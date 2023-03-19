@@ -46,18 +46,20 @@ class _SelectableTextWidgetState extends State<SelectableTextWidget> {
         padding: EdgeInsets.fromLTRB(10,15,10,15) ,
         child: Row(
           children: [
-            Text(
-              widget.text,
-              style: TextStyle(fontSize: 14),
+            Expanded(
+              flex: 80,
+              child: Text(
+                widget.text,
+                style: TextStyle(fontSize: 14),
+              ),
             ),
-            Row(
-              children: [
-                Icon(
-                  _isSelected ? Icons.check_circle : Icons.circle_outlined,
-                  color: _isSelected ? Colors.blue : Colors.grey,
-                  size: 30,
-                ),
-              ],
+            Expanded(
+              flex: 20,
+              child: Icon(
+                _isSelected ? Icons.check_circle : Icons.circle_outlined,
+                color: _isSelected ? Colors.blue : Colors.grey,
+                size: 30,
+              ),
             ),
           ],
         ),
