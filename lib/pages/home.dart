@@ -19,14 +19,17 @@ class _homeState extends State<home> {
         padding: EdgeInsets.all(40.0),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                  labelText: 'Entrer la place de depart',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
+            Expanded(
+              flex: 90,
+              child: TextField(
+                decoration: InputDecoration(
+                    labelText: 'Entrer la place de depart',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
+              ),
             ),
             SizedBox(height: 15.0),
             TextField(
@@ -45,13 +48,14 @@ class _homeState extends State<home> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [RideTypeSelector()],
             ),
-            // Expanded(
-            //   child: Container(
-            //     child: Image(image: NetworkImage(                                'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80')
-            //     ),
-            //       // TODO: add the map here
-            //       ),
-            // ),
+        Expanded(
+        flex: 60,
+        child: Container(
+          child: Image(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rQHFnPgfrAPafybbwk4OOaD69m2bBM5Lqqm-t1RM_A&s)'),
+            // TODO: add the map here
+          ),
+        ),
+        )
           ],
         ),
       ),
