@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/main.dart';
-
-
-
-
-
 class MyBeginPag extends StatefulWidget {
   const MyBeginPag({super.key, required this.title});
 
