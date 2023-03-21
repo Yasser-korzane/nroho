@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "272747583917",
+    "project_id": "app-covoiturage-16bce",
+    "storage_bucket": "app-covoiturage-16bce.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272747583917:android:1cc486504deef9816d2924",
+        "android_client_info": {
+          "package_name": "com.example.appcouvoiturage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272747583917-5uka58mbavb1hqqv7pr7aecd7ish7bj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgj7sGfSt4G6drxKT2JxRX5bZuxTKmiBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272747583917-5uka58mbavb1hqqv7pr7aecd7ish7bj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
