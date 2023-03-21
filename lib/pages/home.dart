@@ -19,17 +19,14 @@ class _homeState extends State<home> {
         padding: EdgeInsets.all(40.0),
         child: Column(
           children: [
-            Expanded(
-              flex: 90,
-              child: TextField(
-                decoration: InputDecoration(
-                    labelText: 'Entrer la place de depart',
-                    floatingLabelBehavior: FloatingLabelBehavior.auto,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
-              ),
+            TextField(
+              decoration: InputDecoration(
+                  labelText: 'Entrer la place de depart',
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
             ),
             SizedBox(height: 15.0),
             TextField(
