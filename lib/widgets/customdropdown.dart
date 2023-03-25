@@ -15,10 +15,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      margin: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
       color: Colors.grey.shade300,
       child: Row(
-
         children: [
           Expanded(
             child: TextFormField(

@@ -43,14 +43,18 @@ class _optionsState extends State<options> {
             SizedBox(height: 20.0),
             CustomDropdown(options: [1,2,3,4]),
             SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                  fillColor: Colors.grey.shade300,
-                  labelText: 'Proposer votre prix',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
-                  suffixIcon:
-                  Icon(Icons.insert_comment_rounded, color: Colors.black)),
+            Container(
+              margin: EdgeInsets.fromLTRB(6, 0, 6, 0),
+              padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
+              child: TextField(
+                decoration: InputDecoration(
+                    fillColor: Colors.grey.shade300,
+                    labelText: 'Proposer votre prix',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
+                    suffixIcon:
+                    Icon(Icons.insert_comment_rounded, color: Colors.black)),
+              ),
             ),
             SizedBox(height: 220.0),
             SizedBox(
