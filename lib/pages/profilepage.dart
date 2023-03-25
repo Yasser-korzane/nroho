@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/profilmodification.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/login.dart';
@@ -53,7 +54,9 @@ class _ProfilepageState extends State<Profilepage> {
                 SizedBox(
                     width: 200,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ModifierProfilePage(),));
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           side: BorderSide.none,

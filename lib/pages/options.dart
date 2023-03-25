@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/customdropdown.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
+import 'package:flutter/material.dart';
 
 class options extends StatefulWidget {
   const options({Key? key}) : super(key: key);
@@ -26,31 +26,34 @@ class _optionsState extends State<options> {
         centerTitle: true,
       ),
       body: Container(
+        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 100.0),
             SelectableTextWidget(
-                text: 'Acceptez-vous un conducteur qui fume ?           '),
+                text: 'Acceptez-vous un conducteur qui fume ?'),
             SizedBox(height: 20.0),
-            SelectableTextWidget(
-                text:
-                'Avez vous un bagage volumineux ?                    '),
+            SelectableTextWidget(text: 'Avez vous un bagage volumineux ?'),
             SizedBox(height: 20.0),
-            SelectableTextWidget(
-                text:
-                'Avez vous  des animaux ?                                    '),
+            SelectableTextWidget(text: 'Avez vous  des animaux ?'),
             SizedBox(height: 20.0),
-            CustomDropdown(options: [1,2,3,4]),
+            Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: CustomDropdown(options: [1, 2, 3, 4])),
             SizedBox(height: 20.0),
-            TextField(
-              decoration: InputDecoration(
-                  fillColor: Colors.grey.shade300,
-                  labelText: 'Laisser un commentaire',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
-                  suffixIcon:
-                  Icon(Icons.insert_comment_rounded, color: Colors.black)),
+            Container(
+              margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
+              // padding: EdgeInsets.only(left: 10),
+              child: TextField(
+                    decoration: InputDecoration(
+                    fillColor: Colors.grey.shade300,
+                    labelText: 'Proposer votre prix',
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
+                    suffixIcon: Icon(Icons.insert_comment_rounded,
+                        color: Colors.black)),
+              ),
             ),
             SizedBox(height: 220.0),
             SizedBox(
@@ -65,12 +68,10 @@ class _optionsState extends State<options> {
                       shape: const StadiumBorder()),
                   child: const Text('Valider',
                       style: TextStyle(color: Colors.white)),
-                )
-            ),
+                )),
           ],
         ),
       ),
     );
   }
 }
-

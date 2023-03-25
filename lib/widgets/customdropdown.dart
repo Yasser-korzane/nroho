@@ -15,14 +15,16 @@ class _CustomDropdownState extends State<CustomDropdown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       color: Colors.grey.shade300,
       child: Row(
+
         children: [
           Expanded(
             child: TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Le nombre des passages',
+              decoration: const InputDecoration(
+                // border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+                labelText: "Le nombre des passagers",
                 // suffixIcon: Icon(Icons.arrow_drop_down_circle),
               ),
               controller: TextEditingController(text: selectedOption.toString()),
@@ -32,7 +34,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
             onPressed: () {
               showOptions();
             },
-            icon: Icon(Icons.arrow_drop_down),
+            icon: const Icon(Icons.arrow_drop_down),
           ),
         ],
       ),
