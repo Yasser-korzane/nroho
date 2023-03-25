@@ -40,12 +40,12 @@ class _optionsState extends State<options> {
               SelectableTextWidget(text: 'Avez vous  des animaux ?'),
               SizedBox(height: 20.0),
               Container(
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: CustomDropdown(options: [1, 2, 3, 4])),
-              SizedBox(height: 20.0),
+              SizedBox(height: 10.0),
               Container(
-                margin: EdgeInsets.fromLTRB(5, 0, 10, 0),
-                // padding: EdgeInsets.only(left: 10),
+                margin: EdgeInsets.fromLTRB(6, 0, 6, 0),
+                padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
                 child: TextField(
                       decoration: InputDecoration(
                       fillColor: Colors.grey.shade300,
