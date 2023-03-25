@@ -19,40 +19,51 @@ class _homeState extends State<home> {
         padding: EdgeInsets.all(40.0),
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                  labelText: 'Entrer la place de depart',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
+            Expanded(
+              flex: 60,
+              child: Container(
+                child: Image(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rQHFnPgfrAPafybbwk4OOaD69m2bBM5Lqqm-t1RM_A&s)'),
+                  // TODO: add the map here
+                ),
+              ),
             ),
-            SizedBox(height: 15.0),
-            TextField(
-              decoration: InputDecoration(
-                  labelText: 'Entrer la place d arivee',
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
-                  prefixIcon:
-                      Icon(Icons.location_on_outlined, color: Colors.blue)),
+            Expanded(
+              flex: 30,
+              child: Container(
+                child: Column(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: 'Entrer la place de depart',
+                          floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
+                    ),
+                    SizedBox(height: 15.0),
+                    TextField(
+                      decoration: InputDecoration(
+                          labelText: 'Entrer la place d arivee',
+                          floatingLabelBehavior: FloatingLabelBehavior.auto,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
+                          prefixIcon:
+                          Icon(Icons.location_on_outlined, color: Colors.blue)),
+                    ),
+                    SizedBox(height: 25.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [RideTypeSelector()],
+                    ),
+                  ],
+                )
+              ),
             ),
-            SizedBox(height: 25.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [RideTypeSelector()],
-            ),
-        Expanded(
-        flex: 60,
-        child: Container(
-          child: Image(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rQHFnPgfrAPafybbwk4OOaD69m2bBM5Lqqm-t1RM_A&s)'),
-            // TODO: add the map here
-          ),
-        ),
-        )
+
+
           ],
         ),
       ),
