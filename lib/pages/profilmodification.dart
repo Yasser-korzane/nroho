@@ -11,8 +11,6 @@ void main() {
     ),
   );
 }
-
-
 class ModifierProfilePage extends StatefulWidget {
   @override
   _ModifierProfilePageState createState() => _ModifierProfilePageState();
