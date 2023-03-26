@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Details extends StatelessWidget {
@@ -33,7 +32,7 @@ class Details extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        margin: EdgeInsets.fromLTRB(20, 0, 10, 0),
+        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
         padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
@@ -61,7 +60,7 @@ class Details extends StatelessWidget {
                     Row(
                       children: List.generate(
                         5,
-                            (index) => Icon(
+                        (index) => Icon(
                           Icons.star,
                           size: 20.0,
                           color: index < rating.round()
@@ -90,11 +89,10 @@ class Details extends StatelessWidget {
                 ),
                 Expanded(
                     child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           canLaunchUrlString("tel:$phoneNumber");
                         },
-                        child: Text(phoneNumber)
-                    ),
+                        child: Text(phoneNumber)),
                     flex: 4),
               ],
             ),
@@ -139,7 +137,7 @@ class Details extends StatelessWidget {
                   flex: 1,
                   child: Column(
                     children: [
-                      Icon(Icons.circle,color: Colors.purple),
+                      Icon(Icons.circle, color: Colors.purple),
                       // SizedBox(height: 20),
                       Container(
                         height: 80,
@@ -147,10 +145,49 @@ class Details extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       // SizedBox(height: 8),
-                      Icon(Icons.circle_outlined,color: Colors.purple,),
+                      Icon(
+                        Icons.circle_outlined,
+                        color: Colors.purple,
+                      ),
                     ],
                   ),
                 ),
+                Expanded(
+                  flex: 4,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: ListTile(
+                          title: Text(
+                            '18 : 30 PM',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text('OUED Smar'),
+                          onTap: () {
+                            // handle onTap event
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: ListTile(
+                          title: Text(
+                            '20 : 30 PM',
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text('  BAROUAGHIA Media'),
+                          onTap: () {
+                            // handle onTap event
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
             SizedBox(height: 15.0),
@@ -176,6 +213,7 @@ class Details extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30.0),
+
             Row(
               children: [
                 Expanded(
@@ -220,6 +258,40 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            SizedBox(height: 40,),
+            ElevatedButton(
+              onPressed: () {
+              },
+
+              style:  ButtonStyle(
+                elevation: MaterialStateProperty.all<double>(4.0),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(14)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              child: const Text('   Demender un trajet   ',
+                  style: TextStyle(color: Colors.white)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+              },
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all<double>(0.0),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(14)),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+              child: const Text('       Annulez le trajet      ',
+                  style: TextStyle(color: Colors.red)),
             )
 
           ],
@@ -229,3 +301,4 @@ class Details extends StatelessWidget {
     );
   }
 }
+

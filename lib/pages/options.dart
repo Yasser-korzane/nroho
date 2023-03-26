@@ -69,7 +69,8 @@ class _optionsState extends State<options> {
                         shape: const StadiumBorder()),
                     child: const Text('Valider',
                         style: TextStyle(color: Colors.white)),
-                  )),
+                  )
+              ),
             ],
           ),
       ]
