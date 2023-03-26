@@ -84,7 +84,7 @@ flutter:
     - family: Poppins
       fonts:
         - asset: fonts/Poppins-Regular.ttf
-        - asset: fonts/Poppins-Meduim.ttf
+        - asset: fonts/Poppins-Medium.ttf
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
