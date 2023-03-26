@@ -61,7 +61,7 @@ class Details extends StatelessWidget {
                     Row(
                       children: List.generate(
                         5,
-                        (index) => Icon(
+                            (index) => Icon(
                           Icons.star,
                           size: 20.0,
                           color: index < rating.round()
@@ -90,9 +90,9 @@ class Details extends StatelessWidget {
                 ),
                 Expanded(
                     child: GestureDetector(
-                      onTap: (){
-                        canLaunchUrlString("tel:$phoneNumber");
-                      },
+                        onTap: (){
+                          canLaunchUrlString("tel:$phoneNumber");
+                        },
                         child: Text(phoneNumber)
                     ),
                     flex: 4),
@@ -195,7 +195,7 @@ class Details extends StatelessWidget {
                         side: BorderSide.none,
                         shape: StadiumBorder(side: BorderSide())
                     ),
-                ),
+                  ),
                 ),
                 Expanded(
                     flex: 1,

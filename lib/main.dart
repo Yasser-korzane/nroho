@@ -2,14 +2,12 @@ import 'package:appcouvoiturage/pages/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/login.dart';
-
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Poppins'),
     home: Wrapper(),
   ));
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   // This widget is the root of your application.
@@ -139,27 +137,8 @@ class _MyConnexinState extends State<Connexin> {
                   child: const Text('create account'),
                 ),
               ),
-              /*Center(
-            child: RichText(
-              TextSpan(
-                text: 'but this is',
-                style: new TextStyle(color: Colors.blue),
-                recognizer: new TapGestureRecognizer()
-                onTap = () { launch('https://docs.flutter.io/flutter/services/UrlLauncher-class.html');}
-            ),
-            ),
-          ),*/
-
             ]
         ),
-        /*child: Center(
-            child: new InkWell(
-              child: new Text('Open Browser'),
-              onTap: () => launch('https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
-            ),
-        ),*/
-
-
       ),
       //bottomNavigationBar: BottomAppBar(),
 

@@ -9,18 +9,38 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
+  bool validerNomEtPrenom(String value) {
+    String chaineTest = value;
+    String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
+    RegExp regExp = new RegExp(pattern);
+    chaineTest = value.replaceAll(' ', '');
+    if(value.length > 20 || chaineTest.isEmpty
+        || !regExp.hasMatch(chaineTest)
+        || value.startsWith(' ') || value.endsWith(' ')){
+      return false;
+    } else {
+      return true;
+    }
+  }
+  bool validerMotDePasse(String motDePasse){
+    if (motDePasse.length >= 8)return true;
+    else return false;
+    /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
+  }
+  bool validerEmail(String email){
+    final regex = RegExp(r'[0-9]');
+    if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
+    else return false;
+  }
+  TextEditingController _controllerNom = TextEditingController();
+  TextEditingController _controllerPrenom = TextEditingController();
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerMotDePasse = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
-      // appBar: AppBar(
-
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-      //   title: Text(widget.title),
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(''),
@@ -39,40 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              /*
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your username',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your First name',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your last name',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your email',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your phone number',
-             ),
-          ),*/
               Padding(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: _controllerNom,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: ' First Name',
@@ -81,7 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Padding(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: _controllerPrenom,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'last Name',
@@ -90,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: _controllerEmail,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
@@ -99,8 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
                   obscureText: true,
+                  controller: _controllerMotDePasse,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
@@ -109,13 +102,24 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 width: 300,
-                //padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.lightBlue),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+                    if (validerNomEtPrenom(_controllerNom.text)
+                    && validerNomEtPrenom(_controllerPrenom.text)
+                    && validerEmail(_controllerEmail.text)
+                    && validerMotDePasse(_controllerMotDePasse.text)){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+                    }else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Vous devez verifier les donnes"),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     'sign up',
@@ -123,9 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              /*SizedBox(
-            height: 150,
-          )*/
             ],
           ),
         ),
