@@ -5,6 +5,7 @@ import 'package:appcouvoiturage/pages/login.dart';
 
 void main() {
   runApp(MaterialApp(
+    theme: ThemeData(fontFamily: 'Poppins'),
     home: Wrapper(),
   ));
 }

@@ -38,6 +38,7 @@ dependencies:
   firebase_auth: ^4.3.0
   cloud_firestore: ^4.4.5
   url_launcher: ^6.1.10
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +81,10 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Medium.ttf
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Regular.ttf
+        - asset: fonts/Poppins-Meduim.ttf
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: ModifierProfilePage(),
-      theme: ThemeData(
-
-        fontFamily: 'Poppins',
-      ),
-    ),
-  );
-}
-
 
 class ModifierProfilePage extends StatefulWidget {
   @override

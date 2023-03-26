@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
+import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 
 class home extends StatefulWidget {
@@ -82,7 +83,14 @@ class _homeState extends State<home> {
               child: Icon(Icons.directions_car_filled_outlined),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => options()));
+                    MaterialPageRoute(builder: (context) => Details(
+                      carName: "Mersedes",
+                      email: "lh_boulacheb@esi.dz",
+                      fullName: "Hichem Boulacheb",
+                      phoneNumber: "0321659874",
+                      photoUrl: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80',
+                      rating: 3.5,
+                    )));
               },
             ),
             selectedIcon: Icon(Icons.directions_car_filled),
