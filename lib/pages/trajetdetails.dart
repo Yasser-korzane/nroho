@@ -21,6 +21,12 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -32,12 +38,12 @@ class Details extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        padding: const EdgeInsets.all(30.0),
+        margin: EdgeInsets.fromLTRB(screenWidth * 0.025, 0, screenWidth * 0.025, 0),
+        padding:  EdgeInsets.all(screenWidth * 0.05),
         child: Column(
           children: [
             SizedBox(
-              height: 20.0,
+              height: screenHeight*0.03,
             ),
             Row(
               children: [
@@ -73,7 +79,7 @@ class Details extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: screenHeight*0.025),
             Row(
               children: [
                 Expanded(
@@ -83,7 +89,7 @@ class Details extends StatelessWidget {
                         textStyle: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w700,
-                          color: Colors.green,
+                          color: Color(0xff137c8b),
                         ),
                       )),
                 ),
@@ -96,7 +102,7 @@ class Details extends StatelessWidget {
                     flex: 4),
               ],
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: screenHeight*0.014),
             Row(
               children: [
                 Expanded(
@@ -106,14 +112,14 @@ class Details extends StatelessWidget {
                         textStyle: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w700,
-                          color: Colors.green,
+                          color: Color(0xff137c8b),
                         ),
                       )),
                 ),
                 Expanded(child: Text(email), flex: 8),
               ],
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: screenHeight*0.014),
             Row(
               children: [
                 Expanded(
@@ -123,14 +129,14 @@ class Details extends StatelessWidget {
                         textStyle: TextStyle(
                           fontSize: 15.0,
                           fontWeight: FontWeight.w700,
-                          color: Colors.green,
+                          color: Color(0xff137c8b),
                         ),
                       )),
                 ),
                 Expanded(child: Text(carName), flex: 5),
               ],
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: screenHeight*0.04),
             Row(
               children: [
                 Expanded(
@@ -140,7 +146,7 @@ class Details extends StatelessWidget {
                       Icon(Icons.circle, color: Colors.purple),
                       // SizedBox(height: 20),
                       Container(
-                        height: 80,
+                        height: screenHeight* 0.09,
                         width: 1,
                         color: Colors.grey,
                       ),
@@ -170,7 +176,7 @@ class Details extends StatelessWidget {
                           },
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: screenHeight*0.03),
                       Container(
                         child: ListTile(
                           title: Text(
@@ -190,9 +196,9 @@ class Details extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height: screenHeight*0.018),
             Container(
-              padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
+              padding: EdgeInsets.fromLTRB(screenWidth*0.03, screenHeight*0.016, screenWidth*0.03, screenHeight*0.016),
               decoration: BoxDecoration(
                 color: Colors.grey[300],
                 border: Border.all(color: Colors.grey[400]!),
@@ -212,7 +218,7 @@ class Details extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: screenHeight * 0.03),
 
             Row(
               children: [
@@ -226,10 +232,10 @@ class Details extends StatelessWidget {
                     label: Text(
                       'Voir le  trajet  sur la map',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Color(0xff137c8b)),
                     ),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent,
+                        backgroundColor: Color(0xffb8cbd0),
                         side: BorderSide.none,
                         shape: StadiumBorder(side: BorderSide())
                     ),
@@ -248,10 +254,10 @@ class Details extends StatelessWidget {
                     label: Text(
                       'Contacter le chauffeur',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Color(0xff137cb8)),
                     ),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.greenAccent,
+                        backgroundColor: Color(0xffb8cbd0),
                         side: BorderSide.none,
                         shape: StadiumBorder(side: BorderSide())
                     ),
@@ -259,22 +265,22 @@ class Details extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 40,),
+            SizedBox(height: screenHeight*0.045,),
             ElevatedButton(
               onPressed: () {
               },
 
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(14)),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(screenHeight*0.01)),
+                backgroundColor: MaterialStateProperty.all<Color>( Color(0xff137c8b)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
               ),
-              child: const Text('   Demender un trajet   ',
+              child: const Text('           Demender un trajet           ',
                   style: TextStyle(color: Colors.white)),
             ),
             ElevatedButton(
@@ -282,7 +288,7 @@ class Details extends StatelessWidget {
               },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(0.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(14)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(screenHeight*0.01)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -290,7 +296,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('       Annulez le trajet      ',
+              child: const Text('              Annulez le trajet            ',
                   style: TextStyle(color: Colors.red)),
             )
 

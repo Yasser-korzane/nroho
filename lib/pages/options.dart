@@ -12,6 +12,12 @@ class options extends StatefulWidget {
 class _optionsState extends State<options> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -26,26 +32,26 @@ class _optionsState extends State<options> {
         centerTitle: true,
       ),
       body: Container(
-        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        margin: EdgeInsets.fromLTRB(screenWidth*0.03, 0, 10, screenWidth*0.03),
         child: ListView(
           children:[ Column(
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(height: 100.0),
+              SizedBox(height: screenHeight * 0.1),
               SelectableTextWidget(
                   text: 'Acceptez-vous un conducteur qui fume ?'),
-              SizedBox(height: 20.0),
+              SizedBox(height: screenHeight * 0.02),
               SelectableTextWidget(text: 'Avez vous un bagage volumineux ?'),
-              SizedBox(height: 20.0),
+              SizedBox(height: screenHeight * 0.02),
               SelectableTextWidget(text: 'Avez vous  des animaux ?'),
-              SizedBox(height: 20.0),
+              SizedBox(height : screenHeight * 0.02),
               Container(
-                  margin: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                   child: CustomDropdown(options: [1, 2, 3, 4])),
               SizedBox(height: 10.0),
               Container(
-                margin: EdgeInsets.fromLTRB(6, 0, 6, 0),
-                padding: EdgeInsets.fromLTRB(7, 0, 7, 0),
+                margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
+                padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                 child: TextField(
                       decoration: InputDecoration(
                       fillColor: Colors.grey.shade300,
@@ -56,9 +62,9 @@ class _optionsState extends State<options> {
                           color: Colors.black)),
                 ),
               ),
-              SizedBox(height: 220.0),
+              SizedBox(height: screenHeight * 0.25),
               SizedBox(
-                  width: 200,
+                  width: screenWidth * 0.5,
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);

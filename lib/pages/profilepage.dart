@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/pages/profilmodification.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
+import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/profilwidget.dart';
 
@@ -71,7 +72,7 @@ class _ProfilepageState extends State<Profilepage> {
                       child: const Text('Modifier Profile',
                           style: TextStyle(color: Colors.white)),
                     )),
-                 SizedBox(height: screenHeight * 0.03),
+                 SizedBox(height: screenHeight * 0.04),
                 const Divider(),
                  SizedBox(height: screenHeight * 0.01 ),
 
@@ -81,7 +82,15 @@ class _ProfilepageState extends State<Profilepage> {
                   icon: Icons.navigation_rounded,
                   onPress: () {},
                 ),
-
+                SizedBox(height: screenHeight * 0.008 ),
+                Profilewidget(
+                  title: 'Mot de passe',
+                  icon: Icons.key_outlined,
+                  onPress: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Details(photoUrl: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE', fullName: "Hicham Boulacheb", rating: 4, phoneNumber: '0678429534', email: "lh_boulacheb@esi.dz", carName: "carName"),));
+                  },
+                ),
+                SizedBox(height: screenHeight * 0.008 ),
                 Profilewidget(
                   title: 'Deconnexion',
                   icon: Icons.logout,
