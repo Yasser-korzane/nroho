@@ -229,7 +229,7 @@ class details extends StatelessWidget {
                               SizedBox(height: 4.0),
                               OutlinedButton(
                                 onPressed: () {
-                                  // Handle button press
+                                  launchUrlString("tel:+213 65498325");// Handle button press
                                 },
                                 style: ButtonStyle(
                                   shape: MaterialStateProperty.all<
@@ -379,7 +379,7 @@ class details extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 30),
+                          padding:  EdgeInsets.only(left: screenWidth*0.0005),
                           child: Text.rich(
                             TextSpan(
                               text: 'Si vous avez un problème avec ce trajet,\n         contactez notre service client \n pour plus d’aide ou signalezdirectement \n                             par ',

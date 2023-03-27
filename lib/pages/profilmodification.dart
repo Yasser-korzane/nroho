@@ -37,8 +37,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-
-
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,

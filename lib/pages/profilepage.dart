@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/Password.dart';
 import 'package:appcouvoiturage/pages/profilmodification.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/trajetdetails.dart';
@@ -80,14 +81,16 @@ class _ProfilepageState extends State<Profilepage> {
                 Profilewidget(
                   title: 'Mes Courses',
                   icon: Icons.navigation_rounded,
-                  onPress: () {},
+                  onPress: () {
+
+                  },
                 ),
                 SizedBox(height: screenHeight * 0.008 ),
                 Profilewidget(
                   title: 'Mot de passe',
                   icon: Icons.key_outlined,
                   onPress: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Details(photoUrl: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE', fullName: "Hicham Boulacheb", rating: 4, phoneNumber: '0678429534', email: "lh_boulacheb@esi.dz", carName: "carName"),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MotdePasse(),));
                   },
                 ),
                 SizedBox(height: screenHeight * 0.008 ),
