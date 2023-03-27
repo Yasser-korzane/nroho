@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
@@ -6,13 +7,7 @@ import 'package:appcouvoiturage/pages/trajetdetails.dart';
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Poppins'),
-    home: Details(
-        carName: "Mersedes",
-        email: "lh_boulacheb@esi.dz",
-        fullName: "Hichem Boulacheb",
-        phoneNumber: "032165974",
-        photoUrl: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80',
-        rating: 3.5),
+    home: home(),
   ));
 }
 class MyApp extends StatelessWidget {
