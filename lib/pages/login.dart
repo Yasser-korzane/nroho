@@ -17,16 +17,7 @@ class _MyBeginPageState extends State<MyBeginPage> {
       appBar: AppBar(
         leading: null,
         automaticallyImplyLeading: false,
-
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        //padding :,
         backgroundColor: Colors.white,
-        /* title: Container(
-          height: 180 ,
-          padding: EdgeInsets.zero,
-          child: Image.asset('asset/images/Ellipse 5.png',height: 100,width: 600,),
-        )*/
-        // title: Text(widget.title),
         title: Text(''),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -34,15 +25,6 @@ class _MyBeginPageState extends State<MyBeginPage> {
                   image: AssetImage('asset/images/Ellipse 5.png'),
                   fit: BoxFit.fill)),
         ),
-// width: MediaQuery.of(context).size.width,
-//   height: 100,
-//   decoration: BoxDecoration(
-//     image: DecorationImage(q
-//       fit: BoxFit.fill,
-//       image: AssetImage("asset/images/Ellipse 5.png"),
-//     ),
-//   ),
-// )
       ),
 
       body: Center(

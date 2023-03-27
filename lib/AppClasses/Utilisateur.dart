@@ -5,7 +5,7 @@ import 'Vehicule.dart';
 class Utilisateur extends Personne{
   Evaluation evaluation;
   Vehicule vehicule;
-  bool statut;
+  bool statut; // si true alors est un passager, si false alors est un conducteur
   List<Trajet> trajets;
   static int nbUtilisateurs = 0;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email, super.motDePasse, super.numeroTelephone,this.evaluation, this.vehicule, this.statut, this.trajets);

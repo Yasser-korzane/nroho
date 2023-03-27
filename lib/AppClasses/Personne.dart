@@ -1,4 +1,4 @@
-class Personne{
+abstract class Personne{
   int identifiant ;
   String nom ;
   String prenom ;

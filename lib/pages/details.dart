@@ -332,7 +332,6 @@ class details extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
                         Padding(
@@ -382,7 +381,7 @@ class details extends StatelessWidget {
                           padding:  EdgeInsets.only(left: screenWidth*0.0005),
                           child: Text.rich(
                             TextSpan(
-                              text: 'Si vous avez un problème avec ce trajet,\n         contactez notre service client \n pour plus d’aide ou signalezdirectement \n                             par ',
+                              text: 'Si vous avez un problème avec ce trajet,\n   contactez notre service client \n pour plus d’aide ou signalezdirectement \n                             par ',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 16.0,
@@ -402,10 +401,6 @@ class details extends StatelessWidget {
                                     ..onTap = () {
                                       launchUrlString('https://tresor.cse.club/');
                                     },
-                                // ),
-                                // TextSpan(
-                                //   text: ' .',
-                                // ),
                                 )
                               ],
                             ),

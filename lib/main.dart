@@ -3,16 +3,16 @@ import 'package:appcouvoiturage/pages/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/login.dart';
-import 'package:appcouvoiturage/pages/trajetdetails.dart';
+import 'package:appcouvoiturage/pages/details.dart';
+import 'package:appcouvoiturage/pages/profilepage.dart';
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Poppins'),
-    home: home(),
+    home: MyBeginPage(title: ""),
   ));
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -127,7 +127,6 @@ class _MyConnexinState extends State<Connexin> {
               ),
               Padding(
                 padding: EdgeInsets.all(10),
-                //  child: Text('Create Account ',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
