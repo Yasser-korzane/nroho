@@ -1,4 +1,6 @@
+import 'package:appcouvoiturage/pages/assistance.dart';
 import 'package:appcouvoiturage/pages/details.dart';
+import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:flutter/material.dart';
 
@@ -95,12 +97,19 @@ class _homeState extends State<home> {
               ),
             ),
             Positioned(
-              top: 15,
-              right: 10,
-              child: Icon(
-                Icons.notifications_none_outlined,
-                color: Colors.blue,
-                size: 50,
+              top: screenHeight*0.03,
+              right: screenWidth*0.04,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => details()));
+                },
+                child: Icon(
+                  Icons.notifications_none_outlined,
+                  color: Colors.blue,
+                  size: 50,
+
+                ),
               ),
             ),
           ],
@@ -116,21 +125,27 @@ class _homeState extends State<home> {
               selectedIcon: Icon(Icons.home),
               label: 'Actuel',
             ),
-            NavigationDestination(
-              icon: Icon(Icons.question_answer_outlined),
-              selectedIcon: Icon(Icons.question_answer),
-              label: 'Assistane',
-            ),
+
             NavigationDestination(
               icon: GestureDetector(
                 child: Icon(Icons.directions_car_filled_outlined),
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => details()));
+                      MaterialPageRoute(builder: (context) => options()));
                 },
               ),
               selectedIcon: Icon(Icons.directions_car_filled),
               label: 'Trajets',
+            ),
+            NavigationDestination(
+              icon: GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Assistance()));
+                },
+                  child: Icon(Icons.question_answer_outlined)),
+              selectedIcon: Icon(Icons.question_answer),
+              label: 'Assistane',
             ),
             NavigationDestination(
               icon: GestureDetector(

@@ -58,10 +58,15 @@ class details extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(defaultPadding),
-                          child: Icon(
-                            Icons.cancel,
-                            color: Colors.white,
-                            size: screenWidth * 0.04, // responsive icon size
+                          child: InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.cancel,
+                              color: Colors.white,
+                              size: screenWidth * 0.04, // responsive icon size
+                            ),
                           ),
                         ),
                       ),
@@ -122,7 +127,7 @@ class details extends StatelessWidget {
                     ),
                     SizedBox(height: screenHeight * 0.01),
                     Image.network(
-                      'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80',
+                      'https://assets.website-files.com/5e832e12eb7ca02ee9064d42/5f7db426b676b95755fb2844_Group%20805.jpg',
                       height: screenHeight * 0.25,
                       width: screenWidth * 0.9,
                     ),
