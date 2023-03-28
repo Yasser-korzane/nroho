@@ -34,7 +34,7 @@ class _MyBeginPagState extends State<MyBeginPag> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('asset/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/Ellipse 5.png'),
                   fit: BoxFit.fill
               )
           ),
@@ -72,7 +72,7 @@ class _MyBeginPagState extends State<MyBeginPag> {
                   borderRadius: BorderRadius.circular(200),
                 ),
                 child: Center(
-                  child: Image.asset('asset/images/Commencer-removebg-preview.png'),
+                  child: Image.asset('assets/images/Commencer-removebg-preview.png'),
                 ),
               ),
               Container(
