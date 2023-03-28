@@ -1,3 +1,6 @@
+import 'package:appcouvoiturage/pages/home.dart';
+import 'package:appcouvoiturage/pages/options.dart';
+import 'package:appcouvoiturage/pages/optionsconducteur.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
@@ -10,11 +13,15 @@ class Trajet extends StatefulWidget {
 
 class _TrajetState extends State<Trajet> {
   String querry = "";
+  int selected = home().get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const InkWell(
+        leading:   InkWell(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+            },
             child: Icon(
           Icons.arrow_circle_left_outlined,
           color: Colors.black,
@@ -101,7 +108,23 @@ class _TrajetState extends State<Trajet> {
   }
 
   Widget validerButton() {
-    return ElevatedButton(onPressed: () {}, child: const Text("Valider"));
+    return ElevatedButton(
+      onPressed: (){},
+      // {
+      //   if (selected == 0) {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => options()),
+      //     );
+      //   } else {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => optionconduc()),
+      //     );
+      //   }
+      // },
+
+    child: const Text("Valider"));
   }
 
   Future<dynamic> getPredictions(String querry) async {

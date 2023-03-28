@@ -2,6 +2,7 @@ import 'package:appcouvoiturage/pages/assistance.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
+import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
 
 class home extends StatefulWidget {
@@ -9,10 +10,14 @@ class home extends StatefulWidget {
 
   @override
   State<home> createState() => _homeState();
+   int get(){
+    return _homeState().selectedIndex;
+  }
 }
 
 class _homeState extends State<home> {
   int index = 0;
+  int selectedIndex = RideTypeSelector().getSelectedIndex();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +55,9 @@ class _homeState extends State<home> {
                                 0.05), // use 5% of screen width as border radius
                           ),
                           child: TextField(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                            },
                             decoration: InputDecoration(
                               labelText: 'Entrer la place de depart',
                               floatingLabelBehavior:
@@ -70,6 +78,9 @@ class _homeState extends State<home> {
                                 0.05), // use 5% of screen width as border radius
                           ),
                           child: TextField(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                            },
                             decoration: InputDecoration(
                               labelText: 'Entrer la place d arivee',
                               floatingLabelBehavior:
@@ -181,8 +192,13 @@ class _homeState extends State<home> {
 }
 
 class RideTypeSelector extends StatefulWidget {
+  get _isSelected => RideTypeSelector()._isSelected;
+
   @override
   _RideTypeSelectorState createState() => _RideTypeSelectorState();
+  int getSelectedIndex() {
+    return _isSelected.indexOf(true);
+  }
 }
 
 class _RideTypeSelectorState extends State<RideTypeSelector> {

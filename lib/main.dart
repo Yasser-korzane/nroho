@@ -8,7 +8,7 @@ import 'package:appcouvoiturage/pages/profilepage.dart';
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Poppins'),
-    home: MyBeginPage(title: ""),
+    home: home(),
   ));
 }
 class MyApp extends StatelessWidget {
