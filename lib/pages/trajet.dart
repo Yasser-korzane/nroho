@@ -13,20 +13,22 @@ class Trajet extends StatefulWidget {
 
 class _TrajetState extends State<Trajet> {
   String querry = "";
-  int selected = home().get();
+
+  // int selected = home().get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:   InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+        leading: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => home(),));
             },
             child: Icon(
-          Icons.arrow_circle_left_outlined,
-          color: Colors.black,
-          size: 35,
-        )),
+              Icons.arrow_circle_left_outlined,
+              color: Colors.black,
+              size: 35,
+            )),
         centerTitle: true,
         title: const Text(
           "Ou allez-vous ?",
@@ -61,14 +63,20 @@ class _TrajetState extends State<Trajet> {
               decoration: InputDecoration(
                   hintText: "Point de Depart",
                   constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width) /
+                      maxWidth: MediaQuery
+                          .of(context)
+                          .size
+                          .width) /
                       1.5),
             ),
             TextFormField(
               decoration: InputDecoration(
                   hintText: "Destination",
                   constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width) /
+                      maxWidth: MediaQuery
+                          .of(context)
+                          .size
+                          .width) /
                       1.5),
             )
           ],
@@ -87,7 +95,7 @@ class _TrajetState extends State<Trajet> {
                   itemCount: snapshot.data["predictions"].length,
                   itemBuilder: (context, index) {
                     var prediction =
-                        snapshot.data["predictions"][index]["description"];
+                    snapshot.data["predictions"][index]["description"];
                     return ListTile(
                       title: Text(prediction),
                     );
@@ -109,22 +117,21 @@ class _TrajetState extends State<Trajet> {
 
   Widget validerButton() {
     return ElevatedButton(
-      onPressed: ()
-      {
-        if (selected == 0) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => options()),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => optionconduc()),
-          );
-        }
-      },
+        onPressed: () {
+          // if (selected == 0) {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => options()),
+          //   );
+          // } else {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => optionconduc()),
+          //   );
+          // }
+        },
 
-    child: const Text("Valider"));
+        child: const Text("Valider"));
   }
 
   Future<dynamic> getPredictions(String querry) async {
