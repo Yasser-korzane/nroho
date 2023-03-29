@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.1.10
   google_fonts: ^4.0.3
   flutter_spinkit: ^5.1.0
+  dio: ^5.1.0
 
 dev_dependencies:
   flutter_test:

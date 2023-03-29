@@ -2,14 +2,14 @@ import 'package:appcouvoiturage/widgets/customdropdown.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:flutter/material.dart';
 
-class options extends StatefulWidget {
-  const options({Key? key}) : super(key: key);
+class optionconduc extends StatefulWidget {
+  const optionconduc({Key? key}) : super(key: key);
 
   @override
-  State<options> createState() => _optionsState();
+  State<optionconduc> createState() => _optionconducState();
 }
 
-class _optionsState extends State<options> {
+class _optionconducState extends State<optionconduc> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -26,7 +26,7 @@ class _optionsState extends State<options> {
             },
             icon: const Icon(Icons.chevron_left, color: Colors.black)),
         title: Text('Plus d’informations',
-            style: Theme.of(context).textTheme.headline6),
+            style: Theme.of(context).textTheme.titleLarge),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
