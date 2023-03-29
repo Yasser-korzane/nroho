@@ -109,20 +109,20 @@ class _TrajetState extends State<Trajet> {
 
   Widget validerButton() {
     return ElevatedButton(
-      onPressed: (){},
-      // {
-      //   if (selected == 0) {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => options()),
-      //     );
-      //   } else {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => optionconduc()),
-      //     );
-      //   }
-      // },
+      onPressed: ()
+      {
+        if (selected == 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => options()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => optionconduc()),
+          );
+        }
+      },
 
     child: const Text("Valider"));
   }
