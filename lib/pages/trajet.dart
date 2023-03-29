@@ -13,7 +13,7 @@ class Trajet extends StatefulWidget {
 
 class _TrajetState extends State<Trajet> {
   String querry = "";
-  int selected = home().get();
+  // int selected = home().get();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,17 +111,17 @@ class _TrajetState extends State<Trajet> {
     return ElevatedButton(
       onPressed: ()
       {
-        if (selected == 0) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => options()),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => optionconduc()),
-          );
-        }
+        // if (selected == 0) {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => options()),
+        //   );
+        // } else {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => optionconduc()),
+        //   );
+        // }
       },
 
     child: const Text("Valider"));

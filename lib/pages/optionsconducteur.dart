@@ -40,11 +40,11 @@ class _optionconducState extends State<optionconduc> {
                 SizedBox(height: screenHeight * 0.1),
                 SelectableTextWidget(
                     text: 'Etes-vous fumeur ?'),
-                SizedBox(height: screenHeight * 0.02),
+                SizedBox(height: screenHeight * 0.03),
                 SelectableTextWidget(text: ' Acceptez vous un bagages volumineux ?'),
-                SizedBox(height: screenHeight * 0.02),
+                SizedBox(height: screenHeight * 0.03),
                 SelectableTextWidget(text: 'Acceptez vous les animaux ?'),
-                SizedBox(height : screenHeight * 0.02),
+                SizedBox(height : screenHeight * 0.03),
                 Container(
                     margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                     child: CustomDropdown(options: [1, 2, 3, 4])),
