@@ -1,6 +1,10 @@
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 
+import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Utilisateur.dart';
+import '../AppClasses/Vehicule.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -10,6 +14,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
+  /*********************************************** Les Fonctions **********************************************/
   bool validerNomEtPrenom(String value) {
     String chaineTest = value;
     String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
@@ -23,20 +28,30 @@ class _MyHomePageState extends State<MyHomePage> {
       return true;
     }
   }
+
   bool validerMotDePasse(String motDePasse){
     if (motDePasse.length >= 8)return true;
     else return false;
     /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
   }
+
   bool validerEmail(String email){
     final regex = RegExp(r'[0-9]');
     if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
     else return false;
   }
+  Utilisateur creerUtilisateurApresSignUp(int identifiant, String nom, String prenom, String email, String motDePasse) {
+    return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
+      Vehicule("", "", "", "", "", 0), false, [],
+    );
+  }
+  /** ************************************************************************************************** **/
+  /** *********************************** Les controlleurs ********************************************** **/
   TextEditingController _controllerNom = TextEditingController();
   TextEditingController _controllerPrenom = TextEditingController();
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerMotDePasse = TextEditingController();
+  /** ************************************************************************************************** **/
   @override
   Widget build(BuildContext context) {
     return Scaffold(

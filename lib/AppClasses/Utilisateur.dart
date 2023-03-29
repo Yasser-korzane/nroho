@@ -8,7 +8,8 @@ class Utilisateur extends Personne{
   bool statut; // si true alors est un passager, si false alors est un conducteur
   List<Trajet> trajets;
   static int nbUtilisateurs = 0;
-  Utilisateur(super.identifiant, super.nom, super.prenom, super.email, super.motDePasse, super.numeroTelephone,this.evaluation, this.vehicule, this.statut, this.trajets);
+  Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
+      super.numeroTelephone,this.evaluation, this.vehicule, this.statut, this.trajets);
   void lancerTrajet() {
     // Code pour lancer un trajet
   }
@@ -49,5 +50,8 @@ class Utilisateur extends Personne{
 
   void afficherHistorique() {
     // Code pour afficher l'historique des trajets effectués
+  }
+  void ajouterHistorique(Trajet trajet) {
+    trajets.add(trajet);
   }
 }
