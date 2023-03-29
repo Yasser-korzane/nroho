@@ -2,7 +2,7 @@ import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/optionsconducteur.dart';
 import 'package:flutter/material.dart';
-//import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 
 class Trajet extends StatefulWidget {
   const Trajet({super.key});
@@ -132,8 +132,4 @@ class _TrajetState extends State<Trajet> {
         "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$querry&key=AIzaSyA7YbcfZHHiA80T-wbB656ql4r6lC3cJRE");
     return response.data;
   }
-}
-
-class Dio {
-  dynamic get(String url){}
 }

@@ -40,9 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
     if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
     else return false;
   }
-  Utilisateur creerUtilisateurApresSignUp(int identifiant, String nom, String prenom, String email, String motDePasse) {
+
+  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
-      Vehicule("", "", "", "", "", 0), false, [],
+      Vehicule("", "", "", "", "", 0), false, [],[],[]
     );
   }
   /** ************************************************************************************************** **/
@@ -129,19 +130,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
                      ),
            ),
-              
-              /*Padding(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  controller: _controllerPrenom,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'last Name',
-                      hintText: 'Enter your last name'),
-                ),
-              ),*/
-
-
               Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -156,7 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.all(12),
               child: Row(
                 children: <Widget>[
-    
                   new Expanded(     
                     child: TextField(
                       controller: _controllerPrenom,

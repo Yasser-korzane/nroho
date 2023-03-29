@@ -6,25 +6,19 @@ class Utilisateur extends Personne{
   Evaluation evaluation;
   Vehicule vehicule;
   bool statut; // si true alors est un passager, si false alors est un conducteur
-  List<Trajet> trajets;
+  List<Trajet> trajetsLances;
+  List<Trajet> trajetsReserves;
+  List<Trajet> Historique;
   static int nbUtilisateurs = 0;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
-      super.numeroTelephone,this.evaluation, this.vehicule, this.statut, this.trajets);
+      super.numeroTelephone,this.evaluation, this.vehicule, this.statut,
+      this.trajetsReserves,this.trajetsLances,this.Historique);
   void lancerTrajet() {
     // Code pour lancer un trajet
   }
   void reserverTrajet() {
     // Code pour réserver un trajet
   }
-
-  void modifierReservation() {
-    // Code pour modifier une réservation
-  }
-
-  void modifierLancement() {
-    // Code pour modifier un lancement
-  }
-
   void annulerReservation() {
     // Code pour annuler une réservation
   }
@@ -37,9 +31,6 @@ class Utilisateur extends Personne{
     // Code pour accepter un trajet
   }
 
-  void modifierProfil() {
-    // Code pour modifier le profil de l'utilisateur
-  }
   void afficherTrajetReservee() {
     // Code pour afficher les trajets réservés
   }
@@ -52,6 +43,12 @@ class Utilisateur extends Personne{
     // Code pour afficher l'historique des trajets effectués
   }
   void ajouterHistorique(Trajet trajet) {
-    trajets.add(trajet);
+    Historique.add(trajet);
+  }
+  void ajouterTrajetReserve(Trajet trajet) {
+    trajetsReserves.add(trajet);
+  }
+  void ajouterTrajetLance(Trajet trajet) {
+    trajetsLances.add(trajet);
   }
 }
