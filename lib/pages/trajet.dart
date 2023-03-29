@@ -2,7 +2,7 @@ import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/optionsconducteur.dart';
 import 'package:flutter/material.dart';
-//import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 
 class Trajet extends StatefulWidget {
   const Trajet({super.key});
@@ -134,6 +134,3 @@ class _TrajetState extends State<Trajet> {
   }
 }
 
-class Dio {
-  dynamic get(String url){}
-}
