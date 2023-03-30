@@ -7,10 +7,8 @@ import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 
 void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(fontFamily: 'Poppins'),
-    home: MyApp(),
-  ));
+  runApp(MyApp()
+  );
 }
 // test 
 class MyApp extends StatelessWidget {
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const Connexin(title: 'Flutter Demo Home Page'),
+      home: home(),
     );
   }
 }
@@ -81,7 +79,7 @@ class _MyConnexinState extends State<Connexin> {
                   borderRadius: BorderRadius.circular(200),
                 ),
                 child: Center(
-                  child: Image.asset('asset/images/logo-removebg-preview.png'),
+                  child: Image.asset('assets/images/logo-removebg-preview.png'),
                 ),
               ),
               Container(
@@ -115,7 +113,9 @@ class _MyConnexinState extends State<Connexin> {
                     color: Colors.blue, borderRadius: BorderRadius.circular(30)
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+                  },
                   child: Text('Login',style: TextStyle(color: Colors.white , fontSize: 18)),
                 ),
               ),
