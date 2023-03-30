@@ -10,14 +10,10 @@ class home extends StatefulWidget {
 
   @override
   State<home> createState() => _homeState();
-   int get(){
-    return _homeState().selectedIndex;
-  }
 }
 
 class _homeState extends State<home> {
   int index = 0;
-  int selectedIndex = RideTypeSelector().getSelectedIndex();
 
   @override
   Widget build(BuildContext context) {
@@ -192,13 +188,9 @@ class _homeState extends State<home> {
 }
 
 class RideTypeSelector extends StatefulWidget {
-  get _isSelected => RideTypeSelector()._isSelected;
 
   @override
   _RideTypeSelectorState createState() => _RideTypeSelectorState();
-  int getSelectedIndex() {
-    return _isSelected.indexOf(true);
-  }
 }
 
 class _RideTypeSelectorState extends State<RideTypeSelector> {

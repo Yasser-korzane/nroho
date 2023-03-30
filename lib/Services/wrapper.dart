@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/main.dart';
-import 'package:appcouvoiturage/Models/Users.dart';
+import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {

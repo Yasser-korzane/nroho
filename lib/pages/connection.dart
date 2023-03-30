@@ -9,53 +9,6 @@ import 'package:appcouvoiturage/pages/profilepage.dart';
 
 
 
-
-
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      initialRoute: '/commencer',
-      routes: {
-        '/signin':(context) => const Connexin(title: 'connextion '),
-        '/signup':(context) => const MyHomePage(title: 'SingnUp'),
-        '/commencer':(context) => const MyBeginPage(title: 'begin'),
-      },
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: const Connexin(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
 class  Connexin extends StatefulWidget {
   const Connexin ({super.key, required this.title});
 
@@ -84,7 +37,7 @@ class _MyConnexinState extends State<Connexin> {
           flexibleSpace: Container(
            decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('asset/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/Ellipse 5.png'),
                   fit: BoxFit.fill,
                   
               )
@@ -113,7 +66,7 @@ class _MyConnexinState extends State<Connexin> {
               borderRadius: BorderRadius.circular(200),
               ),
               child: Center(
-                child: Image.asset('asset/images/logo-removebg-preview.png'),
+                child: Image.asset('assets/images/logo-removebg-preview.png'),
               ),
             ),
             /*
@@ -307,7 +260,10 @@ class _MyConnexinState extends State<Connexin> {
             //padding: EdgeInsets.all(20),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
             color: Colors.lightBlue ),
-            child: TextButton(onPressed: (){},
+            child: TextButton(onPressed: (){
+              Navigator.push(context,MaterialPageRoute(builder: (context) => home(),) );
+
+            },
              child: Text('Connexion',style: TextStyle(fontSize: 18,color: Colors.white),),
              
              ),
