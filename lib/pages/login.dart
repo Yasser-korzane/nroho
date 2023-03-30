@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyBeginPage extends StatefulWidget {
   const MyBeginPage({super.key, required this.title});
@@ -81,22 +82,20 @@ class _MyBeginPageState extends State<MyBeginPage> {
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Connexin(
-                                    title: " sing up ",
-                                  )),
-                        );
-                        // Navigate back to first route when tapped.
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.to( ()=> Connexin(title: 'sin up'),transition: Transition.zoom);
                       },
-                      child: const Text('commencer ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              backgroundColor: Colors.blue)),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(title: 'sin up'),));
+                        },
+                        child: const Text('commencer ',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                backgroundColor: Colors.blue)),
+                      ),
                     ),
                   ),
                 ),

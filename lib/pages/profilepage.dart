@@ -4,6 +4,7 @@ import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/profilwidget.dart';
+import 'package:get/get.dart';
 
 class Profilepage extends StatefulWidget {
   const Profilepage({Key? key}) : super(key: key);
@@ -62,16 +63,21 @@ class _ProfilepageState extends State<Profilepage> {
                  SizedBox(height: screenHeight * 0.02),
                 SizedBox(
                     width: screenWidth * 0.5,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ModifierProfilePage(),));
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.to(()=> ModifierProfilePage(),transition: Transition.zoom,);
                       },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          side: BorderSide.none,
-                          shape: const StadiumBorder()),
-                      child: const Text('Modifier Profile',
-                          style: TextStyle(color: Colors.white)),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ModifierProfilePage(),));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            side: BorderSide.none,
+                            shape: const StadiumBorder()),
+                        child: const Text('Modifier Profile',
+                            style: TextStyle(color: Colors.white)),
+                      ),
                     )),
                  SizedBox(height: screenHeight * 0.04),
                 const Divider(),
