@@ -3,6 +3,7 @@ import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/optionsconducteur.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:appcouvoiturage/widgets/date_time.dart';
 
 class Trajet extends StatefulWidget {
   const Trajet({super.key});
@@ -40,6 +41,7 @@ class _TrajetState extends State<Trajet> {
       body: Column(
         children: [
           departDestination(),
+          DateTimePickerRow(),
           autoComplete(),
           RechercheRecente(),
           validerButton(),
@@ -78,7 +80,7 @@ class _TrajetState extends State<Trajet> {
                           .size
                           .width) /
                       1.5),
-            )
+            ),
           ],
         ),
       ],

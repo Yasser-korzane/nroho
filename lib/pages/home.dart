@@ -54,6 +54,7 @@ class _homeState extends State<home> {
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
                             },
+                            readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Entrer la place de depart',
                               floatingLabelBehavior:
@@ -77,6 +78,7 @@ class _homeState extends State<home> {
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
                             },
+                            readOnly: true,
                             decoration: InputDecoration(
                               labelText: 'Entrer la place d arivee',
                               floatingLabelBehavior:
@@ -218,11 +220,11 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-            child: Text('Take a ride'),
+            child: Text('Passager'),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-            child: Text('Announce a ride'),
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+            child: Text('Conducteur'),
           ),
         ],
         disabledColor: Colors.white,
