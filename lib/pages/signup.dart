@@ -30,14 +30,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool validerMotDePasse(String motDePasse){
-    if (motDePasse.length >= 8)return true;
+    if (motDePasse.length >= 8 && motDePasse.isNotEmpty)return true;
     else return false;
     /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
   }
 
   bool validerEmail(String email){
     final regex = RegExp(r'[0-9]');
-    if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
+    if (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty) return true;
     else return false;
   }
 
@@ -83,19 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text("Insecription",style: TextStyle(color: Color.fromARGB(255, 79, 77, 77), fontSize: 30 ,fontWeight: FontWeight.bold) ,),
                 ),
               ),
-              /*
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  controller: _controllerNom,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: ' First Name',
-                      hintText: 'Enter your First name '),
-                ),
-              ),
-              */
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -112,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget>[
             
                   new Expanded(     
-                    child: TextField(
+                    child: TextFormField(
                       controller: _controllerNom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -145,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 children: <Widget>[
                   new Expanded(     
-                    child: TextField(
+                    child: TextFormField(
                       controller: _controllerPrenom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -170,18 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-            /*
-              Container(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  controller: _controllerEmail,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      hintText: 'Enter valid mail id as abc@esi.dz'),
-                ),
-              ),*/
-
                Padding(
              padding: const EdgeInsets.all(8.0),
              child: Container(
@@ -207,8 +182,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                   ),
                   new Expanded(     
-                    child: TextField(
-                      keyboardType: TextInputType.text,
+                    child: TextFormField(
+                      controller: _controllerEmail,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Email',
@@ -228,20 +203,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
                      ),
            ),
-           
-  /*
-              Container(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  obscureText: true,
-                  controller: _controllerMotDePasse,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      hintText: 'Enter your secure password'),
-                ),
-              )
-            ,*/
             Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -267,10 +228,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                   ),
                   new Expanded(     
-                    child: TextField(
+                    child: TextFormField(
                       controller: _controllerMotDePasse,
                       obscureText :true,
-                      //keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Mot de passe',
@@ -315,7 +275,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     }else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Vous devez verifier les donnes"),
+                          content: Text("Vous devez verifier votre donnee!"),
                           duration: Duration(seconds: 2),
                         ),
                       );
