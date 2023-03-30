@@ -1,7 +1,9 @@
+import 'package:appcouvoiturage/pages/Password.dart';
 import 'package:appcouvoiturage/pages/profilmodification.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
+import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/pages/login.dart';
+import 'package:appcouvoiturage/widgets/profilwidget.dart';
 
 class Profilepage extends StatefulWidget {
   const Profilepage({Key? key}) : super(key: key);
@@ -13,6 +15,12 @@ class Profilepage extends StatefulWidget {
 class _ProfilepageState extends State<Profilepage> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -22,37 +30,38 @@ class _ProfilepageState extends State<Profilepage> {
               },
               icon: const Icon(Icons.chevron_left, color: Colors.black)),
           title: Center(
-              child: Text('Profile',
-                  style: Theme.of(context).textTheme.headline4)),
+              child: Text('Profile       ',
+                  style: Theme.of(context).textTheme.headlineMedium)),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(30.0),
+            padding:  EdgeInsets.all(screenWidth * 0.03),
             child: Column(
               children: [
                 Column(
                   children: [
                     SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: screenHeight *0.15,
+                        height: screenHeight *0.15,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: const Image(
                                 image: NetworkImage(
-                                    'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80')))),
+                                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE')))),
                   ],
                 ),
-                const SizedBox(height: 10),
+                 SizedBox(height: screenHeight * 0.015),
                 Text('data', style: Theme.of(context).textTheme.headline4),
-                const RatingWidget(color: Colors.yellow,rating: 3.5,size: 20.0),
+                 RatingWidget(color: Colors.yellow,rating: 3.5,size: screenWidth*0.05),
+                SizedBox(height: screenHeight * 0.005),
                 Text('mohammedgrine@weal.harach',
-                    style: Theme.of(context).textTheme.bodyText2),
-                const SizedBox(height: 20),
+                    style: Theme.of(context).textTheme.bodyMedium),
+                 SizedBox(height: screenHeight * 0.02),
                 SizedBox(
-                    width: 200,
+                    width: screenWidth * 0.5,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => ModifierProfilePage(),));
@@ -64,31 +73,27 @@ class _ProfilepageState extends State<Profilepage> {
                       child: const Text('Modifier Profile',
                           style: TextStyle(color: Colors.white)),
                     )),
-                const SizedBox(height: 30),
+                 SizedBox(height: screenHeight * 0.04),
                 const Divider(),
-                const SizedBox(height: 10),
+                 SizedBox(height: screenHeight * 0.01 ),
 
                 //  Menu
                 Profilewidget(
                   title: 'Mes Courses',
                   icon: Icons.navigation_rounded,
-                  onPress: () {},
+                  onPress: () {
+
+                  },
                 ),
+                SizedBox(height: screenHeight * 0.008 ),
                 Profilewidget(
-                  title: 'Guide',
-                  icon: Icons.my_library_books,
-                  onPress: () {},
+                  title: 'Mot de passe',
+                  icon: Icons.key_outlined,
+                  onPress: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MotdePasse(),));
+                  },
                 ),
-                Profilewidget(
-                  title: 'Contactez nous',
-                  icon: Icons.call,
-                  onPress: () {},
-                ),
-                Profilewidget(
-                  title: 'Avis',
-                  icon: Icons.comment,
-                  onPress: () {},
-                ),
+                SizedBox(height: screenHeight * 0.008 ),
                 Profilewidget(
                   title: 'Deconnexion',
                   icon: Icons.logout,
@@ -102,54 +107,6 @@ class _ProfilepageState extends State<Profilepage> {
             ),
           ),
         ));
-  }
-}
-
-class Profilewidget extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final VoidCallback onPress;
-  final bool endIcon;
-  final Color? textColor;
-
-  const Profilewidget({
-    Key? key,
-    required this.title,
-    required this.icon,
-    required this.onPress,
-    this.endIcon = true,
-    this.textColor,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onPress,
-      contentPadding: EdgeInsets.only(left: 30.0,right: 30.0),
-      leading: Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100),
-          color: Colors.blueGrey.withOpacity(0.1),
-        ),
-        child:  Icon(icon, color: Colors.blueGrey),
-      ),
-      title: Text(title,
-          style:
-          Theme.of(context).textTheme.bodyText1?.apply(color: textColor)),
-      trailing: endIcon
-          ? Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: Colors.blueGrey.withOpacity(0.1),
-          ),
-          child: const Icon(Icons.chevron_right,
-              size: 18.0, color: Colors.grey))
-          : null,
-    );
   }
 }
 

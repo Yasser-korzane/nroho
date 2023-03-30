@@ -1,6 +1,10 @@
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 
+import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Utilisateur.dart';
+import '../AppClasses/Vehicule.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -9,25 +13,60 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
+  /*********************************************** Les Fonctions **********************************************/
+  bool validerNomEtPrenom(String value) {
+    String chaineTest = value;
+    String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
+    RegExp regExp = new RegExp(pattern);
+    chaineTest = value.replaceAll(' ', '');
+    if(value.length > 20 || chaineTest.isEmpty
+        || !regExp.hasMatch(chaineTest)
+        || value.startsWith(' ') || value.endsWith(' ')){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validerMotDePasse(String motDePasse){
+    if (motDePasse.length >= 8)return true;
+    else return false;
+    /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
+  }
+
+  bool validerEmail(String email){
+    final regex = RegExp(r'[0-9]');
+    if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
+    else return false;
+  }
+
+  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
+    return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
+      Vehicule("", "", "", "", "", 0), false, [],[],[]
+    );
+  }
+  /** ************************************************************************************************** **/
+  /** *********************************** Les controlleurs ********************************************** **/
+  TextEditingController _controllerNom = TextEditingController();
+  TextEditingController _controllerPrenom = TextEditingController();
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerMotDePasse = TextEditingController();
+  /** ************************************************************************************************** **/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
-      // appBar: AppBar(
-
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-      //   title: Text(widget.title),
       appBar: AppBar(
+        toolbarHeight: 100,
+        leading: null,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: Text(''),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('asset/images/Ellipse 5.png'),
+            image: AssetImage('assets/images/Ellipse 5.png'),
             fit: BoxFit.fill,
           )),
         ),
@@ -39,83 +78,248 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Container(
+                child: Center(
+                  child: Text("Insecription",style: TextStyle(color: Color.fromARGB(255, 79, 77, 77), fontSize: 30 ,fontWeight: FontWeight.bold) ,),
+                ),
+              ),
               /*
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your username',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your First name',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your last name',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your email',
-             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-            border: UnderlineInputBorder(),
-            labelText: 'Enter your phone number',
-             ),
-          ),*/
               Padding(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: _controllerNom,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: ' First Name',
                       hintText: 'Enter your First name '),
                 ),
               ),
+              */
+
               Padding(
-                padding: EdgeInsets.all(20),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'last Name',
-                      hintText: 'Enter your last name'),
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color.fromARGB(255, 163, 160, 160).withOpacity(0.5),
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(6.0),
+                  color:Colors.white
                 ),
+                margin: EdgeInsets.all(12),
+                child: Row(
+                  children: <Widget>[
+            
+                  new Expanded(     
+                    child: TextField(
+                      controller: _controllerNom,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Nom',
+                        hintText: "Enterez votre Prenom",
+                        hintStyle: TextStyle(color: Colors.black),
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        isDense: true,
+                      ),
+                        ),
+                  )
+                ],
               ),
+                     ),
+           ),
+              Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color.fromARGB(255, 163, 160, 160).withOpacity(0.5),
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+                color:Color(0xD9D9D9),
+              ),
+              margin: EdgeInsets.all(12),
+              child: Row(
+                children: <Widget>[
+                  new Expanded(     
+                    child: TextField(
+                      controller: _controllerPrenom,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Prenom',
+                        hintText: "Enterez votre Prenom",
+                        hintStyle: TextStyle(color: Colors.black),
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        isDense: true,
+                      ),
+                      
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+      
+                  
+                ],
+              ),
+            ),
+          ),
+            /*
               Container(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: _controllerEmail,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Email',
                       hintText: 'Enter valid mail id as abc@esi.dz'),
                 ),
+              ),*/
+
+               Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color.fromARGB(255, 163, 160, 160).withOpacity(0.5),
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+                //color:Colors.white
+                color:Color(0xD9D9D9),
+
               ),
+              margin: EdgeInsets.all(12),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 8),
+                      child: Icon(
+                        Icons.mail,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                  ),
+                  new Expanded(     
+                    child: TextField(
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Email',
+                        hintText: "Enterez votre mail example: abc@esi.dz",
+                        hintStyle: TextStyle(color: Colors.black),
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        isDense: true,
+                      ),
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+                     ),
+           ),
+           
+  /*
               Container(
                 padding: EdgeInsets.all(20),
-                child: TextField(
+                child: TextFormField(
                   obscureText: true,
+                  controller: _controllerMotDePasse,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Password',
                       hintText: 'Enter your secure password'),
                 ),
+              )
+            ,*/
+            Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Color.fromARGB(255, 163, 160, 160).withOpacity(0.5),
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+                //color:Colors.white
+                color:Color(0xD9D9D9),
+
               ),
+              margin: EdgeInsets.all(12),
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 8),
+                      child: Icon(
+                        Icons.key,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                  ),
+                  new Expanded(     
+                    child: TextField(
+                      controller: _controllerMotDePasse,
+                      obscureText :true,
+                      //keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Mot de passe',
+                        hintText: "Enterez votre mot de passe",
+                        hintStyle: TextStyle(color: Colors.black),
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                        isDense: true,
+                         ),
+                      
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.visibility_off,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        
               Container(
                 width: 300,
-                //padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.lightBlue),
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+                    if (validerNomEtPrenom(_controllerNom.text)
+                    && validerNomEtPrenom(_controllerPrenom.text)
+                    && validerEmail(_controllerEmail.text)
+                    && validerMotDePasse(_controllerMotDePasse.text)){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+                    }else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Vous devez verifier les donnes"),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     'sign up',
@@ -123,9 +327,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              /*SizedBox(
-            height: 150,
-          )*/
             ],
           ),
         ),

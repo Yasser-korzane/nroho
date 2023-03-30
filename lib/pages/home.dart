@@ -1,5 +1,8 @@
+import 'package:appcouvoiturage/pages/assistance.dart';
+import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
+import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
 
 class home extends StatefulWidget {
@@ -11,116 +14,183 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(40.0),
-        child: Column(
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
           children: [
-            Expanded(
-              flex: 60,
-              child: Container(
-                child: Image(image: NetworkImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rQHFnPgfrAPafybbwk4OOaD69m2bBM5Lqqm-t1RM_A&s)'),
-                  // TODO: add the map here
+            Image(
+              image: NetworkImage(
+                  'https://assets.website-files.com/5e832e12eb7ca02ee9064d42/5f7db426b676b95755fb2844_Group%20805.jpg'),
+              fit: BoxFit.cover, // Cover the whole stack with the image
+              height: double.infinity,
+              width: double.infinity,
+            ),
+            // Your main page content goes here
+            Container(
+              child: Column(
+                children: [
+                  Expanded(flex: 60,child: Container()),
+                  Expanded(flex: 40 ,child: Container(
+                    padding: EdgeInsets.all(screenWidth * 0.1),
+                    // use 10% of screen width as padding
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(screenWidth *
+                                0.05), // use 5% of screen width as border radius
+                          ),
+                          child: TextField(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                            },
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'Entrer la place de depart',
+                              floatingLabelBehavior:
+                              FloatingLabelBehavior.auto,
+                              border: InputBorder.none,
+                              // remove the border of the TextField
+                              prefixIcon: Icon(Icons.my_location,
+                                  color: Colors.blue),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.015),
+                        // use 3% of screen height as space between text fields
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(screenWidth *
+                                0.05), // use 5% of screen width as border radius
+                          ),
+                          child: TextField(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                            },
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              labelText: 'Entrer la place d arivee',
+                              floatingLabelBehavior:
+                              FloatingLabelBehavior.auto,
+                              border: InputBorder.none,
+                              // remove the border of the TextField
+                              prefixIcon: Icon(Icons.location_on_outlined,
+                                  color: Colors.blue),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.025),
+                        // use 4% of screen height as space between text fields and row
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            RideTypeSelector(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight*0.03,
+              right: screenWidth*0.04,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => details()));
+                },
+                child: Icon(
+                  Icons.notifications_none_outlined,
+                  color: Colors.blue,
+                  size: 50,
+
                 ),
               ),
             ),
-            Expanded(
-              flex: 30,
-              child: Container(
-                child: Column(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                          labelText: 'Entrer la place de depart',
-                          floatingLabelBehavior: FloatingLabelBehavior.auto,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          prefixIcon: Icon(Icons.my_location, color: Colors.blue)),
-                    ),
-                    SizedBox(height: 15.0),
-                    TextField(
-                      decoration: InputDecoration(
-                          labelText: 'Entrer la place d arivee',
-                          floatingLabelBehavior: FloatingLabelBehavior.auto,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
-                          prefixIcon:
-                          Icon(Icons.location_on_outlined, color: Colors.blue)),
-                    ),
-                    SizedBox(height: 25.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [RideTypeSelector()],
-                    ),
-                  ],
-                )
-              ),
-            ),
-
-
           ],
         ),
-      ),
 
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: index,
-        onDestinationSelected: (index) => setState(() => this.index = index),
-        height: 60,
-        destinations: [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Actuel',
-          ),
-          NavigationDestination(
-            icon: GestureDetector(
-              child: Icon(Icons.directions_car_filled_outlined),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => options()));
-              },
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: index,
+          onDestinationSelected: (index) => setState(() => this.index = index),
+          height: screenHeight * 0.06,
+          destinations: [
+            NavigationDestination(
+              icon: Icon(Icons.home_outlined),
+              selectedIcon: Icon(Icons.home),
+              label: 'Actuel',
             ),
-            selectedIcon: Icon(Icons.directions_car_filled),
-            label: 'Trajets',
-          ),
-          NavigationDestination(
-            icon: GestureDetector(
-              child: Icon(Icons.account_circle_outlined),
-              onTap: () {
-                // Navigate to profile page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Profilepage()),
-                );
-              },
-            ),
-            selectedIcon: Icon(
-              Icons.account_circle,
-            ),
-            label: 'Profile',
-          ),
-        ],
-      ),
 
-      // body: FlutterMap(
-      //   options:  new MapOptions(
-      //     center: new LatLng(36.7167, 3.13333),
-      //       minZoom: 17.0
-      //   ),
-      //     layers : [
-      //       new tilLayersOptions
-      //     ]
-      //   ),
+            NavigationDestination(
+              icon: GestureDetector(
+                child: Icon(Icons.directions_car_filled_outlined),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => options()));
+                },
+              ),
+              selectedIcon: Icon(Icons.directions_car_filled),
+              label: 'Trajets',
+            ),
+            NavigationDestination(
+              icon: GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Assistance()));
+                },
+                  child: Icon(Icons.question_answer_outlined)),
+              selectedIcon: Icon(Icons.question_answer),
+              label: 'Assistane',
+            ),
+            NavigationDestination(
+              icon: GestureDetector(
+                child: Icon(Icons.account_circle_outlined),
+                onTap: () {
+                  // Navigate to profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Profilepage()),
+                  );
+                },
+              ),
+              selectedIcon: Icon(
+                Icons.account_circle,
+              ),
+              label: 'Profile',
+            ),
+          ],
+        ),
+
+        // body: FlutterMap(
+        //   options:  new MapOptions(
+        //     center: new LatLng(36.7167, 3.13333),
+        //       minZoom: 17.0
+        //   ),
+        //     layers : [
+        //       new tilLayersOptions
+        //     ]
+        //   ),
+      ),
     );
   }
 }
 
 class RideTypeSelector extends StatefulWidget {
+
   @override
   _RideTypeSelectorState createState() => _RideTypeSelectorState();
 }
@@ -130,28 +200,35 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return ToggleButtons(
-      isSelected: _isSelected,
-      onPressed: (int index) {
-        setState(() {
-          _isSelected[index] = !_isSelected[index];
-          _isSelected[1 - index] = !_isSelected[1 - index];
-        });
-      },
-      selectedColor: Colors.white,
-      fillColor: Colors.blue,
-      disabledColor: Colors.black,
-      borderRadius: BorderRadius.circular(20.0),
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-          child: Text('Take a ride'),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-          child: Text('Announce a ride'),
-        ),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+      ),
+      child: ToggleButtons(
+        isSelected: _isSelected,
+        onPressed: (int index) {
+          setState(() {
+            _isSelected[index] = !_isSelected[index];
+            _isSelected[1 - index] = !_isSelected[1 - index];
+          });
+        },
+        selectedColor: Colors.white,
+        disabledBorderColor: Colors.blue,
+        fillColor: Colors.blue,
+        borderRadius: BorderRadius.circular(20.0),
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+            child: Text('Passager'),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+            child: Text('Conducteur'),
+          ),
+        ],
+        disabledColor: Colors.white,
+      ),
     );
   }
 }

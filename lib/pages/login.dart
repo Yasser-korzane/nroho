@@ -1,4 +1,4 @@
-import 'package:appcouvoiturage/main.dart';
+import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:flutter/material.dart';
 
 class MyBeginPage extends StatefulWidget {
@@ -17,32 +17,14 @@ class _MyBeginPageState extends State<MyBeginPage> {
       appBar: AppBar(
         leading: null,
         automaticallyImplyLeading: false,
-
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        //padding :,
         backgroundColor: Colors.white,
-        /* title: Container(
-          height: 180 ,
-          padding: EdgeInsets.zero,
-          child: Image.asset('asset/images/Ellipse 5.png',height: 100,width: 600,),
-        )*/
-        // title: Text(widget.title),
         title: Text(''),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('asset/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/Ellipse 5.png'),
                   fit: BoxFit.fill)),
         ),
-// width: MediaQuery.of(context).size.width,
-//   height: 100,
-//   decoration: BoxDecoration(
-//     image: DecorationImage(q
-//       fit: BoxFit.fill,
-//       image: AssetImage("asset/images/Ellipse 5.png"),
-//     ),
-//   ),
-// )
       ),
 
       body: Center(
@@ -61,7 +43,7 @@ class _MyBeginPageState extends State<MyBeginPage> {
                 ),
                 child: Center(
                   child: Image.asset(
-                      'asset/images/Commencer-removebg-preview.png'),
+                      'assets/images/Commencer-removebg-preview.png'),
                 ),
               ),
               Container(

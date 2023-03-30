@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: ModifierProfilePage(),
-      theme: ThemeData(
-
-        fontFamily: 'Poppins',
-      ),
-    ),
-  );
-}
-
 
 class ModifierProfilePage extends StatefulWidget {
   @override
@@ -49,8 +37,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-
-
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
