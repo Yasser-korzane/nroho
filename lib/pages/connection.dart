@@ -5,10 +5,6 @@ import 'package:appcouvoiturage/pages/login.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 
-
-
-
-
 class  Connexin extends StatefulWidget {
   const Connexin ({super.key, required this.title});
 
@@ -19,8 +15,6 @@ class  Connexin extends StatefulWidget {
 }
 
 class _MyConnexinState extends State<Connexin> {
-  
-
   @override
   Widget build(BuildContext context) {
     bool visible=false;
@@ -43,14 +37,6 @@ class _MyConnexinState extends State<Connexin> {
               )
             ),
           ),
-      
-      //   // TRY THIS: Try changing the color here to a specific color (to
-      //   // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-      //   // change color while the other colors stay the same.
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: Text(widget.title),
        ),
       body: Center(
         
@@ -69,51 +55,8 @@ class _MyConnexinState extends State<Connexin> {
                 child: Image.asset('assets/images/logo-removebg-preview.png'),
               ),
             ),
-            /*
-            Container(
-              padding: EdgeInsets.all(20),
-              
-              child: TextField(
-                decoration: InputDecoration(
-                icon: new Icon(Icons.mail),
-                border: OutlineInputBorder(),
-                labelText: 'Email',
-                hintText: 'Enterez votre mail example:abc@esi.dz',
-                hintStyle: TextStyle(color: Colors.grey[500])
-                ),
-              ),
-            ),*/
-            /*PasswordFormField(
-  onSaved: (value) {
-    // Enregistrer la valeur du champ de saisie du mot de passe
-  },
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Veuillez entrer un mot de passe';
-    }
-    return null;
-  },
-  obscureText: true,
-  hintText: 'Mot de passe',
-  labelText: 'Mot de passe',
-),*/
-
-          /*Container(
-            padding: EdgeInsets.all(20),
-            child: TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              icon: new Icon(Icons.password),
-             // border: OutlineInputBorder(),
-              labelText: 'Mot de passe ',
-              hintText: 'Entere votre mot de passe ',
-              hintStyle: TextStyle(color: Colors.grey[500])
-            ),
-            ),
-          ),*/
            Padding(
              padding: const EdgeInsets.only(left: 15,right: 15),
-             
              child: Container(
              // backgroundColor: Color(0xF0F0F0),
               decoration: BoxDecoration(
@@ -122,9 +65,6 @@ class _MyConnexinState extends State<Connexin> {
                   width: 1.0,
                 ),
                 borderRadius: BorderRadius.circular(6.0),
-                
-                //color:Color(0xF0F0F0),
-              
               ),
               margin: EdgeInsets.all(12),
               child: Row(
@@ -159,8 +99,6 @@ class _MyConnexinState extends State<Connexin> {
               ),
                      ),
            ),
-           
-          
           Padding(
             padding: const EdgeInsets.only(left: 15,right: 15),
             child: Container(
@@ -227,34 +165,6 @@ class _MyConnexinState extends State<Connexin> {
               ),
             ),
           ),
-           
-          /*Container(
-           // height: 50,
-            width: 300,
-            //padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(30),
-              
-            ),
-            child: 
-            MaterialButton(color:Colors.blue ,
-              height: 50 ,
-        
-              //MediaQueryData.fromView(80),
-              onPressed: () {},
-
-              
-              //radius:  BorderRadius.circular(30) ,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                //borderRadius: BorderRadius.circular(30),
-                child: Text('Login',style: TextStyle(color: Colors.white , fontSize: 18),),
-              ),
-            )
-            ),
-          //]
-          //),
-          */
           Container(
             width: 300,
             //padding: EdgeInsets.all(20),
@@ -290,32 +200,9 @@ class _MyConnexinState extends State<Connexin> {
           child: const Text('creer un compte',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
           ),
           ),
-          /*Center(
-            child: RichText(
-              TextSpan( 
-                text: 'but this is', 
-                style: new TextStyle(color: Colors.blue), 
-                recognizer: new TapGestureRecognizer()
-                onTap = () { launch('https://docs.flutter.io/flutter/services/UrlLauncher-class.html');}
-            ),
-            ),
-          ),*/
-         
-          ] 
+          ]
         ),
-        /*child: Center( 
-            child: new InkWell( 
-              child: new Text('Open Browser'), 
-              onTap: () => launch('https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
-            ), 
-        ),*/
-      
-      
       ),
     );
-       //bottomNavigationBar: BottomAppBar(;
-      
-    
-    
   }
 }

@@ -51,4 +51,7 @@ class Utilisateur extends Personne{
   void ajouterTrajetLance(Trajet trajet) {
     trajetsLances.add(trajet);
   }
+  void afficherTestUtilisateur(){
+    print("Id : $identifiant , Nom : $nom , Prenom : $prenom");
+  }
 }
