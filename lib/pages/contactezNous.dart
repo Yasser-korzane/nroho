@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme:ThemeData (
-        fontFamily: 'Poppins',
-      ),
 
-      home: Home(),
-    );
-  }
-}
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class ContactUs extends StatelessWidget {
+  const ContactUs({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

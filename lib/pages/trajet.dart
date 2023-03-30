@@ -1,144 +1,201 @@
-import 'package:appcouvoiturage/pages/home.dart';
-import 'package:appcouvoiturage/pages/options.dart';
-import 'package:appcouvoiturage/pages/optionsconducteur.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:appcouvoiturage/widgets/date_time.dart';
 
-class Trajet extends StatefulWidget {
-  const Trajet({super.key});
 
-  @override
-  State<Trajet> createState() => _TrajetState();
-}
-
-class _TrajetState extends State<Trajet> {
-  String querry = "";
-
-  // int selected = home().get();
+class OuAllezVous extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => home(),));
-            },
-            child: Icon(
-              Icons.arrow_circle_left_outlined,
-              color: Colors.black,
-              size: 35,
-            )),
-        centerTitle: true,
-        title: const Text(
-          "Ou allez-vous ?",
-          style: TextStyle(color: Colors.black),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xff344D59),
+          ),
+          onPressed: () {},
         ),
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
+        title: Text(
+          'Où allez-vous ?',
+          style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: Column(
-        children: [
-          departDestination(),
-          DateTimePickerRow(),
-          autoComplete(),
-          RechercheRecente(),
-          validerButton(),
-        ],
-      ),
-    );
-  }
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            // Zone de recherche pour le départ
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 50),
+              child: SizedBox(
+                height: 50,
+                child: Stack(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color:Color(0xff)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.grey,
+                        filled: true,
+                        hintText: 'Départ',
+                      ),
+                    ),
 
-  Widget departDestination() {
-    return Row(
-      children: [
-        const Icon(Icons.location_on),
-        Column(
-          children: [
-            TextFormField(
-              onChanged: (value) {
-                setState(() {
-                  querry = value;
-                });
-              },
-              decoration: InputDecoration(
-                  hintText: "Point de Depart",
-                  constraints: BoxConstraints(
-                      maxWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width) /
-                      1.5),
+                    Positioned(
+                      right: 10,
+                      top: 0,
+                      bottom: 0,
+                      child: Icon(Icons.gps_fixed),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                  hintText: "Destination",
-                  constraints: BoxConstraints(
-                      maxWidth: MediaQuery
-                          .of(context)
-                          .size
-                          .width) /
-                      1.5),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 50),
+              child: SizedBox(
+                height: 50,
+                child: Stack(
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.grey,
+                        filled: true,
+                        hintText: 'Arrivée',
+                      ),
+                    ),
+                    /*  Positioned(
+                      right: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                    ),*/
+                    Positioned(
+                      right: 10,
+                      top: 0,
+                      bottom: 0,
+                      child: Icon(Icons.location_on),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            DateTimePickerRow(),
+            SizedBox(height: 30),
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 2,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('choisir sur la map',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),  Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.gps_fixed,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('Utiliser ma position',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Container(
+                color: Colors.grey,
+                child:  Text('Historique des recherches',style: TextStyle(color: Color(0xff344D59), fontSize: 23, backgroundColor: Colors.grey ),),
+              ),
+            ),
+
+
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('Maoklane - Setif',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('Oued Smar - Alger',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 200,
+                height: 35,
+
+              ),
             ),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget autoComplete() {
-    return Expanded(
-        child: FutureBuilder(
-            future: getPredictions(querry),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return ListView.builder(
-                  itemCount: snapshot.data["predictions"].length,
-                  itemBuilder: (context, index) {
-                    var prediction =
-                    snapshot.data["predictions"][index]["description"];
-                    return ListTile(
-                      title: Text(prediction),
-                    );
-                  },
-                );
-              } else {
-                return const Text("Waiting");
-              }
-            }));
-  }
-
-  Widget RechercheRecente() {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (context, index) {},
       ),
-    );
-  }
-
-  Widget validerButton() {
-    return ElevatedButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // if (selected == 0) {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => options()),
-          //   );
-          // } else {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => optionconduc()),
-          //   );
-          // }
+          // Add your onPressed code here!
         },
+        label: const Text('Valider'),
 
-        child: const Text("Valider"));
-  }
+        backgroundColor: Colors.blue,
 
-  Future<dynamic> getPredictions(String querry) async {
-    var response = await Dio().get(
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$querry&key=AIzaSyA7YbcfZHHiA80T-wbB656ql4r6lC3cJRE");
-    return response.data;
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      );
+
   }
 }
+// Ajout SingleChildScrollView

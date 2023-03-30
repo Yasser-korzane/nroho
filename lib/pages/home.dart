@@ -52,7 +52,7 @@ class _homeState extends State<home> {
                           ),
                           child: TextField(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
                             },
                             readOnly: true,
                             decoration: InputDecoration(
@@ -76,7 +76,7 @@ class _homeState extends State<home> {
                           ),
                           child: TextField(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
                             },
                             readOnly: true,
                             decoration: InputDecoration(
