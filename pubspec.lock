@@ -272,8 +272,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
-<<<<<<< Updated upstream
-=======
   nested:
     dependency: transitive
     description:
@@ -282,7 +280,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
->>>>>>> Stashed changes
   path:
     dependency: transitive
     description:

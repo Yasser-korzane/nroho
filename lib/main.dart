@@ -5,10 +5,11 @@ import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/login.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
+
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'Poppins'),
-    home: home(),
+    home: MyApp(),
   ));
 }
 // test 
