@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/Password.dart';
 import 'package:appcouvoiturage/pages/profilmodification.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
@@ -14,6 +15,7 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
+  final AuthService _auth=AuthService();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -103,8 +105,9 @@ class _ProfilepageState extends State<Profilepage> {
                 Profilewidget(
                   title: 'Deconnexion',
                   icon: Icons.logout,
-                  onPress: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'begin')));
+                  onPress: () async {
+                    await _auth.signOut();
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'begin')));
                   },
                   endIcon: false,
                   textColor: Colors.redAccent,

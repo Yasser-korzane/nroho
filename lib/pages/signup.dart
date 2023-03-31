@@ -1,3 +1,6 @@
+//import 'dart:html';
+
+import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
   /** ************************************************************************************************** **/
   @override
   Widget build(BuildContext context) {
+    final AuthService _auth =AuthService();
+    String nom='';
+    String prenom='';
+    String email='';
+    String password='';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -80,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Container(
                 child: Center(
-                  child: Text("Insecription",style: TextStyle(color: Color.fromARGB(255, 79, 77, 77), fontSize: 30 ,fontWeight: FontWeight.bold) ,),
+                  child: Text("Inscription",style: TextStyle(color: Color.fromARGB(255, 79, 77, 77), fontSize: 30 ,fontWeight: FontWeight.bold) ,),
                 ),
               ),
               Padding(
@@ -99,7 +107,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget>[
             
                   new Expanded(     
+<<<<<<< Updated upstream
                     child: TextFormField(
+=======
+                    child: TextField(
+                      onChanged: (val){
+                        nom=val;
+                      },
+>>>>>>> Stashed changes
                       controller: _controllerNom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -132,7 +147,14 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 children: <Widget>[
                   new Expanded(     
+<<<<<<< Updated upstream
                     child: TextFormField(
+=======
+                    child: TextField(
+                      onChanged: (val){
+                        prenom=val;
+                      },
+>>>>>>> Stashed changes
                       controller: _controllerPrenom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -182,9 +204,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                   ),
                   new Expanded(     
+<<<<<<< Updated upstream
                     child: TextFormField(
                       controller: _controllerEmail,
+=======
+                    child: TextField(
+                      onChanged: (val){
+                        email=val;
+                      },
+                      controller: _controllerEmail,
+                      keyboardType: TextInputType.text,
+>>>>>>> Stashed changes
                       decoration: InputDecoration(
+
                         border: InputBorder.none,
                         labelText: 'Email',
                         hintText: "Enterez votre mail example: abc@esi.dz",
@@ -228,9 +260,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                   ),
                   new Expanded(     
+<<<<<<< Updated upstream
                     child: TextFormField(
                       controller: _controllerMotDePasse,
                       obscureText :true,
+=======
+                    child: TextField(
+                      onChanged: (val){
+                        password=val;
+                      },
+                      controller: _controllerMotDePasse,
+                      obscureText :false,
+                      //keyboardType: TextInputType.text,
+>>>>>>> Stashed changes
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Mot de passe',
@@ -266,16 +308,29 @@ class _MyHomePageState extends State<MyHomePage> {
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.lightBlue),
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+
                     if (validerNomEtPrenom(_controllerNom.text)
                     && validerNomEtPrenom(_controllerPrenom.text)
                     && validerEmail(_controllerEmail.text)
                     && validerMotDePasse(_controllerMotDePasse.text)){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+                      dynamic result = await _auth.signUp(email, password);
+                      if(result==null){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Vous devez verifier les donnees"),
+                              duration: Duration(seconds: 2),
+                            ),
+                        );
+                      }
                     }else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
+<<<<<<< Updated upstream
                           content: Text("Vous devez verifier votre donnee!"),
+=======
+                          content: Text("Vous devez verifier les donnees"),
+>>>>>>> Stashed changes
                           duration: Duration(seconds: 2),
                         ),
                       );

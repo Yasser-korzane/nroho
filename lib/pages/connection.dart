@@ -1,12 +1,16 @@
+import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/login.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
+import 'package:appcouvoiturage/AppClasses/Evaluation.dart';
 
 class  Connexin extends StatefulWidget {
-  const Connexin ({super.key, required this.title});
+   const Connexin ({super.key, required this.title});
 
   final String title;
 
@@ -15,9 +19,54 @@ class  Connexin extends StatefulWidget {
 }
 
 class _MyConnexinState extends State<Connexin> {
+<<<<<<< Updated upstream
+=======
+  /*********************************************** Les Fonctions **********************************************/
+  bool validerNomEtPrenom(String value) {
+    String chaineTest = value;
+    String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
+    RegExp regExp = new RegExp(pattern);
+    chaineTest = value.replaceAll(' ', '');
+    if(value.length > 20 || chaineTest.isEmpty
+        || !regExp.hasMatch(chaineTest)
+        || value.startsWith(' ') || value.endsWith(' ')){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validerMotDePasse(String motDePasse){
+    if (motDePasse.length >= 8)return true;
+    else return false;
+    /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
+  }
+
+  bool validerEmail(String email){
+    final regex = RegExp(r'[0-9]');
+    if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
+    else return false;
+  }
+
+  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
+    return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
+        Vehicule("", "", "", "", "", 0), false, [],[],[]
+    );
+  }
+  /** ************************************************************************************************** **/
+  /** *********************************** Les controlleurs ********************************************** **/
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerMotDePasse = TextEditingController();
+  /** ************************************************************************************************** **/
+
+>>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
-    bool visible=false;
+    final AuthService _auth = AuthService();
+    String email='';
+    String password='';
+    bool visible=true;
+    IconData _currentIcon = Icons.visibility;
     return Scaffold(
        resizeToAvoidBottomInset : false,
        
@@ -79,11 +128,15 @@ class _MyConnexinState extends State<Connexin> {
                   ),
                   new Expanded(     
                     child: TextField(
+                      onChanged: (val){
+                          email=val;
+                      },
+                      controller: _controllerEmail,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Email',
-                        hintText: "Enterez votre mail example: abc@esi.dz",
+                        hintText: "Entrez votre mail example: abc@esi.dz",
                         hintStyle: TextStyle(color: Colors.black),
                         contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -124,8 +177,12 @@ class _MyConnexinState extends State<Connexin> {
                         size: 20,
                       ),
                   ),
-                  new Expanded(     
+                  new Expanded(
                     child: TextField(
+                      onChanged: (val){
+                          password=val;
+                      },
+                      controller: _controllerMotDePasse,
                       obscureText : visible,
                       //keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -155,7 +212,8 @@ class _MyConnexinState extends State<Connexin> {
                       padding: EdgeInsets.only(right: 10),
                         child: Icon(
                           /*Icons.visibility_off,*/
-                          visible ? Icons.visibility :Icons.visibility_off, 
+                          visible ? Icons.visibility : Icons.visibility_off,
+
                           color: Colors.black,
                           size: 20,
                         ),
@@ -170,9 +228,27 @@ class _MyConnexinState extends State<Connexin> {
             //padding: EdgeInsets.all(20),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
             color: Colors.lightBlue ),
-            child: TextButton(onPressed: (){
-              Navigator.push(context,MaterialPageRoute(builder: (context) => home(),) );
+            child: TextButton(onPressed: () async {
 
+              if (validerEmail(_controllerEmail.text)
+                  && validerMotDePasse(_controllerMotDePasse.text)){
+                dynamic result = await _auth.signIn(email, password);
+                if(result==null){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Vous devez verifier les donnees"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              }else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Vous devez verifier les donnees"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
             },
              child: Text('Connexion',style: TextStyle(fontSize: 18,color: Colors.white),),
              

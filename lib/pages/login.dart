@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyBeginPage extends StatefulWidget {
+  final String title;
+
   const MyBeginPage({super.key, required this.title});
 
-  final String title;
 
   @override
   State<MyBeginPage> createState() => _MyBeginPageState();
