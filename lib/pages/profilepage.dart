@@ -1,10 +1,12 @@
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/Password.dart';
+import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/profilmodification.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/profilwidget.dart';
+import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:get/get.dart';
 
 class Profilepage extends StatefulWidget {
@@ -106,7 +108,9 @@ class _ProfilepageState extends State<Profilepage> {
                   title: 'Deconnexion',
                   icon: Icons.logout,
                   onPress: () async {
+                    Navigator.pop(context);
                     await _auth.signOut();
+
                     //Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'begin')));
                   },
                   endIcon: false,

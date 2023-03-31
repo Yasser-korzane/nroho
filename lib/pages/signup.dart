@@ -203,7 +203,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
-
                         border: InputBorder.none,
                         labelText: 'Email',
                         hintText: "Enterez votre mail example: abc@esi.dz",
@@ -290,11 +289,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.lightBlue),
                 child: TextButton(
                   onPressed: () async {
-
-                    if (validerNomEtPrenom(_controllerNom.text)
+                    /*if (validerNomEtPrenom(_controllerNom.text)
                     && validerNomEtPrenom(_controllerPrenom.text)
                     && validerEmail(_controllerEmail.text)
-                    && validerMotDePasse(_controllerMotDePasse.text)){
+                    && validerMotDePasse(_controllerMotDePasse.text)){*/
                       dynamic result = await _auth.signUp(email, password);
                       if(result==null){
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -303,11 +301,10 @@ class _MyHomePageState extends State<MyHomePage> {
                               duration: Duration(seconds: 2),
                             ),
                         );
-                      }
-                    }else {
+                      } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Vous devez verifier votre donnee!"),
+                          content: Text("Succes"),
                           duration: Duration(seconds: 2),
                         ),
                       );

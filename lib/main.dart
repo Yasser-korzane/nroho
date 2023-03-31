@@ -25,9 +25,10 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<Users>.value(
+    return StreamProvider<Users?>.value(
+      catchError: (Users,user){},
+      initialData: null,
       value: AuthService().user,
-      initialData: Users(null),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',

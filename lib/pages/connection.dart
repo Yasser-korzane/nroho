@@ -125,11 +125,13 @@ class _MyConnexinState extends State<Connexin> {
                       ),
                   ),
                   new Expanded(     
-                    child: TextField(
-                      onChanged: (val){
-                          email=val;
-                      },
+                    child: TextFormField(
                       controller: _controllerEmail,
+                      onChanged: (val){
+                          setState(() {
+                            email=val;
+                          });
+                      },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -176,13 +178,13 @@ class _MyConnexinState extends State<Connexin> {
                       ),
                   ),
                   new Expanded(
-                    child: TextField(
+                    child: TextFormField(
+                      controller: _controllerMotDePasse,
                       onChanged: (val){
                           password=val;
                       },
-                      controller: _controllerMotDePasse,
                       obscureText : visible,
-                      //keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Mot de passe',
@@ -226,11 +228,12 @@ class _MyConnexinState extends State<Connexin> {
             //padding: EdgeInsets.all(20),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
             color: Colors.lightBlue ),
-            child: TextButton(onPressed: () async {
+            child: TextButton(
+              onPressed: () async {
 
-              if (validerEmail(_controllerEmail.text)
-                  && validerMotDePasse(_controllerMotDePasse.text)){
-                dynamic result = await _auth.signIn(email, password);
+              /*if (validerEmail(_controllerEmail.text)
+                  && validerMotDePasse(_controllerMotDePasse.text)){*/
+                dynamic result = await _auth.signIn('lh_boulacheb@esi.dz', 'hichem12345');
                 if(result==null){
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -238,14 +241,13 @@ class _MyConnexinState extends State<Connexin> {
                       duration: Duration(seconds: 2),
                     ),
                   );
-                }
-              }else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Vous devez verifier les donnees"),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("succes"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
               }
             },
              child: Text('Connexion',style: TextStyle(fontSize: 18,color: Colors.white),),

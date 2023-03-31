@@ -11,9 +11,9 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Users>(context);
+    final user = Provider.of<Users?>(context);
     //return home page or log in page
-    if (user.uid == null) {
+    if (user == null) {
       return MyBeginPage(title: 'test',);
     } else {
       return home();
