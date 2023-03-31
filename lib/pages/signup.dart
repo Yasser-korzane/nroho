@@ -106,15 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Row(
                   children: <Widget>[
             
-                  new Expanded(     
-<<<<<<< Updated upstream
+                  new Expanded(
                     child: TextFormField(
-=======
-                    child: TextField(
                       onChanged: (val){
                         nom=val;
                       },
->>>>>>> Stashed changes
                       controller: _controllerNom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -126,8 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                         isDense: true,
                       ),
-                        ),
-                  )
+                  ),
+                  ),
                 ],
               ),
                      ),
@@ -146,15 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.all(12),
               child: Row(
                 children: <Widget>[
-                  new Expanded(     
-<<<<<<< Updated upstream
+                  new Expanded(
                     child: TextFormField(
-=======
-                    child: TextField(
                       onChanged: (val){
                         prenom=val;
                       },
->>>>>>> Stashed changes
                       controller: _controllerPrenom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -171,7 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontSize: 14.0,
                         color: Colors.black,
                       ),
-                    ),
+                  ),
                   ),
       
                   
@@ -203,18 +195,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 20,
                       ),
                   ),
-                  new Expanded(     
-<<<<<<< Updated upstream
+                  new Expanded(
                     child: TextFormField(
                       controller: _controllerEmail,
-=======
-                    child: TextField(
                       onChanged: (val){
                         email=val;
                       },
-                      controller: _controllerEmail,
                       keyboardType: TextInputType.text,
->>>>>>> Stashed changes
                       decoration: InputDecoration(
 
                         border: InputBorder.none,
@@ -259,20 +246,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 20,
                       ),
                   ),
-                  new Expanded(     
-<<<<<<< Updated upstream
+                  new Expanded(
                     child: TextFormField(
                       controller: _controllerMotDePasse,
                       obscureText :true,
-=======
-                    child: TextField(
                       onChanged: (val){
                         password=val;
                       },
-                      controller: _controllerMotDePasse,
-                      obscureText :false,
                       //keyboardType: TextInputType.text,
->>>>>>> Stashed changes
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Mot de passe',
@@ -326,11 +307,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     }else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-<<<<<<< Updated upstream
                           content: Text("Vous devez verifier votre donnee!"),
-=======
-                          content: Text("Vous devez verifier les donnees"),
->>>>>>> Stashed changes
                           duration: Duration(seconds: 2),
                         ),
                       );

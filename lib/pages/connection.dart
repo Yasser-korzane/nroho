@@ -19,8 +19,7 @@ class  Connexin extends StatefulWidget {
 }
 
 class _MyConnexinState extends State<Connexin> {
-<<<<<<< Updated upstream
-=======
+
   /*********************************************** Les Fonctions **********************************************/
   bool validerNomEtPrenom(String value) {
     String chaineTest = value;
@@ -59,7 +58,6 @@ class _MyConnexinState extends State<Connexin> {
   TextEditingController _controllerMotDePasse = TextEditingController();
   /** ************************************************************************************************** **/
 
->>>>>>> Stashed changes
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
