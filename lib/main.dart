@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/login.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<Users?>.value(
-      catchError: (Users,user){},
+      catchError: (User,Users)=>null,
       initialData: null,
       value: AuthService().user,
       child: MaterialApp(

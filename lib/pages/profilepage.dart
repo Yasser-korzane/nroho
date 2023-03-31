@@ -108,7 +108,6 @@ class _ProfilepageState extends State<Profilepage> {
                   title: 'Deconnexion',
                   icon: Icons.logout,
                   onPress: () async {
-                    Navigator.pop(context);
                     await _auth.signOut();
 
                     //Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage(title: 'begin')));
