@@ -176,24 +176,26 @@ class OuAllezVous extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                width: 200,
-                height: 35,
+                width: 210,
+                height: 43,
+                  child: ElevatedButton(
+                    onPressed: () {},
+
+                    child: Text('Valider', style: TextStyle( fontSize: 20),),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                  )
 
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        label: const Text('Valider'),
 
-        backgroundColor: Colors.blue,
 
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
 
   }
