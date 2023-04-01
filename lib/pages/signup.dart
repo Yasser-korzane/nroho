@@ -3,6 +3,7 @@
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
+import 'package:appcouvoiturage/Models/Users.dart';
 
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/Utilisateur.dart';
@@ -289,24 +290,33 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.lightBlue),
                 child: TextButton(
                   onPressed: () async {
-                    /*if (validerNomEtPrenom(_controllerNom.text)
+                    if (validerNomEtPrenom(_controllerNom.text)
                     && validerNomEtPrenom(_controllerPrenom.text)
                     && validerEmail(_controllerEmail.text)
-                    && validerMotDePasse(_controllerMotDePasse.text)){*/
-                      dynamic result = await _auth.signUp(email, password);
+                    && validerMotDePasse(_controllerMotDePasse.text)){
+                    Utilisateur utilisateur = creerUtilisateurApresSignUp('',_controllerNom.text,_controllerPrenom.text,_controllerEmail.text, _controllerMotDePasse.text);
+                      dynamic result = await _auth.signUp(email, password,utilisateur);
                       if(result==null){
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("Vous devez verifier les donnees"),
                               duration: Duration(seconds: 2),
                             ),
+                        );}
+                      else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Succes"),
+                            duration: Duration(seconds: 2),
+                          ),
                         );
-                      } else {
+                      }
+                      } else{
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Succes"),
-                          duration: Duration(seconds: 2),
-                        ),
+                          SnackBar(
+                            content: Text("Vous devez verifier les donnees"),
+                            duration: Duration(seconds: 2),
+                          )
                       );
                     }
                   },
