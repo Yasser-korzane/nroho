@@ -11,6 +11,13 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = DateTime.now();
+    _selectedTime = TimeOfDay.now();
+  }
+
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
