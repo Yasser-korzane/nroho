@@ -61,7 +61,7 @@ class _homeState extends State<home> {
                               },
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: 'Entrer la place de depart',
+                                labelText: 'Choisir un point de depart',
                                 floatingLabelBehavior:
                                 FloatingLabelBehavior.auto,
                                 border: InputBorder.none,
@@ -90,7 +90,7 @@ class _homeState extends State<home> {
                               },
                               readOnly: true,
                               decoration: InputDecoration(
-                                labelText: 'Entrer la place d arivee',
+                                labelText: 'Choisir une destination',
                                 floatingLabelBehavior:
                                 FloatingLabelBehavior.auto,
                                 border: InputBorder.none,
