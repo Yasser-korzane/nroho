@@ -4,6 +4,7 @@ import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -50,19 +51,24 @@ class _homeState extends State<home> {
                             borderRadius: BorderRadius.circular(screenWidth *
                                 0.05), // use 5% of screen width as border radius
                           ),
-                          child: TextField(
+                          child: GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
+                              Get.to(()=>OuAllezVous(),transition: Transition.fade);
                             },
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: 'Entrer la place de depart',
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.auto,
-                              border: InputBorder.none,
-                              // remove the border of the TextField
-                              prefixIcon: Icon(Icons.my_location,
-                                  color: Colors.blue),
+                            child: TextField(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
+                              },
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Entrer la place de depart',
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.auto,
+                                border: InputBorder.none,
+                                // remove the border of the TextField
+                                prefixIcon: Icon(Icons.my_location,
+                                    color: Colors.blue),
+                              ),
                             ),
                           ),
                         ),
@@ -74,19 +80,24 @@ class _homeState extends State<home> {
                             borderRadius: BorderRadius.circular(screenWidth *
                                 0.05), // use 5% of screen width as border radius
                           ),
-                          child: TextField(
+                          child: GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
+                              Get.to(()=>OuAllezVous(),transition: Transition.fade);
                             },
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              labelText: 'Entrer la place d arivee',
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.auto,
-                              border: InputBorder.none,
-                              // remove the border of the TextField
-                              prefixIcon: Icon(Icons.location_on_outlined,
-                                  color: Colors.blue),
+                            child: TextField(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
+                              },
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Entrer la place d arivee',
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.auto,
+                                border: InputBorder.none,
+                                // remove the border of the TextField
+                                prefixIcon: Icon(Icons.location_on_outlined,
+                                    color: Colors.blue),
+                              ),
                             ),
                           ),
                         ),
@@ -141,6 +152,8 @@ class _homeState extends State<home> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => options()));
+                  Get.to(() => options(),transition: Transition.fade);
+
                 },
               ),
               selectedIcon: Icon(Icons.directions_car_filled),
@@ -151,6 +164,8 @@ class _homeState extends State<home> {
                 onTap: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Assistance()));
+                  Get.to(() => Assistance(),transition: Transition.fade);
+
                 },
                   child: Icon(Icons.question_answer_outlined)),
               selectedIcon: Icon(Icons.question_answer),
@@ -165,6 +180,8 @@ class _homeState extends State<home> {
                     context,
                     MaterialPageRoute(builder: (context) => Profilepage()),
                   );
+                  Get.to(() => Profilepage(),transition: Transition.leftToRightWithFade);
+
                 },
               ),
               selectedIcon: Icon(

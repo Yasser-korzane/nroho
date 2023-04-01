@@ -1,10 +1,12 @@
 import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyBeginPage extends StatefulWidget {
+  final String title;
+
   const MyBeginPage({super.key, required this.title});
 
-  final String title;
 
   @override
   State<MyBeginPage> createState() => _MyBeginPageState();
@@ -22,7 +24,7 @@ class _MyBeginPageState extends State<MyBeginPage> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/ellipse.png'),
                   fit: BoxFit.fill)),
         ),
       ),
@@ -43,7 +45,7 @@ class _MyBeginPageState extends State<MyBeginPage> {
                 ),
                 child: Center(
                   child: Image.asset(
-                      'assets/images/Commencer-removebg-preview.png'),
+                      'assets/images/commencer.png'),
                 ),
               ),
               Container(
@@ -81,22 +83,20 @@ class _MyBeginPageState extends State<MyBeginPage> {
                     decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Connexin(
-                                    title: " sing up ",
-                                  )),
-                        );
-                        // Navigate back to first route when tapped.
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.to( ()=> Connexin(title: 'sin up'),transition: Transition.zoom);
                       },
-                      child: const Text('commencer ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              backgroundColor: Colors.blue)),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(title: 'sin up'),));
+                        },
+                        child: const Text('commencer ',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                backgroundColor: Colors.blue)),
+                      ),
                     ),
                   ),
                 ),
