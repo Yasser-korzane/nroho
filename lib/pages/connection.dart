@@ -78,7 +78,7 @@ class _MyConnexinState extends State<Connexin> {
           flexibleSpace: Container(
            decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/ellipse.png'),
                   fit: BoxFit.fill,
                   
               )
@@ -99,7 +99,7 @@ class _MyConnexinState extends State<Connexin> {
               borderRadius: BorderRadius.circular(200),
               ),
               child: Center(
-                child: Image.asset('assets/images/logo-removebg-preview.png'),
+                child: Image.asset('assets/images/logo.png'),
               ),
             ),
            Padding(
@@ -229,9 +229,11 @@ class _MyConnexinState extends State<Connexin> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
             color: Colors.lightBlue ),
             child: TextButton(
-              onPressed: () async {
-
-              /*if (validerEmail(_controllerEmail.text)
+              onPressed: ()
+            async
+             {
+               // MaterialPageRoute(builder: (context) => const home());
+               /*if (validerEmail(_controllerEmail.text)
                   && validerMotDePasse(_controllerMotDePasse.text)){*/
                 dynamic result = await _auth.signIn('lh_boulacheb@esi.dz', 'hichem12345');
                 if(result==null){
@@ -248,8 +250,10 @@ class _MyConnexinState extends State<Connexin> {
                       duration: Duration(seconds: 2),
                     ),
                   );
-              }
-            },
+                  MaterialPageRoute(builder: (context) => const home());
+                }
+
+    },
              child: Text('Connexion',style: TextStyle(fontSize: 18,color: Colors.white),),
              
              ),

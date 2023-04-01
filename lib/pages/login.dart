@@ -24,7 +24,7 @@ class _MyBeginPageState extends State<MyBeginPage> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/ellipse.png'),
                   fit: BoxFit.fill)),
         ),
       ),
@@ -45,7 +45,7 @@ class _MyBeginPageState extends State<MyBeginPage> {
                 ),
                 child: Center(
                   child: Image.asset(
-                      'assets/images/Commencer-removebg-preview.png'),
+                      'assets/images/commencer.png'),
                 ),
               ),
               Container(
