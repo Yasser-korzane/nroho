@@ -26,7 +26,7 @@ class _optionsState extends State<options> {
             },
             icon: const Icon(Icons.chevron_left, color: Colors.black)),
         title: Text('Plus d’informations',
-            style: Theme.of(context).textTheme.headline6),
+            style: Theme.of(context).textTheme.titleLarge),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -40,11 +40,11 @@ class _optionsState extends State<options> {
               SizedBox(height: screenHeight * 0.1),
               SelectableTextWidget(
                   text: 'Acceptez-vous un conducteur qui fume ?'),
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: screenHeight * 0.03),
               SelectableTextWidget(text: 'Avez vous un bagage volumineux ?'),
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: screenHeight * 0.03),
               SelectableTextWidget(text: 'Avez vous  des animaux ?'),
-              SizedBox(height : screenHeight * 0.02),
+              SizedBox(height : screenHeight * 0.03),
               Container(
                   margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                   child: CustomDropdown(options: [1, 2, 3, 4])),
@@ -55,14 +55,14 @@ class _optionsState extends State<options> {
                 child: TextField(
                       decoration: InputDecoration(
                       fillColor: Colors.grey.shade300,
-                      labelText: 'Proposer votre prix',
+                      labelText: 'Laisser un commentaire',
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
                       suffixIcon: Icon(Icons.insert_comment_rounded,
                           color: Colors.black)),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.25),
+              SizedBox(height: screenHeight * 0.2),
               SizedBox(
                   width: screenWidth * 0.5,
                   child: ElevatedButton(

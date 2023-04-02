@@ -1,5 +1,5 @@
 abstract class Personne{
-  int identifiant ;
+  String identifiant ;
   String nom ;
   String prenom ;
   String email ;

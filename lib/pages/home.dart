@@ -4,20 +4,23 @@ import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+void main(){
+  runApp(MaterialApp(
+    theme: ThemeData(fontFamily: 'Poppins'),
+    home: home(),
+  ));
+}
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
 
   @override
   State<home> createState() => _homeState();
-   int get(){
-    return _homeState().selectedIndex;
-  }
 }
 
 class _homeState extends State<home> {
   int index = 0;
-  int selectedIndex = RideTypeSelector().getSelectedIndex();
 
   @override
   Widget build(BuildContext context) {
@@ -54,18 +57,24 @@ class _homeState extends State<home> {
                             borderRadius: BorderRadius.circular(screenWidth *
                                 0.05), // use 5% of screen width as border radius
                           ),
-                          child: TextField(
+                          child: GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                              Get.to(()=>OuAllezVous(),transition: Transition.fade);
                             },
-                            decoration: InputDecoration(
-                              labelText: 'Entrer la place de depart',
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.auto,
-                              border: InputBorder.none,
-                              // remove the border of the TextField
-                              prefixIcon: Icon(Icons.my_location,
-                                  color: Colors.blue),
+                            child: TextField(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
+                              },
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Choisir un point de depart',
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.auto,
+                                border: InputBorder.none,
+                                // remove the border of the TextField
+                                prefixIcon: Icon(Icons.my_location,
+                                    color: Colors.blue),
+                              ),
                             ),
                           ),
                         ),
@@ -77,18 +86,24 @@ class _homeState extends State<home> {
                             borderRadius: BorderRadius.circular(screenWidth *
                                 0.05), // use 5% of screen width as border radius
                           ),
-                          child: TextField(
+                          child: GestureDetector(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Trajet(),));
+                              Get.to(()=>OuAllezVous(),transition: Transition.fade);
                             },
-                            decoration: InputDecoration(
-                              labelText: 'Entrer la place d arivee',
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.auto,
-                              border: InputBorder.none,
-                              // remove the border of the TextField
-                              prefixIcon: Icon(Icons.location_on_outlined,
-                                  color: Colors.blue),
+                            child: TextField(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous(),));
+                              },
+                              readOnly: true,
+                              decoration: InputDecoration(
+                                labelText: 'Choisir une destination',
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.auto,
+                                border: InputBorder.none,
+                                // remove the border of the TextField
+                                prefixIcon: Icon(Icons.location_on_outlined,
+                                    color: Colors.blue),
+                              ),
                             ),
                           ),
                         ),
@@ -143,6 +158,8 @@ class _homeState extends State<home> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => options()));
+                  Get.to(() => options(),transition: Transition.fade);
+
                 },
               ),
               selectedIcon: Icon(Icons.directions_car_filled),
@@ -153,6 +170,8 @@ class _homeState extends State<home> {
                 onTap: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => Assistance()));
+                  Get.to(() => Assistance(),transition: Transition.fade);
+
                 },
                   child: Icon(Icons.question_answer_outlined)),
               selectedIcon: Icon(Icons.question_answer),
@@ -167,6 +186,8 @@ class _homeState extends State<home> {
                     context,
                     MaterialPageRoute(builder: (context) => Profilepage()),
                   );
+                  Get.to(() => Profilepage(),transition: Transition.leftToRightWithFade);
+
                 },
               ),
               selectedIcon: Icon(
@@ -192,13 +213,9 @@ class _homeState extends State<home> {
 }
 
 class RideTypeSelector extends StatefulWidget {
-  get _isSelected => RideTypeSelector()._isSelected;
 
   @override
   _RideTypeSelectorState createState() => _RideTypeSelectorState();
-  int getSelectedIndex() {
-    return _isSelected.indexOf(true);
-  }
 }
 
 class _RideTypeSelectorState extends State<RideTypeSelector> {
@@ -226,11 +243,11 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-            child: Text('Take a ride'),
+            child: Text('Passager'),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
-            child: Text('Announce a ride'),
+            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+            child: Text('Conducteur'),
           ),
         ],
         disabledColor: Colors.white,

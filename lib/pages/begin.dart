@@ -1,4 +1,4 @@
-import 'package:appcouvoiturage/main.dart';
+import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:flutter/material.dart';
 
 class MyBeginPag extends StatefulWidget {
@@ -33,7 +33,7 @@ class _MyBeginPagState extends State<MyBeginPag> {
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/ellipse.png'),
                   fit: BoxFit.fill)),
         ),
 // width: MediaQuery.of(context).size.width,
@@ -63,7 +63,7 @@ class _MyBeginPagState extends State<MyBeginPag> {
                 ),
                 child: Center(
                   child: Image.asset(
-                      'assets/images/Commencer-removebg-preview.png'),
+                      'assets/images/commencer.png'),
                 ),
               ),
               Container(

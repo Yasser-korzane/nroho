@@ -1,139 +1,206 @@
-import 'package:appcouvoiturage/pages/home.dart';
-import 'package:appcouvoiturage/pages/options.dart';
-import 'package:appcouvoiturage/pages/optionsconducteur.dart';
 import 'package:flutter/material.dart';
-//import 'package:dio/dio.dart';
+import 'package:appcouvoiturage/widgets/date_time.dart';
 
-class Trajet extends StatefulWidget {
-  const Trajet({super.key});
 
-  @override
-  State<Trajet> createState() => _TrajetState();
-}
-
-class _TrajetState extends State<Trajet> {
-  String querry = "";
-  int selected = home().get();
+class OuAllezVous extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading:   InkWell(
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
-            },
-            child: Icon(
-          Icons.arrow_circle_left_outlined,
-          color: Colors.black,
-          size: 35,
-        )),
-        centerTitle: true,
-        title: const Text(
-          "Ou allez-vous ?",
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-      ),
-      body: Column(
-        children: [
-          departDestination(),
-          autoComplete(),
-          RechercheRecente(),
-          validerButton(),
-        ],
-      ),
-    );
-  }
 
-  Widget departDestination() {
-    return Row(
-      children: [
-        const Icon(Icons.location_on),
-        Column(
-          children: [
-            TextFormField(
-              onChanged: (value) {
-                setState(() {
-                  querry = value;
-                });
-              },
-              decoration: InputDecoration(
-                  hintText: "Point de Depart",
-                  constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width) /
-                      1.5),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Color(0xff344D59),
+          ),
+          onPressed: () {},
+        ),
+        title: Text(
+          'Où allez-vous ?',
+          style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child :Container(
+        child: Column(
+          children: <Widget>[
+            // Zone de recherche pour le départ
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children:[ Column(
+                  children: [
+                    Icon(Icons.gps_fixed),
+                    // SizedBox(height: screenHeight * 0.03),
+                    Container(
+                      height: 32,
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                    // SizedBox(height: screenHeight * 0.03),
+                    Icon(
+                      Icons.location_on,
+
+                    ),
+                  ],
+                ),
+
+
+                  Column(children:[ SizedBox(
+                    width: 285,
+                    height: 42,
+
+                    child: TextField(
+
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xff)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.grey,
+                        filled: true,
+                        hintText: 'Départ',
+                      ),
+                    ),
+                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: 285,
+                      height: 42,
+
+                      child: TextField(
+
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xff)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          fillColor: Colors.grey,
+                          filled: true,
+                          hintText: 'Arrivée',
+                        ),
+                      ),
+
+                    ),
+                  ]
+                  ),
+
+                ]
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                  hintText: "Destination",
-                  constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width) /
-                      1.5),
-            )
+
+
+            SizedBox(height: 10),
+            DateTimePickerRow(),
+            SizedBox(height: 10),
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 2,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('choisir sur la map',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),  Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.gps_fixed,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('Utiliser ma position',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              child: Container(
+                color: Colors.grey,
+                child:  Text('Historique des recherches                                    ',style: TextStyle(color: Color(0xff344D59), fontSize: 23, backgroundColor: Colors.grey ),),
+              ),
+            ),
+
+
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('Maoklane - Setif',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),
+            Divider(
+              color: Colors.blueGrey,
+              thickness: 1,
+            ),
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.location_on,
+
+                  ),
+                  onPressed: () {},
+                ),
+                Text('Oued Smar - Alger',style: TextStyle(color: Color(0xff344D59), fontSize: 20),),
+              ],
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 210,
+                height: 43,
+                  child: ElevatedButton(
+                    onPressed: () {},
+
+                    child: Text('Valider', style: TextStyle( fontSize: 20),),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                  )
+
+              ),
+            ),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget autoComplete() {
-    return Expanded(
-        child: FutureBuilder(
-            future: getPredictions(querry),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return ListView.builder(
-                  itemCount: snapshot.data["predictions"].length,
-                  itemBuilder: (context, index) {
-                    var prediction =
-                        snapshot.data["predictions"][index]["description"];
-                    return ListTile(
-                      title: Text(prediction),
-                    );
-                  },
-                );
-              } else {
-                return const Text("Waiting");
-              }
-            }));
-  }
-
-  Widget RechercheRecente() {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (context, index) {},
       ),
-    );
-  }
 
-  Widget validerButton() {
-    return ElevatedButton(
-      onPressed: ()
-      {
-        if (selected == 0) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => options()),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => optionconduc()),
-          );
-        }
-      },
+      ),
+      );
 
-    child: const Text("Valider"));
-  }
-
-  Future<dynamic> getPredictions(String querry) async {
-    var response = await Dio().get(
-        "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$querry&key=AIzaSyA7YbcfZHHiA80T-wbB656ql4r6lC3cJRE");
-    return response.data;
   }
 }
-
-class Dio {
-  dynamic get(String url){}
-}
+// Ajout SingleChildScrollView

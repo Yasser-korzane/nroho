@@ -56,7 +56,7 @@ class _SelectableTextWidgetState extends State<SelectableTextWidget> {
             Expanded(
               flex: 20,
               child: Icon(
-                _isSelected ? Icons.check_circle : Icons.circle_outlined,
+                _isSelected ? Icons.check_box : Icons.check_box_outline_blank,
                 color: _isSelected ? Colors.blue : Colors.grey,
                 size: 30,
               ),

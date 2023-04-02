@@ -375,42 +375,38 @@ class details extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: screenHeight * 0.015),
-                    Row(
-                      children: [
-                        Padding(
-                          padding:  EdgeInsets.only(left: screenWidth*0.0005),
-                          child: Text.rich(
-                            TextSpan(
-                              text: 'Si vous avez un problème avec ce trajet,\n   contactez notre service client \n pour plus d’aide ou signalezdirectement \n                             par ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 16.0,
-                                fontFamily: 'Poppins',
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: 'ici',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
-                                    fontFamily: 'Poppins',
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launchUrlString('https://tresor.cse.club/');
-                                    },
-                                )
-                              ],
+                    Center(
+                      child: Flexible(
+                        child: Text.rich(
+                          TextSpan(
+                            text: 'Si vous avez un problème avec ce trajet,contactez notre service client pour plus d’aide ou signalezdirectement                             par ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16.0,
+                              fontFamily: 'Poppins',
                             ),
-                            softWrap: true,
-                            overflow: TextOverflow.visible,
-                            maxLines: null,
+                            children: [
+                              TextSpan(
+                                text: 'ici',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 16.0,
+                                  fontFamily: 'Poppins',
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    launchUrlString('https://tresor.cse.club/');
+                                  },
+                              )
+                            ],
                           ),
-                        )
-                        ,
-                      ],
+                          softWrap: true,
+                          overflow: TextOverflow.visible,
+                          maxLines: null,
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -1,5 +1,9 @@
+//import 'dart:html';
+
+import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
+import 'package:appcouvoiturage/Models/Users.dart';
 
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/Utilisateur.dart';
@@ -30,19 +34,20 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   bool validerMotDePasse(String motDePasse){
-    if (motDePasse.length >= 8)return true;
+    if (motDePasse.length >= 8 && motDePasse.isNotEmpty)return true;
     else return false;
     /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
   }
 
   bool validerEmail(String email){
     final regex = RegExp(r'[0-9]');
-    if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
+    if (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty) return true;
     else return false;
   }
-  Utilisateur creerUtilisateurApresSignUp(int identifiant, String nom, String prenom, String email, String motDePasse) {
+
+  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
-      Vehicule("", "", "", "", "", 0), false, [],
+      Vehicule("", "", "", "", "", 0), false, [],[],[]
     );
   }
   /** ************************************************************************************************** **/
@@ -54,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   /** ************************************************************************************************** **/
   @override
   Widget build(BuildContext context) {
+    final AuthService _auth =AuthService();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -79,22 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Container(
                 child: Center(
-                  child: Text("Insecription",style: TextStyle(color: Color.fromARGB(255, 79, 77, 77), fontSize: 30 ,fontWeight: FontWeight.bold) ,),
+                  child: Text("Inscription",style: TextStyle(color: Color.fromARGB(255, 79, 77, 77), fontSize: 30 ,fontWeight: FontWeight.bold) ,),
                 ),
               ),
-              /*
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  controller: _controllerNom,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: ' First Name',
-                      hintText: 'Enter your First name '),
-                ),
-              ),
-              */
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -110,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Row(
                   children: <Widget>[
             
-                  new Expanded(     
-                    child: TextField(
+                  new Expanded(
+                    child: TextFormField(
                       controller: _controllerNom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -123,25 +116,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                         isDense: true,
                       ),
-                        ),
-                  )
+                  ),
+                  ),
                 ],
               ),
                      ),
            ),
-              
-              /*Padding(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  controller: _controllerPrenom,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'last Name',
-                      hintText: 'Enter your last name'),
-                ),
-              ),*/
-
-
               Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -156,15 +136,14 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.all(12),
               child: Row(
                 children: <Widget>[
-    
-                  new Expanded(     
-                    child: TextField(
+                  new Expanded(
+                    child: TextFormField(
                       controller: _controllerPrenom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Prenom',
-                        hintText: "Enterez votre Prenom",
+                        hintText: "Entrez votre Prenom",
                         hintStyle: TextStyle(color: Colors.black),
                         contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -175,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontSize: 14.0,
                         color: Colors.black,
                       ),
-                    ),
+                  ),
                   ),
       
                   
@@ -183,18 +162,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-            /*
-              Container(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  controller: _controllerEmail,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      hintText: 'Enter valid mail id as abc@esi.dz'),
-                ),
-              ),*/
-
                Padding(
              padding: const EdgeInsets.all(8.0),
              child: Container(
@@ -219,8 +186,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 20,
                       ),
                   ),
-                  new Expanded(     
-                    child: TextField(
+                  new Expanded(
+                    child: TextFormField(
+                      controller: _controllerEmail,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -241,20 +209,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
                      ),
            ),
-           
-  /*
-              Container(
-                padding: EdgeInsets.all(20),
-                child: TextFormField(
-                  obscureText: true,
-                  controller: _controllerMotDePasse,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      hintText: 'Enter your secure password'),
-                ),
-              )
-            ,*/
             Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
@@ -279,8 +233,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         size: 20,
                       ),
                   ),
-                  new Expanded(     
-                    child: TextField(
+                  new Expanded(
+                    child: TextFormField(
                       controller: _controllerMotDePasse,
                       obscureText :true,
                       //keyboardType: TextInputType.text,
@@ -319,18 +273,36 @@ class _MyHomePageState extends State<MyHomePage> {
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.lightBlue),
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (validerNomEtPrenom(_controllerNom.text)
                     && validerNomEtPrenom(_controllerPrenom.text)
                     && validerEmail(_controllerEmail.text)
                     && validerMotDePasse(_controllerMotDePasse.text)){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
-                    }else {
+                    Utilisateur utilisateur = creerUtilisateurApresSignUp('',_controllerNom.text,_controllerPrenom.text,_controllerEmail.text, _controllerMotDePasse.text);
+                      dynamic result = await _auth.signUp(_controllerEmail.text, _controllerMotDePasse.text,utilisateur);
+                      if(result==null){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Vous devez verifier les donnees"),
+                              duration: Duration(seconds: 2),
+                            ),
+                        );}
+                      else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Succes"),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
+                      } else{
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Vous devez verifier les donnes"),
-                          duration: Duration(seconds: 2),
-                        ),
+                          SnackBar(
+                            content: Text("Vous devez verifier les donnees"),
+                            duration: Duration(seconds: 2),
+                          )
                       );
                     }
                   },

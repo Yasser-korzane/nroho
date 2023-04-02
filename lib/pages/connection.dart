@@ -1,67 +1,16 @@
+import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
-import 'package:appcouvoiturage/pages/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
 import 'package:appcouvoiturage/pages/login.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
-
-
-
-
-
-
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      initialRoute: '/commencer',
-      routes: {
-        '/signin':(context) => const Connexin(title: 'connextion '),
-        '/signup':(context) => const MyHomePage(title: 'SingnUp'),
-        '/commencer':(context) => const MyBeginPage(title: 'begin'),
-      },
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: const Connexin(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
+import 'package:appcouvoiturage/AppClasses/Evaluation.dart';
 
 class  Connexin extends StatefulWidget {
-  const Connexin ({super.key, required this.title});
+   const Connexin ({super.key, required this.title});
 
   final String title;
 
@@ -70,11 +19,50 @@ class  Connexin extends StatefulWidget {
 }
 
 class _MyConnexinState extends State<Connexin> {
-  
+
+  /*********************************************** Les Fonctions **********************************************/
+  bool validerNomEtPrenom(String value) {
+    String chaineTest = value;
+    String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
+    RegExp regExp = new RegExp(pattern);
+    chaineTest = value.replaceAll(' ', '');
+    if(value.length > 20 || chaineTest.isEmpty
+        || !regExp.hasMatch(chaineTest)
+        || value.startsWith(' ') || value.endsWith(' ')){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  bool validerMotDePasse(String motDePasse){
+    if (motDePasse.length >= 8)return true;
+    else return false;
+    /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
+  }
+
+  bool validerEmail(String email){
+    final regex = RegExp(r'[0-9]');
+    if (email.endsWith('@esi.dz') && !regex.hasMatch(email)) return true;
+    else return false;
+  }
+
+  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
+    return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
+        Vehicule("", "", "", "", "", 0), false, [],[],[]
+    );
+  }
+  /** ************************************************************************************************** **/
+  /** *********************************** Les controlleurs ********************************************** **/
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerMotDePasse = TextEditingController();
+  /** ************************************************************************************************** **/
 
   @override
   Widget build(BuildContext context) {
-    bool visible=false;
+    final AuthService _auth = AuthService();
+    bool visible=true;
+    IconData _currentIcon = Icons.visibility;
     return Scaffold(
        resizeToAvoidBottomInset : false,
        
@@ -88,20 +76,12 @@ class _MyConnexinState extends State<Connexin> {
           flexibleSpace: Container(
            decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('asset/images/Ellipse 5.png'),
+                  image: AssetImage('assets/images/ellipse.png'),
                   fit: BoxFit.fill,
                   
               )
             ),
           ),
-      
-      //   // TRY THIS: Try changing the color here to a specific color (to
-      //   // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-      //   // change color while the other colors stay the same.
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: Text(widget.title),
        ),
       body: Center(
         
@@ -117,54 +97,11 @@ class _MyConnexinState extends State<Connexin> {
               borderRadius: BorderRadius.circular(200),
               ),
               child: Center(
-                child: Image.asset('asset/images/logo-removebg-preview.png'),
+                child: Image.asset('assets/images/logo.png'),
               ),
             ),
-            /*
-            Container(
-              padding: EdgeInsets.all(20),
-              
-              child: TextField(
-                decoration: InputDecoration(
-                icon: new Icon(Icons.mail),
-                border: OutlineInputBorder(),
-                labelText: 'Email',
-                hintText: 'Enterez votre mail example:abc@esi.dz',
-                hintStyle: TextStyle(color: Colors.grey[500])
-                ),
-              ),
-            ),*/
-            /*PasswordFormField(
-  onSaved: (value) {
-    // Enregistrer la valeur du champ de saisie du mot de passe
-  },
-  validator: (value) {
-    if (value == null || value.isEmpty) {
-      return 'Veuillez entrer un mot de passe';
-    }
-    return null;
-  },
-  obscureText: true,
-  hintText: 'Mot de passe',
-  labelText: 'Mot de passe',
-),*/
-
-          /*Container(
-            padding: EdgeInsets.all(20),
-            child: TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              icon: new Icon(Icons.password),
-             // border: OutlineInputBorder(),
-              labelText: 'Mot de passe ',
-              hintText: 'Entere votre mot de passe ',
-              hintStyle: TextStyle(color: Colors.grey[500])
-            ),
-            ),
-          ),*/
            Padding(
              padding: const EdgeInsets.only(left: 15,right: 15),
-             
              child: Container(
              // backgroundColor: Color(0xF0F0F0),
               decoration: BoxDecoration(
@@ -173,9 +110,6 @@ class _MyConnexinState extends State<Connexin> {
                   width: 1.0,
                 ),
                 borderRadius: BorderRadius.circular(6.0),
-                
-                //color:Color(0xF0F0F0),
-              
               ),
               margin: EdgeInsets.all(12),
               child: Row(
@@ -189,12 +123,13 @@ class _MyConnexinState extends State<Connexin> {
                       ),
                   ),
                   new Expanded(     
-                    child: TextField(
-                      keyboardType: TextInputType.text,
+                    child: TextFormField(
+                      controller: _controllerEmail,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Email',
-                        hintText: "Enterez votre mail example: abc@esi.dz",
+                        hintText: "Entrez votre mail example: abc@esi.dz",
                         hintStyle: TextStyle(color: Colors.black),
                         contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -210,8 +145,6 @@ class _MyConnexinState extends State<Connexin> {
               ),
                      ),
            ),
-           
-          
           Padding(
             padding: const EdgeInsets.only(left: 15,right: 15),
             child: Container(
@@ -237,10 +170,11 @@ class _MyConnexinState extends State<Connexin> {
                         size: 20,
                       ),
                   ),
-                  new Expanded(     
-                    child: TextField(
+                  new Expanded(
+                    child: TextFormField(
+                      controller: _controllerMotDePasse,
                       obscureText : visible,
-                      //keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Mot de passe',
@@ -268,7 +202,8 @@ class _MyConnexinState extends State<Connexin> {
                       padding: EdgeInsets.only(right: 10),
                         child: Icon(
                           /*Icons.visibility_off,*/
-                          visible ? Icons.visibility :Icons.visibility_off, 
+                          visible ? Icons.visibility : Icons.visibility_off,
+
                           color: Colors.black,
                           size: 20,
                         ),
@@ -278,40 +213,46 @@ class _MyConnexinState extends State<Connexin> {
               ),
             ),
           ),
-           
-          /*Container(
-           // height: 50,
-            width: 300,
-            //padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(30),
-              
-            ),
-            child: 
-            MaterialButton(color:Colors.blue ,
-              height: 50 ,
-        
-              //MediaQueryData.fromView(80),
-              onPressed: () {},
-
-              
-              //radius:  BorderRadius.circular(30) ,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                //borderRadius: BorderRadius.circular(30),
-                child: Text('Login',style: TextStyle(color: Colors.white , fontSize: 18),),
-              ),
-            )
-            ),
-          //]
-          //),
-          */
           Container(
             width: 300,
             //padding: EdgeInsets.all(20),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
             color: Colors.lightBlue ),
-            child: TextButton(onPressed: (){},
+            child: TextButton(
+              onPressed: () async
+             {
+               // MaterialPageRoute(builder: (context) => const home());
+               if (validerEmail(_controllerEmail.text)
+                  && validerMotDePasse(_controllerMotDePasse.text)) {
+                 dynamic result = await _auth.signIn(
+                     _controllerEmail.text, _controllerMotDePasse.text);
+                 if (result == null) {
+                   ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(
+                       content: Text("Vous devez verifier les donnees"),
+                       duration: Duration(seconds: 2),
+                     ),
+                   );
+                 } else {
+                   ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(
+                       content: Text("succes"),
+                       duration: Duration(seconds: 2),
+                     ),
+                   );
+                   //MaterialPageRoute(builder: (context) => const home());
+                   Navigator.pop(context);
+                 }
+               }else{
+                 ScaffoldMessenger.of(context).showSnackBar(
+                   SnackBar(
+                     content: Text("Vous devez verifier les donneess"),
+                     duration: Duration(seconds: 2),
+                   ),
+                 );
+               }
+
+    },
              child: Text('Connexion',style: TextStyle(fontSize: 18,color: Colors.white),),
              
              ),
@@ -338,32 +279,9 @@ class _MyConnexinState extends State<Connexin> {
           child: const Text('creer un compte',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
           ),
           ),
-          /*Center(
-            child: RichText(
-              TextSpan( 
-                text: 'but this is', 
-                style: new TextStyle(color: Colors.blue), 
-                recognizer: new TapGestureRecognizer()
-                onTap = () { launch('https://docs.flutter.io/flutter/services/UrlLauncher-class.html');}
-            ),
-            ),
-          ),*/
-         
-          ] 
+          ]
         ),
-        /*child: Center( 
-            child: new InkWell( 
-              child: new Text('Open Browser'), 
-              onTap: () => launch('https://docs.flutter.io/flutter/services/UrlLauncher-class.html')
-            ), 
-        ),*/
-      
-      
       ),
     );
-       //bottomNavigationBar: BottomAppBar(;
-      
-    
-    
   }
 }

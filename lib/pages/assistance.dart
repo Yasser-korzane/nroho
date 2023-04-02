@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/profilwidget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:flutter/gestures.dart';
+import 'package:appcouvoiturage/pages/contactezNous.dart';
 
 class Assistance extends StatelessWidget {
   const Assistance({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class Assistance extends StatelessWidget {
             Profilewidget(
               title: 'Contactez nous',
               icon: Icons.call,
-              onPress: () {},
+              onPress: () {Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs(),));},
             ),
             SizedBox(height: screenHeight* 0.02),
             Profilewidget(
