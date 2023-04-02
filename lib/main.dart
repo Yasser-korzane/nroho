@@ -10,6 +10,7 @@ import 'package:appcouvoiturage/pages/login.dart';
 import 'package:appcouvoiturage/pages/connection.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/Services/wrapper.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 

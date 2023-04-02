@@ -60,10 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth =AuthService();
-    String nom='';
-    String prenom='';
-    String email='';
-    String password='';
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -109,9 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
             
                   new Expanded(
                     child: TextFormField(
-                      onChanged: (val){
-                        nom=val;
-                      },
                       controller: _controllerNom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
@@ -145,15 +138,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   new Expanded(
                     child: TextFormField(
-                      onChanged: (val){
-                        prenom=val;
-                      },
                       controller: _controllerPrenom,
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Prenom',
-                        hintText: "Enterez votre Prenom",
+                        hintText: "Entrez votre Prenom",
                         hintStyle: TextStyle(color: Colors.black),
                         contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 8),
@@ -199,9 +189,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   new Expanded(
                     child: TextFormField(
                       controller: _controllerEmail,
-                      onChanged: (val){
-                        email=val;
-                      },
                       keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -250,9 +237,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: TextFormField(
                       controller: _controllerMotDePasse,
                       obscureText :true,
-                      onChanged: (val){
-                        password=val;
-                      },
                       //keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -295,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     && validerEmail(_controllerEmail.text)
                     && validerMotDePasse(_controllerMotDePasse.text)){
                     Utilisateur utilisateur = creerUtilisateurApresSignUp('',_controllerNom.text,_controllerPrenom.text,_controllerEmail.text, _controllerMotDePasse.text);
-                      dynamic result = await _auth.signUp(email, password,utilisateur);
+                      dynamic result = await _auth.signUp(_controllerEmail.text, _controllerMotDePasse.text,utilisateur);
                       if(result==null){
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -310,6 +294,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             duration: Duration(seconds: 2),
                           ),
                         );
+                        Navigator.pop(context);
+                        Navigator.pop(context);
                       }
                       } else{
                       ScaffoldMessenger.of(context).showSnackBar(

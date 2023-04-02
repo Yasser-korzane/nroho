@@ -61,8 +61,6 @@ class _MyConnexinState extends State<Connexin> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
-    String email='';
-    String password='';
     bool visible=true;
     IconData _currentIcon = Icons.visibility;
     return Scaffold(
@@ -127,12 +125,7 @@ class _MyConnexinState extends State<Connexin> {
                   new Expanded(     
                     child: TextFormField(
                       controller: _controllerEmail,
-                      onChanged: (val){
-                          setState(() {
-                            email=val;
-                          });
-                      },
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Email',
@@ -180,11 +173,8 @@ class _MyConnexinState extends State<Connexin> {
                   new Expanded(
                     child: TextFormField(
                       controller: _controllerMotDePasse,
-                      onChanged: (val){
-                          password=val;
-                      },
                       obscureText : visible,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         labelText: 'Mot de passe',
@@ -229,29 +219,38 @@ class _MyConnexinState extends State<Connexin> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
             color: Colors.lightBlue ),
             child: TextButton(
-              onPressed: ()
-            async
+              onPressed: () async
              {
                // MaterialPageRoute(builder: (context) => const home());
-               /*if (validerEmail(_controllerEmail.text)
-                  && validerMotDePasse(_controllerMotDePasse.text)){*/
-                dynamic result = await _auth.signIn('lh_boulacheb@esi.dz', 'hichem12345');
-                if(result==null){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("Vous devez verifier les donnees"),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text("succes"),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
-                  MaterialPageRoute(builder: (context) => const home());
-                }
+               if (validerEmail(_controllerEmail.text)
+                  && validerMotDePasse(_controllerMotDePasse.text)) {
+                 dynamic result = await _auth.signIn(
+                     _controllerEmail.text, _controllerMotDePasse.text);
+                 if (result == null) {
+                   ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(
+                       content: Text("Vous devez verifier les donnees"),
+                       duration: Duration(seconds: 2),
+                     ),
+                   );
+                 } else {
+                   ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(
+                       content: Text("succes"),
+                       duration: Duration(seconds: 2),
+                     ),
+                   );
+                   //MaterialPageRoute(builder: (context) => const home());
+                   Navigator.pop(context);
+                 }
+               }else{
+                 ScaffoldMessenger.of(context).showSnackBar(
+                   SnackBar(
+                     content: Text("Vous devez verifier les donneess"),
+                     duration: Duration(seconds: 2),
+                   ),
+                 );
+               }
 
     },
              child: Text('Connexion',style: TextStyle(fontSize: 18,color: Colors.white),),
