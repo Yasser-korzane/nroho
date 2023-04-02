@@ -26,12 +26,18 @@ class _homeState extends State<home> {
   int index = 0;
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-
   static const CameraPosition _pos = CameraPosition(
       target: LatLng(36.79302464414026, 2.918638530284433), zoom: 16);
 
   @override
   Widget build(BuildContext context) {
+    final List arg = ModalRoute.of(context)!.settings.arguments as List;
+    dynamic arg1, arg2;
+    // ignore: unnecessary_null_comparison
+    if (arg != null) {
+      arg1 = arg[0];
+      arg2 = arg[1];
+    }
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
@@ -41,8 +47,8 @@ class _homeState extends State<home> {
         body: Stack(
           children: [
             GoogleMap(
+              mapType: MapType.normal,
               initialCameraPosition: _pos,
-              mapType: MapType.terrain,
               onMapCreated: (controller) {
                 _controller.complete(controller);
               },
@@ -68,15 +74,18 @@ class _homeState extends State<home> {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                Get.to(() => OuAllezVous(),
+                                Get.to(() => const OuAllezVous(),
                                     transition: Transition.fade);
                               },
                               child: TextField(
+                                controller:
+                                    TextEditingController(text: arg1 ?? ""),
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => OuAllezVous(),
+                                        builder: (context) =>
+                                            const OuAllezVous(),
                                       ));
                                 },
                                 readOnly: true,
@@ -102,15 +111,18 @@ class _homeState extends State<home> {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                Get.to(() => OuAllezVous(),
+                                Get.to(() => const OuAllezVous(),
                                     transition: Transition.fade);
                               },
                               child: TextField(
+                                controller:
+                                    TextEditingController(text: arg2 ?? ""),
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => OuAllezVous(),
+                                        builder: (context) =>
+                                            const OuAllezVous(),
                                       ));
                                 },
                                 readOnly: true,

@@ -16,7 +16,12 @@ Future<void> main() async {
     runApp(
       MaterialApp(
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: const home(),
+        home: const MyApp(),
+        routes: {
+          "home": (context) {
+            return const home();
+          }
+        },
       ),
     );
   });
