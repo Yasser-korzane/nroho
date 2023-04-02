@@ -5,6 +5,12 @@ import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+void main(){
+  runApp(MaterialApp(
+    theme: ThemeData(fontFamily: 'Poppins'),
+    home: home(),
+  ));
+}
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);

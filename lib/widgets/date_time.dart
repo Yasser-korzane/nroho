@@ -11,6 +11,13 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = DateTime.now();
+    _selectedTime = TimeOfDay.now();
+  }
+
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -39,50 +46,57 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: _selectDate,
-          icon: Icon(Icons.calendar_today),
-        ),
-        SizedBox(
-          width: 8.0,
-        ),
-        Expanded(
-          child: TextFormField(
-            readOnly: true,
-            onTap: _selectDate,
-            decoration: InputDecoration(
-              labelText: _selectedDate == null
-                  ? 'Select a date'
-                  : 'Selected Date: ${_selectedDate!.toString().split(" ")[0]}',
-              border: OutlineInputBorder(),
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 50),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: IconButton(
+              onPressed: _selectDate,
+              icon: Icon(Icons.calendar_today),
             ),
           ),
-        ),
-        SizedBox(
-          width: 16.0,
-        ),
-        IconButton(
-          onPressed: _selectTime,
-          icon: Icon(Icons.access_time),
-        ),
-        SizedBox(
-          width: 8.0,
-        ),
-        Expanded(
-          child: TextFormField(
-            readOnly: true,
-            onTap: _selectTime,
-            decoration: InputDecoration(
-              labelText: _selectedTime == null
-                  ? 'Select a time'
-                  : 'Selected Time: ${_selectedTime!.format(context)}',
-              border: OutlineInputBorder(),
+          Expanded(
+            flex: 7,
+            child: TextFormField(
+              readOnly: true,
+              onTap: _selectDate,
+              decoration: InputDecoration(
+                labelText: _selectedDate == null
+                    ? 'Select a date'
+                    : 'Selected Date: ${_selectedDate!.toString().split(" ")[0]}',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
-        ),
-      ],
+          Expanded(
+            flex: 1,
+            child: IconButton(
+              onPressed: _selectTime,
+              icon: Icon(Icons.access_time),
+            ),
+          ),
+          Expanded(
+            flex: 7,
+            child: TextFormField(
+              readOnly: true,
+              onTap: _selectTime,
+              decoration: InputDecoration(
+                labelText: _selectedTime == null
+                    ? 'Select a time'
+                    : 'Selected Time: ${_selectedTime!.format(context)}',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
