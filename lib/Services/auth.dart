@@ -1,5 +1,7 @@
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:appcouvoiturage/Models/Users.dart';
+import 'package:appcouvoiturage/Services/base de donnee.dart';
 
 class AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -22,10 +24,12 @@ class AuthService{
     }
   }
   // methode to sign up
-    Future signUp(String email,String password) async{
+    Future signUp(String email,String password,Utilisateur utilisateur) async{
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user =result.user;
+      utilisateur.identifiant = user!.uid;
+      BaseDeDonnee().creerUtilisateur(utilisateur);
       return _userfromfirebase(user);
     }catch(e){
       print(e.toString());

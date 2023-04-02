@@ -6,6 +6,7 @@ class OuAllezVous extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
@@ -22,20 +23,40 @@ class OuAllezVous extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: Container(
+      body: SingleChildScrollView(
+        child :Container(
         child: Column(
           children: <Widget>[
             // Zone de recherche pour le départ
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 50),
-              child: SizedBox(
-                height: 50,
-                child: Stack(
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children:[ Column(
                   children: [
-                    TextField(
+                    Icon(Icons.gps_fixed),
+                    // SizedBox(height: screenHeight * 0.03),
+                    Container(
+                      height: 32,
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                    // SizedBox(height: screenHeight * 0.03),
+                    Icon(
+                      Icons.location_on,
+
+                    ),
+                  ],
+                ),
+
+
+                  Column(children:[ SizedBox(
+                    width: 285,
+                    height: 42,
+
+                    child: TextField(
+
                       decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color:Color(0xff)),
+                          borderSide: BorderSide(color: Color(0xff)),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.grey),
@@ -45,55 +66,37 @@ class OuAllezVous extends StatelessWidget {
                         hintText: 'Départ',
                       ),
                     ),
+                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      width: 285,
+                      height: 42,
 
-                    Positioned(
-                      right: 10,
-                      top: 0,
-                      bottom: 0,
-                      child: Icon(Icons.gps_fixed),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 50),
-              child: SizedBox(
-                height: 50,
-                child: Stack(
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                      child: TextField(
+
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xff)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          fillColor: Colors.grey,
+                          filled: true,
+                          hintText: 'Arrivée',
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        fillColor: Colors.grey,
-                        filled: true,
-                        hintText: 'Arrivée',
                       ),
+
                     ),
-                    /*  Positioned(
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: Container(
-                        width: 1,
-                        color: Colors.grey,
-                      ),
-                    ),*/
-                    Positioned(
-                      right: 10,
-                      top: 0,
-                      bottom: 0,
-                      child: Icon(Icons.location_on),
-                    ),
-                  ],
-                ),
-              ),
+                  ]
+                  ),
+
+                ]
             ),
+
+
             SizedBox(height: 10),
             DateTimePickerRow(),
             SizedBox(height: 30),
@@ -176,24 +179,26 @@ class OuAllezVous extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                width: 200,
-                height: 35,
+                width: 210,
+                height: 43,
+                  child: ElevatedButton(
+                    onPressed: () {},
+
+                    child: Text('Valider', style: TextStyle( fontSize: 20),),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                  )
 
               ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        label: const Text('Valider'),
-
-        backgroundColor: Colors.blue,
 
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
 
   }

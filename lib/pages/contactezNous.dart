@@ -34,7 +34,7 @@ class ContactUs extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/images.jfif"),
+            image: AssetImage("assets/images/contactUsBackground.png"),
             colorFilter: ColorFilter.mode(
               Colors.white.withOpacity(0.4),
               BlendMode.modulate,
