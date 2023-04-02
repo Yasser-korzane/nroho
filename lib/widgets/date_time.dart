@@ -52,7 +52,8 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 50),
+      // padding:  EdgeInsets.symmetric(vertical: 0, horizontal: screenWidth*0.075),
+      padding: EdgeInsets.fromLTRB(screenWidth*0.075, 0, screenWidth*0.075, 0),
       child: Row(
         children: [
           Expanded(
@@ -63,14 +64,14 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
             ),
           ),
           Expanded(
-            flex: 7,
+            flex: 3,
             child: TextFormField(
               readOnly: true,
               onTap: _selectDate,
               decoration: InputDecoration(
                 labelText: _selectedDate == null
                     ? 'Select a date'
-                    : 'Selected Date: ${_selectedDate!.toString().split(" ")[0]}',
+                    : '${_selectedDate!.toString().split(" ")[0]}',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -83,14 +84,14 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
             ),
           ),
           Expanded(
-            flex: 7,
+            flex: 3,
             child: TextFormField(
               readOnly: true,
               onTap: _selectTime,
               decoration: InputDecoration(
                 labelText: _selectedTime == null
                     ? 'Select a time'
-                    : 'Selected Time: ${_selectedTime!.format(context)}',
+                    : '${_selectedTime!.format(context)}',
                 border: OutlineInputBorder(),
               ),
             ),

@@ -99,7 +99,7 @@ class OuAllezVous extends StatelessWidget {
 
             SizedBox(height: 10),
             DateTimePickerRow(),
-            SizedBox(height: 30),
+            SizedBox(height: 10),
             Divider(
               color: Colors.blueGrey,
               thickness: 2,
@@ -136,7 +136,7 @@ class OuAllezVous extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Container(
                 color: Colors.grey,
-                child:  Text('Historique des recherches',style: TextStyle(color: Color(0xff344D59), fontSize: 23, backgroundColor: Colors.grey ),),
+                child:  Text('Historique des recherches                                    ',style: TextStyle(color: Color(0xff344D59), fontSize: 23, backgroundColor: Colors.grey ),),
               ),
             ),
 

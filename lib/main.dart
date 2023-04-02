@@ -12,22 +12,32 @@ import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/Services/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 
 
-Future <void> main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MaterialApp(
-    theme: ThemeData(fontFamily: 'Poppins'),
-    home: MyApp(),
-  ));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) {
+    runApp(
+      MaterialApp(
+        theme: ThemeData(fontFamily: 'Poppins'),
+        home: MyApp(),
+      ),
+    );
+  });
 }
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<Users?>.value(
-      catchError: (User,Users)=>null,
+      catchError: (User, Users) => null,
       initialData: null,
       value: AuthService().user,
       child: MaterialApp(
@@ -43,7 +53,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: Wrapper(),//const Connexin(title: 'Flutter Demo Home Page'),
+        home: Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
       ),
     );
   }
