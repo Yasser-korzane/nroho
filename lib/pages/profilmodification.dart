@@ -74,15 +74,11 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       children: <Widget>[
                         Text('Identifiant:                                                              $_nom $_prenom',style: TextStyle(color:Colors.grey,fontSize: 12),),
                         Text('Email:                                                       $_email',style: TextStyle(color:Colors.grey,fontSize: 12),),
-
-                        Text('Telephone:                                                                      $_telephone',style: TextStyle(color:Colors.grey,fontSize: 12),),
-
+                        Text('Telephone:                                                                $_telephone',style: TextStyle(color:Colors.grey,fontSize: 12),),
+                        /// ****************** Il faut faire une autre methode pour afficher ses informations ********************
                       ],
                     )
                 ),
-
-
-
                 SizedBox(height: 30),
                 Text('Nom', style: TextStyle(fontWeight: FontWeight.bold),),
 
@@ -203,8 +199,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     ),
                     fillColor: Colors.white,
                     filled: true,
-
-                    labelText: 'Matricule',
                     hintText: 'Entrez le matricule de votre vehicule',
 
                   ),
@@ -286,12 +280,11 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   },
                 ),
                 SizedBox(height: 12),
-
-
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _validerModifications,
-                  child: Text('Valider les modifications'),
+                  child: Text('Valider les modifications',style: TextStyle(color: Colors.white),),
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
 
                 ),
               ],
