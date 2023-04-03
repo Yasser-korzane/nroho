@@ -1,9 +1,14 @@
+import 'dart:collection';
+import 'dart:developer';
+
+import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/assistance.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,6 +29,18 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   int index = 0;
+  late Position current_location;
+  bool loading = true;
+  @override
+  void initState() {
+    super.initState();
+    LocationManager locationManager = LocationManager();
+    locationManager.initialize(context).then((value) {
+      loading = false;
+      log(loading.toString());
+    });
+  }
+
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   static const CameraPosition _pos = CameraPosition(
@@ -31,12 +48,18 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-    final List arg = ModalRoute.of(context)!.settings.arguments as List;
+    late HashSet<Marker> markers = HashSet();
+    final arg = ModalRoute.of(context)!.settings.arguments;
+    List? args;
+    if (arg != null) {
+      args = arg as List;
+    }
     dynamic arg1, arg2;
     // ignore: unnecessary_null_comparison
-    if (arg != null) {
-      arg1 = arg[0];
-      arg2 = arg[1];
+    if (args != null) {
+      arg1 = args[0];
+      arg2 = args[1];
+      markers.add(args[2]);
     }
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
@@ -52,6 +75,7 @@ class _homeState extends State<home> {
               onMapCreated: (controller) {
                 _controller.complete(controller);
               },
+              markers: markers,
               compassEnabled: true,
             ),
             // Your main page content goes here

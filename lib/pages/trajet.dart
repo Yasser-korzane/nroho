@@ -1,6 +1,12 @@
+import 'dart:developer';
+
+import 'package:appcouvoiturage/Shared/permission.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/date_time.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:places_service/places_service.dart';
 
@@ -16,14 +22,17 @@ class OuAllezVous extends StatefulWidget {
 class _OuAllezVousState extends State<OuAllezVous> {
   String querry = "";
   String? arrive, depart;
+  late PlacesAutoCompleteResult departData, ArriveData;
   Selected caseSelected = Selected.none;
-  LocationData? current_location;
+  Position? current_location;
+  final Location _location = Location();
   final _placesService = PlacesService();
 
-  void getLocation() {
-    Location location = Location();
-    location.getLocation().then((value) => current_location = value);
-  }
+  Future<dynamic> getPlaceFromId(String placeID) async {
+  var response = await Dio().get(
+      "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
+  return response.data;
+}
 
   Future<dynamic> getPredictions(String querry) async {
     List<PlacesAutoCompleteResult>? response;
@@ -38,7 +47,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
     super.initState();
     _placesService.initialize(
         apiKey: "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
-    //getLocation();
   }
 
   @override
@@ -195,22 +203,25 @@ class _OuAllezVousState extends State<OuAllezVous> {
                           shrinkWrap: true,
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                            var prediction = snapshot.data[index].description;
+                            var data = snapshot.data[index];
+                            var prediction = data.description;
                             return ListTile(
                               onTap: () {
                                 setState(() {
                                   switch (caseSelected) {
                                     case Selected.depart:
+                                      departData = data;
                                       depart = prediction;
                                       break;
                                     case Selected.arrivee:
+                                      ArriveData = data;
                                       arrive = prediction;
                                       break;
                                     default:
                                   }
                                 });
                               },
-                              title: Text('$index : $prediction'),
+                              title: Text(prediction),
                             );
                           },
                         );
@@ -282,8 +293,15 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (depart != null && arrive != null) {
+                          getPlaceFromId(departData.placeId!).then((value) {
+                          var lat = value["result"]["geometry"]["location"]["lat"];;
+                          var lng = value["result"]["geometry"]["location"]["lng"];;
+                          Marker departMarker = Marker(
+                              markerId: MarkerId(depart.toString()),
+                              position: LatLng(lat, lng));
                           Navigator.pushNamed(context, "home",
-                              arguments: [depart, arrive]);
+                              arguments: [depart, arrive,departMarker]);
+                          });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
