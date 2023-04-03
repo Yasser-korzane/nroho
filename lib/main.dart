@@ -1,20 +1,11 @@
-import 'dart:ffi';
-
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/pages/signup.dart';
-import 'package:appcouvoiturage/pages/login.dart';
-import 'package:appcouvoiturage/pages/connection.dart';
-import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/Services/wrapper.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +16,16 @@ Future<void> main() async {
     runApp(
       MaterialApp(
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: MyApp(),
+        home: const home(),
+        routes: {
+          "home": (context) {
+            return const home();
+          }
+        },
       ),
     );
   });
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -54,7 +49,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
+        home:
+            const Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
       ),
     );
   }
