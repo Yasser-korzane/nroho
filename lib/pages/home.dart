@@ -268,6 +268,7 @@ class _homeState extends State<home> {
             ),
             NavigationDestination(
               icon: GestureDetector(
+<<<<<<< Updated upstream
                   onTap: () {
                     Navigator.push(
                         context,
@@ -279,6 +280,17 @@ class _homeState extends State<home> {
                   child: const Icon(Icons.question_answer_outlined)),
               selectedIcon: const Icon(Icons.question_answer),
               label: 'Assistane',
+=======
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Assistance()));
+                  Get.to(() => Assistance(),transition: Transition.fade);
+
+                },
+                  child: Icon(Icons.settings_accessibility)),
+              selectedIcon: Icon(Icons.question_answer),
+              label: 'Assistance',
+>>>>>>> Stashed changes
             ),
             NavigationDestination(
               icon: GestureDetector(
