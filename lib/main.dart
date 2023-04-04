@@ -16,12 +16,13 @@ Future<void> main() async {
     runApp(
       MaterialApp(
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: const home(),
+        home: MyApp(),
+       /* home: const home(),
         routes: {
           "home": (context) {
             return const home();
           }
-        },
+        },*/
       ),
     );
   });
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home:
-            const Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
+             Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
       ),
     );
   }

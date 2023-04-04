@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/assistance.dart';
@@ -8,7 +9,6 @@ import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
@@ -282,21 +282,16 @@ class _homeState extends State<home> {
             ),
             NavigationDestination(
               icon: GestureDetector(
-                child: const Icon(Icons.account_circle_outlined),
-                onTap: () {
-                  // Navigate to profile page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Profilepage()),
-                  );
-                  Get.to(() => const Profilepage(),
-                      transition: Transition.leftToRightWithFade);
-                },
-              ),
-              selectedIcon: const Icon(
-                Icons.account_circle,
-              ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profilepage()));
+                    Get.to(() => const Profilepage(),
+                        transition: Transition.leftToRightWithFade);
+                  },
+                  child: const Icon(Icons.account_circle_outlined)),
+              selectedIcon: const Icon(Icons.account_circle),
               label: 'Profile',
             ),
           ],
