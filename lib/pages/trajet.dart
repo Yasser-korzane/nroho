@@ -59,9 +59,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    double screenWidth = screenSize.width;
-    double screenHeight = screenSize.height;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -77,9 +75,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
             ));
           },
         ),
-        title: const Text(
+        title:  Text(
           'Où allez-vous ?',
-          style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+          style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -108,8 +106,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
                 Column(children: [
                   SizedBox(
-                    width: 285,
-                    height: 42,
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
                     child: TextField(
                       controller: _departController,
                       onChanged: (value) {
@@ -119,23 +117,23 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       },
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0x000000ff)),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
-                        fillColor: Colors.grey,
+                        fillColor: Colors.white,
                         filled: true,
                         hintText: 'Départ',
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                   SizedBox(
+                    height: size.height * 0.01,
                   ),
                   SizedBox(
-                    width: 285,
-                    height: 42,
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
                     child: TextField(
                       controller: _arriveController,
                       onChanged: (value) {
@@ -145,12 +143,12 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       },
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0x000000ff)),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
-                        fillColor: Colors.grey,
+                        fillColor: Colors.white,
                         filled: true,
                         hintText: 'Arrivée',
                       ),
@@ -159,10 +157,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ]),
               ]),
 
-              const SizedBox(height: 10),
-              const DateTimePickerRow(),
-              const SizedBox(height: 10),
-              const Divider(
+               SizedBox(height:size.height * 0.02 ),
+               DateTimePickerRow(),
+               SizedBox(height:size.height * 0.01 ),
+               Divider(
                 color: Colors.blueGrey,
                 thickness: 2,
               ),
@@ -199,15 +197,12 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   Icons.gps_fixed,
                   color: Colors.black,
                 ),
-                title: const Text(
+                title:  Text(
                   'Utiliser ma position',
-                  style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                  style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
                 ),
               ),
-              const Divider(
-                color: Colors.blueGrey,
-                thickness: 1,
-              ),
+
               FutureBuilder(
                   future: getPredictions(querry),
                   builder: (context, snapshot) {
@@ -276,15 +271,12 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     style: TextStyle(
                         color: Color(0xff344D59),
                         fontSize: 23,
-                        backgroundColor: Colors.grey),
+                        backgroundColor: Colors.grey), textAlign: TextAlign.center,
                   ),
                 ),
               ),
 
-              const Divider(
-                color: Colors.blueGrey,
-                thickness: 1,
-              ),
+
               Row(
                 children: [
                   IconButton(
@@ -293,9 +285,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ),
                     onPressed: () {},
                   ),
-                  const Text(
+                   Text(
                     'Maoklane - Setif',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
                   ),
                 ],
               ),
@@ -311,9 +303,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ),
                     onPressed: () {},
                   ),
-                  const Text(
+                   Text(
                     'Oued Smar - Alger',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
                   ),
                 ],
               ),
@@ -323,8 +315,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                    width: 210,
-                    height: 43,
+                    width: size.width * 0.51,
+                    height:size.height * 0.048,
                     child: ElevatedButton(
                       onPressed: () {
                         if (depart != null && arrive != null) {
@@ -363,18 +355,22 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                         ),
+                        backgroundColor: Colors.blue,
                       ),
-                      child: const Text(
+                      child:  Text(
                         'Valider',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(color:Colors.white,fontSize: 20),),
+
                       ),
-                    )),
-              ),
+                    ),
+
+                    ),
             ],
-          ),
         ),
+              ),
+
+
       ),
     );
   }
 }
-// Ajout SingleChildScrollView
