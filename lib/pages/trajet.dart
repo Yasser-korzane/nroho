@@ -1,13 +1,10 @@
-import 'dart:developer';
-
-import 'package:appcouvoiturage/Shared/permission.dart';
+import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/date_time.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:places_service/places_service.dart';
 
 enum Selected { depart, arrivee, none }
@@ -20,19 +17,22 @@ class OuAllezVous extends StatefulWidget {
 }
 
 class _OuAllezVousState extends State<OuAllezVous> {
+  final TextEditingController _departController = TextEditingController();
+  final TextEditingController _arriveController = TextEditingController();
   String querry = "";
   String? arrive, depart;
-  late PlacesAutoCompleteResult departData, ArriveData;
+  bool showSuggestion = true;
+  PlacesAutoCompleteResult? departData, ArriveData;
   Selected caseSelected = Selected.none;
   Position? current_location;
-  final Location _location = Location();
+  final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
-
+  BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
   Future<dynamic> getPlaceFromId(String placeID) async {
-  var response = await Dio().get(
-      "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
-  return response.data;
-}
+    var response = await Dio().get(
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
+    return response.data;
+  }
 
   Future<dynamic> getPredictions(String querry) async {
     List<PlacesAutoCompleteResult>? response;
@@ -42,9 +42,17 @@ class _OuAllezVousState extends State<OuAllezVous> {
     return response;
   }
 
+  void setCustomMarker() {
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration.empty, "assets/images/marker.png")
+        .then((icon) => customMarker = icon);
+  }
+
   @override
   void initState() {
     super.initState();
+    _location.initialize(context);
+    setCustomMarker();
     _placesService.initialize(
         apiKey: "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
   }
@@ -102,9 +110,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   SizedBox(
                     width: 285,
                     height: 42,
-                    child: TextFormField(
-                      controller: TextEditingController(text: depart),
+                    child: TextField(
+                      controller: _departController,
                       onChanged: (value) {
+                        showSuggestion = true;
                         querry = value;
                         caseSelected = Selected.depart;
                       },
@@ -128,8 +137,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     width: 285,
                     height: 42,
                     child: TextField(
-                      controller: TextEditingController(text: arrive),
+                      controller: _arriveController,
                       onChanged: (value) {
+                        showSuggestion = true;
                         querry = value;
                         caseSelected = Selected.arrivee;
                       },
@@ -174,7 +184,17 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 thickness: 1,
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    depart = "Current Position";
+                    _departController.value = TextEditingValue(
+                      text: "Current Position",
+                      selection: TextSelection.fromPosition(
+                        const TextPosition(offset: "Current Position".length),
+                      ),
+                    );
+                  });
+                },
                 leading: const Icon(
                   Icons.gps_fixed,
                   color: Colors.black,
@@ -192,7 +212,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   future: getPredictions(querry),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
+                      if (snapshot.hasData && showSuggestion) {
                         return ListView.separated(
                           separatorBuilder: (context, index) {
                             return const Divider(
@@ -208,14 +228,29 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             return ListTile(
                               onTap: () {
                                 setState(() {
+                                  showSuggestion = false;
                                   switch (caseSelected) {
                                     case Selected.depart:
                                       departData = data;
                                       depart = prediction;
+                                      _departController.value =
+                                          TextEditingValue(
+                                        text: depart!,
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(offset: depart!.length),
+                                        ),
+                                      );
                                       break;
                                     case Selected.arrivee:
                                       ArriveData = data;
                                       arrive = prediction;
+                                      _arriveController.value =
+                                          TextEditingValue(
+                                        text: arrive!,
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(offset: arrive!.length),
+                                        ),
+                                      );
                                       break;
                                     default:
                                   }
@@ -293,15 +328,30 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (depart != null && arrive != null) {
-                          getPlaceFromId(departData.placeId!).then((value) {
-                          var lat = value["result"]["geometry"]["location"]["lat"];;
-                          var lng = value["result"]["geometry"]["location"]["lng"];;
-                          Marker departMarker = Marker(
-                              markerId: MarkerId(depart.toString()),
-                              position: LatLng(lat, lng));
-                          Navigator.pushNamed(context, "home",
-                              arguments: [depart, arrive,departMarker]);
-                          });
+                          if (departData != null) {
+                            getPlaceFromId(departData!.placeId!).then((value) {
+                              var lat = value["result"]["geometry"]["location"]
+                                  ["lat"];
+                              var lng = value["result"]["geometry"]["location"]
+                                  ["lng"];
+                              Marker departMarker = Marker(
+                                markerId: MarkerId(depart.toString()),
+                                position: LatLng(lat, lng),
+                                icon: customMarker,
+                              );
+
+                              Navigator.pushNamed(context, "home",
+                                  arguments: [depart, arrive, departMarker]);
+                            });
+                          } else {
+                            Marker currentPosMarker = Marker(
+                                markerId: MarkerId(depart.toString()),
+                                position: LatLng(
+                                    _location.getCurrentPos.latitude,
+                                    _location.getCurrentPos.longitude));
+                            Navigator.pushNamed(context, "home",
+                                arguments: [depart, arrive, currentPosMarker]);
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(

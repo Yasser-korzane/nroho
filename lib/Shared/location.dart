@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:appcouvoiturage/Shared/permission.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,13 +12,13 @@ class LocationManager {
   }
   Position? _currentLocation;
   Future<void> initialize(BuildContext context) async {
-    handleLocationPermission(context).then((value) {
-      Geolocator.getCurrentPosition().then((value2) {
-        _currentLocation = value2;
-        log(_currentLocation.toString());
-        return;
+    if (_currentLocation == null) {
+      await handleLocationPermission(context).then((value) async {
+        await Geolocator.getCurrentPosition().then((value2) {
+          _currentLocation = value2;
+        });
       });
-    });
+    }
   }
 
   Position get getCurrentPos => _currentLocation!;
