@@ -128,7 +128,7 @@ class DriverListPage extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'Driver.depart',
+                                    driver.depart,
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15),
                                   ),
@@ -141,7 +141,7 @@ class DriverListPage extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'Driver.arrivee',
+                                    driver.arrivee,
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15),
                                   ),

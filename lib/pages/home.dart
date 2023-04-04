@@ -115,7 +115,7 @@ class _homeState extends State<home> {
               initialCameraPosition: CameraPosition(
                   target: LatLng(current_location!.latitude,
                       current_location!.longitude),
-                  zoom: 13.5),
+                  zoom: 14),
               onMapCreated: (controller) {
                 _controller.complete(controller);
               },
