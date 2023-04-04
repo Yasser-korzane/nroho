@@ -6,6 +6,7 @@ import 'package:appcouvoiturage/Services/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:appcouvoiturage/pages/Historique.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -383,8 +383,7 @@ packages:
       sha256: "5528c2f391ededb7775ec1daa69e65a2d61276f7552de2b5f7b8d34ee9fd4ab7"
       url: "https://pub.dev"
     source: hosted
-<<<<<<< Updated upstream
-    version: "0.6.7"
+    version: "0.6.5"
   json_annotation:
     dependency: transitive
     description:
@@ -393,9 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.0"
-=======
-    version: "0.6.5"
->>>>>>> Stashed changes
   lints:
     dependency: transitive
     description:
@@ -616,8 +612,7 @@ packages:
       sha256: ad540f65f92caa91bf21dfc8ffb8c589d6e4dc0c2267818b4cc2792857706206
       url: "https://pub.dev"
     source: hosted
-<<<<<<< Updated upstream
-    version: "0.4.18"
+    version: "0.4.16"
   tuple:
     dependency: transitive
     description:
@@ -626,9 +621,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-=======
-    version: "0.4.16"
->>>>>>> Stashed changes
   typed_data:
     dependency: transitive
     description:

@@ -42,7 +42,7 @@ class _homeState extends State<home> {
     setCustomMarker();
     LocationManager locationManager = LocationManager();
     locationManager.initialize(context).then(
-      (value) {
+          (value) {
         current_location = locationManager.getCurrentPos;
         addMarker();
       },
@@ -61,7 +61,7 @@ class _homeState extends State<home> {
 
   Future<void> setCustomMarker() async {
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/images/current_location.png")
+        ImageConfiguration.empty, "assets/images/current_location.png")
         .then((icon) => locationMarker = icon);
   }
 
@@ -72,7 +72,7 @@ class _homeState extends State<home> {
         markers.add(Marker(
           markerId: const MarkerId("cuurent_pos"),
           position:
-              LatLng(current_location!.latitude, current_location!.longitude),
+          LatLng(current_location!.latitude, current_location!.longitude),
           icon: BitmapDescriptor.fromBytes(value),
         ));
       });
@@ -80,7 +80,7 @@ class _homeState extends State<home> {
   }
 
   final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -104,145 +104,145 @@ class _homeState extends State<home> {
       child: Scaffold(
         body: current_location == null
             ? const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ),
-              )
+          child: CircularProgressIndicator(
+            color: Colors.blue,
+          ),
+        )
             : Stack(
+          children: [
+            GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: CameraPosition(
+                  target: LatLng(current_location!.latitude,
+                      current_location!.longitude),
+                  zoom: 13.5),
+              onMapCreated: (controller) {
+                _controller.complete(controller);
+              },
+              markers: markers,
+            ),
+            // Your main page content goes here
+            Container(
+              child: Column(
                 children: [
-                  GoogleMap(
-                    mapType: MapType.normal,
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(current_location!.latitude,
-                            current_location!.longitude),
-                        zoom: 13.5),
-                    onMapCreated: (controller) {
-                      _controller.complete(controller);
-                    },
-                    markers: markers,
-                  ),
-                  // Your main page content goes here
-                  Container(
-                    child: Column(
-                      children: [
-                        Expanded(flex: 60, child: Container()),
-                        Expanded(
-                          flex: 40,
-                          child: Container(
-                            padding: EdgeInsets.all(screenWidth * 0.1),
-                            // use 10% of screen width as padding
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(
-                                        screenWidth *
-                                            0.05), // use 5% of screen width as border radius
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => const OuAllezVous(),
-                                          transition: Transition.fade);
-                                    },
-                                    child: TextField(
-                                      controller: TextEditingController(
-                                          text: arg1 ?? ""),
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const OuAllezVous(),
-                                            ));
-                                      },
-                                      readOnly: true,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Choisir un point de depart',
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
-                                        border: InputBorder.none,
-                                        // remove the border of the TextField
-                                        prefixIcon: Icon(Icons.my_location,
-                                            color: Colors.blue),
-                                      ),
-                                    ),
-                                  ),
+                  Expanded(flex: 60, child: Container()),
+                  Expanded(
+                    flex: 40,
+                    child: Container(
+                      padding: EdgeInsets.all(screenWidth * 0.1),
+                      // use 10% of screen width as padding
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth *
+                                      0.05), // use 5% of screen width as border radius
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(() => const OuAllezVous(),
+                                    transition: Transition.fade);
+                              },
+                              child: TextField(
+                                controller: TextEditingController(
+                                    text: arg1 ?? ""),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        const OuAllezVous(),
+                                      ));
+                                },
+                                readOnly: true,
+                                decoration: const InputDecoration(
+                                  labelText: 'Choisir un point de depart',
+                                  floatingLabelBehavior:
+                                  FloatingLabelBehavior.auto,
+                                  border: InputBorder.none,
+                                  // remove the border of the TextField
+                                  prefixIcon: Icon(Icons.my_location,
+                                      color: Colors.blue),
                                 ),
-                                SizedBox(height: screenHeight * 0.015),
-                                // use 3% of screen height as space between text fields
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(
-                                        screenWidth *
-                                            0.05), // use 5% of screen width as border radius
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => const OuAllezVous(),
-                                          transition: Transition.fade);
-                                    },
-                                    child: TextField(
-                                      controller: TextEditingController(
-                                          text: arg2 ?? ""),
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const OuAllezVous(),
-                                            ));
-                                      },
-                                      readOnly: true,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Choisir une destination',
-                                        floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
-                                        border: InputBorder.none,
-                                        // remove the border of the TextField
-                                        prefixIcon: Icon(
-                                            Icons.location_on_outlined,
-                                            color: Colors.blue),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                // use 4% of screen height as space between text fields and row
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: const [
-                                    RideTypeSelector(),
-                                  ],
-                                ),
-                              ],
+                              ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    top: screenHeight * 0.03,
-                    right: screenWidth * 0.04,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const details()));
-                      },
-                      child: const Icon(
-                        Icons.notifications_none_outlined,
-                        color: Colors.blue,
-                        size: 50,
+                          SizedBox(height: screenHeight * 0.015),
+                          // use 3% of screen height as space between text fields
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                  screenWidth *
+                                      0.05), // use 5% of screen width as border radius
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(() => const OuAllezVous(),
+                                    transition: Transition.fade);
+                              },
+                              child: TextField(
+                                controller: TextEditingController(
+                                    text: arg2 ?? ""),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                        const OuAllezVous(),
+                                      ));
+                                },
+                                readOnly: true,
+                                decoration: const InputDecoration(
+                                  labelText: 'Choisir une destination',
+                                  floatingLabelBehavior:
+                                  FloatingLabelBehavior.auto,
+                                  border: InputBorder.none,
+                                  // remove the border of the TextField
+                                  prefixIcon: Icon(
+                                      Icons.location_on_outlined,
+                                      color: Colors.blue),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.025),
+                          // use 4% of screen height as space between text fields and row
+                          Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              RideTypeSelector(),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
+            ),
+            Positioned(
+              top: screenHeight * 0.03,
+              right: screenWidth * 0.04,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const details()));
+                },
+                child: const Icon(
+                  Icons.notifications_none_outlined,
+                  color: Colors.blue,
+                  size: 50,
+                ),
+              ),
+            ),
+          ],
+        ),
 
         bottomNavigationBar: NavigationBar(
           selectedIndex: index,
@@ -268,7 +268,6 @@ class _homeState extends State<home> {
             ),
             NavigationDestination(
               icon: GestureDetector(
-<<<<<<< Updated upstream
                   onTap: () {
                     Navigator.push(
                         context,
@@ -280,17 +279,6 @@ class _homeState extends State<home> {
                   child: const Icon(Icons.question_answer_outlined)),
               selectedIcon: const Icon(Icons.question_answer),
               label: 'Assistane',
-=======
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Assistance()));
-                  Get.to(() => Assistance(),transition: Transition.fade);
-
-                },
-                  child: Icon(Icons.settings_accessibility)),
-              selectedIcon: Icon(Icons.question_answer),
-              label: 'Assistance',
->>>>>>> Stashed changes
             ),
             NavigationDestination(
               icon: GestureDetector(

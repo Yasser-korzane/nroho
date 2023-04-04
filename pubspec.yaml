@@ -77,13 +77,9 @@ flutter:
     - assets/images/ellipse.png
     - assets/images/logo.png
     - assets/images/partiehaut.png
-<<<<<<< Updated upstream
     - assets/images/contactUsBackground.png
     - assets/images/marker.png
     - assets/images/current_location.png
-=======
-    - assets/images/linkedInLogo.png
->>>>>>> Stashed changes
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
