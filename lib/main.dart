@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:appcouvoiturage/pages/Historique.dart';
+import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,8 +52,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home:
-             Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
+        home: Wrapper(), //const Connexin(title: 'Flutter Demo Home Page'),
       ),
     );
   }
