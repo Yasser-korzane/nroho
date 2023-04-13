@@ -7,6 +7,7 @@ import 'package:appcouvoiturage/pages/options.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -34,10 +35,14 @@ class _homeState extends State<home> {
   Position? current_location;
   BitmapDescriptor locationMarker = BitmapDescriptor.defaultMarker;
   bool loading = true;
+  final Set<Polyline> _polylineSet = <Polyline>{};
+  List<LatLng> polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
 
   @override
   void initState() {
     super.initState();
+    polylinePoints = PolylinePoints();
     markers = HashSet();
     setCustomMarker();
     LocationManager locationManager = LocationManager();
@@ -79,6 +84,22 @@ class _homeState extends State<home> {
     });
   }
 
+  void setPolylines(LatLng depart, LatLng arrive) async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k",
+        PointLatLng(depart.latitude, depart.longitude),
+        PointLatLng(arrive.latitude, arrive.longitude));
+    for (var element in result.points) {
+      polylineCoordinates.add(LatLng(element.latitude, element.longitude));
+    }
+    setState(() {
+      _polylineSet.add(Polyline(
+          polylineId: const PolylineId("Route"),
+          points: polylineCoordinates,
+          color: Colors.yellow));
+    });
+  }
+
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
 
@@ -86,15 +107,21 @@ class _homeState extends State<home> {
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)!.settings.arguments;
     List? args;
-    if (arg != null) {
+    bool noMarkersAdded = arg == null;
+    if (!noMarkersAdded) {
       args = arg as List;
     }
-    dynamic arg1, arg2;
-    // ignore: unnecessary_null_comparison
+    String? depart, arrive;
+    LatLng? departCoord, arriveCoord;
+    bool isUsingCurrentLocation = false;
     if (args != null) {
-      arg1 = args[0];
-      arg2 = args[1];
+      depart = args[0];
+      arrive = args[1];
       markers.add(args[2]);
+      markers.add(args[3]);
+      departCoord = args[4];
+      arriveCoord = args[5];
+      isUsingCurrentLocation = args[6];
     }
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
@@ -109,140 +136,147 @@ class _homeState extends State<home> {
           ),
         )
             : Stack(
-          children: [
-            GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(
-                  target: LatLng(current_location!.latitude,
-                      current_location!.longitude),
-                  zoom: 14),
-              onMapCreated: (controller) {
-                _controller.complete(controller);
-              },
-              markers: markers,
-            ),
-            // Your main page content goes here
-            Container(
-              child: Column(
                 children: [
-                  Expanded(flex: 60, child: Container()),
-                  Expanded(
-                    flex: 40,
-                    child: Container(
-                      padding: EdgeInsets.all(screenWidth * 0.1),
-                      // use 10% of screen width as padding
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  screenWidth *
-                                      0.05), // use 5% of screen width as border radius
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(() => const OuAllezVous(),
-                                    transition: Transition.fade);
-                              },
-                              child: TextField(
-                                controller: TextEditingController(
-                                    text: arg1 ?? ""),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                        const OuAllezVous(),
-                                      ));
-                                },
-                                readOnly: true,
-                                decoration: const InputDecoration(
-                                  labelText: 'Choisir un point de depart',
-                                  floatingLabelBehavior:
-                                  FloatingLabelBehavior.auto,
-                                  border: InputBorder.none,
-                                  // remove the border of the TextField
-                                  prefixIcon: Icon(Icons.my_location,
-                                      color: Colors.blue),
+                  GoogleMap(
+                    polylines: _polylineSet,
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                        target: LatLng(current_location!.latitude,
+                            current_location!.longitude),
+                        zoom: 13.5),
+                    onMapCreated: (controller) {
+                      _controller.complete(controller);
+                      if (!noMarkersAdded) {
+                        setPolylines(departCoord!, arriveCoord!);
+                      }
+                    },
+                    markers: markers,
+                  ),
+                  // Your main page content goes here
+                  Container(
+                    child: Column(
+                      children: [
+                        Expanded(flex: 60, child: Container()),
+                        Expanded(
+                          flex: 40,
+                          child: Container(
+                            padding: EdgeInsets.all(screenWidth * 0.1),
+                            // use 10% of screen width as padding
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth *
+                                            0.05), // use 5% of screen width as border radius
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => const OuAllezVous(),
+                                          transition: Transition.fade);
+                                    },
+                                    child: TextField(
+                                      controller: TextEditingController(
+                                          text: depart ?? ""),
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const OuAllezVous(),
+                                            ));
+                                      },
+                                      readOnly: true,
+                                      decoration: InputDecoration(
+                                        labelText: 'Choisir un point de depart',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        border: InputBorder.none,
+                                        // remove the border of the TextField
+                                        prefixIcon: Icon(
+                                            isUsingCurrentLocation
+                                                ? Icons.gps_fixed
+                                                : Icons.gps_not_fixed,
+                                            color: Colors.blue),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.015),
-                          // use 3% of screen height as space between text fields
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                  screenWidth *
-                                      0.05), // use 5% of screen width as border radius
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.to(() => const OuAllezVous(),
-                                    transition: Transition.fade);
-                              },
-                              child: TextField(
-                                controller: TextEditingController(
-                                    text: arg2 ?? ""),
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                        const OuAllezVous(),
-                                      ));
-                                },
-                                readOnly: true,
-                                decoration: const InputDecoration(
-                                  labelText: 'Choisir une destination',
-                                  floatingLabelBehavior:
-                                  FloatingLabelBehavior.auto,
-                                  border: InputBorder.none,
-                                  // remove the border of the TextField
-                                  prefixIcon: Icon(
-                                      Icons.location_on_outlined,
-                                      color: Colors.blue),
+                                SizedBox(height: screenHeight * 0.015),
+                                // use 3% of screen height as space between text fields
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(
+                                        screenWidth *
+                                            0.05), // use 5% of screen width as border radius
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => const OuAllezVous(),
+                                          transition: Transition.fade);
+                                    },
+                                    child: TextField(
+                                      controller: TextEditingController(
+                                          text: arrive ?? ""),
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const OuAllezVous(),
+                                            ));
+                                      },
+                                      readOnly: true,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Choisir une destination',
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        border: InputBorder.none,
+                                        // remove the border of the TextField
+                                        prefixIcon: Icon(
+                                            Icons.location_on_outlined,
+                                            color: Colors.blue),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(height: screenHeight * 0.025),
+                                // use 4% of screen height as space between text fields and row
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: const [
+                                    RideTypeSelector(),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(height: screenHeight * 0.025),
-                          // use 4% of screen height as space between text fields and row
-                          Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              RideTypeSelector(),
-                            ],
-                          ),
-                        ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: screenHeight * 0.03,
+                    right: screenWidth * 0.04,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const details()));
+                      },
+                      child: const Icon(
+                        Icons.notifications_none_outlined,
+                        color: Colors.blue,
+                        size: 50,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-            ),
-            Positioned(
-              top: screenHeight * 0.03,
-              right: screenWidth * 0.04,
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const details()));
-                },
-                child: const Icon(
-                  Icons.notifications_none_outlined,
-                  color: Colors.blue,
-                  size: 50,
-                ),
-              ),
-            ),
-          ],
-        ),
 
         bottomNavigationBar: NavigationBar(
           selectedIndex: index,

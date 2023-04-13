@@ -21,6 +21,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _arriveController = TextEditingController();
   String querry = "";
   String? arrive, depart;
+  LatLng? departCoord, arriveCoord;
   bool showSuggestion = true;
   PlacesAutoCompleteResult? departData, ArriveData;
   Selected caseSelected = Selected.none;
@@ -325,24 +326,64 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               var lat = value["result"]["geometry"]["location"]
                               ["lat"];
                               var lng = value["result"]["geometry"]["location"]
-                              ["lng"];
+                                  ["lng"];
+                              departCoord = LatLng(lat, lng);
                               Marker departMarker = Marker(
                                 markerId: MarkerId(depart.toString()),
-                                position: LatLng(lat, lng),
-                                icon: customMarker,
+                                position: departCoord!,
                               );
+                              getPlaceFromId(ArriveData!.placeId!)
+                                  .then((value) {
+                                var lat = value["result"]["geometry"]
+                                    ["location"]["lat"];
+                                var lng = value["result"]["geometry"]
+                                    ["location"]["lng"];
+                                arriveCoord = LatLng(lat, lng);
+                                Marker arriveMarker = Marker(
+                                  markerId: MarkerId(depart.toString()),
+                                  position: arriveCoord!,
+                                );
 
-                              Navigator.pushNamed(context, "home",
-                                  arguments: [depart, arrive, departMarker]);
+                                Navigator.pushNamed(context, "home",
+                                    arguments: [
+                                      depart,
+                                      arrive,
+                                      departMarker,
+                                      arriveMarker,
+                                      departCoord,
+                                      arriveCoord,
+                                      false
+                                    ]);
+                              });
                             });
                           } else {
-                            Marker currentPosMarker = Marker(
+                            getPlaceFromId(ArriveData!.placeId!).then((value) {
+                              var lat = value["result"]["geometry"]["location"]
+                                  ["lat"];
+                              var lng = value["result"]["geometry"]["location"]
+                                  ["lng"];
+                              arriveCoord = LatLng(lat, lng);
+                              Marker arriveMarker = Marker(
                                 markerId: MarkerId(depart.toString()),
-                                position: LatLng(
-                                    _location.getCurrentPos.latitude,
-                                    _location.getCurrentPos.longitude));
-                            Navigator.pushNamed(context, "home",
-                                arguments: [depart, arrive, currentPosMarker]);
+                                position: arriveCoord!,
+                              );
+
+                              Marker currentPosMarker = Marker(
+                                  markerId: MarkerId(depart.toString()),
+                                  position: LatLng(
+                                      _location.getCurrentPos.latitude,
+                                      _location.getCurrentPos.longitude));
+                              Navigator.pushNamed(context, "home", arguments: [
+                                depart,
+                                arrive,
+                                currentPosMarker,
+                                arriveMarker,
+                                LatLng(_location.getCurrentPos.latitude,
+                                    _location.getCurrentPos.longitude),
+                                arriveCoord,
+                                true
+                              ]);
+                            });
                           }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
