@@ -190,10 +190,12 @@ class _homeState extends State<home> {
                                       },
                                       readOnly: true,
                                       decoration: InputDecoration(
-                                        labelText: 'Choisir un point de depart',
+                                        hintText: 'Choisir un point de depart',
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.auto,
                                         border: InputBorder.none,
+                                        // fillColor: Colors.white,
+                                        // filled: true,
                                         // remove the border of the TextField
                                         prefixIcon: Icon(
                                             isUsingCurrentLocation
@@ -231,14 +233,16 @@ class _homeState extends State<home> {
                                       },
                                       readOnly: true,
                                       decoration: const InputDecoration(
-                                        labelText: 'Choisir une destination',
+                                        hintText: 'Choisir une destination',
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.auto,
-                                        border: InputBorder.none,
                                         // remove the border of the TextField
                                         prefixIcon: Icon(
                                             Icons.location_on_outlined,
                                             color: Colors.blue),
+                                        border: InputBorder.none,
+                                        // fillColor: Colors.white,
+                                        // filled: true,
                                       ),
                                     ),
                                   ),
