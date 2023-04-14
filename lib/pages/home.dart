@@ -14,6 +14,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -131,7 +132,7 @@ class _homeState extends State<home> {
       child: Scaffold(
         body: current_location == null
             ? const Center(
-          child: CircularProgressIndicator(
+             child: CircularProgressIndicator(
             color: Colors.blue,
           ),
         )
@@ -278,58 +279,125 @@ class _homeState extends State<home> {
                 ],
               ),
 
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: index,
-          onDestinationSelected: (index) => setState(() => this.index = index),
-          height: screenHeight * 0.06,
-          destinations: [
-            const NavigationDestination(
-              icon: Icon(Icons.home_outlined),
-              selectedIcon: Icon(Icons.home),
-              label: 'Actuel',
-            ),
-            NavigationDestination(
-              icon: GestureDetector(
-                child: const Icon(Icons.directions_car_filled_outlined),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const options()));
-                  Get.to(() => const options(), transition: Transition.fade);
-                },
+
+
+        bottomNavigationBar: Container(
+          height: screenHeight * 0.075,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 20,
+                color: Colors.black.withOpacity(.1),
+              )
+            ],
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              child: GNav(
+                  rippleColor: Colors.grey[800]!,
+                  hoverColor: Colors.blueGrey[700]!,
+                  gap: 8,
+                  activeColor: Colors.black,
+                  iconSize: 24,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  duration: Duration(milliseconds: 400),
+                  tabBackgroundColor: Colors.grey[100]!,
+                  color: Colors.black,
+                  tabs: [
+                    GButton(
+                      icon: Icons.home,
+                      onPressed: (){
+
+                      },
+                      text: 'Actuel',
+                    ),
+                    GButton(
+                      icon: Icons.directions_car_filled,
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => options()));
+                      },
+                      text: 'Trajets',
+                    ),
+                    GButton(
+                      icon: Icons.question_answer_outlined,
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  Assistance()));
+                      },
+                      text: 'Assistance',
+                    ),
+                    GButton(
+                      icon: Icons.account_circle_outlined,
+                      onPressed: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) =>Profilepage()));
+                      },
+                      text: 'Profile',
+                    ),
+                  ],
+                  selectedIndex: index,
+                  onTabChange: (index) {
+                    setState(() {
+                      var _selectedIndex = index;
+                    });
+                  }
               ),
-              selectedIcon: const Icon(Icons.directions_car_filled),
-              label: 'Trajets',
             ),
-            NavigationDestination(
-              icon: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Assistance()));
-                    Get.to(() => const Assistance(),
-                        transition: Transition.fade);
-                  },
-                  child: const Icon(Icons.question_answer_outlined)),
-              selectedIcon: const Icon(Icons.question_answer),
-              label: 'Assistane',
-            ),
-            NavigationDestination(
-              icon: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Profilepage()));
-                    Get.to(() => const Profilepage(),
-                        transition: Transition.leftToRightWithFade);
-                  },
-                  child: const Icon(Icons.account_circle_outlined)),
-              selectedIcon: const Icon(Icons.account_circle),
-              label: 'Profile',
-            ),
-          ],
+          ),
         ),
+        // bottomNavigationBar: NavigationBar(
+        //   selectedIndex: index,
+        //   onDestinationSelected: (index) => setState(() => this.index = index),
+        //   height: screenHeight * 0.06,
+        //   destinations: [
+        //     const NavigationDestination(
+        //       icon: Icon(Icons.home_outlined),
+        //       selectedIcon: Icon(Icons.home),
+        //       label: 'Actuel',
+        //     ),
+        //     NavigationDestination(
+        //       icon: GestureDetector(
+        //         child: const Icon(Icons.directions_car_filled_outlined),
+        //         onTap: () {
+        //           Navigator.push(context,
+        //               MaterialPageRoute(builder: (context) => const options()));
+        //           Get.to(() => const options(), transition: Transition.fade);
+        //         },
+        //       ),
+        //       selectedIcon: const Icon(Icons.directions_car_filled),
+        //       label: 'Trajets',
+        //     ),
+        //     NavigationDestination(
+        //       icon: GestureDetector(
+        //           onTap: () {
+        //             Navigator.push(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                     builder: (context) => const Assistance()));
+        //             Get.to(() => const Assistance(),
+        //                 transition: Transition.fade);
+        //           },
+        //           child: const Icon(Icons.question_answer_outlined)),
+        //       selectedIcon: const Icon(Icons.question_answer),
+        //       label: 'Assistane',
+        //     ),
+        //     NavigationDestination(
+        //       icon: GestureDetector(
+        //           onTap: () {
+        //             Navigator.push(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                     builder: (context) => const Profilepage()));
+        //             Get.to(() => const Profilepage(),
+        //                 transition: Transition.leftToRightWithFade);
+        //           },
+        //           child: const Icon(Icons.account_circle_outlined)),
+        //       selectedIcon: const Icon(Icons.account_circle),
+        //       label: 'Profile',
+        //     ),
+        //   ],
+        // ),
 
         // body: FlutterMap(
         //   options:  new MapOptions(
