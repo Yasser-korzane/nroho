@@ -50,6 +50,7 @@ dependencies:
   geocoding: ^2.1.0
   flutter_polyline_points: ^1.0.0
   google_nav_bar: ^5.0.6
+  loader_overlay: ^2.2.0
 
 dev_dependencies:
   flutter_test:
