@@ -29,13 +29,8 @@ class _ProfilepageState extends State<Profilepage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.chevron_left, color: Colors.black)),
           title: Center(
-              child: Text('Profile       ',
+              child: Text('Profile',
                   style: Theme.of(context).textTheme.headlineMedium)),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -59,7 +54,7 @@ class _ProfilepageState extends State<Profilepage> {
                   ],
                 ),
                  SizedBox(height: screenHeight * 0.015),
-                Text('data', style: Theme.of(context).textTheme.headline4),
+                Text('data', style: Theme.of(context).textTheme.headlineMedium),
                  RatingWidget(color: Colors.yellow,rating: 3.5,size: screenWidth*0.05),
                 SizedBox(height: screenHeight * 0.005),
                 Text('mohammedgrine@weal.harach',
