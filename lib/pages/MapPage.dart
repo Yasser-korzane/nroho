@@ -186,9 +186,10 @@ class _MywidState extends State<Mywid> {
                               // filled: true,
                               // remove the border of the TextField
                               prefixIcon: Icon(
-                                  isUsingCurrentLocation
-                                      ? Icons.gps_fixed
-                                      : Icons.gps_not_fixed,
+                                  // isUsingCurrentLocation
+                                  //     ? Icons.gps_fixed
+                                  //     : Icons.gps_not_fixed,
+                                Icons.gps_fixed_outlined,
                                   color: Colors.blue),
                             ),
                           ),
@@ -306,7 +307,7 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         fillColor: Colors.blue,
         borderRadius: BorderRadius.circular(20.0),
         disabledColor: Colors.white,
-        children: const [
+        children:  [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
             child: Text('Passager'),

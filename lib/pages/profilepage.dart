@@ -49,8 +49,7 @@ class _ProfilepageState extends State<Profilepage> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: const Image(
-                                image: NetworkImage(
-                                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE')))),
+                                image: NetworkImage('https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE')))),
                   ],
                 ),
                  SizedBox(height: screenHeight * 0.015),

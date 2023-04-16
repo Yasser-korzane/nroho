@@ -49,16 +49,16 @@ class _homeState extends State<home> {
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              padding:  EdgeInsets.symmetric(horizontal: screenHeight*0.015, vertical: screenSize.width * 0.001),
               child: GNav(
-                  rippleColor: Colors.grey[800]!,
-                  hoverColor: Colors.blueGrey[700]!,
+                  rippleColor: Colors.grey[400]!,
+                  hoverColor: Colors.blueGrey[300]!,
                   gap: 8,
-                  activeColor: Colors.black,
+                  activeColor: Colors.blueGrey,
                   iconSize: 24,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  duration: Duration(milliseconds: 400),
-                  tabBackgroundColor: Colors.grey[100]!,
+                  duration: Duration(milliseconds: 200),
+                  tabBackgroundColor: Colors.grey[300]!,
                   color: Colors.black,
                   tabs: [
                     GButton(
