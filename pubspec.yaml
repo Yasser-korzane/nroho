@@ -48,6 +48,9 @@ dependencies:
   location: ^4.4.0
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+  flutter_polyline_points: ^1.0.0
+  google_nav_bar: ^5.0.6
+  loader_overlay: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +81,9 @@ flutter:
     - assets/images/logo.png
     - assets/images/partiehaut.png
     - assets/images/contactUsBackground.png
+    - assets/images/marker.png
+    - assets/images/current_location.png
+    - assets/images/linkedInLogo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

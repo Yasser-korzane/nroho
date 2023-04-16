@@ -1,13 +1,10 @@
-import 'dart:developer';
-
-import 'package:appcouvoiturage/Shared/permission.dart';
+import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/date_time.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:places_service/places_service.dart';
 
 enum Selected { depart, arrivee, none }
@@ -20,19 +17,23 @@ class OuAllezVous extends StatefulWidget {
 }
 
 class _OuAllezVousState extends State<OuAllezVous> {
+  final TextEditingController _departController = TextEditingController();
+  final TextEditingController _arriveController = TextEditingController();
   String querry = "";
   String? arrive, depart;
-  late PlacesAutoCompleteResult departData, ArriveData;
+  LatLng? departCoord, arriveCoord;
+  bool showSuggestion = true;
+  PlacesAutoCompleteResult? departData, ArriveData;
   Selected caseSelected = Selected.none;
   Position? current_location;
-  final Location _location = Location();
+  final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
-
+  BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
   Future<dynamic> getPlaceFromId(String placeID) async {
-  var response = await Dio().get(
-      "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
-  return response.data;
-}
+    var response = await Dio().get(
+        "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
+    return response.data;
+  }
 
   Future<dynamic> getPredictions(String querry) async {
     List<PlacesAutoCompleteResult>? response;
@@ -42,18 +43,24 @@ class _OuAllezVousState extends State<OuAllezVous> {
     return response;
   }
 
+  void setCustomMarker() {
+    BitmapDescriptor.fromAssetImage(
+        ImageConfiguration.empty, "assets/images/marker.png")
+        .then((icon) => customMarker = icon);
+  }
+
   @override
   void initState() {
     super.initState();
+    _location.initialize(context);
+    setCustomMarker();
     _placesService.initialize(
         apiKey: "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
   }
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    double screenWidth = screenSize.width;
-    double screenHeight = screenSize.height;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -69,9 +76,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
             ));
           },
         ),
-        title: const Text(
+        title:  Text(
           'Où allez-vous ?',
-          style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+          style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -100,47 +107,49 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
                 Column(children: [
                   SizedBox(
-                    width: 285,
-                    height: 42,
-                    child: TextFormField(
-                      controller: TextEditingController(text: depart),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(
+                      controller: _departController,
                       onChanged: (value) {
+                        showSuggestion = true;
                         querry = value;
                         caseSelected = Selected.depart;
                       },
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0x000000ff)),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
-                        fillColor: Colors.grey,
+                        fillColor: Colors.white,
                         filled: true,
                         hintText: 'Départ',
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
+                   SizedBox(
+                    height: size.height * 0.01,
                   ),
                   SizedBox(
-                    width: 285,
-                    height: 42,
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
                     child: TextField(
-                      controller: TextEditingController(text: arrive),
+                      controller: _arriveController,
                       onChanged: (value) {
+                        showSuggestion = true;
                         querry = value;
                         caseSelected = Selected.arrivee;
                       },
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0x000000ff)),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
-                        fillColor: Colors.grey,
+                        fillColor: Colors.white,
                         filled: true,
                         hintText: 'Arrivée',
                       ),
@@ -149,10 +158,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ]),
               ]),
 
-              const SizedBox(height: 10),
-              const DateTimePickerRow(),
-              const SizedBox(height: 10),
-              const Divider(
+               SizedBox(height:size.height * 0.02 ),
+               DateTimePickerRow(),
+               SizedBox(height:size.height * 0.01 ),
+               Divider(
                 color: Colors.blueGrey,
                 thickness: 2,
               ),
@@ -174,25 +183,32 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 thickness: 1,
               ),
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    depart = "Current Position";
+                    _departController.value = TextEditingValue(
+                      text: "Current Position",
+                      selection: TextSelection.fromPosition(
+                        const TextPosition(offset: "Current Position".length),
+                      ),
+                    );
+                  });
+                },
                 leading: const Icon(
                   Icons.gps_fixed,
                   color: Colors.black,
                 ),
-                title: const Text(
+                title:  Text(
                   'Utiliser ma position',
-                  style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                  style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
                 ),
               ),
-              const Divider(
-                color: Colors.blueGrey,
-                thickness: 1,
-              ),
+
               FutureBuilder(
                   future: getPredictions(querry),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
+                      if (snapshot.hasData && showSuggestion) {
                         return ListView.separated(
                           separatorBuilder: (context, index) {
                             return const Divider(
@@ -208,14 +224,29 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             return ListTile(
                               onTap: () {
                                 setState(() {
+                                  showSuggestion = false;
                                   switch (caseSelected) {
                                     case Selected.depart:
                                       departData = data;
                                       depart = prediction;
+                                      _departController.value =
+                                          TextEditingValue(
+                                            text: depart!,
+                                            selection: TextSelection.fromPosition(
+                                              TextPosition(offset: depart!.length),
+                                            ),
+                                          );
                                       break;
                                     case Selected.arrivee:
                                       ArriveData = data;
                                       arrive = prediction;
+                                      _arriveController.value =
+                                          TextEditingValue(
+                                            text: arrive!,
+                                            selection: TextSelection.fromPosition(
+                                              TextPosition(offset: arrive!.length),
+                                            ),
+                                          );
                                       break;
                                     default:
                                   }
@@ -241,15 +272,12 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     style: TextStyle(
                         color: Color(0xff344D59),
                         fontSize: 23,
-                        backgroundColor: Colors.grey),
+                        backgroundColor: Colors.grey), textAlign: TextAlign.center,
                   ),
                 ),
               ),
 
-              const Divider(
-                color: Colors.blueGrey,
-                thickness: 1,
-              ),
+
               Row(
                 children: [
                   IconButton(
@@ -258,9 +286,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ),
                     onPressed: () {},
                   ),
-                  const Text(
+                   Text(
                     'Maoklane - Setif',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
                   ),
                 ],
               ),
@@ -276,9 +304,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ),
                     onPressed: () {},
                   ),
-                  const Text(
+                   Text(
                     'Oued Smar - Alger',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
                   ),
                 ],
               ),
@@ -288,43 +316,102 @@ class _OuAllezVousState extends State<OuAllezVous> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                    width: 210,
-                    height: 43,
+                    width: size.width * 0.51,
+                    height:size.height * 0.048,
                     child: ElevatedButton(
                       onPressed: () {
                         if (depart != null && arrive != null) {
-                          getPlaceFromId(departData.placeId!).then((value) {
-                          var lat = value["result"]["geometry"]["location"]["lat"];;
-                          var lng = value["result"]["geometry"]["location"]["lng"];;
-                          Marker departMarker = Marker(
-                              markerId: MarkerId(depart.toString()),
-                              position: LatLng(lat, lng));
-                          Navigator.pushNamed(context, "home",
-                              arguments: [depart, arrive,departMarker]);
-                          });
+                          if (departData != null) {
+                            getPlaceFromId(departData!.placeId!).then((value) {
+                              var lat = value["result"]["geometry"]["location"]
+                              ["lat"];
+                              var lng = value["result"]["geometry"]["location"]
+                                  ["lng"];
+                              departCoord = LatLng(lat, lng);
+                              Marker departMarker = Marker(
+                                markerId: MarkerId(depart.toString()),
+                                position: departCoord!,
+                              );
+                              getPlaceFromId(ArriveData!.placeId!)
+                                  .then((value) {
+                                var lat = value["result"]["geometry"]
+                                    ["location"]["lat"];
+                                var lng = value["result"]["geometry"]
+                                    ["location"]["lng"];
+                                arriveCoord = LatLng(lat, lng);
+                                Marker arriveMarker = Marker(
+                                  markerId: MarkerId(depart.toString()),
+                                  position: arriveCoord!,
+                                );
+
+                                Navigator.pushNamed(context, "home",
+                                    arguments: [
+                                      depart,
+                                      arrive,
+                                      departMarker,
+                                      arriveMarker,
+                                      departCoord,
+                                      arriveCoord,
+                                      false
+                                    ]);
+                              });
+                            });
+                          } else {
+                            getPlaceFromId(ArriveData!.placeId!).then((value) {
+                              var lat = value["result"]["geometry"]["location"]
+                                  ["lat"];
+                              var lng = value["result"]["geometry"]["location"]
+                                  ["lng"];
+                              arriveCoord = LatLng(lat, lng);
+                              Marker arriveMarker = Marker(
+                                markerId: MarkerId(depart.toString()),
+                                position: arriveCoord!,
+                              );
+
+                              Marker currentPosMarker = Marker(
+                                  markerId: MarkerId(depart.toString()),
+                                  position: LatLng(
+                                      _location.getCurrentPos.latitude,
+                                      _location.getCurrentPos.longitude));
+                              Navigator.pushNamed(context, "home", arguments: [
+                                depart,
+                                arrive,
+                                currentPosMarker,
+                                arriveMarker,
+                                LatLng(_location.getCurrentPos.latitude,
+                                    _location.getCurrentPos.longitude),
+                                arriveCoord,
+                                true
+                              ]);
+                            });
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content:
-                                      Text("Please fill all the information")));
+                                  Text("Please fill all the information")));
                         }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                         ),
+                        backgroundColor: Colors.blue,
                       ),
-                      child: const Text(
+                      child:  Text(
                         'Valider',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(color:Colors.white,fontSize: 20),),
+
                       ),
-                    )),
-              ),
+                    ),
+
+                    ),
             ],
-          ),
         ),
+              ),
+
+
       ),
     );
   }
 }
-// Ajout SingleChildScrollView

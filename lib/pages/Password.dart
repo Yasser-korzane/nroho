@@ -76,10 +76,10 @@ class MotdePasse extends StatelessWidget {
                 ),
                 SizedBox(height: screenHeight*0.1),
                 ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                   onPressed: (){
-
                   },
-                  child: Center(child: Text('Valider les modifications')),
+                  child: Center(child: Text('Valider les modifications',style: TextStyle(color: Colors.white),)),
 
                 ),
                 SizedBox(height: screenHeight*0.17),

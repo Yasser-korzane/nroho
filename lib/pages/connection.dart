@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/Services/auth.dart';
+import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup.dart';
@@ -62,8 +63,9 @@ class _MyConnexinState extends State<Connexin> {
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
     bool visible=true;
+    bool loading =false;
     IconData _currentIcon = Icons.visibility;
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
        resizeToAvoidBottomInset : false,
        
        appBar: AppBar(
@@ -274,15 +276,23 @@ class _MyConnexinState extends State<Connexin> {
                // MaterialPageRoute(builder: (context) => const home());
                if (validerEmail(_controllerEmail.text)
                   && validerMotDePasse(_controllerMotDePasse.text)) {
+                 Navigator.push(
+                   context,
+                   MaterialPageRoute(builder: (context) => Loading()),
+                 );
                  dynamic result = await _auth.signIn(
                      _controllerEmail.text, _controllerMotDePasse.text);
                  if (result == null) {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(
-                       content: Text("Vous devez verifier les donnees"),
-                       duration: Duration(seconds: 2),
-                     ),
-                   );
+
+                     Navigator.pop(context);
+
+                     ScaffoldMessenger.of(context).showSnackBar(
+                       SnackBar(
+                         content: Text("Vous devez verifier les donnees"),
+                         duration: Duration(seconds: 2),
+                       ),
+                     );
+
                  } else {
                    ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(
@@ -291,7 +301,11 @@ class _MyConnexinState extends State<Connexin> {
                      ),
                    );
                    //MaterialPageRoute(builder: (context) => const home());
-                   Navigator.pop(context);
+                   Navigator.pushAndRemoveUntil(
+                     context,
+                     MaterialPageRoute(builder: (context) => home()),
+                         (Route<dynamic> route)=>false,
+                   );
                  }
                }else{
                  ScaffoldMessenger.of(context).showSnackBar(

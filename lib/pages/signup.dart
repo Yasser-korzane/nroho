@@ -8,6 +8,7 @@ import 'package:appcouvoiturage/Models/Users.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Vehicule.dart';
+import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -279,8 +280,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     && validerEmail(_controllerEmail.text)
                     && validerMotDePasse(_controllerMotDePasse.text)){
                     Utilisateur utilisateur = creerUtilisateurApresSignUp('',_controllerNom.text,_controllerPrenom.text,_controllerEmail.text, _controllerMotDePasse.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Loading()),
+                    );
                       dynamic result = await _auth.signUp(_controllerEmail.text, _controllerMotDePasse.text,utilisateur);
                       if(result==null){
+                        Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text("Vous devez verifier les donnees"),
@@ -294,8 +300,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             duration: Duration(seconds: 2),
                           ),
                         );
-                        Navigator.pop(context);
-                        Navigator.pop(context);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => home()),
+                            (Route<dynamic> route)=>false,
+
+                        );
                       }
                       } else{
                       ScaffoldMessenger.of(context).showSnackBar(

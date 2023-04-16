@@ -4,16 +4,18 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-    color: Colors.brown,
+    color: Colors.grey,
     child: Center(
-          child: SpinKitFadingCircle(
-            itemBuilder: (BuildContext context, int index) {
+          child: SpinKitDoubleBounce(
+            color: Colors.white,
+           size: 50.0,
+           /* itemBuilder: (BuildContext context, int index) {
             return DecoratedBox(
                     decoration: BoxDecoration(
-                    color: index.isEven ? Colors.red : Colors.green,
+                    color: index.isEven ? Colors.white : Colors.white,
                     ),
                     );
-            },
+            },*/
           )
     )
   );

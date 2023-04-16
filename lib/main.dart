@@ -6,6 +6,9 @@ import 'package:appcouvoiturage/Services/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
+import 'package:appcouvoiturage/pages/Historique.dart';
+import 'package:appcouvoiturage/Shared/lodingEffect.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +19,7 @@ Future<void> main() async {
     runApp(
       MaterialApp(
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: const home(),
+        home: const MyApp(),
         routes: {
           "home": (context) {
             return const home();

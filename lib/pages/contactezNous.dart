@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:appcouvoiturage/pages/assistance.dart';
 
 class ContactUs extends StatelessWidget {
   const ContactUs({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(120.0),
+        preferredSize: Size.fromHeight(screenHeight * 0.142),
         child: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -19,10 +21,18 @@ class ContactUs extends StatelessWidget {
               Icons.arrow_back,
               color: Color(0xff344D59),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Assistance()),
+              );
+            },
           ),
           title: Container(
-            margin: EdgeInsets.only(bottom: 20.0, top: 60.0),
+            margin: EdgeInsets.only(
+              bottom: screenHeight * 0.0224,
+              top: screenHeight * 0.0674,
+            ),
             child: Text(
               'Contactez Nous',
               style: TextStyle(color: Color(0xff344D59)),
@@ -32,6 +42,8 @@ class ContactUs extends StatelessWidget {
         ),
       ),
       body: Container(
+        height: screenHeight,
+        width: screenWidth,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/contactUsBackground.png"),
@@ -45,69 +57,81 @@ class ContactUs extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: 150.0,
-              left: 60.0,
+              top: screenHeight * 0.168,
+              left: screenWidth * 0.146,
               child: CircleAvatar(
-                radius: 25.0,
-                backgroundImage: AssetImage("assets/images/mailProfilePicture.jpg"),
+                radius: screenWidth * 0.06,
+                backgroundImage:
+                AssetImage("assets/images/mailProfilePicture.jpg"),
               ),
             ),
             Positioned(
-              top: 160.0,
-              left: 30.0,
-              right: 20.0,
+              top: screenHeight * 0.179,
+              left: screenWidth * 0.073,
+              right: screenWidth * 0.0485,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Mohamed Grine',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.0583,
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenHeight * 0.0112),
                   Text(
                     'Etudiant 2CP à ESI Alger',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: screenWidth * 0.0286),
                   ),
                   Text(
                     'Developpeur mobile (Flutter , Java , Kotlin)',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: screenWidth * 0.0286),
                   ),
                   Text(
                     'Chef d’equipe',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: screenWidth * 0.0286),
                   ),
                 ],
               ),
             ),
             Positioned(
-              top: 400,
-              left: 20.0,
+              top: screenHeight * 0.448,
+              left: screenWidth * 0.0485,
               child: Row(
                 children: [
                   Icon(
                     Icons.mail,
-                    size: 50,
+                    size: screenWidth * 0.1214,
                   ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    'lm_grine@esi.dz',
-                    style: TextStyle(fontSize: 16),
+                  SizedBox(width: screenWidth * 0.0244),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'lm_grine@esi.dz',
+                      style: TextStyle(
+                          color: Colors.black, fontSize: screenWidth * 0.0388),
+                    ),
                   ),
                 ],
               ),
             ),
             Positioned(
-              top: 500.0,
-              left: 20.0,
+              top: screenHeight * 0.561,
+              left: screenWidth * 0.0495,
+
+
               child: Row(
                 children: [
 
                   new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),),
-                  SizedBox(width: 10.0),
-                  Text(
+                  SizedBox( width:screenWidth * 0.0244),
+                  TextButton(
+                    onPressed:(){},
+                    child:Text(
                     'LinkedIn',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388),
+                  ),
                   ),
                 ],
               ),

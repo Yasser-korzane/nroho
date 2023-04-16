@@ -68,99 +68,109 @@ class DriverListPage extends StatelessWidget {
         itemCount: drivers.length,
         itemBuilder: (context, index) {
           final driver = drivers[index];
-          return Card(
-            margin: EdgeInsets.all(2),
-            borderOnForeground:true,
-            shape:   RoundedRectangleBorder(
-                side:  BorderSide(color: Colors.grey,width: 3),
-                borderRadius: BorderRadius.all(Radius.circular(15))
-            ),
-            child:   Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(children: [
-                  Image.network(
-                    driver.imageUrl,
-                    height: 45,
-                    width: 45,
-                    fit: BoxFit.cover,
-                  ),
-                  Column(children: [
-                    Text(driver.name,
-                      style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold),
-                    ),
-                    Text(driver.phoneNumber,
-                      style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold),
-                    ),
-                  ]),
-                ]),
-                Row(
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              margin: EdgeInsets.all(2),
+              borderOnForeground:true,
+              shape:   RoundedRectangleBorder(
+                  side:  BorderSide(color: Colors.grey,width: 3),
+                  borderRadius: BorderRadius.all(Radius.circular(15))
+              ),
+              child:   Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          Icon(Icons.location_on),
-                          // SizedBox(height: screenHeight * 0.03),
-                          Container(
-                            height: 20,
-                            width: 1,
-                            color: Colors.grey,
-                          ),
-                          // SizedBox(height: screenHeight * 0.03),
-                          Icon(
-                            Icons.location_on,
-                          ),
-                        ],
+                    Row(children: [
+                      Image.network(
+                        driver.imageUrl,
+                        height: 45,
+                        width: 45,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                    Expanded(
-                      flex: 9,
-                      child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //crossAxisAlignment:CrossAxisAlignment.start ,
-                        children: [
-                          Container(
-                            child: ListTile(
-                              title: Text(
-                                'Driver.depart',
-                                style: TextStyle(
-                                    color: Color(0xff7A90A4), fontSize: 15),
-                              ),
-                              onTap: () {
-                                // handle onTap event
-                              },
-                            ),
-                          ),
-                          //  SizedBox(height: 0.02),
-                          Container(
-                            child: ListTile(
-                              title: Text(
-                                'Driver.arrivee',
-                                style: TextStyle(
-                                    color: Color(0xff7A90A4), fontSize: 15),
-                              ),
-                              onTap: () {
-                                // handle onTap event
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      child: Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text('Choisir'),
+                      SizedBox(width: 6,height: 6,),
+                      Column(children: [
+                        Text(driver.name,
+                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold),
                         ),
-                      ),
+                        Text(driver.phoneNumber,
+                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold),
+                        ),
+                      ]),
+                    ]),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              Icon(Icons.location_on),
+                              // SizedBox(height: screenHeight * 0.03),
+                              Container(
+                                height: 20,
+                                width: 1,
+                                color: Colors.grey,
+                              ),
+                              // SizedBox(height: screenHeight * 0.03),
+                              Icon(
+                                Icons.location_on,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Column(
+                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //crossAxisAlignment:CrossAxisAlignment.start ,
+                            children: [
+                              Container(
+                                child: ListTile(
+                                  title: Text(
+                                    driver.depart,
+                                    style: TextStyle(
+                                        color: Color(0xff7A90A4), fontSize: 15),
+                                  ),
+                                  onTap: () {
+                                    // handle onTap event
+                                  },
+                                ),
+                              ),
+                              //  SizedBox(height: 0.02),
+                              Container(
+                                child: ListTile(
+                                  title: Text(
+                                    driver.arrivee,
+                                    style: TextStyle(
+                                        color: Color(0xff7A90A4), fontSize: 15),
+                                  ),
+                                  onTap: () {
+                                    // handle onTap event
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: SizedBox(
+                            child: Expanded(
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text('Choisir'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
+              //
             ),
-            //
           );
         },
       ),
