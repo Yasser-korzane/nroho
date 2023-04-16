@@ -100,6 +100,7 @@ class _MyConnexinState extends State<Connexin> {
                 child: Image.asset('assets/images/logo.png'),
               ),
             ),
+            /*
            Padding(
              padding: const EdgeInsets.only(left: 15,right: 15),
              child: Container(
@@ -144,7 +145,27 @@ class _MyConnexinState extends State<Connexin> {
                 ],
               ),
                      ),
-           ),
+           ),*/
+            TextField(
+                
+                controller: _controllerEmail,
+                keyboardType: TextInputType.emailAddress,
+                      
+                decoration: InputDecoration(
+                icon:Icon(
+                        Icons.mail,
+                        color: Colors.black,
+                        size: 20,
+                      ) ,
+                border: OutlineInputBorder(),
+                labelText: 'User Name',
+                hintText: 'Enter valid mail id as abc@gmail.com',
+                hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                fillColor: Colors.white,
+                filled: true,
+                
+                ),
+              ),
           Padding(
             padding: const EdgeInsets.only(left: 15,right: 15),
             child: Container(
@@ -192,10 +213,10 @@ class _MyConnexinState extends State<Connexin> {
                     ),
                   ),
                 InkWell(
-                   onTap: (){
+                  onTap: (){
                     setState(() {
                       visible = !visible;
-                    });
+                    }); 
                    },
                     child:
                      Padding(
@@ -213,6 +234,35 @@ class _MyConnexinState extends State<Connexin> {
               ),
             ),
           ),
+           TextField(         
+                keyboardType: TextInputType.visiblePassword,
+           
+                decoration: InputDecoration(
+                icon:Icon(
+                        Icons.key,
+                        color: Colors.black,
+                        size: 20,
+                      ) ,
+                border: OutlineInputBorder(),
+                labelText: 'Mot de passe',
+                hintText: 'entrer votre mot de passe ',
+                hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                fillColor: Colors.white,
+                filled: true,
+                
+                suffixIcon:  IconButton(
+                  icon: Icon(
+                          /*Icons.visibility_off,*/
+                          visible ? Icons.visibility : Icons.visibility_off,
+
+                          color: Colors.black,
+                          size: 20,
+                        ),
+                ),
+                
+                ),
+              ),
+      
           Container(
             width: 300,
             //padding: EdgeInsets.all(20),
