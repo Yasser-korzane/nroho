@@ -29,13 +29,8 @@ class _ProfilepageState extends State<Profilepage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.chevron_left, color: Colors.black)),
           title: Center(
-              child: Text('Profile       ',
+              child: Text('Profile',
                   style: Theme.of(context).textTheme.headlineMedium)),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -54,12 +49,11 @@ class _ProfilepageState extends State<Profilepage> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: const Image(
-                                image: NetworkImage(
-                                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE')))),
+                                image: NetworkImage('https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fprofile&psig=AOvVaw1RZ-njENZw_1IL8D25HljV&ust=1680019595580000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCLi1m-u-_P0CFQAAAAAdAAAAABAE')))),
                   ],
                 ),
                  SizedBox(height: screenHeight * 0.015),
-                Text('data', style: Theme.of(context).textTheme.headline4),
+                Text('data', style: Theme.of(context).textTheme.headlineMedium),
                  RatingWidget(color: Colors.yellow,rating: 3.5,size: screenWidth*0.05),
                 SizedBox(height: screenHeight * 0.005),
                 Text('mohammedgrine@weal.harach',
