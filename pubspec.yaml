@@ -50,8 +50,9 @@ dependencies:
   geocoding: ^2.1.0
   flutter_polyline_points: ^1.0.0
   google_nav_bar: ^5.0.6
-
+  image_picker: ^0.8.7+3
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
 

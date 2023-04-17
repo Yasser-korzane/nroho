@@ -78,7 +78,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
         ),
         title:  Text(
           'Où allez-vous ?',
-          style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+          style: TextStyle(color: Colors.black, fontSize: size.width * 0.05),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -162,7 +162,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                DateTimePickerRow(),
                SizedBox(height:size.height * 0.01 ),
                Divider(
-                color: Colors.blueGrey,
+
                 thickness: 2,
               ),
               ListTile(
@@ -173,13 +173,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   Icons.location_on,
                   color: Colors.black,
                 ),
-                title: const Text(
+                title: Text(
                   'choisir sur la map',
-                  style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                  style: TextStyle( fontSize: size.width * 0.04),
                 ),
               ),
-              const Divider(
-                color: Colors.blueGrey,
+              Divider(
+
                 thickness: 1,
               ),
               ListTile(
@@ -200,7 +200,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
                 title:  Text(
                   'Utiliser ma position',
-                  style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+                  style: TextStyle( fontSize: size.width * 0.04),
                 ),
               ),
 
@@ -212,7 +212,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         return ListView.separated(
                           separatorBuilder: (context, index) {
                             return const Divider(
-                              color: Colors.blueGrey,
+
                               thickness: 1,
                             );
                           },
@@ -266,13 +266,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Container(
-                  color: Colors.grey,
-                  child: const Text(
+                  color: Color(0XFFD3D3D3),
+                  child:  Text(
                     'Historique des recherches                                    ',
                     style: TextStyle(
-                        color: Color(0xff344D59),
-                        fontSize: 23,
-                        backgroundColor: Colors.grey), textAlign: TextAlign.center,
+                        color: Colors.black,
+                        fontSize: size.width * 0.04,
+                        ),
+                   // textAlign: TextAlign.center,
                   ),
                 ),
               ),
@@ -288,7 +289,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   ),
                    Text(
                     'Maoklane - Setif',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+                    style: TextStyle( fontSize: size.width * 0.04),
                   ),
                 ],
               ),
@@ -306,7 +307,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   ),
                    Text(
                     'Oued Smar - Alger',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+                    style: TextStyle( fontSize: size.width * 0.04),
                   ),
                 ],
               ),
