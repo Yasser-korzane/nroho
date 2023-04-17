@@ -145,8 +145,8 @@ class _MyConnexinState extends State<Connexin> {
                 
                     labelText: 'User Name',
                     hintText: 'Enter valid mail id as abc@gmail.com',
-                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                     
                     ),
@@ -180,8 +180,8 @@ class _MyConnexinState extends State<Connexin> {
            
                     labelText: 'Mot de passe',
                     hintText: 'entrer votre mot de passe ',
-                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                     
                     suffix:  TextButton(

@@ -105,7 +105,7 @@ final Size screenSize = MediaQuery
                    height: screenHeight*0.080,
 
                  child: Padding(
-                             padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
+                             padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 10,top: 10),
                              //padding: EdgeInsets.all(20),
                              child: TextField(
                   controller: _controllerNom,
@@ -114,8 +114,8 @@ final Size screenSize = MediaQuery
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
                   labelText: 'Nom',
                   hintText: 'Entere votre nom ',
-                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                   ),
                              ),
@@ -126,7 +126,7 @@ final Size screenSize = MediaQuery
 
               child: Padding(
                // padding: EdgeInsets.all(20),
-                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 5,top: 5 ),
+                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10,top: 10 ),
             
                 child: TextFormField(
                         controller: _controllerPrenom,
@@ -143,8 +143,8 @@ final Size screenSize = MediaQuery
             
                   labelText: 'Prenom',
                   hintText: 'Enterez votre prenom',
-                   hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                   hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                   ),
                 ),
@@ -155,7 +155,7 @@ final Size screenSize = MediaQuery
 
               child: Padding(
                // padding: EdgeInsets.al
-                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
+                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 10,top: 10),
             
                 child: TextFormField(
                         controller: _controllerPrenom,
@@ -171,8 +171,8 @@ final Size screenSize = MediaQuery
             
                   labelText: ' numero de telephone',
                   hintText: 'Enterez votre numero de telephone',
-                   hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                   hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                   ),
                 ),
@@ -183,7 +183,7 @@ final Size screenSize = MediaQuery
 
               child: Padding(
                 //padding: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
+                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 10,top:10),
             
                 child: TextFormField(
                     
@@ -207,8 +207,8 @@ final Size screenSize = MediaQuery
             
                     labelText: 'Email',
                     hintText: 'Enter valid mail id as abc@gmail.com',
-                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                     
                     ),
@@ -219,7 +219,7 @@ final Size screenSize = MediaQuery
                    height: screenHeight*0.080,
 
                 child: Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
+                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 20,top: 10),
                            
                            child: TextFormField(         
                     //keyboardType: TextInputType.visiblePassword,
@@ -240,8 +240,8 @@ final Size screenSize = MediaQuery
                     border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
               
                     hintText: 'entrer votre mot de passe ',
-                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
-                    fillColor: Colors.white,
+                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
+                    fillColor: Colors.grey,
                     filled: true,
                     
                     suffix:  TextButton(
