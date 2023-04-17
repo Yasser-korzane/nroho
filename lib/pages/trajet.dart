@@ -1,11 +1,13 @@
 import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:appcouvoiturage/pages/map.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/date_time.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
+import 'package:geocoding/geocoding.dart';
 
 enum Selected { depart, arrivee, none }
 
@@ -20,6 +22,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _arriveController = TextEditingController();
   String querry = "";
+  bool fromMap = false;
   String? arrive, depart;
   LatLng? departCoord, arriveCoord;
   bool showSuggestion = true;
@@ -45,7 +48,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
 
   void setCustomMarker() {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, "assets/images/marker.png")
+            ImageConfiguration.empty, "assets/images/marker.png")
         .then((icon) => customMarker = icon);
   }
 
@@ -60,6 +63,18 @@ class _OuAllezVousState extends State<OuAllezVous> {
 
   @override
   Widget build(BuildContext context) {
+    final position =
+        ModalRoute.of(context)!.settings.arguments as CameraPosition?;
+    if (position != null) {
+      GeocodingPlatform.instance
+          .placemarkFromCoordinates(
+              position.target.latitude, position.target.longitude)
+          .then((value) {
+        fromMap = true;
+        arrive = value[0].locality!;
+        _arriveController.text = arrive!;
+      });
+    }
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -76,9 +91,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
             ));
           },
         ),
-        title:  Text(
+        title: Text(
           'Où allez-vous ?',
-          style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+          style: TextStyle(
+              color: const Color(0xff344D59), fontSize: size.width * 0.05),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -112,9 +128,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     child: TextField(
                       controller: _departController,
                       onChanged: (value) {
-                        showSuggestion = true;
-                        querry = value;
-                        caseSelected = Selected.depart;
+                        setState(() {
+                          showSuggestion = true;
+                          querry = value;
+                          caseSelected = Selected.depart;
+                        });
                       },
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -129,7 +147,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: size.height * 0.01,
                   ),
                   SizedBox(
@@ -138,9 +156,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     child: TextField(
                       controller: _arriveController,
                       onChanged: (value) {
-                        showSuggestion = true;
-                        querry = value;
-                        caseSelected = Selected.arrivee;
+                        setState(() {
+                          showSuggestion = true;
+                          querry = value;
+                          caseSelected = Selected.arrivee;
+                        });
                       },
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -158,16 +178,22 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ]),
               ]),
 
-               SizedBox(height:size.height * 0.02 ),
-               DateTimePickerRow(),
-               SizedBox(height:size.height * 0.01 ),
-               Divider(
+              SizedBox(height: size.height * 0.02),
+              const DateTimePickerRow(),
+              SizedBox(height: size.height * 0.01),
+              const Divider(
                 color: Colors.blueGrey,
                 thickness: 2,
               ),
               ListTile(
                 onTap: () {
-                  setState(() {});
+                  setState(() {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const MapPage();
+                      },
+                    ));
+                  });
                 },
                 leading: const Icon(
                   Icons.location_on,
@@ -198,9 +224,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   Icons.gps_fixed,
                   color: Colors.black,
                 ),
-                title:  Text(
+                title: Text(
                   'Utiliser ma position',
-                  style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+                  style: TextStyle(
+                      color: const Color(0xff344D59),
+                      fontSize: size.width * 0.05),
                 ),
               ),
 
@@ -231,22 +259,22 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                       depart = prediction;
                                       _departController.value =
                                           TextEditingValue(
-                                            text: depart!,
-                                            selection: TextSelection.fromPosition(
-                                              TextPosition(offset: depart!.length),
-                                            ),
-                                          );
+                                        text: depart!,
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(offset: depart!.length),
+                                        ),
+                                      );
                                       break;
                                     case Selected.arrivee:
                                       ArriveData = data;
                                       arrive = prediction;
                                       _arriveController.value =
                                           TextEditingValue(
-                                            text: arrive!,
-                                            selection: TextSelection.fromPosition(
-                                              TextPosition(offset: arrive!.length),
-                                            ),
-                                          );
+                                        text: arrive!,
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(offset: arrive!.length),
+                                        ),
+                                      );
                                       break;
                                     default:
                                   }
@@ -272,11 +300,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     style: TextStyle(
                         color: Color(0xff344D59),
                         fontSize: 23,
-                        backgroundColor: Colors.grey), textAlign: TextAlign.center,
+                        backgroundColor: Colors.grey),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
-
 
               Row(
                 children: [
@@ -286,9 +314,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ),
                     onPressed: () {},
                   ),
-                   Text(
+                  Text(
                     'Maoklane - Setif',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+                    style: TextStyle(
+                        color: const Color(0xff344D59),
+                        fontSize: size.width * 0.05),
                   ),
                 ],
               ),
@@ -304,9 +334,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ),
                     onPressed: () {},
                   ),
-                   Text(
+                  Text(
                     'Oued Smar - Alger',
-                    style: TextStyle(color: Color(0xff344D59), fontSize: size.width * 0.05),
+                    style: TextStyle(
+                        color: const Color(0xff344D59),
+                        fontSize: size.width * 0.05),
                   ),
                 ],
               ),
@@ -316,47 +348,22 @@ class _OuAllezVousState extends State<OuAllezVous> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                    width: size.width * 0.51,
-                    height:size.height * 0.048,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (depart != null && arrive != null) {
-                          if (departData != null) {
-                            getPlaceFromId(departData!.placeId!).then((value) {
-                              var lat = value["result"]["geometry"]["location"]
-                              ["lat"];
-                              var lng = value["result"]["geometry"]["location"]
-                                  ["lng"];
-                              departCoord = LatLng(lat, lng);
-                              Marker departMarker = Marker(
-                                markerId: MarkerId(depart.toString()),
-                                position: departCoord!,
-                              );
-                              getPlaceFromId(ArriveData!.placeId!)
-                                  .then((value) {
-                                var lat = value["result"]["geometry"]
-                                    ["location"]["lat"];
-                                var lng = value["result"]["geometry"]
-                                    ["location"]["lng"];
-                                arriveCoord = LatLng(lat, lng);
-                                Marker arriveMarker = Marker(
-                                  markerId: MarkerId(depart.toString()),
-                                  position: arriveCoord!,
-                                );
-
-                                Navigator.pushNamed(context, "home",
-                                    arguments: [
-                                      depart,
-                                      arrive,
-                                      departMarker,
-                                      arriveMarker,
-                                      departCoord,
-                                      arriveCoord,
-                                      false
-                                    ]);
-                              });
-                            });
-                          } else {
+                  width: size.width * 0.51,
+                  height: size.height * 0.048,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (depart != null && arrive != null) {
+                        if (departData != null) {
+                          getPlaceFromId(departData!.placeId!).then((value) {
+                            var lat =
+                                value["result"]["geometry"]["location"]["lat"];
+                            var lng =
+                                value["result"]["geometry"]["location"]["lng"];
+                            departCoord = LatLng(lat, lng);
+                            Marker departMarker = Marker(
+                              markerId: MarkerId(depart.toString()),
+                              position: departCoord!,
+                            );
                             getPlaceFromId(ArriveData!.placeId!).then((value) {
                               var lat = value["result"]["geometry"]["location"]
                                   ["lat"];
@@ -364,15 +371,39 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                   ["lng"];
                               arriveCoord = LatLng(lat, lng);
                               Marker arriveMarker = Marker(
-                                markerId: MarkerId(depart.toString()),
+                                markerId: MarkerId(arrive.toString()),
                                 position: arriveCoord!,
                               );
 
+                              Navigator.pushNamed(context, "home", arguments: [
+                                depart,
+                                arrive,
+                                departMarker,
+                                arriveMarker,
+                                departCoord,
+                                arriveCoord,
+                                false
+                              ]);
+                            });
+                          });
+                        } else {
+                          if (!fromMap) {
+                            getPlaceFromId(ArriveData!.placeId!).then((value) {
+                              var lat = value["result"]["geometry"]["location"]
+                                  ["lat"];
+                              var lng = value["result"]["geometry"]["location"]
+                                  ["lng"];
+                              arriveCoord = LatLng(lat, lng);
+                              Marker arriveMarker = Marker(
+                                markerId: MarkerId(arrive.toString()),
+                                position: arriveCoord!,
+                              );
                               Marker currentPosMarker = Marker(
                                   markerId: MarkerId(depart.toString()),
                                   position: LatLng(
                                       _location.getCurrentPos.latitude,
                                       _location.getCurrentPos.longitude));
+
                               Navigator.pushNamed(context, "home", arguments: [
                                 depart,
                                 arrive,
@@ -384,33 +415,53 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 true
                               ]);
                             });
+                          } else {
+                            Marker arriveMarker = Marker(
+                                position: LatLng(position!.target.latitude,
+                                    position.target.longitude),
+                                markerId: MarkerId(depart.toString()));
+                            Marker currentPosMarker = Marker(
+                                markerId: MarkerId(depart.toString()),
+                                position: LatLng(
+                                    _location.getCurrentPos.latitude,
+                                    _location.getCurrentPos.longitude));
+                            arriveCoord = LatLng(position.target.latitude,
+                                position.target.longitude);
+                            Navigator.pushNamed(context, "home", arguments: [
+                              depart,
+                              arrive,
+                              currentPosMarker,
+                              arriveMarker,
+                              LatLng(_location.getCurrentPos.latitude,
+                                  _location.getCurrentPos.longitude),
+                              arriveCoord,
+                              true
+                            ]);
                           }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                  Text("Please fill all the information")));
                         }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        backgroundColor: Colors.blue,
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content:
+                                    Text("Please fill all the information")));
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
                       ),
-                      child:  Text(
-                        'Valider',
-                        style: TextStyle(color:Colors.white,fontSize: 20),),
-
-                      ),
+                      backgroundColor: Colors.blue,
                     ),
-
+                    child: const Text(
+                      'Valider',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
-            ],
-        ),
+                  ),
+                ),
               ),
-
-
+            ],
+          ),
+        ),
       ),
     );
   }
