@@ -9,6 +9,7 @@ import '../AppClasses/Evaluation.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
+import 'package:appcouvoiturage/pages/connection.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
-      Vehicule("", "", "", "", "", 0), false, [],[],[]
+        Vehicule("", "", "", "", "", 0), false, [],[],[]
     );
   }
   /** ************************************************************************************************** **/
@@ -61,28 +62,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth =AuthService();
-    bool visible=false;
-final Size screenSize = MediaQuery
-        .of(context)
-        .size;
-    final double screenWidth = screenSize.width;
-    final double screenHeight = screenSize.height;
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         toolbarHeight: 100,
         leading: null,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         title: Text(''),
         flexibleSpace: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('assets/images/ellipse.png'),
-            fit: BoxFit.fill,
-          )),
+                image: AssetImage('assets/images/Ellipse 5.png'),
+                fit: BoxFit.fill,
+              )),
         ),
       ),
 
@@ -105,7 +98,7 @@ final Size screenSize = MediaQuery
                    height: screenHeight*0.080,
 
                  child: Padding(
-                             padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 10,top: 10),
+                             padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
                              //padding: EdgeInsets.all(20),
                              child: TextField(
                   controller: _controllerNom,
@@ -114,8 +107,8 @@ final Size screenSize = MediaQuery
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
                   labelText: 'Nom',
                   hintText: 'Entere votre nom ',
-                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
-                    fillColor: Colors.grey,
+                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
                     filled: true,
                   ),
                              ),
@@ -126,7 +119,7 @@ final Size screenSize = MediaQuery
 
               child: Padding(
                // padding: EdgeInsets.all(20),
-                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 10,top: 10 ),
+                padding: const EdgeInsets.only(left: 20,right: 20,bottom: 5,top: 5 ),
             
                 child: TextFormField(
                         controller: _controllerPrenom,
@@ -143,8 +136,8 @@ final Size screenSize = MediaQuery
             
                   labelText: 'Prenom',
                   hintText: 'Enterez votre prenom',
-                   hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
-                    fillColor: Colors.grey,
+                   hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
                     filled: true,
                   ),
                 ),
@@ -155,7 +148,7 @@ final Size screenSize = MediaQuery
 
               child: Padding(
                // padding: EdgeInsets.al
-                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 10,top: 10),
+                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
             
                 child: TextFormField(
                         controller: _controllerPrenom,
@@ -171,8 +164,8 @@ final Size screenSize = MediaQuery
             
                   labelText: ' numero de telephone',
                   hintText: 'Enterez votre numero de telephone',
-                   hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
-                    fillColor: Colors.grey,
+                   hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
                     filled: true,
                   ),
                 ),
@@ -183,7 +176,7 @@ final Size screenSize = MediaQuery
 
               child: Padding(
                 //padding: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 10,top:10),
+                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
             
                 child: TextFormField(
                     
@@ -207,11 +200,15 @@ final Size screenSize = MediaQuery
             
                     labelText: 'Email',
                     hintText: 'Enter valid mail id as abc@gmail.com',
-                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
-                    fillColor: Colors.grey,
+                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
                     filled: true,
                     
                     ),
+                    borderRadius: BorderRadius.circular(6.0),
+                    //color:Colors.white
+                    color:Color(0xD9D9D9),
+
                   ),
               ),
             ),
@@ -219,7 +216,7 @@ final Size screenSize = MediaQuery
                    height: screenHeight*0.080,
 
                 child: Padding(
-                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 20,top: 10),
+                padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
                            
                            child: TextFormField(         
                     //keyboardType: TextInputType.visiblePassword,
@@ -240,8 +237,8 @@ final Size screenSize = MediaQuery
                     border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
               
                     hintText: 'entrer votre mot de passe ',
-                    hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
-                    fillColor: Colors.grey,
+                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
                     filled: true,
                     
                     suffix:  TextButton(
@@ -259,16 +256,9 @@ final Size screenSize = MediaQuery
                     
                     ),
                   ),
-                         ),
+                ),
               ),
-           ])
-              ),
-            
-              /*
-              
-          */
-            /**************************************************/
-        
+
               Container(
                 width: 300,
                 decoration: BoxDecoration(
@@ -277,22 +267,22 @@ final Size screenSize = MediaQuery
                 child: TextButton(
                   onPressed: () async {
                     if (validerNomEtPrenom(_controllerNom.text)
-                    && validerNomEtPrenom(_controllerPrenom.text)
-                    && validerEmail(_controllerEmail.text)
-                    && validerMotDePasse(_controllerMotDePasse.text)){
-                    Utilisateur utilisateur = creerUtilisateurApresSignUp('',_controllerNom.text,_controllerPrenom.text,_controllerEmail.text, _controllerMotDePasse.text);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Loading()),
-                    );
+                        && validerNomEtPrenom(_controllerPrenom.text)
+                        && validerEmail(_controllerEmail.text)
+                        && validerMotDePasse(_controllerMotDePasse.text)){
+                      Utilisateur utilisateur = creerUtilisateurApresSignUp('',_controllerNom.text,_controllerPrenom.text,_controllerEmail.text, _controllerMotDePasse.text);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Loading()),
+                      );
                       dynamic result = await _auth.signUp(_controllerEmail.text, _controllerMotDePasse.text,utilisateur);
                       if(result==null){
                         Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Vous devez verifier les donnees"),
-                              duration: Duration(seconds: 2),
-                            ),
+                          SnackBar(
+                            content: Text("Vous devez verifier les donnees"),
+                            duration: Duration(seconds: 2),
+                          ),
                         );}
                       else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -304,11 +294,11 @@ final Size screenSize = MediaQuery
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => home()),
-                            (Route<dynamic> route)=>false,
+                              (Route<dynamic> route)=>false,
 
                         );
                       }
-                      } else{
+                    } else{
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("Vous devez verifier les donnees"),
@@ -323,24 +313,6 @@ final Size screenSize = MediaQuery
                   ),
                 ),
               ),
-               Container(
-            padding: EdgeInsets.all(10),
-            child: Text('Voua avez deja un compte?',style: TextStyle(color: Colors.grey, fontSize: 15)),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-          //  child: Text('Create Account ',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
-          child: TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const Connexin (title: " connecter ",)),
-            );
-            // Navigate back to first route when tapped.
-          },
-          child: const Text('clicker ici ',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
-          ),
-          ),
             ],
           ),
         ),
