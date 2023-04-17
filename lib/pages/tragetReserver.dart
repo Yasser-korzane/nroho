@@ -10,7 +10,7 @@ class cardReserverList extends StatefulWidget{
 
 class _cardReserverListeState extends State<cardReserverList> {
 
-  List<dynamic> cardReservers= [
+  List<cardReserver> cardReservers= [
     cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
     cardReserver(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
 
@@ -39,6 +39,8 @@ class _cardReserverListeState extends State<cardReserverList> {
                     //backGrounndImage: AssetImage('your image path'),
                     backgroundImage: AssetImage('asset/images/profile.png',),
                     radius: 50,
+                    
+                    //width:screenHeight*0.3 ,
                   ),
                   Column(
                     children: [
@@ -178,7 +180,7 @@ class _cardReserverListeState extends State<cardReserverList> {
       ),
       body: PageView(
               scrollDirection: Axis.vertical,
-             // children: cardReservers.map((cardReserver) =>  cardReserverTamplate(cardReserver) ).toList(),
+              //children: cardReservers.map((cardReserver) =>  cardReserverTamplate(cardReserver) ).toList(),
     )
     );
   }

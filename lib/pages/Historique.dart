@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+
 import 'cardLancer.dart';
 import 'cardReserver.dart';
 import 'package:appcouvoiturage/pages/tragetLancer.dart';
@@ -10,12 +12,12 @@ import 'package:appcouvoiturage/pages/tragetReserver.dart';
 
 
 
-class cardHistoriqueList extends StatefulWidget{
+class cardReserverLancerList extends StatefulWidget{
   @override
-  _cardHistoriqueListeState createState()=> _cardHistoriqueListeState();
+  _cardReserverLancerListeState createState()=> _cardReserverLancerListeState();
 } 
 
-class _cardHistoriqueListeState extends State<cardHistoriqueList> {
+class _cardReserverLancerListeState extends State<cardReserverLancerList> {
 
   List<dynamic> cardReservers= [
     cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
@@ -79,14 +81,14 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Divider(
                   height: 3,
                   thickness: 2,
                   color: Colors.black,
                 ),
               ),    
-               SizedBox(height: screenHeight*0.04),
+              // SizedBox(height: screenHeight*0.04),
             Row(
               children: [
                 Expanded(
@@ -96,7 +98,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                       Icon(Icons.circle, color: Colors.purple),
                       // SizedBox(height: 20),
                       Container(
-                        height: screenHeight* 0.09,
+                        height: screenHeight* 0.05,
                         width: 1,
                         color: Colors.grey,
                       ),
@@ -126,7 +128,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                           },
                         ),
                       ),
-                      SizedBox(height: screenHeight*0.03),
+                     // SizedBox(height: screenHeight*0.03),
                       Container(
                         child: ListTile(
                           title: Text(
@@ -146,7 +148,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                 )
               ],
             ),
-            SizedBox(height: screenHeight*0.018),
+           // SizedBox(height: screenHeight*0.018),
             Container(
               child:  Row(children: [
                 Icon(
@@ -158,7 +160,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
               ]),
             ),
             
-            SizedBox(height: screenHeight * 0.03),
+            //SizedBox(height: screenHeight * 0.03),
       
               ],
           ),
@@ -221,14 +223,14 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Divider(
-                  height: 3,
-                  thickness: 2,
-                  color: Colors.black,
+                  height: 1,
+                  thickness: 1,
+                  color: Colors.grey,
                 ),
               ),    
-               SizedBox(height: screenHeight*0.04),
+               SizedBox(height: screenHeight*0.01),
             Row(
               children: [
                 Expanded(
@@ -238,7 +240,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                       Icon(Icons.circle, color: Colors.purple),
                       // SizedBox(height: 20),
                       Container(
-                        height: screenHeight* 0.09,
+                        height: screenHeight* 0.05,
                         width: 1,
                         color: Colors.grey,
                       ),
@@ -268,7 +270,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                           },
                         ),
                       ),
-                      SizedBox(height: screenHeight*0.03),
+                      //SizedBox(height: screenHeight*0.01),
                       Container(
                         child: ListTile(
                           title: Text(
@@ -288,7 +290,7 @@ class _cardHistoriqueListeState extends State<cardHistoriqueList> {
                 )
               ],
             ),
-            SizedBox(height: screenHeight*0.018),
+           // SizedBox(height: screenHeight*0.018),
            /* Container(
               child:  Row(children: [
                 Icon(

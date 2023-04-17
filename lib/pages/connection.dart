@@ -2,7 +2,7 @@ import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/pages/signup.dart';
+import 'package:appcouvoiturage/pages/signup1.dart';
 import 'package:appcouvoiturage/pages/login.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
@@ -65,6 +65,14 @@ class _MyConnexinState extends State<Connexin> {
     bool visible=true;
     bool loading =false;
     IconData _currentIcon = Icons.visibility;
+     final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
+  final GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
+
     return loading ? Loading() : Scaffold(
        resizeToAvoidBottomInset : false,
        
@@ -73,7 +81,7 @@ class _MyConnexinState extends State<Connexin> {
 
           leading: null,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white, 
+          backgroundColor: Colors.grey, 
           title: Text(''),
           flexibleSpace: Container(
            decoration: BoxDecoration(
@@ -85,6 +93,8 @@ class _MyConnexinState extends State<Connexin> {
             ),
           ),
        ),
+     
+
       body: Center(
         
         child: Column(
@@ -102,119 +112,102 @@ class _MyConnexinState extends State<Connexin> {
                 child: Image.asset('assets/images/logo.png'),
               ),
             ),
-           Padding(
-             padding: const EdgeInsets.only(left: 15,right: 15),
-             child: Container(
-             // backgroundColor: Color(0xF0F0F0),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color.fromARGB(255, 163, 160, 160).withOpacity(0.5),
-                  width: 1.0,
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              margin: EdgeInsets.all(12),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                      child: Icon(
-                        Icons.mail,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                  ),
-                  new Expanded(     
-                    child: TextFormField(
-                      controller: _controllerEmail,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Email',
-                        hintText: "Entrez votre mail example: abc@esi.dz",
-                        hintStyle: TextStyle(color: Colors.black),
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        isDense: true,
-                      ),
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
+            /***********************************************************************/
+           Form(
+            key:_formkey1,
+            child: Column(
+              children:[
+                Container(
+                   height: screenHeight*0.080,
+
+                  child: Padding(
+                              padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5,),
+                              child: TextFormField(
+                    
+                    controller: _controllerEmail,
+                    keyboardType: TextInputType.emailAddress,
+                     validator:(input){
+                                    if(input == null ){
+                                      return 'Entrer votre nom svp';
+                                    }
+                                    return null;
+                                  },
+                          
+                    decoration: InputDecoration(
+                    
+                    prefixIcon:Icon(
+                            Icons.mail,
+                            color: Colors.black,
+                            size: 20,
+                          ) ,
+                    //border: OutlineInputBorder(),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
+                
+                    labelText: 'User Name',
+                    hintText: 'Enter valid mail id as abc@gmail.com',
+                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
+                    filled: true,
+                    
                     ),
-                  )
-                ],
-              ),
-                     ),
+                  ),
+                            ),
+                ),
+              /*************************************************************/
+           Container(
+            height: screenHeight*0.080,
+             child: Padding(
+                padding: const EdgeInsets.only(left: 20,right: 20, bottom:5 , top: 5,),
+               
+               child: TextFormField(         
+                    //keyboardType: TextInputType.visiblePassword,
+                    keyboardType: TextInputType.visiblePassword,
+                     validator:(input){
+                                    if(input == null ){
+                                      return 'Entrer votre nom svp';
+                                    }
+                                    return null;
+                                  },
+               
+                    decoration: InputDecoration(
+                    prefixIcon:Icon(
+                            Icons.key,
+                            color: Colors.black,
+                            size: 20,
+                          ) ,
+                    //border: OutlineInputBorder(),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
+           
+                    labelText: 'Mot de passe',
+                    hintText: 'entrer votre mot de passe ',
+                    hintStyle: TextStyle(color: Colors.grey[500],fontSize: 14),
+                    fillColor: Colors.white,
+                    filled: true,
+                    
+                    suffix:  TextButton(
+                      child: Icon(
+                              /*Icons.visibility_off,*/
+                              visible ? Icons.visibility : Icons.visibility_off,
+             
+                              color: Colors.black,
+                              size: 15,
+                            ),
+                        onPressed: () =>{
+                          setState(()=> {
+                            visible ? visible= false : visible= true,
+                          })
+                        },
+                    ),
+                    
+                    ),
+                  ),
+             ),
            ),
-          Padding(
-            padding: const EdgeInsets.only(left: 15,right: 15),
-            child: Container(
-
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Color(0xF0F0F0).withOpacity(0.5),
-                  width: 1.0,
-                ),
-                borderRadius: BorderRadius.circular(6.0),
-                color:Color(0xF0F0F0),
-
-                //color:Colors.white
-              ),
-              margin: EdgeInsets.all(12),
-              child: Row(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 8),
-                      child: Icon(
-                        Icons.key,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                  ),
-                  new Expanded(
-                    child: TextFormField(
-                      controller: _controllerMotDePasse,
-                      obscureText : visible,
-                      keyboardType: TextInputType.visiblePassword,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Mot de passe',
-                        hintText: "Enterez votre mot de passe",
-                        hintStyle: TextStyle(color: Colors.black),
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        isDense: true,
-                      ),
-                      
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                InkWell(
-                   onTap: (){
-                    setState(() {
-                      visible = !visible;
-                    });
-                   },
-                    child:
-                     Padding(
-                      padding: EdgeInsets.only(right: 10),
-                        child: Icon(
-                          /*Icons.visibility_off,*/
-                          visible ? Icons.visibility : Icons.visibility_off,
-
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                    ),
-                  ) ,
-                ],
-              ),
-            ),
-          ),
+              ],
+           ),
+          
+           ),
+      
           Container(
             width: 300,
             //padding: EdgeInsets.all(20),
@@ -277,7 +270,7 @@ class _MyConnexinState extends State<Connexin> {
           ),
           Container(
             padding: EdgeInsets.all(10),
-            child: Text('Voua n avez pas un compte?',style: TextStyle(color: Colors.grey, fontSize: 15)),
+            child: Text('Vous n avez pas un compte?',style: TextStyle(color: Colors.grey, fontSize: 15)),
           ),
           Container(
             padding: EdgeInsets.all(10),
