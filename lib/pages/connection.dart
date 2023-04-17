@@ -81,7 +81,7 @@ class _MyConnexinState extends State<Connexin> {
 
           leading: null,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.grey, 
+          backgroundColor: Colors.white,
           title: Text(''),
           flexibleSpace: Container(
            decoration: BoxDecoration(
@@ -114,7 +114,7 @@ class _MyConnexinState extends State<Connexin> {
             ),
             /***********************************************************************/
            Form(
-            key:_formkey1,
+           // key:_formkey1,
             child: Column(
               children:[
                 Container(
@@ -129,8 +129,9 @@ class _MyConnexinState extends State<Connexin> {
                      validator:(input){
                                     if(input == null ){
                                       return 'Entrer votre nom svp';
+                                    }else {
+                                      return null;
                                     }
-                                    return null;
                                   },
                           
                     decoration: InputDecoration(
@@ -161,6 +162,7 @@ class _MyConnexinState extends State<Connexin> {
                
                child: TextFormField(         
                     //keyboardType: TextInputType.visiblePassword,
+                    controller: _controllerMotDePasse,
                     keyboardType: TextInputType.visiblePassword,
                      validator:(input){
                                     if(input == null ){
@@ -237,12 +239,7 @@ class _MyConnexinState extends State<Connexin> {
                      );
 
                  } else {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(
-                       content: Text("succes"),
-                       duration: Duration(seconds: 2),
-                     ),
-                   );
+
                    //MaterialPageRoute(builder: (context) => const home());
                    Navigator.pushAndRemoveUntil(
                      context,

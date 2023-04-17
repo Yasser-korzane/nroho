@@ -9,6 +9,7 @@ import '../AppClasses/Evaluation.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
+import 'package:appcouvoiturage/pages/connection.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -75,7 +76,7 @@ final Size screenSize = MediaQuery
         toolbarHeight: 100,
         leading: null,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.white,
         title: Text(''),
         flexibleSpace: Container(
           decoration: BoxDecoration(
