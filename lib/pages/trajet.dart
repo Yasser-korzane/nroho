@@ -89,7 +89,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
           child: Column(
             children: <Widget>[
               // Zone de recherche pour le départ
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                 Column(
                   children: [
                     const Icon(Icons.gps_fixed),
@@ -104,8 +106,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       Icons.location_on,
                     ),
                   ],
-                ),
-                Column(children: [
+                ),//icons
+                Column(
+                    children: [
                   SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
@@ -126,6 +129,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: 'Départ',
+                        labelText: 'Départ',
                       ),
                     ),
                   ),
@@ -152,17 +156,16 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: 'Arrivée',
+                        labelText: 'Arrivée',
                       ),
                     ),
                   ),
                 ]),
               ]),
-
                SizedBox(height:size.height * 0.02 ),
                DateTimePickerRow(),
                SizedBox(height:size.height * 0.01 ),
                Divider(
-
                 thickness: 2,
               ),
               ListTile(
@@ -203,7 +206,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   style: TextStyle( fontSize: size.width * 0.04),
                 ),
               ),
-
               FutureBuilder(
                   future: getPredictions(querry),
                   builder: (context, snapshot) {
@@ -276,9 +278,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                    // textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-
-
+              ),//historique
               Row(
                 children: [
                   IconButton(
@@ -406,7 +406,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                     ),
 
-                    ),
+                    ),//button
             ],
         ),
               ),
