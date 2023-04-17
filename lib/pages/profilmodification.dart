@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ModifierProfilePage extends StatefulWidget {
   @override
@@ -20,6 +22,18 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   String _modele = '';
   String _policeAssurance = '';
   int _nombrePlaces = 0;
+  File _image = File('assets/images/logo.png');
+
+  Future<void> getImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source:  ImageSource.gallery) as File;
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
 
   // Methode pour changer la photo de profil
   void _changerPhoto() {
@@ -54,72 +68,79 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.014),
-
-
                 Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    'changer votre photo',
-                    style: TextStyle(
-                      color: Color(0xff271BAB),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: TextStyle(
+                        color: Color(0xff271BAB),
+                      ),
                     ),
+                    onPressed: getImage,
+                    child: Text('changer votre photo'),
                   ),
                 ),
                 Card(
-                    child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Identifiant:',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Identifiant:',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '$_nom $_prenom',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          Expanded(
+                            child: Text(
+                              '$_nom $_prenom',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Email:',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Email:',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '$_email',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          Expanded(
+                            child: Text(
+                              '$_email',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            'Numero de telephone:',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Numero de telephone:',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            '$_telephone',
-                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          Expanded(
+                            child: Text(
+                              '$_telephone',
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12),
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 SizedBox(height: size.height * 0.033),
                 Text(
@@ -127,54 +148,54 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Entrez votre nom',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez votre nom',
+                    onChanged: (value) {
+                      setState(() {
+                        _nom = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _nom = value;
-                    });
-                  },
                 ),
-                ),
-                SizedBox(height:size.height * 0.02),
+                SizedBox(height: size.height * 0.02),
                 Text(
                   'Prenom',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-        SizedBox(
-          width: size.width * 0.7,
-          height: size.height * 0.06,
-          child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Entrez votre prenom',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez votre prenom',
+                    onChanged: (value) {
+                      setState(() {
+                        _prenom = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _prenom = value;
-                    });
-                  },
                 ),
-        ),
                 SizedBox(height: 25),
                 SizedBox(height: 40),
                 Text(
@@ -183,188 +204,188 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       color: Color(0xff0085FF),
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
-                    textAlign: TextAlign.center,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
                 Text(
                   'marque',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-        SizedBox(
-          width: size.width * 0.7,
-          height: size.height * 0.06,
-          child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
 
-                    // labelText: 'Marque',
-                    hintText: 'Entrez la marque de votre vehicule',
+                      // labelText: 'Marque',
+                      hintText: 'Entrez la marque de votre vehicule',
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _marque = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _marque = value;
-                    });
-                  },
                 ),
-        ),
                 SizedBox(height: 15),
                 Text(
                   'Type du vehicule',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-          SizedBox(
-            width: size.width * 0.7,
-            height: size.height * 0.06,
-            child:    TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Entrez le type de votre vehicule',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez le type de votre vehicule',
+                    onChanged: (value) {
+                      setState(() {
+                        _type = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _type = value;
-                    });
-                  },
-                ),),
+                ),
                 SizedBox(height: 15),
                 Text(
                   'Matricule',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-          SizedBox(
-            width: size.width * 0.7,
-            height: size.height * 0.06,
-            child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Entrez le matricule de votre vehicule',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez le matricule de votre vehicule',
+                    onChanged: (value) {
+                      setState(() {
+                        _matricule = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _matricule = value;
-                    });
-                  },
                 ),
-          ),
                 SizedBox(height: 15),
                 Text(
                   'modéle',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-          SizedBox(
-            width: size.width * 0.7,
-            height: size.height * 0.06,
-            child:  TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Entrez le modele de votre vehicule',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez le modele de votre vehicule',
+                    onChanged: (value) {
+                      setState(() {
+                        _modele = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _modele = value;
-                    });
-                  },
                 ),
-          ),
                 SizedBox(height: 15),
                 Text(
                   'Police d\'assurance',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-          SizedBox(
-            width: size.width * 0.7,
-            height: size.height * 0.06,
-            child:   TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText:
+                          'Entrez la Police d\'assurance de votre vehicule',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez la Police d\'assurance de votre vehicule',
+                    onChanged: (value) {
+                      setState(() {
+                        _policeAssurance = value;
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _policeAssurance = value;
-                    });
-                  },
                 ),
-          ),
                 SizedBox(height: 15),
                 Text(
                   'Nombre de places',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-          SizedBox(
-            width: size.width * 0.7,
-            height: size.height * 0.06,
-            child:  TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
+                SizedBox(
+                  width: size.width * 0.7,
+                  height: size.height * 0.06,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'Entrez le nombre de places de votre vehicule',
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xff004DF6)),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: 'Entrez le nombre de places de votre vehicule',
+                    onChanged: (value) {
+                      setState(() {
+                        _nombrePlaces = int.parse(value);
+                      });
+                    },
                   ),
-                  onChanged: (value) {
-                    setState(() {
-                      _nombrePlaces = int.parse(value);
-                    });
-                  },
                 ),
-          ),
                 SizedBox(height: 12),
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: _validerModifications,
                   child: Text(
                     'Valider les modifications',
-                    style:  TextStyle(
-                        color: Colors.white),),
+                    style: TextStyle(color: Colors.white),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),
                 ),
-      ],
-      ),
-
-    ),
-
+              ],
+            ),
+          ),
         ),
       ),
     );

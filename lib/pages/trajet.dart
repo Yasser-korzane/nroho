@@ -93,8 +93,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
         ),
         title: Text(
           'Où allez-vous ?',
-          style: TextStyle(
-              color: const Color(0xff344D59), fontSize: size.width * 0.05),
+          style: TextStyle(color: Colors.black, fontSize: size.width * 0.05),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -105,7 +104,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
           child: Column(
             children: <Widget>[
               // Zone de recherche pour le départ
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
                 Column(
                   children: [
                     const Icon(Icons.gps_fixed),
@@ -120,8 +121,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       Icons.location_on,
                     ),
                   ],
-                ),
-                Column(children: [
+                ),//icons
+                Column(
+                    children: [
                   SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
@@ -144,6 +146,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: 'Départ',
+                        labelText: 'Départ',
                       ),
                     ),
                   ),
@@ -172,17 +175,16 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: 'Arrivée',
+                        labelText: 'Arrivée',
                       ),
                     ),
                   ),
                 ]),
               ]),
-
-              SizedBox(height: size.height * 0.02),
-              const DateTimePickerRow(),
-              SizedBox(height: size.height * 0.01),
-              const Divider(
-                color: Colors.blueGrey,
+               SizedBox(height:size.height * 0.02 ),
+               DateTimePickerRow(),
+               SizedBox(height:size.height * 0.01 ),
+               Divider(
                 thickness: 2,
               ),
               ListTile(
@@ -199,13 +201,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   Icons.location_on,
                   color: Colors.black,
                 ),
-                title: const Text(
+                title: Text(
                   'choisir sur la map',
-                  style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+                  style: TextStyle( fontSize: size.width * 0.04),
                 ),
               ),
-              const Divider(
-                color: Colors.blueGrey,
+              Divider(
+
                 thickness: 1,
               ),
               ListTile(
@@ -226,12 +228,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
                 title: Text(
                   'Utiliser ma position',
-                  style: TextStyle(
-                      color: const Color(0xff344D59),
-                      fontSize: size.width * 0.05),
+                  style: TextStyle( fontSize: size.width * 0.04),
                 ),
               ),
-
               FutureBuilder(
                   future: getPredictions(querry),
                   builder: (context, snapshot) {
@@ -240,7 +239,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         return ListView.separated(
                           separatorBuilder: (context, index) {
                             return const Divider(
-                              color: Colors.blueGrey,
+
                               thickness: 1,
                             );
                           },
@@ -294,18 +293,17 @@ class _OuAllezVousState extends State<OuAllezVous> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: Container(
-                  color: Colors.grey,
-                  child: const Text(
+                  color: Color(0XFFD3D3D3),
+                  child:  Text(
                     'Historique des recherches                                    ',
                     style: TextStyle(
-                        color: Color(0xff344D59),
-                        fontSize: 23,
-                        backgroundColor: Colors.grey),
-                    textAlign: TextAlign.center,
+                        color: Colors.black,
+                        fontSize: size.width * 0.04,
+                        ),
+                   // textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-
+              ),//historique
               Row(
                 children: [
                   IconButton(
@@ -316,9 +314,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   ),
                   Text(
                     'Maoklane - Setif',
-                    style: TextStyle(
-                        color: const Color(0xff344D59),
-                        fontSize: size.width * 0.05),
+                    style: TextStyle( fontSize: size.width * 0.04),
                   ),
                 ],
               ),
@@ -336,9 +332,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   ),
                   Text(
                     'Oued Smar - Alger',
-                    style: TextStyle(
-                        color: const Color(0xff344D59),
-                        fontSize: size.width * 0.05),
+                    style: TextStyle( fontSize: size.width * 0.04),
                   ),
                 ],
               ),

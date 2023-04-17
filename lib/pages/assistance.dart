@@ -18,13 +18,8 @@ class Assistance extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.chevron_left, color: Colors.black)),
         title: Center(
-            child: Text('Assistance      ',
+            child: Text('Assistance',
                 style: Theme
                     .of(context)
                     .textTheme
@@ -55,7 +50,7 @@ class Assistance extends StatelessWidget {
               icon: Icons.comment,
               onPress: () {},
             ),
-            SizedBox(height: screenHeight * 0.3),
+            SizedBox(height: screenHeight * 0.25),
             Text.rich(
               TextSpan(
                 text: 'besoin d’aide? ',

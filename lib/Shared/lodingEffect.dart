@@ -1,13 +1,15 @@
+import 'package:appcouvoiturage/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-    color: Colors.grey,
+    color: Colors.white,
     child: Center(
-          child: SpinKitDoubleBounce(
-            color: Colors.white,
+          child: SpinKitThreeBounce(
+            color: Colors.blue,
            size: 50.0,
            /* itemBuilder: (BuildContext context, int index) {
             return DecoratedBox(
@@ -21,3 +23,5 @@ class Loading extends StatelessWidget {
   );
   }
 }
+
+
