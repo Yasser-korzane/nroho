@@ -103,7 +103,7 @@ class _ProfilepageState extends State<Profilepage> {
                   icon: Icons.logout,
                   onPress: () async {
                     await _auth.signOut();
-                    Navigator.pop(context);
+                   // Navigator.pop(context);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const Connexin(title: 'test')),
