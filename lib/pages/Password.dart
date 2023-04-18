@@ -32,7 +32,7 @@ class MotdePasse extends StatelessWidget {
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: screenHeight*0.04,),
-                Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 14),)),
+                Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)),
                 SizedBox(height: screenHeight*0.1),
                 Text('Ancien mot de passe',
                   style: TextStyle(fontWeight: FontWeight.bold),),
@@ -94,7 +94,7 @@ class MotdePasse extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text: ' Click ici',
+                          text: ' Cliquez ici',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             fontSize: 16.0,

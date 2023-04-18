@@ -18,7 +18,7 @@ class Driver {
 }
 
 class DriverListPage extends StatelessWidget {
-  final List<Driver> drivers = [
+  final List<Driver> drivers = [ // Creation de 3 instances de la classe Driver afin de dérouler le code
     Driver(
       name: 'Ali Lapointe',
       phoneNumber: '07786111801',
@@ -28,7 +28,7 @@ class DriverListPage extends StatelessWidget {
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
     ),
     Driver(
-      name: 'Redouane Bouraoui',
+      name: 'Mohamed Boudief',
       phoneNumber: '05555555555',
       depart: 'Constantine',
       arrivee: 'Setif',
@@ -36,7 +36,7 @@ class DriverListPage extends StatelessWidget {
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
     ),
     Driver(
-      name: 'Hamid Latcha',
+      name: 'Ferhat Abbas',
       phoneNumber: '05513555655',
       depart: 'Oran',
       arrivee: 'Tlemcen',
@@ -64,7 +64,7 @@ class DriverListPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 5,
       ),
-      body: ListView.builder(
+      body: ListView.builder( // Utilisation du widget ListView.builder pour afficher à l'utilisateur l'ensemble des chauffeurs disponible correspandant a sa demande
         itemCount: drivers.length,
         itemBuilder: (context, index) {
           final driver = drivers[index];
@@ -137,7 +137,6 @@ class DriverListPage extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              //  SizedBox(height: 0.02),
                               Container(
                                 child: ListTile(
                                   title: Text(
