@@ -6,7 +6,7 @@ import 'package:appcouvoiturage/pages/signup1.dart';
 import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/profilwidget.dart';
-import 'package:appcouvoiturage/pages/connection.dart';
+import 'package:appcouvoiturage/pages/connexion.dart';
 import 'package:get/get.dart';
 
 class Profilepage extends StatefulWidget {

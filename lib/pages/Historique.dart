@@ -72,7 +72,7 @@ class _cardReserverLancerListeState extends State<cardReserverLancerList> {
                   ),
                   Column(
                     children : [
-                    Text('Le court'),
+                    Text('Le cout'),
                     Text(  cardLancer.price.toString() +' DA'),
                     ]
                   )

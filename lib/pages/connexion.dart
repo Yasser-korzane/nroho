@@ -128,7 +128,7 @@ class _MyConnexinState extends State<Connexin> {
                     keyboardType: TextInputType.emailAddress,
                      validator:(input){
                                     if(input == null ){
-                                      return 'Entrer votre nom svp';
+                                      return 'Entrez votre nom ';
                                     }else {
                                       return null;
                                     }
@@ -145,7 +145,7 @@ class _MyConnexinState extends State<Connexin> {
                     border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
                 
                     labelText: 'User Name',
-                    hintText: 'Enter valid mail id as abc@gmail.com',
+                    hintText: 'Entrez votre adresse mail abc@gmail.com',
                     hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
                     fillColor: Colors.grey,
                     filled: true,
@@ -166,7 +166,7 @@ class _MyConnexinState extends State<Connexin> {
                     keyboardType: TextInputType.visiblePassword,
                      validator:(input){
                                     if(input == null ){
-                                      return 'Entrer votre nom svp';
+                                      return 'Entrez votre nom ';
                                     }
                                     return null;
                                   },
@@ -181,7 +181,7 @@ class _MyConnexinState extends State<Connexin> {
                     border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12)),),
            
                     labelText: 'Mot de passe',
-                    hintText: 'entrer votre mot de passe ',
+                    hintText: 'Entrez votre mot de passe ',
                     hintStyle: TextStyle(color: Colors.grey[200],fontSize: 14),
                     fillColor: Colors.grey,
                     filled: true,
@@ -233,7 +233,7 @@ class _MyConnexinState extends State<Connexin> {
 
                      ScaffoldMessenger.of(context).showSnackBar(
                        SnackBar(
-                         content: Text("Vous devez verifier les donnees"),
+                         content: Text("Veuillez verifier vos données "),
                          duration: Duration(seconds: 2),
                        ),
                      );
@@ -250,7 +250,7 @@ class _MyConnexinState extends State<Connexin> {
                }else{
                  ScaffoldMessenger.of(context).showSnackBar(
                    SnackBar(
-                     content: Text("Vous devez verifier les donneess"),
+                     content: Text("Veuillez verifier vos données"),
                      duration: Duration(seconds: 2),
                    ),
                  );
@@ -263,11 +263,11 @@ class _MyConnexinState extends State<Connexin> {
           ),
           Container(
             padding: EdgeInsets.all(10),
-            child: Text('Mot de passe oublier ?',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
+            child: Text('Mot de passe oublié ?',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
           ),
           Container(
             padding: EdgeInsets.all(10),
-            child: Text('Vous n avez pas un compte?',style: TextStyle(color: Colors.grey, fontSize: 15)),
+            child: Text('Vous n\'avez pas compte?',style: TextStyle(color: Colors.grey, fontSize: 15)),
           ),
           Container(
             padding: EdgeInsets.all(10),
