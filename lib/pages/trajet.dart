@@ -32,6 +32,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
+
   Future<dynamic> getPlaceFromId(String placeID) async {
     var response = await Dio().get(
         "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
@@ -104,9 +105,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
           child: Column(
             children: <Widget>[
               // Zone de recherche pour le départ
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Column(
                   children: [
                     const Icon(Icons.gps_fixed),
@@ -121,9 +120,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       Icons.location_on,
                     ),
                   ],
-                ),//icons
-                Column(
-                    children: [
+                ), //icons
+                Column(children: [
                   SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
@@ -181,54 +179,61 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   ),
                 ]),
               ]),
-               SizedBox(height:size.height * 0.02 ),
-               DateTimePickerRow(),
-               SizedBox(height:size.height * 0.01 ),
-               Divider(
+              SizedBox(height: size.height * 0.02),
+              DateTimePickerRow(),
+              SizedBox(height: size.height * 0.01),
+              const Divider(
+                color: Colors.black,
                 thickness: 2,
               ),
-              ListTile(
-                onTap: () {
-                  setState(() {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const MapPage();
-                      },
-                    ));
-                  });
-                },
-                leading: const Icon(
-                  Icons.location_on,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  'choisir sur la map',
-                  style: TextStyle( fontSize: size.width * 0.04),
+              SizedBox(
+                height: size.height * 0.05,
+                child: ListTile(
+                  onTap: () {
+                    setState(() {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const MapPage();
+                        },
+                      ));
+                    });
+                  },
+                  leading: const Icon(
+                    Icons.location_on,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'choisir sur la map',
+                    style: TextStyle(fontSize: size.width * 0.04),
+                  ),
                 ),
               ),
-              Divider(
-
+              const Divider(
+                color: Colors.black,
                 thickness: 1,
               ),
-              ListTile(
-                onTap: () {
-                  setState(() {
-                    depart = "Current Position";
-                    _departController.value = TextEditingValue(
-                      text: "Current Position",
-                      selection: TextSelection.fromPosition(
-                        const TextPosition(offset: "Current Position".length),
-                      ),
-                    );
-                  });
-                },
-                leading: const Icon(
-                  Icons.gps_fixed,
-                  color: Colors.black,
-                ),
-                title: Text(
-                  'Utiliser ma position',
-                  style: TextStyle( fontSize: size.width * 0.04),
+              SizedBox(
+                height: size.height * 0.05,
+                child: ListTile(
+                  onTap: () {
+                    setState(() {
+                      depart = "Current Position";
+                      _departController.value = TextEditingValue(
+                        text: "Current Position",
+                        selection: TextSelection.fromPosition(
+                          const TextPosition(offset: "Current Position".length),
+                        ),
+                      );
+                    });
+                  },
+                  leading: const Icon(
+                    Icons.gps_fixed,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'Utiliser ma position',
+                    style: TextStyle(fontSize: size.width * 0.04),
+                  ),
                 ),
               ),
               FutureBuilder(
@@ -239,7 +244,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         return ListView.separated(
                           separatorBuilder: (context, index) {
                             return const Divider(
-
                               thickness: 1,
                             );
                           },
@@ -290,52 +294,63 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       return const Text("searching...");
                     }
                   }),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                child: Container(
-                  color: Color(0XFFD3D3D3),
-                  child:  Text(
-                    'Historique des recherches                                    ',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: size.width * 0.04,
-                        ),
-                   // textAlign: TextAlign.center,
-                  ),
-                ),
-              ),//historique
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.location_on,
-                    ),
-                    onPressed: () {},
-                  ),
-                  Text(
-                    'Maoklane - Setif',
-                    style: TextStyle( fontSize: size.width * 0.04),
-                  ),
-                ],
-              ),
               const Divider(
-                color: Colors.blueGrey,
+                color: Colors.black,
                 thickness: 1,
               ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.location_on,
-                    ),
-                    onPressed: () {},
+              SizedBox(
+                height: size.height * 0.045,
+                child: ListTile(
+                  onTap: () {},
+                  tileColor: Color(0XFFD3D3D3),
+                  title: Text(
+                    'Historique des recherches',
+                    style: TextStyle(fontSize: size.width * 0.04),
                   ),
-                  Text(
-                    'Oued Smar - Alger',
-                    style: TextStyle( fontSize: size.width * 0.04),
-                  ),
-                ],
+                ),
               ),
+              const Divider(
+                color: Colors.black,
+                thickness: 1,
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+                child: ListTile(
+                  onTap: () {},
+                  leading: const Icon(
+                    Icons.location_on,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'Maoklane-Setif',
+                    style: TextStyle(fontSize: size.width * 0.04),
+                  ),
+                ),
+              ),
+              const Divider(
+                color: Colors.black,
+                thickness: 1,
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+                child: ListTile(
+                  onTap: () {},
+                  leading: const Icon(
+                    Icons.location_on,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'Oued Smar-Alger',
+                    style: TextStyle(fontSize: size.width * 0.04),
+                  ),
+                ),
+              ),
+
+              const Divider(
+                color: Colors.black,
+                thickness: 1,
+              ),
+
               const SizedBox(
                 height: 150,
               ),
@@ -437,7 +452,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content:
-                                    Text("Please fill all the information")));
+                                    Text("Please fill all the informations")));
                       }
                     },
                     style: ElevatedButton.styleFrom(

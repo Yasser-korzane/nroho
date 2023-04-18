@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'cardLancer.dart';
 import 'cardReserver.dart';
-import 'package:appcouvoiturage/pages/tragetLancer.dart';
-import 'package:appcouvoiturage/pages/tragetReserver.dart';
+import 'package:appcouvoiturage/pages/trajetsLances.dart';
+import 'package:appcouvoiturage/pages/trajetsReserves.dart';
 
 
 

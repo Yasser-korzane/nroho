@@ -1,5 +1,5 @@
 import 'package:appcouvoiturage/pages/assistance.dart';
-import 'package:appcouvoiturage/pages/options.dart';
+import 'package:appcouvoiturage/pages/optionspassager.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
