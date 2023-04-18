@@ -17,7 +17,6 @@ class _MyBeginPageState extends State<MyBeginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
         leading: null,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,

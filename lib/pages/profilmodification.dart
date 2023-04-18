@@ -1,52 +1,167 @@
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import '../AppClasses/Evaluation.dart';
+import '../AppClasses/PlusInformations.dart';
+import '../AppClasses/Trajet.dart';
+import '../AppClasses/Utilisateur.dart';
+import '../AppClasses/Vehicule.dart';
+import '../Services/base de donnee.dart';
+import '../Shared/lodingEffect.dart';
 
 class ModifierProfilePage extends StatefulWidget {
   @override
   _ModifierProfilePageState createState() => _ModifierProfilePageState();
 }
-
 class _ModifierProfilePageState extends State<ModifierProfilePage> {
-  // Initialisation des variables
-  String _nom = 'Omar';
-  String _prenom = 'Hemmadi';
-  String _email = 'omarhemmadi@esi.dz';
-  String _telephone = '0123456789';
-  String _ancienMotDePasse = '';
-  String _nouveauMotDePasse = '';
-  String _confirmationMotDePasse = '';
-  String _marque = '';
-  String _type = '';
-  String _matricule = '';
-  String _modele = '';
-  String _policeAssurance = '';
-  int _nombrePlaces = 0;
-  File _image = File('assets/images/logo.png');
-
-  Future<void> getImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source:  ImageSource.gallery) as File;
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-  }
-
+  final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  /*TextEditingController _contrNom = TextEditingController();
+  TextEditingController _contrPrenom = TextEditingController();
+  TextEditingController _contrMarque = TextEditingController();
+  TextEditingController _contrType = TextEditingController();
+  TextEditingController _contrMatricule = TextEditingController();
+  TextEditingController _contrModele = TextEditingController();
+  TextEditingController _contrPolice = TextEditingController();
+  TextEditingController _contrNbPlaces = TextEditingController();*/
   // Methode pour changer la photo de profil
   void _changerPhoto() {
     // Implementer la logique pour changer la photo de profil
   }
-
   // Methode pour sauvegarder les modifications
-  void _validerModifications() {
+  void _validerModifications() async {
     //  Implementer la logique pour valider les modifications
-  }
 
+  }
+  late Utilisateur _utilisateur ;
+  Future _getDataFromDataBase()async {
+    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
+    try {
+      await FirebaseFirestore.instance.collection('Utilisateur')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          setState(() {
+            _utilisateur.identifiant = snapshot.data()!['identifiant'];
+            _utilisateur.nom = snapshot.data()!['nom'];
+            _utilisateur.prenom = snapshot.data()!['prenom'];
+            _utilisateur.email = snapshot.data()!['email'];
+            _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
+            _utilisateur.evaluation = Evaluation(
+              List<String>.from(snapshot.data()!['evaluation']['feedback']),
+              snapshot.data()!['evaluation']['etoiles'],
+              snapshot.data()!['evaluation']['nbSignalement'],
+            );
+            _utilisateur.vehicule = Vehicule(
+              snapshot.data()!['vehicule']['marque'],
+              snapshot.data()!['vehicule']['typevehicule'],
+              snapshot.data()!['vehicule']['matricule'],
+              snapshot.data()!['vehicule']['modele'],
+              snapshot.data()!['vehicule']['policeAssurance'],
+              snapshot.data()!['vehicule']['nbPlaces'],
+            );
+            _utilisateur.statut = snapshot.data()!['statut'];
+            _utilisateur.trajetsLances =
+            snapshot.data()!['trajetsLances'] != null
+                ? List<Trajet>.from(snapshot.data()!['trajetsLances'].map(
+                  (trajet) =>
+                  Trajet(
+                    trajet['horaire'],
+                    trajet['tempsDePause'],
+                    trajet['lieuDepart'],
+                    trajet['lieuArrivee'],
+                    trajet['coutTrajet'],
+                    trajet['villeDepart'],
+                    trajet['villeArrivee'],
+                    List<String>.from(trajet['villeIntermediaires']),
+                    PlusInformations(
+                      trajet['plusInformations']['fumeur'],
+                      trajet['plusInformations']['bagage'],
+                      trajet['plusInformations']['animaux'],
+                      trajet['plusInformations']['nbPlaces'],
+                    ),
+                    trajet['trajetEstValide'],
+                  ),
+            ))
+                : [];
+            _utilisateur.trajetsReserves =
+            snapshot.data()!['trajetsReserves'] != null
+                ? List<Trajet>.from(snapshot.data()!['trajetsReserves'].map(
+                  (trajet) =>
+                  Trajet(
+                    trajet['horaire'],
+                    trajet['tempsDePause'],
+                    trajet['lieuDepart'],
+                    trajet['lieuArrivee'],
+                    trajet['coutTrajet'],
+                    trajet['villeDepart'],
+                    trajet['villeArrivee'],
+                    List<String>.from(trajet['villeIntermediaires']),
+                    PlusInformations(
+                      trajet['plusInformations']['fumeur'],
+                      trajet['plusInformations']['bagage'],
+                      trajet['plusInformations']['animaux'],
+                      trajet['plusInformations']['nbPlaces'],
+                    ),
+                    trajet['trajetEstValide'],
+                  ),
+            ))
+                : [];
+            _utilisateur.Historique = snapshot.data()!['Historique'] != null
+                ? List<Trajet>.from(snapshot.data()!['Historique'].map(
+                  (trajet) =>
+                  Trajet(
+                    trajet['horaire'],
+                    trajet['tempsDePause'],
+                    trajet['lieuDepart'],
+                    trajet['lieuArrivee'],
+                    trajet['coutTrajet'],
+                    trajet['villeDepart'],
+                    trajet['villeArrivee'],
+                    List<String>.from(trajet['villeIntermediaires']),
+                    PlusInformations(
+                      trajet['plusInformations']['fumeur'],
+                      trajet['plusInformations']['bagage'],
+                      trajet['plusInformations']['animaux'],
+                      trajet['plusInformations']['nbPlaces'],
+                    ),
+                    trajet['trajetEstValide'],
+                  ),
+            ))
+                : [];
+            //tests by printing
+          }); // end setState
+        } else { // end snapshot exist
+          throw Exception("Utilisateur does not exist.");
+        }
+      });
+    } catch (e) {
+      throw Exception("Failed to get utilisateur.");
+    }
+  } /// end getdata
+  @override
+  void initState() {
+    super.initState();
+    _getDataFromDataBase();
+  }
   @override
   Widget build(BuildContext context) {
+    /*_contrNom.text = _utilisateur.nom;
+    _contrPrenom.text = _utilisateur.prenom;
+    _contrMarque.text = _utilisateur.vehicule.marque;
+    _contrType.text = _utilisateur.vehicule.typevehicule;
+    _contrMatricule.text = _utilisateur.vehicule.matricule;
+    _contrModele.text = _utilisateur.vehicule.modele;
+    _contrPolice.text = _utilisateur.vehicule.policeAssurance;
+    _contrNbPlaces.text = _utilisateur.vehicule.nbPlaces.toString();*/
+    if (_utilisateur.nom.isEmpty) _utilisateur.nom = 'Entrer votre nom';
+    if (_utilisateur.prenom.isEmpty) _utilisateur.prenom = 'Entrer votre prenom';
+    if (_utilisateur.vehicule.marque.isEmpty) _utilisateur.vehicule.marque = 'Entrez la marque de votre vehicule';
+    if (_utilisateur.vehicule.typevehicule.isEmpty) _utilisateur.vehicule.typevehicule = 'Entrez le type de votre vehicule';
+    if (_utilisateur.vehicule.matricule.isEmpty) _utilisateur.vehicule.matricule = 'Entrez la matircule de votre vehicule';
+    if (_utilisateur.vehicule.modele.isEmpty) _utilisateur.vehicule.modele = 'Entrez le modele de votre vehicule';
+    if (_utilisateur.vehicule.policeAssurance.isEmpty) _utilisateur.vehicule.policeAssurance = 'Entrez la police d\'assurance de votre vehicule';
+    if (_utilisateur.vehicule.marque.isEmpty) _utilisateur.vehicule.nbPlaces = 0;
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -70,14 +185,11 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: size.height * 0.014),
                 Align(
                   alignment: Alignment.center,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle: TextStyle(
-                        color: Color(0xff271BAB),
-                      ),
+                  child: Text(
+                    'changer votre photo',
+                    style: TextStyle(
+                      color: Color(0xff271BAB),
                     ),
-                    onPressed: getImage,
-                    child: Text('changer votre photo'),
                   ),
                 ),
                 Card(
@@ -90,15 +202,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           Expanded(
                             child: Text(
                               'Identifiant:',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              '$_nom $_prenom',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              _utilisateur.identifiant,
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
                             ),
                           ),
                         ],
@@ -107,16 +217,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         children: [
                           Expanded(
                             child: Text(
-                              'Email:',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              'Email: ',
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              '$_email',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              _utilisateur.email,
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
                             ),
                           ),
                         ],
@@ -126,15 +234,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           Expanded(
                             child: Text(
                               'Numero de telephone:',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              '$_telephone',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                              _utilisateur.numeroTelephone,
+                              style: TextStyle(color: Colors.grey, fontSize: 12),
                             ),
                           ),
                         ],
@@ -150,7 +256,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                   width: size.width * 0.7,
                   height: size.height * 0.06,
-                  child: TextField(
+                  child: TextFormField(//controller: _contrNom,
                     decoration: InputDecoration(
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -160,41 +266,43 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       ),
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: 'Entrez votre nom',
+                      hintText: _utilisateur.nom,
                     ),
                     onChanged: (value) {
                       setState(() {
-                        _nom = value;
+                        _utilisateur.nom = value;
                       });
                     },
                   ),
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height:size.height * 0.02),
                 Text(
                   'Prenom',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(//controller: _contrPrenom,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.prenom,
+
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez votre prenom',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _prenom = value;
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrPrenom.text = value;
+                          _utilisateur.prenom = value;
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 25),
                 SizedBox(height: 40),
@@ -212,28 +320,27 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(//controller: _contrMarque,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.vehicule.marque,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-
-                      // labelText: 'Marque',
-                      hintText: 'Entrez la marque de votre vehicule',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _marque = value;
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrMarque.text = value;
+                          _utilisateur.vehicule.marque = value;
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 15),
                 Text(
@@ -241,26 +348,28 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child:    TextField(//controller: _contrType,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.vehicule.typevehicule,
+
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez le type de votre vehicule',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _type = value;
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrType.text = value;
+                          _utilisateur.vehicule.typevehicule = value;
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 15),
                 Text(
@@ -268,26 +377,28 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(//controller: _contrMatricule,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText:_utilisateur.vehicule.matricule,
+
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez le matricule de votre vehicule',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _matricule = value;
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrMatricule.text = value;
+                          _utilisateur.vehicule.matricule = value;
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 15),
                 Text(
@@ -295,26 +406,28 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child:  TextField(//controller: _contrModele,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.vehicule.modele,
+
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez le modele de votre vehicule',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _modele = value;
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrModele.text = value;
+                          _utilisateur.vehicule.modele = value;
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 15),
                 Text(
@@ -322,27 +435,28 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child:   TextField(//controller: _contrPolice,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.vehicule.policeAssurance,
+
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText:
-                          'Entrez la Police d\'assurance de votre vehicule',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _policeAssurance = value;
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrPolice.text = value;
+                          _utilisateur.vehicule.policeAssurance = value;
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 15),
                 Text(
@@ -350,42 +464,58 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child:  TextField(//controller: _contrNbPlaces,
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.vehicule.nbPlaces.toString(),
+
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xff004DF6)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez le nombre de places de votre vehicule',
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _nombrePlaces = int.parse(value);
-                      });
-                    },
-                  ),
+                      onChanged: (value) {
+                        setState(() {
+                          //_contrNbPlaces.text = value;
+                          _utilisateur.vehicule.nbPlaces = int.parse(value);
+                        });
+                      },
+                    )
                 ),
                 SizedBox(height: 12),
                 SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: _validerModifications,
+                  onPressed: () async{
+                    Navigator.pop(
+                      context,
+                      MaterialPageRoute(builder: (context) => Loading()),
+                    );
+                    await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, _utilisateur);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Modifications avec succes'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
                   child: Text(
                     'Valider les modifications',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                    style:  TextStyle(
+                        color: Colors.white),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
                   ),
                 ),
               ],
             ),
+
           ),
+
         ),
       ),
     );

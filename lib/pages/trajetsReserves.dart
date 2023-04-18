@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 class cardReserverList extends StatefulWidget{
   @override
   _cardReserverListeState createState()=> _cardReserverListeState();
-} 
+}
 
 class _cardReserverListeState extends State<cardReserverList> {
 
-  List<cardReserver> cardReservers= [
+  List<dynamic> cardReservers= [
     cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
     cardReserver(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
 
@@ -22,51 +22,48 @@ class _cardReserverListeState extends State<cardReserverList> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-    /*
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Center(
         child: Card(
           child:Column(
-            
+
             children: [
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget> [
-                  //Image، 
-                  CircleAvatar(
-                    //backGrounndImage: AssetImage('your image path'),
-                    backgroundImage: AssetImage('asset/images/profile.png',),
-                    radius: 50,
-                    
-                    //width:screenHeight*0.3 ,
-                  ),
-                  Column(
-                    children: [
-                       Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget> [
+                      //Image،
+                      CircleAvatar(
+                        //backGrounndImage: AssetImage('your image path'),
+                        backgroundImage: AssetImage('asset/images/profile.png',),
+                        radius: 50,
+                      ),
+                      Column(
                         children: [
-                          Text( cardReserver.firstName),
-                          Text(cardReserver.lastName)
+                          Row(
+                            children: [
+                              Text( cardReserver.firstName),
+                              Text(cardReserver.lastName)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.star , color: Colors.amber[600] ,),
+                              Text(cardReserver.nombraStar.toString())
+                            ],
+                          )
                         ],
                       ),
-                      Row(
-                        children: [
-                          Icon(Icons.star , color: Colors.amber[600] ,),
-                          Text(cardReserver.nombraStar.toString())
-                        ],
-                        )
-                    ],
-                  ),
-                  Column(
-                    children : [
-                    Text('Le court'),
-                    Text(cardReserver.price.toString()+'DA'),
+                      Column(
+                          children : [
+                            Text('Le court'),
+                            Text(cardReserver.price.toString()+'DA'),
+                          ]
+                      )
+
                     ]
-                  )
-                  
-                  ]
                 ),
               ),
               Padding(
@@ -76,69 +73,69 @@ class _cardReserverListeState extends State<cardReserverList> {
                   thickness: 2,
                   color: Colors.black,
                 ),
-              ),    
-               SizedBox(height: screenHeight*0.04),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Icon(Icons.circle, color: Colors.purple),
-                      // SizedBox(height: 20),
-                      Container(
-                        height: screenHeight* 0.09,
-                        width: 1,
-                        color: Colors.grey,
-                      ),
-                      // SizedBox(height: 8),
-                      Icon(
-                        Icons.circle_outlined,
-                        color: Colors.purple,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Column(
-                    children: [
-                      Container(
-                        child: ListTile(
-                          title: Text(
-                            cardReserver.heurDepar,
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(cardReserver.placeDepart),
-                          onTap: () {
-                            // handle onTap event
-                          },
+              ),
+              SizedBox(height: screenHeight*0.04),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Icon(Icons.circle, color: Colors.purple),
+                        // SizedBox(height: 20),
+                        Container(
+                          height: screenHeight* 0.09,
+                          width: 1,
+                          color: Colors.grey,
                         ),
-                      ),
-                      SizedBox(height: screenHeight*0.03),
-                      Container(
-                        child: ListTile(
-                          title: Text(
-                           cardReserver.heureArrive ,
-                            style: TextStyle(
-                              color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(cardReserver.placeArrive),
-                          onTap: () {
-                            // handle onTap event
-                          },
+                        // SizedBox(height: 8),
+                        Icon(
+                          Icons.circle_outlined,
+                          color: Colors.purple,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                )
-              ],
-            ),
-            SizedBox(height: screenHeight*0.018),
-           /* Container(
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      children: [
+                        Container(
+                          child: ListTile(
+                            title: Text(
+                              cardReserver.heurDepar,
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(cardReserver.placeDepart),
+                            onTap: () {
+                              // handle onTap event
+                            },
+                          ),
+                        ),
+                        SizedBox(height: screenHeight*0.03),
+                        Container(
+                          child: ListTile(
+                            title: Text(
+                              cardReserver.heureArrive ,
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(cardReserver.placeArrive),
+                            onTap: () {
+                              // handle onTap event
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: screenHeight*0.018),
+              /* Container(
               child:  Row(children: [
                 Icon(
                   Icons.person,
@@ -148,187 +145,54 @@ class _cardReserverListeState extends State<cardReserverList> {
                 Text('3 passagers',style: TextStyle( color: Colors.blue ,  ),)
               ]),
             ),
-            
+
             SizedBox(height: screenHeight * 0.03),*/
-      
-              ],
+
+            ],
           ),
-    
-    //Divider() الخط هذاك
-    
-    //The rest of content
-    
-    
-    //]
-    ),
-    
-    
-    
-    ),
-    );*/
-   return  Padding(
-      padding: const EdgeInsets.all(10),
-      child: Card(
-        child: Center(
-          child: Column(
-            
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget> [
-                  //Image، 
-                  Container(
-                    height: 50,
-                    width: 50,
-                    child: CircleAvatar(
-                      //backGrounndImage: AssetImage('your image path'),
-                      backgroundImage: AssetImage('asset/images/profile.png',),
-                      radius: 50,
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-      
-                        children: [
-                          Text( cardReserver.firstName),
-                          Text(cardReserver.lastName),
-                          SizedBox(
-                            height: 1,
-                            width: 90,
-                          )
-                        ],
-                      ),
-                      Row(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(Icons.star , color: Colors.amber[600] ,),
-                          Text(cardReserver.nombraStar.toString()),
-                          SizedBox(
-                            height: 1,
-                            width: 160,
-                          )
-                        ],
-                        )
-                    ],
-                  ),
-                  Column(
-                    children : [
-                    Text('Le court'),
-                    Text(  cardReserver.price.toString() +' DA'),
-                    ]
-                  )
-                  
-                  ]
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left:10.0, right: 10),
-                child: Divider(
-                  height: 1,
-                  thickness: 2,
-                  color: Colors.black,
-                ),
-              ),    
-               //SizedBox(height: screenHeight*0.04),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Icon(Icons.circle, color: Colors.purple),
-                      // SizedBox(height: 20),
-                      Container(
-                        height: screenHeight* 0.05,
-                        width: 1,
-                        color: Colors.grey,
-                      ),
-                      // SizedBox(height: 8),
-                      Icon(
-                        Icons.circle_outlined,
-                        color: Colors.purple,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: Column(
-                    children: [
-                      Container(
-                        child: ListTile(
-                          title: Text(
-                            cardReserver.heurDepar,
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                
-                                ),
-                          ),
-                          subtitle: Text(cardReserver.placeDepart),
-                          onTap: () {
-                            // handle onTap event
-                          },
-                        ),
-                      ),
-                      //SizedBox(height: screenHeight*0.03),
-                      Container(
-                        child: ListTile(
-                          title: Text(
-                            cardReserver.heureArrive,
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          subtitle: Text(cardReserver.placeArrive),
-                          onTap: () {
-                            // handle onTap event
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            //SizedBox(height: screenHeight*0.018),
-    
-            
-           // SizedBox(height: screenHeight * 0.03),
-        
-              ],
-          ),
-          
-          
-          
-          ),
+
+          //Divider() الخط هذاك
+
+          //The rest of content
+
+
+          //]
+        ),
+
+
+
       ),
     );
-    }
-  
 
 
-
-  
+  }
 
   @override
   Widget build (BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.grey [200],
-      appBar: AppBar(
-        title: Text ('Mes tragets',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20), ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-      ),
-      body: ListView(
-              scrollDirection: Axis.vertical,
-              children: cardReservers.map((cardReserver) =>  cardReserverTamplate(cardReserver) ).toList(),
-    )
+        backgroundColor: Colors.grey [200],
+        appBar: AppBar(
+          title: Text ('Mes tragets',style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20), ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+        ),
+        body: PageView(
+          scrollDirection: Axis.vertical,
+          // children: cardReservers.map((cardReserver) =>  cardReserverTamplate(cardReserver) ).toList(),
+        )
     );
-  };
+  }
 }
+
+
+
+/*Future<void> getImage() async {
+  final pickedFile =
+  await ImagePicker().pickImage(source:  ImageSource.gallery) as File;
+
+  if (pickedFile != null) {
+    setState(() {
+      _image = File(pickedFile.path);
+    });
+  }
+}*/
