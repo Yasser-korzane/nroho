@@ -28,6 +28,162 @@ class _cardLancerListeState extends State<cardLancerList> {
     final double defaultPadding = 10;
     return  Padding(
       padding: const EdgeInsets.all(10),
+      child: Card(
+        child: Center(
+          child: Column(
+            
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget> [
+                  //Image، 
+                  Container(
+                    height: 50,
+                    width: 50,
+                    child: CircleAvatar(
+                      //backGrounndImage: AssetImage('your image path'),
+                      backgroundImage: AssetImage('asset/images/profile.png',),
+                      radius: 50,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+      
+                        children: [
+                          Text( cardLancer.firstName),
+                          Text(cardLancer.lastName),
+                          SizedBox(
+                            height: 1,
+                            width: 90,
+                          )
+                        ],
+                      ),
+                      Row(
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.star , color: Colors.amber[600] ,),
+                          Text(cardLancer.nombraStar.toString()),
+                          SizedBox(
+                            height: 1,
+                            width: 160,
+                          )
+                        ],
+                        )
+                    ],
+                  ),
+                  Column(
+                    children : [
+                    Text('Le court'),
+                    Text(  cardLancer.price.toString() +' DA'),
+                    ]
+                  )
+                  
+                  ]
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0, right: 10),
+                child: Divider(
+                  height: 1,
+                  thickness: 2,
+                  color: Colors.black,
+                ),
+              ),    
+               //SizedBox(height: screenHeight*0.04),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      Icon(Icons.circle, color: Colors.purple),
+                      // SizedBox(height: 20),
+                      Container(
+                        height: screenHeight* 0.05,
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                      // SizedBox(height: 8),
+                      Icon(
+                        Icons.circle_outlined,
+                        color: Colors.purple,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: ListTile(
+                          title: Text(
+                            cardLancer.heurDepar,
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                
+                                ),
+                          ),
+                          subtitle: Text(cardLancer.placeDepart),
+                          onTap: () {
+                            // handle onTap event
+                          },
+                        ),
+                      ),
+                      //SizedBox(height: screenHeight*0.03),
+                      Container(
+                        child: ListTile(
+                          title: Text(
+                            cardLancer.heureArrive,
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          subtitle: Text(cardLancer.placeArrive),
+                          onTap: () {
+                            // handle onTap event
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            //SizedBox(height: screenHeight*0.018),
+            Padding(
+              padding: const EdgeInsets.only(left: 30,bottom: 5),
+              child: Container(
+                child:  Row(children: [
+                  Icon(
+                    Icons.person,
+                    color: Colors.blue,
+                    size: 20,
+                  ),
+                  Text( cardLancer.nbPassager.toString() +'passagers',style: TextStyle( color: Colors.blue ,  ),)
+                ]),
+              ),
+            ),
+            
+           // SizedBox(height: screenHeight * 0.03),
+        
+              ],
+          ),
+          
+          
+          
+          ),
+      ),
+    );
+    /*
+    return  Padding(
+      padding: const EdgeInsets.all(10),
       child: Center(
         child: Card(
           child:Column(
@@ -166,7 +322,7 @@ class _cardLancerListeState extends State<cardLancerList> {
     
     
     ),
-    );
+    );*/
   }
   @override
   Widget build (BuildContext context){
