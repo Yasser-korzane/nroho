@@ -22,11 +22,12 @@ class _optionsState extends State<options> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              // Navigator.pop(context)
+               //Navigator.pop(context);
             },
-            icon: const Icon(Icons.chevron_left, color: Colors.black)),
+            icon: const Icon(Icons.arrow_back, color: Color(0xff344D59))
+        ),
         title: Text('Plus d’informations',
-            style: Theme.of(context).textTheme.titleLarge),
+            style: TextStyle(color: Color(0xff344D59))),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -69,10 +70,7 @@ class _optionsState extends State<options> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        side: BorderSide.none,
-                        shape: const StadiumBorder()),
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',
                         style: TextStyle(color: Colors.white)),
                   )

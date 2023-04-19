@@ -15,6 +15,7 @@ class ModifierProfilePage extends StatefulWidget {
 }
 class _ModifierProfilePageState extends State<ModifierProfilePage> {
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  bool _changement = false ;
   /*TextEditingController _contrNom = TextEditingController();
   TextEditingController _contrPrenom = TextEditingController();
   TextEditingController _contrMarque = TextEditingController();
@@ -269,6 +270,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       hintText: _utilisateur.nom,
                     ),
                     onChanged: (value) {
+                      _changement = true ;
                       setState(() {
                         _utilisateur.nom = value;
                       });
@@ -297,6 +299,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
 
                       ),
                       onChanged: (value) {
+                        _changement = true ;
                         setState(() {
                           //_contrPrenom.text = value;
                           _utilisateur.prenom = value;
@@ -336,6 +339,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       ),
                       onChanged: (value) {
                         setState(() {
+                          _changement = true ;
                           //_contrMarque.text = value;
                           _utilisateur.vehicule.marque = value;
                         });
@@ -364,6 +368,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
 
                       ),
                       onChanged: (value) {
+                        _changement = true ;
                         setState(() {
                           //_contrType.text = value;
                           _utilisateur.vehicule.typevehicule = value;
@@ -393,6 +398,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
 
                       ),
                       onChanged: (value) {
+                        _changement = true ;
                         setState(() {
                           //_contrMatricule.text = value;
                           _utilisateur.vehicule.matricule = value;
@@ -419,9 +425,9 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: _utilisateur.vehicule.modele,
-
                       ),
                       onChanged: (value) {
+                        _changement = true ;
                         setState(() {
                           //_contrModele.text = value;
                           _utilisateur.vehicule.modele = value;
@@ -451,6 +457,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
 
                       ),
                       onChanged: (value) {
+                        _changement = true ;
                         setState(() {
                           //_contrPolice.text = value;
                           _utilisateur.vehicule.policeAssurance = value;
@@ -480,6 +487,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
 
                       ),
                       onChanged: (value) {
+                        _changement = true ;
                         setState(() {
                           //_contrNbPlaces.text = value;
                           _utilisateur.vehicule.nbPlaces = int.parse(value);
@@ -491,18 +499,25 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async{
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => Loading()),
-                    );
-                    await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, _utilisateur);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Modifications avec succes'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  },
+                    if (_changement){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Modifications avec succes'),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                      Navigator.pop(
+                        context,
+                        MaterialPageRoute(builder: (context) => Loading()),
+                      );
+                      await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, _utilisateur);
+                    }else {
+                      Navigator.pop(
+                        context,
+                        MaterialPageRoute(builder: (context) => Loading()),
+                      );
+                    }
+                },
                   child: Text(
                     'Valider les modifications',
                     style:  TextStyle(

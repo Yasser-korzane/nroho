@@ -66,14 +66,6 @@ class _ProfilepageState extends State<Profilepage> {
     final double defaultPadding = 10;
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Center(
-              child: Text('Profile',
-                  style: Theme.of(context).textTheme.headlineMedium)),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-        ),
         body: SingleChildScrollView(
           child: Container(
             padding:  EdgeInsets.all(screenWidth * 0.03),
@@ -81,6 +73,7 @@ class _ProfilepageState extends State<Profilepage> {
               children: [
                 Column(
                   children: [
+                    Text("Profil",style: TextStyle(color: Color(0xff344d59),fontSize: screenHeight*0.038)),
                     SizedBox(
                         width: screenHeight *0.15,
                         height: screenHeight *0.15,

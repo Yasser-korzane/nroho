@@ -455,16 +455,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                     Text("Please fill all the informations")));
                       }
                     },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      backgroundColor: Colors.blue,
-                    ),
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text(
                       'Valider',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                      style:  TextStyle(
+                          color: Colors.white),
                     ),
+
                   ),
                 ),
               ),

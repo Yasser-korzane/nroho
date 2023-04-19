@@ -1,9 +1,88 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class MotdePasse extends StatelessWidget {
+
+class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
+
+  @override
+  State<MotdePasse> createState() => _MotdePasseState();
+}
+
+class _MotdePasseState extends State<MotdePasse> {
+  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Utilisateur');
+  String oldPassword = '';
+  String newPassword = '';
+  void changePassword(BuildContext context) async {
+    try {
+      // Get the current user
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Erreur'),
+                content: Text('L\'utilisateur n\'est pas authentifiée!'),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'),
+                  )
+                ],
+              );
+            });
+        return;
+      }
+      // Re-authenticate the user with their old password
+      AuthCredential credential = EmailAuthProvider.credential(email: user.email!, password: oldPassword);
+      await user.reauthenticateWithCredential(credential);
+      // Update the user's password
+      await user.updatePassword(newPassword);
+      // Update the password in the Firestore collection
+      await usersCollection.doc(user.uid).update({'password': newPassword});
+      // Show success dialog
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Succès'),
+              content: Text('Mot de passe mis à jour avec succès'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                )
+              ],
+            );
+          });
+    } catch (e) {
+      // Handle error
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Erreur'),
+              content: Text('Échec de la mise à jour du mot de passe. Veuillez réessayer'),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                )
+              ],
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +94,9 @@ class MotdePasse extends StatelessWidget {
         appBar: AppBar(
           leading: IconButton(
               onPressed: () {
-                // Navigator.pop(context)
+                Navigator.pop(context);
               },
-              icon: const Icon(Icons.chevron_left, color: Color(0xff344d59))),
+              icon: const Icon(Icons.arrow_back, color: Color(0xff344d59))),
           title: Text('Mot de passe',
               style: Theme.of(context).textTheme.titleLarge),
           backgroundColor: Colors.transparent,
@@ -36,8 +115,13 @@ class MotdePasse extends StatelessWidget {
                 SizedBox(height: screenHeight*0.1),
                 Text('Ancien mot de passe',
                   style: TextStyle(fontWeight: FontWeight.bold),),
-
                 TextField(
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      oldPassword = value ;
+                    });
+                  },
 
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -49,17 +133,19 @@ class MotdePasse extends StatelessWidget {
                     fillColor: Colors.white,
                     filled: true,
                     hintText: 'Entrez votre ancien mot de passe',
-
                   ),
                   obscureText: true,
                 ),
-
-
                 SizedBox(height: screenHeight*0.07),
                 Text('Nouveau mot de passe ',
                   style: TextStyle(fontWeight: FontWeight.bold),),
-
                 TextField(
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      newPassword = value ;
+                    });
+                  },
                   obscureText: true,
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -71,13 +157,13 @@ class MotdePasse extends StatelessWidget {
                     fillColor: Colors.white,
                     filled: true,
                     hintText: 'Entrez votre nouveau mot de passe',
-
                   ),
                 ),
                 SizedBox(height: screenHeight*0.1),
                 ElevatedButton(
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
-                  onPressed: (){
+                  onPressed: () async{
+                    changePassword(context);
                   },
                   child: Center(child: Text('Valider les modifications',style: TextStyle(color: Colors.white),)),
 
@@ -106,10 +192,6 @@ class MotdePasse extends StatelessWidget {
                             ..onTap = () {
                               launchUrlString('https://tresor.cse.club/');
                             },
-                          // ),
-                          // TextSpan(
-                          //   text: ' .',
-                          // ),
                         )
                       ],
                     ),
@@ -121,6 +203,7 @@ class MotdePasse extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        )
+    );
   }
 }

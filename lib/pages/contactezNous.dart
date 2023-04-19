@@ -43,9 +43,8 @@ class ContactUs extends StatelessWidget {
               color: Color(0xff344D59),
             ),
             onPressed: () {// l'icone retour en haut a gauche nous permttra de revenir vers la page d'avant(Assistance)
-              Navigator.push(
+              Navigator.pop(
                 context,
-                MaterialPageRoute(builder: (context) => Assistance()),
               );
             },
           ),
@@ -106,11 +105,11 @@ class ContactUs extends StatelessWidget {
                     style: TextStyle(fontSize: screenWidth * 0.04),
                   ),
                   Text(
-                    'Developpeur mobile (Flutter , Java , Kotlin)',
+                    'Développeur mobile (Flutter , Java , Kotlin)',
                     style: TextStyle(fontSize: screenWidth * 0.04),
                   ),
                   Text(
-                    'Chef d’equipe',
+                    'Chef d’équipe de l\'application Nro7o',
                     style: TextStyle(fontSize: screenWidth * 0.04),
                   ),
                 ],
