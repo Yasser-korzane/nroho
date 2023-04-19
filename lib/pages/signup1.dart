@@ -61,6 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
   /** ************************************************************************************************** **/
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    const double defaultPadding = 10;
+
     final AuthService _auth =AuthService();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -91,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Form(
-                key: _formkey,
+                // key: _formkey,
                 child: Column(
                   children: [
                Container(
@@ -205,9 +210,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     filled: true,
                     
                     ),
-                    borderRadius: BorderRadius.circular(6.0),
-                    //color:Colors.white
-                    color:Color(0xD9D9D9),
+                    // borderRadius: BorderRadius.circular(6.0),
+                    // //color:Colors.white
+                    // color:Color(0xD9D9D9),
 
                   ),
               ),
@@ -219,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.only(left: 20,right: 20 ,bottom: 5,top: 5),
                            
                            child: TextFormField(         
-                    //keyboardType: TextInputType.visiblePassword,
+                    keyboardType: TextInputType.visiblePassword,
                     validator:(input){
                                     if(input == null){
                                       return 'Entrer votre nom svp';
@@ -318,6 +323,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       //),
-    );
-  }
+    )
+  
+      )
+    )
+  
 }
