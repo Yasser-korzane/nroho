@@ -63,7 +63,7 @@ class _optionsState extends State<options> {
                           color: Colors.black)),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.1),
+              SizedBox(height: screenHeight * 0.2),
               SizedBox(
                   width: screenWidth * 0.5,
                   child: ElevatedButton(

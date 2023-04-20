@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/assistance.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 class ContactUs extends StatelessWidget {
   const ContactUs({Key? key}) : super(key: key);
 
@@ -8,29 +8,8 @@ class ContactUs extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    final String subject = "Contactez_nous";
-    final String linkedInProfileUrl ='linkedin.com/in/grine-mohammed-205b01238';
-    final Uri _emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'lm_grine@esi.dz',
-      queryParameters: {'subject': subject},
-    );
-    void _launchEmail(Uri emailUri)async {
-      if (await canLaunchUrl(emailUri)) {
-        await launchUrl(emailUri);
-      } else {
-        throw 'Could not launch email';
-      }
-    }
-    void _launchLinkedIn(String linkedInProfileUrl) async {
-      /*final Uri url = Uri.parse(linkedInProfileUrl);
-      if (await canLaunchUrl(url)) {
-        await launchUrl(url);
-      } else {
-        throw 'Could not launch LinkedIn';
-      }*/
-    }
-      return Scaffold(
+
+    return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(screenHeight * 0.142),
@@ -82,7 +61,7 @@ class ContactUs extends StatelessWidget {
               child: CircleAvatar(
                 radius: screenWidth * 0.06,
                 backgroundImage:
-                NetworkImage('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
+                AssetImage("assets/images/mailProfilePicture.jpg"),
               ),
             ),
             Positioned(
@@ -94,15 +73,15 @@ class ContactUs extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Grine Mohammed',
+                    'Mohamed Grine',
                     style: TextStyle(
-                        fontSize: screenWidth * 0.05,
+                        fontSize: screenWidth * 0.0583,
                         fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(height: screenHeight * 0.0112),
                   Text(
                     'Etudiant 2CP à ESI Alger',
-                    style: TextStyle(fontSize: screenWidth * 0.04),
+                    style: TextStyle(fontSize: screenWidth * 0.0286),
                   ),
                   Text(
                     'Développeur mobile (Flutter , Java , Kotlin)',
@@ -111,6 +90,14 @@ class ContactUs extends StatelessWidget {
                   Text(
                     'Chef d’équipe de l\'application Nro7o',
                     style: TextStyle(fontSize: screenWidth * 0.04),
+                  ),
+                    Text(
+                    'Developpeur mobile (Flutter , Java , Kotlin)',
+                    style: TextStyle(fontSize: screenWidth * 0.0286),
+                  ),
+                  Text(
+                    'Chef d’equipe',
+                    style: TextStyle(fontSize: screenWidth * 0.0286),
                   ),
                 ],
               ),
@@ -126,7 +113,7 @@ class ContactUs extends StatelessWidget {
                   ),
                   SizedBox(width: screenWidth * 0.0244),
                   TextButton(
-                    onPressed: () => _launchEmail(_emailLaunchUri),
+                    onPressed: () {},
                     child: Text(
                       'lm_grine@esi.dz',
                       style: TextStyle(
@@ -147,7 +134,7 @@ class ContactUs extends StatelessWidget {
                   new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),),
                   SizedBox( width:screenWidth * 0.0244),
                   TextButton(
-                    onPressed:() => _launchLinkedIn(linkedInProfileUrl),
+                    onPressed:(){},
                     child:Text(
                     'LinkedIn',
                     style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388),

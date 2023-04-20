@@ -379,7 +379,7 @@ class details extends StatelessWidget {
                       child: Flexible(
                         child: Text.rich(
                           TextSpan(
-                            text: 'Si vous avez un problème avec ce trajet, contactez notre service client pour plus d’aide ou signalez directement par ',
+                            text: 'Si vous avez un problème avec ce trajet,contactez notre service client pour plus d’aide ou signalezdirectement                             par ',
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 16.0,
