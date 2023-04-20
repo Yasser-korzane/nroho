@@ -36,15 +36,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   int _nombrePlaces = 0;
   File _image = File('assets/images/logo.png');
 
-  Future<void> getImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source:  ImageSource.gallery) as File;
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
+  void pickImage() async {
+    ImagePicker imagePicker = ImagePicker();
+    var _image = await
+    imagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = _image;
+    });
   }
 
   // Methode pour changer la photo de profil
@@ -74,9 +72,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     onTap: _changerPhoto,
                     child: CircleAvatar(
                       radius: 40,
-                      backgroundImage: NetworkImage(
-                          'https://media.istockphoto.com/id/1210939712/vector/user-icon-people-icon-isolated-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=vKDH9j7PPMN-AiUX8vsKlmOonwx7wjqdKiLge7PX1ZQ='),
-                    ),
+                        backgroundImage: _image ==null ? null : FileImage(_image),
+            ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.014),
@@ -88,7 +85,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         color: Color(0xff271BAB),
                       ),
                     ),
-                    onPressed: getImage,
+                    onPressed: pickImage,
                     child: Text('changer votre photo'),
                   ),
                 ),
