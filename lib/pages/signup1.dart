@@ -1,6 +1,5 @@
-//import 'dart:html';
-
 import 'package:appcouvoiturage/Services/auth.dart';
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/Models/Users.dart';
@@ -20,33 +19,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
+  final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   /*********************************************** Les Fonctions **********************************************/
-  bool validerNomEtPrenom(String value) {
-    String chaineTest = value;
-    String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
-    RegExp regExp = new RegExp(pattern);
-    chaineTest = value.replaceAll(' ', '');
-    if(value.length > 20 || chaineTest.isEmpty
-        || !regExp.hasMatch(chaineTest)
-        || value.startsWith(' ') || value.endsWith(' ')){
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  bool validerMotDePasse(String motDePasse){
-    if (motDePasse.length >= 8 && motDePasse.isNotEmpty)return true;
-    else return false;
-    /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
-  }
-
-  bool validerEmail(String email){
-    final regex = RegExp(r'[0-9]');
-    if (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty) return true;
-    else return false;
-  }
-
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
         Vehicule("", "", "", "", "", 0), false, [],[],[]
@@ -244,7 +218,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, bottom: 5, top: 5),
-
                               child: TextFormField(
                                 keyboardType: TextInputType.visiblePassword,
                                 validator: (input) {
@@ -296,11 +269,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: Colors.lightBlue),
                             child: TextButton(
                               onPressed: () async {
-                                if (validerNomEtPrenom(_controllerNom.text)
+                                if (_baseDeDonnee.validerNomEtPrenom(_controllerNom.text)
                                     &&
-                                    validerNomEtPrenom(_controllerPrenom.text)
-                                    && validerEmail(_controllerEmail.text)
-                                    && validerMotDePasse(
+                                    _baseDeDonnee.validerNomEtPrenom(_controllerPrenom.text)
+                                    && _baseDeDonnee.validerEmail(_controllerEmail.text)
+                                    && _baseDeDonnee.validerMotDePasse(
                                         _controllerMotDePasse.text)) {
                                   Utilisateur utilisateur = creerUtilisateurApresSignUp(
                                       '', _controllerNom.text,

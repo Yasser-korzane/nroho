@@ -22,13 +22,11 @@ class _optionsState extends State<options> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-               //Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back, color: Color(0xff344D59))
         ),
         title: Text('Plus d’informations',
-            style: TextStyle(color: Color(0xff344D59))),
-        backgroundColor: Colors.transparent,
+            style: TextStyle(color: Color(0xff344D59))),        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
       ),
@@ -63,12 +61,12 @@ class _optionsState extends State<options> {
                           color: Colors.black)),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.2),
+              SizedBox(height: screenHeight * 0.1),
               SizedBox(
-                  width: screenWidth * 0.5,
+                  width: screenWidth * 0.6,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      //Navigator.pop(context);
                     },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',

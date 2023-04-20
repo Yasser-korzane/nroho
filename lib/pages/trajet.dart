@@ -459,9 +459,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     child: const Text(
                       'Valider',
                       style:  TextStyle(
-                          color: Colors.white),
+                          color: Colors.white,fontSize: 16),
                     ),
-
                   ),
                 ),
               ),
