@@ -62,8 +62,7 @@ class _MyBeginPagState extends State<MyBeginPag> {
                   borderRadius: BorderRadius.circular(200),
                 ),
                 child: Center(
-                  child: Image.asset(
-                      'assets/images/commencer.png'),
+                  child: Image.asset('assets/images/commencer.png'),
                 ),
               ),
               Container(
@@ -105,10 +104,7 @@ class _MyBeginPagState extends State<MyBeginPag> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const Connexin(
-                                    title: " sing up ",
-                                  )),
+                          MaterialPageRoute(builder: (context) => Connexin()),
                         );
                         // Navigate back to first route when tapped.
                       },

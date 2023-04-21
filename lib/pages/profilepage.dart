@@ -135,7 +135,7 @@ class _ProfilepageState extends State<Profilepage> {
           await _auth.signOut();
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const Connexin(title: 'test')),
+            MaterialPageRoute(builder: (context) =>  Connexin()),
           );
         },
         endIcon: false,

@@ -5,12 +5,9 @@ import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
+import 'package:appcouvoiturage/pages/signup1.dart';
 
 class Connexin extends StatefulWidget {
-  const Connexin({super.key, required this.title});
-
-  final String title;
-
   @override
   State<Connexin> createState() => _MyConnexinState();
 }
@@ -113,7 +110,6 @@ class _MyConnexinState extends State<Connexin> {
                         SizedBox(
                           height: screenHeight * 0.4,
                         ),
-                        // Image.asset('assets/images/connexion.jpg'),
                         Form(
                           // key:_formkey1,
                           child: Container(
@@ -169,7 +165,7 @@ class _MyConnexinState extends State<Connexin> {
                                     keyboardType: TextInputType.visiblePassword,
                                     validator: (input) {
                                       if (input == null) {
-                                        return 'Entrez votre nom ';
+                                        return 'Entrez votre mot de passe ';
                                       }
                                       return null;
                                     },
@@ -275,7 +271,7 @@ class _MyConnexinState extends State<Connexin> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: screenHeight * 0.02,
+                                  height: screenHeight * 0.01,
                                 ),
                               ],
                             ),
@@ -286,19 +282,21 @@ class _MyConnexinState extends State<Connexin> {
                           children: [
                             Text('Oubien?'),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Sinup(),));
+                              },
                               child: Text.rich(
                                 TextSpan(
                                   text: 'Vous n\'avez pas compte? ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 16.0,
+                                    fontSize: 14.0,
                                     fontFamily: 'Poppins',
                                     color: Colors.black,
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: ' Create Account',
+                                      text: 'S\'inscrire',
                                       style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12.0,

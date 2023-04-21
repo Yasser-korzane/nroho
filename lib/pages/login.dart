@@ -86,11 +86,11 @@ class _MyBeginPageState extends State<MyBeginPage> {
                         borderRadius: BorderRadius.circular(20)),
                     child: GestureDetector(
                       onTap: (){
-                        Get.to( ()=> Connexin(title: 'sin up'),transition: Transition.zoom);
+                        Get.to( ()=> Connexin(),transition: Transition.zoom);
                       },
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(title: 'sin up'),));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(),));
                         },
                         child: const Text('commencer ',
                             style: TextStyle(
