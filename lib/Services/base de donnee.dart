@@ -46,6 +46,9 @@ class BaseDeDonnee{
           'nbPlaces': trajet.plusInformations.nbPlaces,
         },
         'trajetEstValide': trajet.trajetEstValide,
+        'confort': trajet.confort,
+        'avis': trajet.avis,
+        'probleme': trajet.probleme,
       }).toList(),
       'trajetsReserves': utilisateur.trajetsReserves.map((trajet) => {
         'horaire': trajet.horaire,
@@ -63,6 +66,9 @@ class BaseDeDonnee{
           'nbPlaces': trajet.plusInformations.nbPlaces,
         },
         'trajetEstValide': trajet.trajetEstValide,
+        'confort': trajet.confort,
+        'avis': trajet.avis,
+        'probleme': trajet.probleme,
       }).toList(),
       'Historique': utilisateur.Historique.map((trajet) => {
         'horaire': trajet.horaire,
@@ -80,6 +86,9 @@ class BaseDeDonnee{
           'nbPlaces': trajet.plusInformations.nbPlaces,
         },
         'trajetEstValide': trajet.trajetEstValide,
+        'confort': trajet.confort,
+        'avis': trajet.avis,
+        'probleme': trajet.probleme,
       }).toList(),
     });
   } // Fin creerUtilisateur
@@ -120,6 +129,9 @@ class BaseDeDonnee{
           'nbPlaces': trajet.plusInformations.nbPlaces,
         },
         'trajetEstValide': trajet.trajetEstValide,
+        'confort': trajet.confort,
+        'avis': trajet.avis,
+        'probleme': trajet.probleme,
       }).toList(),
       'trajetsReserves': utilisateur.trajetsReserves.map((trajet) => {
         'horaire': trajet.horaire,
@@ -137,6 +149,9 @@ class BaseDeDonnee{
           'nbPlaces': trajet.plusInformations.nbPlaces,
         },
         'trajetEstValide': trajet.trajetEstValide,
+        'confort': trajet.confort,
+        'avis': trajet.avis,
+        'probleme': trajet.probleme,
       }).toList(),
       'Historique': utilisateur.Historique.map((trajet) => {
         'horaire': trajet.horaire,
@@ -154,6 +169,9 @@ class BaseDeDonnee{
           'nbPlaces': trajet.plusInformations.nbPlaces,
         },
         'trajetEstValide': trajet.trajetEstValide,
+        'confort': trajet.confort,
+        'avis': trajet.avis,
+        'probleme': trajet.probleme,
       }).toList(),
     });
   } // Fin creerUtilisateur
@@ -212,6 +230,9 @@ class BaseDeDonnee{
                       trajet['plusInformations']['nbPlaces'],
                     ),
                     trajet['trajetEstValide'],
+                    trajet['confort'],
+                    trajet['avis'],
+                    trajet['probleme'],
                   ),
             ))
                 : [];
@@ -234,7 +255,10 @@ class BaseDeDonnee{
                       trajet['plusInformations']['animaux'],
                       trajet['plusInformations']['nbPlaces'],
                     ),
-                    trajet['trajetEstValide'],
+                      trajet['trajetEstValide'],
+                      trajet['confort'],
+                      trajet['avis'],
+                      trajet['probleme'],
                   ),
             ))
                 : [];
@@ -256,7 +280,10 @@ class BaseDeDonnee{
                       trajet['plusInformations']['animaux'],
                       trajet['plusInformations']['nbPlaces'],
                     ),
-                    trajet['trajetEstValide'],
+                      trajet['trajetEstValide'],
+                      trajet['confort'],
+                      trajet['avis'],
+                      trajet['probleme'],
                   ),
             ))
                 : [];

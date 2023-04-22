@@ -14,6 +14,9 @@ class Trajet {
   List<GeoPoint> chemin;*/
   PlusInformations plusInformations;
   bool trajetEstValide;
+  String confort ;
+  String avis;
+  bool probleme; // si false alors il n'as pas de probleme, si true alors il ya un probleme
 
   Trajet(
       this.horaire,
@@ -28,5 +31,8 @@ class Trajet {
       this.cordonneesArrivee,
       this.chemin,*/
       this.plusInformations,
-      this.trajetEstValide);
+      this.trajetEstValide,
+      this.confort,
+      this.avis,
+      this.probleme);
 }
