@@ -131,7 +131,7 @@ class _SinupState extends State<Sinup> {
                               keyboardType: TextInputType.name,
                               validator: (input) {
                                 if (input == null) {
-                                  return 'Entrer votre prenom svp ';
+                                  return 'Entrer votre prenom';
                                 } else {
                                   return null;
                                 }
@@ -149,7 +149,7 @@ class _SinupState extends State<Sinup> {
                                 ),
 
                                 labelText: 'Prenom',
-                                hintText: 'Entrer votre prenom svp',
+                                hintText: 'Entrer votre prenom',
                                 hintStyle: TextStyle(
                                     color: Colors.grey[800],
                                     fontSize: 14),
@@ -217,7 +217,7 @@ class _SinupState extends State<Sinup> {
                                 ),
 
                                 labelText: 'Email',
-                                hintText: 'Entrer votre address email ex:*****@esi.dz ',
+                                hintText: 'Entrez votre adresse mail de l\'esi',
                                 hintStyle: TextStyle(
                                     color: Colors.grey[800],
                                     fontSize: 14),

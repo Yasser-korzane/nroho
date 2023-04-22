@@ -144,9 +144,9 @@ class _MyConnexinState extends State<Connexin> {
                                             Radius.circular(12)),
                                       ),
 
-                                      labelText: 'User Name',
+                                      labelText: 'Email',
                                       hintText:
-                                          'Entrez votre adresse mail abc@gmail.com',
+                                          'Entrez votre adresse mail de l\'esi',
                                       hintStyle: TextStyle(
                                           color: Colors.grey[800],
                                           fontSize: 14),
