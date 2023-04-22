@@ -25,8 +25,8 @@ class _SinupState extends State<Sinup> {
   }
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   /*********************************************** Les Fonctions **********************************************/
-  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse) {
-    return Utilisateur(identifiant, nom, prenom, email, motDePasse, "", Evaluation([], 0, 0),
+  Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse,String numero) {
+    return Utilisateur(identifiant, nom, prenom, email, motDePasse, numero, Evaluation([], 5, 0),
         Vehicule("", "", "", "", "", 0), false, [],[],[]
     );
   }
@@ -280,13 +280,14 @@ class _SinupState extends State<Sinup> {
                                       &&
                                       _baseDeDonnee.validerNomEtPrenom(_controllerPrenom.text)
                                       && _baseDeDonnee.validerEmail(_controllerEmail.text)
-                                      && _baseDeDonnee.validerMotDePasse(
-                                          _controllerMotDePasse.text)) {
+                                      && _baseDeDonnee.validerMotDePasse(_controllerMotDePasse.text)
+                                      && _baseDeDonnee.validatePhoneNumber(_controllerPhone.text)) {
                                     Utilisateur utilisateur = creerUtilisateurApresSignUp(
                                         '', _controllerNom.text,
                                         _controllerPrenom.text,
                                         _controllerEmail.text,
-                                        _controllerMotDePasse.text);
+                                        _controllerMotDePasse.text,
+                                        _controllerPhone.text);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

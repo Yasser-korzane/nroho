@@ -306,13 +306,12 @@ class BaseDeDonnee{
     String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
     RegExp regExp = new RegExp(pattern);
     chaineTest = value.replaceAll(' ', '');
-    return(
+    return!(
         value.length > 20 || chaineTest.isEmpty
         || !regExp.hasMatch(chaineTest)
         || value.startsWith(' ') || value.endsWith(' ')
     );
   }
-
   bool validerMotDePasse(String motDePasse){
     return (motDePasse.length >= 8 && motDePasse.isNotEmpty);
     /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
