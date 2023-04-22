@@ -77,6 +77,9 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       trajet['plusInformations']['nbPlaces'],
                     ),
                     trajet['trajetEstValide'],
+                    trajet['confort'],
+                    trajet['avis'],
+                    trajet['probleme'],
                   ),
             ))
                 : [];
@@ -100,6 +103,9 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       trajet['plusInformations']['nbPlaces'],
                     ),
                     trajet['trajetEstValide'],
+                    trajet['confort'],
+                    trajet['avis'],
+                    trajet['probleme'],
                   ),
             ))
                 : [];
@@ -122,6 +128,9 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       trajet['plusInformations']['nbPlaces'],
                     ),
                     trajet['trajetEstValide'],
+                    trajet['confort'],
+                    trajet['avis'],
+                    trajet['probleme'],
                   ),
             ))
                 : [];
