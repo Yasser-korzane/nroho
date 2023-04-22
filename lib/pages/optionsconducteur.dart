@@ -1,4 +1,3 @@
-import 'package:appcouvoiturage/widgets/customdropdown.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +9,8 @@ class optionconduc extends StatefulWidget {
 }
 
 class _optionconducState extends State<optionconduc> {
+  List<String> nbPlaces = ['1','2','3','4'];
+  String ?selectedNb = '1';
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -17,7 +18,6 @@ class _optionconducState extends State<optionconduc> {
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -45,9 +45,26 @@ class _optionconducState extends State<optionconduc> {
                 SizedBox(height: screenHeight * 0.03),
                 SelectableTextWidget(text: 'Acceptez vous les animaux ?'),
                 SizedBox(height : screenHeight * 0.03),
-                Container(
-                    margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
-                    child: CustomDropdown(options: [1, 2, 3, 4])),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    //margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
+                    //child: CustomDropdown(options: [1, 2, 3, 4])),
+                    child: DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              //borderSide: BorderSide(color: Colors.black),
+                            )
+                        ),
+                        value: selectedNb,
+                        items: nbPlaces
+                            .map((item) => DropdownMenuItem(
+                          value: item,
+                          child: Text(item),))
+                            .toList(),
+                        onChanged: (item) => setState(() => selectedNb = item)),
+                  ),
+                ),
                 SizedBox(height: 10.0),
                 Container(
                   margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),

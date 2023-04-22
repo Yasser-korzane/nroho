@@ -201,6 +201,173 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
                                 return const MapPage();
+                    // SizedBox(height: screenHeight * 0.03),
+                    const Icon(
+                      Icons.location_on,
+                    ),
+                  ],
+                ), //icons
+                Column(children: [
+                  SizedBox(
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(
+                      controller: _departController,
+                      onChanged: (value) {
+                        setState(() {
+                          showSuggestion = true;
+                          querry = value;
+                          caseSelected = Selected.depart;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: 'Départ',
+                        //labelText: 'Départ',
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.01,
+                  ),
+                  SizedBox(
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(
+                      controller: _arriveController,
+                      onChanged: (value) {
+                        setState(() {
+                          showSuggestion = true;
+                          querry = value;
+                          caseSelected = Selected.arrivee;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: 'Arrivée',
+                        //labelText: 'Arrivée',
+                      ),
+                    ),
+                  ),
+                ]),
+              ]),
+              SizedBox(height: size.height * 0.02),
+              DateTimePickerRow(),
+              SizedBox(height: size.height * 0.01),
+              const Divider(
+                color: Colors.black,
+                thickness: 2,
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+                child: ListTile(
+                  onTap: () {
+                    setState(() {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const MapPage();
+                        },
+                      ));
+                    });
+                  },
+                  leading: const Icon(
+                    Icons.location_on,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'choisir sur la map',
+                    style: TextStyle(fontSize: size.width * 0.04),
+                  ),
+                ),
+              ),
+              const Divider(
+                color: Colors.black,
+                thickness: 1,
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+                child: ListTile(
+                  onTap: () {
+                    setState(() {
+                      depart = "Current Position";
+                      _departController.value = TextEditingValue(
+                        text: "Current Position",
+                        selection: TextSelection.fromPosition(
+                          const TextPosition(offset: "Current Position".length),
+                        ),
+                      );
+                    });
+                  },
+                  leading: const Icon(
+                    Icons.gps_fixed,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'Utiliser ma position',
+                    style: TextStyle(fontSize: size.width * 0.04),
+                  ),
+                ),
+              ),
+              FutureBuilder(
+                  future: getPredictions(querry),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData && showSuggestion) {
+                        return ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              thickness: 1,
+                            );
+                          },
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            var data = snapshot.data[index];
+                            var prediction = data.description;
+                            return ListTile(
+                              onTap: () {
+                                setState(() {
+                                  showSuggestion = false;
+                                  switch (caseSelected) {
+                                    case Selected.depart:
+                                      departData = data;
+                                      depart = prediction;
+                                      _departController.value =
+                                          TextEditingValue(
+                                        text: depart!,
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(offset: depart!.length),
+                                        ),
+                                      );
+                                      break;
+                                    case Selected.arrivee:
+                                      ArriveData = data;
+                                      arrive = prediction;
+                                      _arriveController.value =
+                                          TextEditingValue(
+                                        text: arrive!,
+                                        selection: TextSelection.fromPosition(
+                                          TextPosition(offset: arrive!.length),
+                                        ),
+                                      );
+                                      break;
+                                    default:
+                                  }
+                                });
                               },
                             ));
                           });

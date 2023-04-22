@@ -28,11 +28,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   void _changerPhoto() {
     // Implementer la logique pour changer la photo de profil
   }
-  // Methode pour sauvegarder les modifications
-  void _validerModifications() async {
-    //  Implementer la logique pour valider les modifications
-
-  }
   late Utilisateur _utilisateur ;
   Future _getDataFromDataBase()async {
     _utilisateur = BaseDeDonnee().creerUtilisateurVide();

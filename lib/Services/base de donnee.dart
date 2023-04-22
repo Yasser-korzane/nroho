@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
+import 'package:firebase_auth/firebase_auth.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
@@ -158,107 +159,108 @@ class BaseDeDonnee{
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
-    return Utilisateur("", "", "", "", "", "", Evaluation([], 0, 0),
+    return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
         Vehicule("", "", "", "", "", 0), false, [],[],[]
     );
   }
   //------------------------------------------------------------------------------------------
   /** ************************************** Geters ****************************************** **////
-  Future _getDataFromDataBase(String uid,Utilisateur _utilisateur)async {
-    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
+  Future getDataFromDataBase(Utilisateur utilisateur)async {
+    utilisateur = BaseDeDonnee().creerUtilisateurVide();
     try {
       await FirebaseFirestore.instance.collection('Utilisateur')
-          .doc(uid)
+          .doc(FirebaseAuth.instance.currentUser!.uid)
           .get()
           .then((snapshot) async {
         if (snapshot.exists) {
-          _utilisateur.nom = snapshot.data()!['nom'];
-          _utilisateur.prenom = snapshot.data()!['prenom'];
-          _utilisateur.email = snapshot.data()!['email'];
-          _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
-          _utilisateur.evaluation = Evaluation(
-            List<String>.from(snapshot.data()!['evaluation']['feedback']),
-            snapshot.data()!['evaluation']['etoiles'],
-            snapshot.data()!['evaluation']['nbSignalement'],
-          );
-          _utilisateur.vehicule = Vehicule(
-            snapshot.data()!['vehicule']['marque'],
-            snapshot.data()!['vehicule']['typevehicule'],
-            snapshot.data()!['vehicule']['matricule'],
-            snapshot.data()!['vehicule']['modele'],
-            snapshot.data()!['vehicule']['policeAssurance'],
-            snapshot.data()!['vehicule']['nbPlaces'],
-          );
-          _utilisateur.statut = snapshot.data()!['statut'];
-          _utilisateur.trajetsLances =
-          snapshot.data()!['trajetsLances'] != null
-              ? List<Trajet>.from(snapshot.data()!['trajetsLances'].map(
-                (trajet) =>
-                Trajet(
-                  trajet['horaire'],
-                  trajet['tempsDePause'],
-                  trajet['lieuDepart'],
-                  trajet['lieuArrivee'],
-                  trajet['coutTrajet'],
-                  trajet['villeDepart'],
-                  trajet['villeArrivee'],
-                  List<String>.from(trajet['villeIntermediaires']),
-                  PlusInformations(
-                    trajet['plusInformations']['fumeur'],
-                    trajet['plusInformations']['bagage'],
-                    trajet['plusInformations']['animaux'],
-                    trajet['plusInformations']['nbPlaces'],
+            utilisateur.identifiant = snapshot.data()!['identifiant'];
+            utilisateur.nom = snapshot.data()!['nom'];
+            utilisateur.prenom = snapshot.data()!['prenom'];
+            utilisateur.email = snapshot.data()!['email'];
+            utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
+            utilisateur.evaluation = Evaluation(
+              List<String>.from(snapshot.data()!['evaluation']['feedback']),
+              snapshot.data()!['evaluation']['etoiles'],
+              snapshot.data()!['evaluation']['nbSignalement'],
+            );
+            utilisateur.vehicule = Vehicule(
+              snapshot.data()!['vehicule']['marque'],
+              snapshot.data()!['vehicule']['typevehicule'],
+              snapshot.data()!['vehicule']['matricule'],
+              snapshot.data()!['vehicule']['modele'],
+              snapshot.data()!['vehicule']['policeAssurance'],
+              snapshot.data()!['vehicule']['nbPlaces'],
+            );
+            utilisateur.statut = snapshot.data()!['statut'];
+            utilisateur.trajetsLances =
+            snapshot.data()!['trajetsLances'] != null
+                ? List<Trajet>.from(snapshot.data()!['trajetsLances'].map(
+                  (trajet) =>
+                  Trajet(
+                    trajet['horaire'],
+                    trajet['tempsDePause'],
+                    trajet['lieuDepart'],
+                    trajet['lieuArrivee'],
+                    trajet['coutTrajet'],
+                    trajet['villeDepart'],
+                    trajet['villeArrivee'],
+                    List<String>.from(trajet['villeIntermediaires']),
+                    PlusInformations(
+                      trajet['plusInformations']['fumeur'],
+                      trajet['plusInformations']['bagage'],
+                      trajet['plusInformations']['animaux'],
+                      trajet['plusInformations']['nbPlaces'],
+                    ),
+                    trajet['trajetEstValide'],
                   ),
-                  trajet['trajetEstValide'],
-                ),
-          ))
-              : [];
-          _utilisateur.trajetsReserves =
-          snapshot.data()!['trajetsReserves'] != null
-              ? List<Trajet>.from(snapshot.data()!['trajetsReserves'].map(
-                (trajet) =>
-                Trajet(
-                  trajet['horaire'],
-                  trajet['tempsDePause'],
-                  trajet['lieuDepart'],
-                  trajet['lieuArrivee'],
-                  trajet['coutTrajet'],
-                  trajet['villeDepart'],
-                  trajet['villeArrivee'],
-                  List<String>.from(trajet['villeIntermediaires']),
-                  PlusInformations(
-                    trajet['plusInformations']['fumeur'],
-                    trajet['plusInformations']['bagage'],
-                    trajet['plusInformations']['animaux'],
-                    trajet['plusInformations']['nbPlaces'],
+            ))
+                : [];
+            utilisateur.trajetsReserves =
+            snapshot.data()!['trajetsReserves'] != null
+                ? List<Trajet>.from(snapshot.data()!['trajetsReserves'].map(
+                  (trajet) =>
+                  Trajet(
+                    trajet['horaire'],
+                    trajet['tempsDePause'],
+                    trajet['lieuDepart'],
+                    trajet['lieuArrivee'],
+                    trajet['coutTrajet'],
+                    trajet['villeDepart'],
+                    trajet['villeArrivee'],
+                    List<String>.from(trajet['villeIntermediaires']),
+                    PlusInformations(
+                      trajet['plusInformations']['fumeur'],
+                      trajet['plusInformations']['bagage'],
+                      trajet['plusInformations']['animaux'],
+                      trajet['plusInformations']['nbPlaces'],
+                    ),
+                    trajet['trajetEstValide'],
                   ),
-                  trajet['trajetEstValide'],
-                ),
-          ))
-              : [];
-          _utilisateur.Historique = snapshot.data()!['Historique'] != null
-              ? List<Trajet>.from(snapshot.data()!['Historique'].map(
-                (trajet) =>
-                Trajet(
-                  trajet['horaire'],
-                  trajet['tempsDePause'],
-                  trajet['lieuDepart'],
-                  trajet['lieuArrivee'],
-                  trajet['coutTrajet'],
-                  trajet['villeDepart'],
-                  trajet['villeArrivee'],
-                  List<String>.from(trajet['villeIntermediaires']),
-                  PlusInformations(
-                    trajet['plusInformations']['fumeur'],
-                    trajet['plusInformations']['bagage'],
-                    trajet['plusInformations']['animaux'],
-                    trajet['plusInformations']['nbPlaces'],
+            ))
+                : [];
+            utilisateur.Historique = snapshot.data()!['Historique'] != null
+                ? List<Trajet>.from(snapshot.data()!['Historique'].map(
+                  (trajet) =>
+                  Trajet(
+                    trajet['horaire'],
+                    trajet['tempsDePause'],
+                    trajet['lieuDepart'],
+                    trajet['lieuArrivee'],
+                    trajet['coutTrajet'],
+                    trajet['villeDepart'],
+                    trajet['villeArrivee'],
+                    List<String>.from(trajet['villeIntermediaires']),
+                    PlusInformations(
+                      trajet['plusInformations']['fumeur'],
+                      trajet['plusInformations']['bagage'],
+                      trajet['plusInformations']['animaux'],
+                      trajet['plusInformations']['nbPlaces'],
+                    ),
+                    trajet['trajetEstValide'],
                   ),
-                  trajet['trajetEstValide'],
-                ),
-          ))
-              : [];
-          //tests by printing
+            ))
+                : [];
+            //tests by printing
         } else { // end snapshot exist
           throw Exception("Utilisateur does not exist.");
         }
@@ -266,31 +268,49 @@ class BaseDeDonnee{
     } catch (e) {
       throw Exception("Failed to get utilisateur.");
     }
+  } /// end getdata
+
+  Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    await utilisateurDocRef.update({'statut': newStatut});
   }
   bool validerNomEtPrenom(String value) {
     String chaineTest = value;
     String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
     RegExp regExp = new RegExp(pattern);
     chaineTest = value.replaceAll(' ', '');
-    if(value.length > 20 || chaineTest.isEmpty
+    return(
+        value.length > 20 || chaineTest.isEmpty
         || !regExp.hasMatch(chaineTest)
-        || value.startsWith(' ') || value.endsWith(' ')){
-      return false;
-    } else {
-      return true;
-    }
+        || value.startsWith(' ') || value.endsWith(' ')
+    );
   }
 
   bool validerMotDePasse(String motDePasse){
-    if (motDePasse.length >= 8 && motDePasse.isNotEmpty)return true;
-    else return false;
+    return (motDePasse.length >= 8 && motDePasse.isNotEmpty);
     /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
   }
 
   bool validerEmail(String email){
     final regex = RegExp(r'[0-9]');
-    if (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty) return true;
-    else return false;
+    return (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty);
   }
 
+  bool validatePhoneNumber(String phoneNumber) {
+    phoneNumber = phoneNumber.replaceAll(RegExp(r'\s|-'), '');
+    return (
+        phoneNumber.length == 10
+            && (   phoneNumber.startsWith('05')
+            || phoneNumber.startsWith('06')
+            || phoneNumber.startsWith('07')
+        )
+            && isNumeric(phoneNumber)
+    );
+  }
+  bool isNumeric(String str) {
+    if (str == null || str.isEmpty) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
 } // end Bdd class

@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,6 +12,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
+
+import '../Services/base de donnee.dart';
 
 
 class Mywid extends StatefulWidget {
@@ -296,7 +299,13 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
       ),
       child: ToggleButtons(
         isSelected: _isSelected,
-        onPressed: (int index) {
+        onPressed: (int index) async{
+          bool statut = false; // passager
+          if (index == 0 && _isSelected[index] == false) statut = false ;
+          else if (index == 1 && _isSelected[index] == false) statut = true ;
+          else if (index == 1 && _isSelected[index] == true) statut = false ;
+          else if (index == 0 && _isSelected[index] == true) statut = true ;
+          await BaseDeDonnee().updateUtilisateurStatut(FirebaseAuth.instance.currentUser!.uid, statut);
           setState(() {
             _isSelected[index] = !_isSelected[index];
             _isSelected[1 - index] = !_isSelected[1 - index];
