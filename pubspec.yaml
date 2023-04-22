@@ -54,6 +54,8 @@ dependencies:
   connectivity: ^3.0.6
   image_picker: ^0.8.7+3
   path: ^1.8.2
+  animate_do: ^3.0.2
+  flutter_verification_code: ^1.1.6
 
 dev_dependencies:
 
@@ -89,7 +91,9 @@ flutter:
     - assets/images/current_location.png
     - assets/images/linkedInLogo.png
     - assets/images/connexion.jpg
-
+    - assets/images/welcome.jpg
+    - assets/images/email.png
+    - assets/images/user-profile.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

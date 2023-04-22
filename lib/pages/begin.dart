@@ -1,130 +1,110 @@
 import 'package:appcouvoiturage/pages/connexion.dart';
+import 'package:appcouvoiturage/pages/signup1.dart';
 import 'package:flutter/material.dart';
 
-class MyBeginPag extends StatefulWidget {
-  const MyBeginPag({super.key, required this.title});
-
-  final String title;
-
+class Commancer extends StatefulWidget {
   @override
-  State<MyBeginPag> createState() => _MyBeginPagState();
+  State<Commancer> createState() => _CommancerState();
 }
 
-class _MyBeginPagState extends State<MyBeginPag> {
+class _CommancerState extends State<Commancer> {
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-
-        leading: null,
-        automaticallyImplyLeading: false,
-
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        //padding :,
-        backgroundColor: Colors.white,
-        /* title: Container(
-          height: 180 ,
-          padding: EdgeInsets.zero,
-          child: Image.asset('asset/images/Ellipse 5.png',height: 100,width: 600,),
-        )*/
-        // title: Text(widget.title),
-        title: Text(''),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/ellipse.png'),
-                  fit: BoxFit.fill)),
-        ),
-// width: MediaQuery.of(context).size.width,
-//   height: 100,
-//   decoration: BoxDecoration(
-//     image: DecorationImage(q
-//       fit: BoxFit.fill,
-//       image: AssetImage("asset/images/Ellipse 5.png"),
-//     ),
-//   ),
-// )
-      ),
-
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceAround,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
-                height: 300.0,
-                width: 350.0,
-                padding: EdgeInsets.only(top: 40),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(200),
-                ),
-                child: Center(
-                  child: Image.asset('assets/images/commencer.png'),
-                ),
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/welcome.jpg',
+                fit: BoxFit.cover,
               ),
-              Container(
-                child: Center(
-                    child: Text('NRO7O',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 6, 41, 69),
-                          fontSize: 50,
-                        ))),
-              ),
-              Container(
-                child: Center(
-                    child: Text('Gagner du temps et preserver votre argent ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                        ))),
-              ),
-              Container(
-                width: 300,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.lightBlue),
-                /* child: TextButton(onPressed: (){},
-             child: Text('commencer',style: TextStyle(fontSize: 18,color: Colors.white),),
-
-             ),*/
-                child: Padding(
-                  padding: EdgeInsets.all(2),
-
-                  //  child: Text('Create Account ',style: TextStyle(color: Color.fromARGB(255, 37, 15, 161), fontSize: 15)),
-                  child: Container(
-                    height: 50,
-                    width: 250,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Connexin()),
-                        );
-                        // Navigate back to first route when tapped.
-                      },
-                      child: const Text('commencer ',
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: Padding(
+                    padding:  EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal: screenWidth*0.06),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'NRO7OO',
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              backgroundColor: Colors.blue)),
+                            color: Colors.black,
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight*0.001),
+                        Text(
+                          'La premiere et la mailleur app de couvoiturage dans l''ALGERIE',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 150,
-              )
-            ],
-          ),
-        ),
-      ),
-      //),
-    );
+                Expanded(
+                  flex: 6,
+                  child: Padding(
+                    padding:  EdgeInsets.fromLTRB(screenWidth*0.06, screenHeight*0.31, screenWidth*0.06, screenHeight*0.15),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          width: screenWidth*0.9,
+                          height: screenHeight*0.055,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Color(0xff202e59)),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(),));
+                            },
+                            child: Center(child: Text('Connexion', style: TextStyle(color: Colors.white))),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth*0.9,
+                          height: screenHeight*0.055,
+                          child: ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Sinup()));
+                            },
+                            child: Center(child: Text('creater un compte', style: TextStyle(color: Color(0xff202e59)))),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }

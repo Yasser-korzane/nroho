@@ -3,6 +3,7 @@ import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
+import 'package:appcouvoiturage/pages/email.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup1.dart';
@@ -266,7 +267,9 @@ class _MyConnexinState extends State<Connexin> {
                                 Align(
                                   alignment: Alignment.center,
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Emailgetter()));
+                                    },
                                     child: Text('Mot de passe oublié ?'),
                                   ),
                                 ),
