@@ -181,7 +181,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
               ),
             ),
-            expandedHeight: size.height * 0.4,
+            expandedHeight: size.height * 0.255,
             // your app bar properties here
           ),
           SliverToBoxAdapter(
