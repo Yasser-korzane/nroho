@@ -43,11 +43,48 @@ class DriverListPage extends StatelessWidget {
       imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
     ),
+    Driver(
+      name: 'Ferhat Abbas',
+      phoneNumber: '05513555655',
+      depart: 'Oran',
+      arrivee: 'Tlemcen',
+      imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
+    ),
+    Driver(
+      name: 'Ferhat Abbas',
+      phoneNumber: '05513555655',
+      depart: 'Oran',
+      arrivee: 'Tlemcen',
+      imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
+    ),
+    Driver(
+      name: 'Ferhat Abbas',
+      phoneNumber: '05513555655',
+      depart: 'Oran',
+      arrivee: 'Tlemcen',
+      imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
+    ),
+    Driver(
+      name: 'Ferhat Abbas',
+      phoneNumber: '05513555655',
+      depart: 'Oran',
+      arrivee: 'Tlemcen',
+      imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
     return Scaffold(
+      backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
@@ -69,27 +106,30 @@ class DriverListPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final driver = drivers[index];
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.all(screenWidth*0.015),
             child: Card(
-              margin: EdgeInsets.all(2),
+              color: Colors.white,
+              elevation: 8,
+              margin: EdgeInsets.symmetric(horizontal: screenHeight*0.01,vertical: screenWidth*0.001),
               borderOnForeground:true,
               shape:   RoundedRectangleBorder(
-                  side:  BorderSide(color: Colors.grey,width: 3),
+                  side:  BorderSide(color: Colors.grey,width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(15))
               ),
               child:   Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:  EdgeInsets.all(screenWidth*0.02),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(children: [
+                    Row(
+                        children: [
                       Image.network(
                         driver.imageUrl,
-                        height: 45,
-                        width: 45,
+                        height: screenHeight*0.055,
+                        width: screenWidth*0.12,
                         fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 6,height: 6,),
+                      SizedBox(width: screenWidth*0.04),
                       Column(children: [
                         Text(driver.name,
                           style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold),
@@ -108,7 +148,7 @@ class DriverListPage extends StatelessWidget {
                               Icon(Icons.location_on),
                               // SizedBox(height: screenHeight * 0.03),
                               Container(
-                                height: 20,
+                                height: screenHeight*0.035,
                                 width: 1,
                                 color: Colors.grey,
                               ),
@@ -120,7 +160,7 @@ class DriverListPage extends StatelessWidget {
                           ),
                         ),
                         Expanded(
-                          flex: 9,
+                          flex: 4,
                           child: Column(
                             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             //crossAxisAlignment:CrossAxisAlignment.start ,
@@ -153,13 +193,11 @@ class DriverListPage extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: SizedBox(
-                            child: Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: Text('Choisir'),
-                              ),
+                          padding:  EdgeInsets.all(screenWidth*0.04),
+                          child: Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text('Choisir'),
                             ),
                           ),
                         ),
