@@ -1,23 +1,23 @@
 class cardLancer {
-  String firstName;
-  String lastName;
-  String heurDepar = '08:16 AM';
-  String heureArrive = '08:35 AM ';
-  String placeDepart = '';
-  String placeArrive = '';
-  double nombraStar = 5.0;
-  int price = 0;
+  final String firstName;
+  final String lastName;
+  final  String heurDepar ;
+  final  String heureArrive ;
+  final String placeDepart ;
+  final  String placeArrive ;
+  final  double nombraStar ;
+  final   int price ;
 
   int nbPassager = 0;
 
   cardLancer(
-      {this.firstName = '',
-      this.lastName = '',
-      this.heurDepar = '',
-      this.heureArrive = '',
-      this.nbPassager = 0,
-      this.nombraStar = 0,
-      this.placeArrive = '',
-      this.placeDepart = '',
-      this.price = 0});
+      { required this.firstName ,
+        required this.lastName ,
+        required this.heurDepar ,
+        required this.heureArrive ,
+        required this.nbPassager ,
+        required this.nombraStar ,
+        required this.placeArrive ,
+        required this.placeDepart,
+        required this.price});
 }

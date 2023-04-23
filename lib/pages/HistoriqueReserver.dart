@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 
 
-class cardReserverList extends StatelessWidget{
+class cardReserverListH extends StatelessWidget{
   final List<cardReserver> cardReservers = [
     cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
     cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
@@ -26,14 +26,6 @@ class cardReserverList extends StatelessWidget{
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-        shape: CircleBorder(),
-      ),
       body: ListView.builder(
         itemCount: cardReservers.length,
         itemBuilder: (context, index) {

@@ -86,13 +86,6 @@ class DriverListPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey.shade400,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Color(0xff344D59),
-          ),
-          onPressed: () {},
-        ),
         title: Text(
           'Choisissez un chauffeur',
           style: TextStyle(color: Color(0xff344D59), fontSize: 20),

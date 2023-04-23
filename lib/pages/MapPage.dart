@@ -4,6 +4,7 @@ import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
+import 'package:appcouvoiturage/pages/trajetsLances.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -177,7 +178,7 @@ class _MywidState extends State<Mywid> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                    DriverListPage(),
+                                    cardLancerList(),
                                   ));
                             },
                             readOnly: true,

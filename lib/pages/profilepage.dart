@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/Services/auth.dart';
+import 'package:appcouvoiturage/pages/Historique.dart';
 import 'package:appcouvoiturage/pages/Password.dart';
 import 'package:appcouvoiturage/pages/connexion.dart';
 import 'package:appcouvoiturage/pages/profilmodification.dart';
@@ -124,7 +125,9 @@ class _ProfilepageState extends State<Profilepage> {
                 Profilewidget(
                   title: 'Mes Courses',
                   icon: Icons.navigation_rounded,
-                  onPress: () {},
+                  onPress: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(),));
+                  },
                 ),
                 SizedBox(height: screenHeight * 0.008),
                 Profilewidget(

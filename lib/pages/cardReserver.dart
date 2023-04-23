@@ -1,16 +1,22 @@
+class cardReserver {
+  final String firstName;
+  final String lastName;
+  final  String heurDepar ;
+  final  String heureArrive ;
+  final String placeDepart ;
+  final  String placeArrive ;
+  final  double nombraStar ;
+  final   int price ;
 
+  int nbPassager = 0;
 
-class cardReserver  {
-  String firstName;
-  String lastName;
-  String heurDepar ='08:16 AM';
-  String heureArrive='08:35 AM ';
-  String placeDepart ='';
-  String placeArrive='';
-  double  nombraStar=5.0;
-  int  price = 0  ;
- // int nbPassager =0  ;
-  
-  cardReserver ({this.firstName='', this.lastName='', this.heurDepar='',this.heureArrive='',this.nombraStar=0,this.placeArrive='',this.placeDepart='',this.price=0});
-
+  cardReserver(
+      { required this.firstName ,
+        required this.lastName ,
+        required this.heurDepar ,
+        required this.heureArrive ,
+        required this.nombraStar ,
+        required this.placeArrive ,
+        required this.placeDepart,
+        required this.price});
 }

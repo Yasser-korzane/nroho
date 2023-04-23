@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/pages/assistance.dart';
+import 'package:appcouvoiturage/pages/lancer_reserver.dart';
 import 'package:appcouvoiturage/pages/optionspassager.dart';
 import 'package:appcouvoiturage/pages/profilepage.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _homeState extends State<home> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Mywid(),
-    options(),
+    Trajets(),
     Assistance(),
     Profilepage(),
   ];

@@ -1,19 +1,18 @@
 import 'package:appcouvoiturage/pages/Commancer.dart';
 
-import 'cardReserver.dart';
+import 'cardLancer.dart';
 import 'package:flutter/material.dart';
 
 
 
 
-class cardReserverList extends StatelessWidget{
-  final List<cardReserver> cardReservers = [
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
+class cardLancerListH extends StatelessWidget{
+  final List<cardLancer> cardLancers = [
+    cardLancer(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 3,nombraStar: 4.5 ,price: 50 ),
+    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
+    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
+    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
+    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
 
   ];
   // Widget cardLancerTamplate (cardLancer){
@@ -26,18 +25,10 @@ class cardReserverList extends StatelessWidget{
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-        shape: CircleBorder(),
-      ),
       body: ListView.builder(
-        itemCount: cardReservers.length,
+        itemCount: cardLancers.length,
         itemBuilder: (context, index) {
-          final lancer = cardReservers[index];
+          final lancer = cardLancers[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: Card(
@@ -176,6 +167,30 @@ class cardReserverList extends StatelessWidget{
                           )
                         ],
                       ),
+                      //SizedBox(height: screenHeight*0.018),
+                      Padding(
+                        padding: const EdgeInsets.only(left:10.0, right: 10),
+                        child: Divider(
+                          height: 1,
+                          thickness: 1,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Padding(
+                        padding:  EdgeInsets.only(left: screenWidth*0.06),
+                        child: Container(
+                          child:  Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.blue,
+                                  size: screenHeight*0.03,
+                                ),
+                                Text(' '+ lancer.nbPassager.toString() +' passagers',style: TextStyle( color: Colors.blue ,  ),)
+                              ]),
+                        ),
+                      ),
+                      // SizedBox(height: screenHeight * 0.03),
                     ],
                   ),
                 ),
