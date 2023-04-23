@@ -8,6 +8,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:async';
+import 'package:flutter/cupertino.dart';
 
 import '../AppClasses/Evaluation.dart';
 
@@ -19,6 +23,9 @@ class Profilepage extends StatefulWidget {
 }
 
 class _ProfilepageState extends State<Profilepage> {
+  late StreamSubscription subscription;
+  var isDeviceConnected = false;
+  bool isAlertSet=false;
   final AuthService _auth = AuthService();
   String _email = '';
   String _nom = '';
@@ -50,8 +57,27 @@ class _ProfilepageState extends State<Profilepage> {
   void initState() {
     super.initState();
     _getProfileInfo();
+    getConnectivity();
   }
 
+  getConnectivity() =>
+      subscription = Connectivity().onConnectivityChanged.listen(
+              (ConnectivityResult result) async{
+            isDeviceConnected = await InternetConnectionChecker().hasConnection;
+            if(!isDeviceConnected && isAlertSet == false){
+              showDialogBox();
+              setState(() {
+                isAlertSet = true;
+              });
+            }
+          }
+      );
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -160,6 +186,31 @@ class _ProfilepageState extends State<Profilepage> {
           ),
         ));
   }
+  showDialogBox()=> showCupertinoDialog<String>(
+      context: context,
+      builder:(BuildContext context) =>CupertinoAlertDialog(
+        title: const Text('No connection'),
+        content: const Text('please check your internet connectivity'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async{
+              Navigator.pop(context , 'cancel');
+              setState(() {
+                isAlertSet =false;
+              });
+              isDeviceConnected = await InternetConnectionChecker().hasConnection;
+              if(!isDeviceConnected){
+                showDialogBox();
+                setState(() {
+                  isAlertSet =true;
+                });
+              }
+            },
+            child: const Text('OK'),
+          )
+        ],
+      )
+  );
 }
 
 class RatingWidget extends StatelessWidget {

@@ -20,7 +20,7 @@ class _ressayerState extends State<ressayer> {
         ElevatedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => Wrapper(),));
-    // Réessayer la connexion en rappelant la fonction de vérification de la connectivité
+        // Réessayer la connexion en rappelant la fonction de vérification de la connectivité
          },
           child: Text("Réessayer"),
     ),
