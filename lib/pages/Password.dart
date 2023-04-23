@@ -51,8 +51,8 @@ class _MotdePasseState extends State<MotdePasse> {
       await user.reauthenticateWithCredential(credential);
       // Update the user's password
       await user.updatePassword(newPassword);
-      // Update the password in the Firestore collection
-      await usersCollection.doc(user.uid).update({'password': newPassword});
+      /* Update the password in the Firestore collection
+      await usersCollection.doc(user.uid).update({'password': newPassword});*/
       Navigator.pop(context);
       // Show success dialog
       showDialog(
@@ -119,7 +119,8 @@ class _MotdePasseState extends State<MotdePasse> {
     // mainAxisAlignment: MainAxisAlignment.start,
     children: [
     SizedBox(height: screenHeight*0.04,),
-    Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)),
+    Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)
+    ),
     SizedBox(height: screenHeight*0.1),
     Text('Ancien mot de passe',
     style: TextStyle(fontWeight: FontWeight.bold),),

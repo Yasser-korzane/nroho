@@ -35,4 +35,27 @@ class Trajet {
       this.confort,
       this.avis,
       this.probleme);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'horaire': horaire,
+      'tempsDePause': tempsDePause,
+      'lieuDepart': lieuDepart,
+      'lieuArrivee': lieuArrivee,
+      'coutTrajet': coutTrajet,
+      'villeDepart': villeDepart,
+      'villeArrivee': villeArrivee,
+      'villeIntermediaires': villeIntermediaires,
+      'plusInformations': {
+        'fumeur': plusInformations.fumeur,
+        'bagage': plusInformations.bagage,
+        'animaux': plusInformations.animaux,
+        'nbPlaces': plusInformations.nbPlaces,
+      },
+      'trajetEstValide': trajetEstValide,
+      'confort': confort,
+      'avis': avis,
+      'probleme': probleme,
+    };
+  }
 }
