@@ -36,7 +36,7 @@ class _CommancerState extends State<Commancer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'NRO7OO',
+                          'NRO7O',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 32.0,
@@ -45,7 +45,7 @@ class _CommancerState extends State<Commancer> {
                         ),
                         SizedBox(height: screenHeight*0.001),
                         Text(
-                          'La premiere et la mailleur app de couvoiturage dans l''ALGERIE',
+                          'La premiére et la meilleur application de covoiturage dans l\'Algérie',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.0,
@@ -77,7 +77,7 @@ class _CommancerState extends State<Commancer> {
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(),));
                             },
-                            child: Center(child: Text('Connexion', style: TextStyle(color: Colors.white))),
+                            child: Center(child: Text('Connecter', style: TextStyle(color: Colors.white))),
                           ),
                         ),
                         Container(
@@ -95,7 +95,7 @@ class _CommancerState extends State<Commancer> {
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Sinup()));
                             },
-                            child: Center(child: Text('creater un compte', style: TextStyle(color: Color(0xff202e59)))),
+                            child: Center(child: Text('créer un compte', style: TextStyle(color: Color(0xff202e59)))),
                           ),
                         ),
                       ],

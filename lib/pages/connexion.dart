@@ -355,8 +355,8 @@ class _MyConnexinState extends State<Connexin> {
   showDialogBox()=> showCupertinoDialog<String>(
       context: context,
       builder:(BuildContext context) =>CupertinoAlertDialog(
-        title: const Text('No connection'),
-        content: const Text('please check your internet connectivity'),
+        title: const Text('Erreur de connexion'),
+        content: const Text('Vérifier votre connexion internet'),
         actions: <Widget>[
           TextButton(
             onPressed: () async{

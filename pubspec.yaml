@@ -54,13 +54,10 @@ dependencies:
   connectivity: ^3.0.6
   image_picker: ^0.8.7+3
   path: ^1.8.2
-<<<<<<< Updated upstream
   animate_do: ^3.0.2
   flutter_verification_code: ^1.1.6
-=======
   connectivity_plus: ^3.0.4
   internet_connection_checker: ^1.0.0+1
->>>>>>> Stashed changes
 
 dev_dependencies:
 

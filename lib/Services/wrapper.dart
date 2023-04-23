@@ -5,18 +5,14 @@ import 'package:appcouvoiturage/pages/begin.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
 import 'package:provider/provider.dart';
-=======
 import 'package:appcouvoiturage/main.dart';
 import 'package:appcouvoiturage/pages/connexion.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:appcouvoiturage/pages/login.dart';
-import 'package:appcouvoiturage/pages/ressayer.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
->>>>>>> Stashed changes
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -67,8 +63,8 @@ class _WrapperState extends State<Wrapper> {
   showDialogBox()=> showCupertinoDialog<String>(
     context: context,
     builder:(BuildContext context) =>CupertinoAlertDialog(
-      title: const Text('No connection'),
-      content: const Text('please check your internet connectivity'),
+      title: const Text('Erreur de connexion'),
+      content: const Text('Vérifier votre connexion internet'),
       actions: <Widget>[
         TextButton(
           onPressed: () async{
