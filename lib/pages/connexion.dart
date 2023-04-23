@@ -150,6 +150,7 @@ class _MyConnexinState extends State<Connexin> {
                                 Container(
                                   height: screenHeight * 0.1,
                                   child: TextFormField(
+                                    style: TextStyle(fontFamily: 'Popping'),
                                     controller: _controllerEmail,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: (input) {
@@ -186,6 +187,7 @@ class _MyConnexinState extends State<Connexin> {
                                   height: screenHeight * 0.001,
                                 ),
                                 TextFormField(
+                                  style: TextStyle(fontFamily: 'Popping'),
                                     obscureText: _isObscured,
                                     //keyboardType: TextInputType.visiblePassword,
                                     controller: _controllerMotDePasse,
@@ -251,7 +253,8 @@ class _MyConnexinState extends State<Connexin> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                  "Veuillez verifier vos données "),
+                                                  "Veuillez verifier vos données ",                                  style: TextStyle(fontFamily: 'Popping'),
+                                              ),
                                               duration: Duration(seconds: 2),
                                             ),
                                           );
@@ -269,7 +272,8 @@ class _MyConnexinState extends State<Connexin> {
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                "Veuillez verifier vos données"),
+                                                "Veuillez verifier vos données",                                  style: TextStyle(fontFamily: 'Popping'),
+                                            ),
                                             duration: Duration(seconds: 2),
                                           ),
                                         );

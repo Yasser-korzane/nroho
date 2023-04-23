@@ -272,7 +272,7 @@ class Details extends StatelessWidget {
 
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(screenHeight*0.01)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.27)),
                 backgroundColor: MaterialStateProperty.all<Color>( Color(0xff137c8b)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -280,7 +280,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('           Demender un trajet           ',
+              child: const Text('Demender un trajet',
                   style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
             ),
             ElevatedButton(
@@ -288,7 +288,7 @@ class Details extends StatelessWidget {
               },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(0.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(screenHeight*0.01)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.27)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -296,7 +296,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('              Annulez le trajet            ',
+              child: const Text('Annulez le trajet',
                   style: TextStyle(color: Colors.red,fontFamily: 'Popping')),
             )
 

@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 
 
@@ -189,7 +190,9 @@ class DriverListPage extends StatelessWidget {
                           padding:  EdgeInsets.all(screenWidth*0.04),
                           child: Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Details(photoUrl: 'assets/images/user-profile.png', fullName: ' weal bougessa', rating: 2, phoneNumber: '0665996688', email: 'bougessa.hrach@esi.dz', carName: 'car_pooling'),));
+                              },
                               child: Text('Choisir',
                               style: TextStyle(
                                   fontFamily: 'Popping',
