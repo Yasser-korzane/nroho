@@ -39,8 +39,15 @@ class _homeState extends State<home> {
 
   @override
   void initState() {
+    checkConnectivityinitial();
     getConnectivity();
     super.initState();
+  }
+  void checkConnectivityinitial() async{
+    var result = await Connectivity().checkConnectivity();
+    if(result==ConnectivityResult.none){
+      showDialogBox();
+    }
   }
   getConnectivity() =>
       subscription = Connectivity().onConnectivityChanged.listen(

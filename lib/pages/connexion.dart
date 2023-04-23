@@ -27,7 +27,7 @@ class _MyConnexinState extends State<Connexin> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _isObscured = true;
+    _isObscured = false;
     getConnectivity();
   }
   getConnectivity() =>
@@ -106,7 +106,7 @@ class _MyConnexinState extends State<Connexin> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
-    bool visible = true;
+    bool visible = false;
     bool loading = false;
     IconData _currentIcon = Icons.visibility;
     final Size screenSize = MediaQuery.of(context).size;
@@ -173,9 +173,9 @@ class _MyConnexinState extends State<Connexin> {
 
                                       labelText: 'Email',
                                       hintText:
-                                          'Entrez votre adresse mail de l\'esi',
+                                          'Entrez votre adresse email : exemple@esi.dz',
                                       hintStyle: TextStyle(
-                                          color: Colors.grey[800],
+                                          color: Colors.grey[700],
                                           fontSize: 14),
                                       fillColor: Colors.grey.shade100,
                                       filled: true,
@@ -186,7 +186,7 @@ class _MyConnexinState extends State<Connexin> {
                                   height: screenHeight * 0.001,
                                 ),
                                 TextFormField(
-                                    obscureText: _isObscured,
+                                    obscureText: !_isObscured,
                                     //keyboardType: TextInputType.visiblePassword,
                                     controller: _controllerMotDePasse,
                                     keyboardType: TextInputType.visiblePassword,
@@ -210,7 +210,7 @@ class _MyConnexinState extends State<Connexin> {
                                         labelText: 'Mot de passe',
                                         hintText: 'Entrez votre mot de passe ',
                                         hintStyle: TextStyle(
-                                            color: Colors.grey[800],
+                                            color: Colors.grey[700],
                                             fontSize: 14),
                                         fillColor: Colors.grey.shade100,
                                         filled: true,
@@ -309,10 +309,10 @@ class _MyConnexinState extends State<Connexin> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Oubien?'),
+                            Text('Oubien'),
                             TextButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Sinup(),));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sinup(),));
                               },
                               child: Text.rich(
                                 TextSpan(

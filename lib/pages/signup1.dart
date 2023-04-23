@@ -22,7 +22,7 @@ class _SinupState extends State<Sinup> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _isObscured = true;
+    _isObscured = false;
   }
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   /*********************************************** Les Fonctions **********************************************/
@@ -117,9 +117,9 @@ class _SinupState extends State<Sinup> {
                                     ),
 
                                     labelText: 'Nom',
-                                    hintText: 'Entere votre nom',
+                                    hintText: 'Enterez votre nom',
                                     hintStyle: TextStyle(
-                                        color: Colors.grey[800],
+                                        color: Colors.grey[700],
                                         fontSize: 14),
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
@@ -134,7 +134,7 @@ class _SinupState extends State<Sinup> {
                                 keyboardType: TextInputType.name,
                                 validator: (input) {
                                   if (input == null) {
-                                    return 'Entrer votre prenom';
+                                    return 'Entrez votre prenom';
                                   } else {
                                     return null;
                                   }
@@ -151,10 +151,10 @@ class _SinupState extends State<Sinup> {
                                         Radius.circular(12)),
                                   ),
 
-                                  labelText: 'Prenom',
+                                  labelText: 'Prénom',
                                   hintText: 'Entrer votre prenom',
                                   hintStyle: TextStyle(
-                                      color: Colors.grey[800],
+                                      color: Colors.grey[700],
                                       fontSize: 14),
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
@@ -168,7 +168,7 @@ class _SinupState extends State<Sinup> {
                                 keyboardType: TextInputType.phone,
                                 validator: (input) {
                                   if (input == null) {
-                                    return 'Entrer votre numero de telephone ';
+                                    return 'Entrez votre numero de téléphone ';
                                   } else {
                                     return null;
                                   }
@@ -185,10 +185,10 @@ class _SinupState extends State<Sinup> {
                                         Radius.circular(12)),
                                   ),
 
-                                  labelText: 'Numero de Telephone',
-                                  hintText: 'Entrer votre numero de telephone',
+                                  labelText: 'Numéro de Téléphone',
+                                  hintText: 'Entrez votre numéro de téléphone',
                                   hintStyle: TextStyle(
-                                      color: Colors.grey[800],
+                                      color: Colors.grey[700],
                                       fontSize: 14),
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
@@ -202,7 +202,7 @@ class _SinupState extends State<Sinup> {
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input) {
                                   if (input == null) {
-                                    return 'Entrer votre address email ';
+                                    return 'Entrez votre adresse email ';
                                   } else {
                                     return null;
                                   }
@@ -220,9 +220,9 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Email',
-                                  hintText: 'Entrez votre adresse mail de l\'esi',
+                                  hintText: 'Entrez votre adresse email exemple@esi.dz',
                                   hintStyle: TextStyle(
-                                      color: Colors.grey[800],
+                                      color: Colors.grey[700],
                                       fontSize: 14),
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
@@ -256,12 +256,12 @@ class _SinupState extends State<Sinup> {
                                       labelText: 'Mot de passe',
                                       hintText: 'Entrez votre mot de passe ',
                                       hintStyle: TextStyle(
-                                          color: Colors.grey[800],
+                                          color: Colors.grey[700],
                                           fontSize: 14),
                                       fillColor: Colors.grey.shade100,
                                       filled: true,
                                       suffixIcon: IconButton(
-                                        icon: _isObscured
+                                        icon: !_isObscured
                                             ? const Icon(Icons.visibility)
                                             : const Icon(
                                             Icons.visibility_off),
@@ -352,7 +352,7 @@ class _SinupState extends State<Sinup> {
                       SizedBox(height: screenHeight*0.01,),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(),));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Connexin(),));
                         },
                         child: Text.rich(
                           TextSpan(
@@ -365,7 +365,7 @@ class _SinupState extends State<Sinup> {
                             ),
                             children: [
                               TextSpan(
-                                text: ' Connecter',
+                                text: ' Se Connecter',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 12.0,
