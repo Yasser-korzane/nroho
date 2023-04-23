@@ -123,12 +123,12 @@ class _MotdePasseState extends State<MotdePasse> {
     // mainAxisAlignment: MainAxisAlignment.start,
     children: [
     SizedBox(height: screenHeight*0.04,),
-<<<<<<< Updated upstream
-    Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)
-    ),
-=======
-    Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,fontFamily: 'Popping'),)),
->>>>>>> Stashed changes
+      Center(child:
+      TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+        onPressed: ()async{
+        },
+      ),
+      ),
     SizedBox(height: screenHeight*0.1),
     Text('Ancien mot de passe',
     style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Popping'),),

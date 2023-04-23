@@ -88,7 +88,6 @@ class _optionsState extends State<options> {
                   width: screenWidth * 0.6,
                   child: ElevatedButton(
                     onPressed: () {
-                      //Navigator.pop(context);
                     },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',

@@ -72,13 +72,14 @@ class _optionconducState extends State<optionconduc> {
                   margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                   padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     style: TextStyle(fontFamily: 'Popping'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
                         labelText: 'Proposer votre prix',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
-                        suffixIcon: Icon(Icons.insert_comment_rounded,
+                        suffixIcon: Icon(Icons.monetization_on,
                             color: Colors.black)),
                   ),
                 ),
@@ -87,7 +88,6 @@ class _optionconducState extends State<optionconduc> {
                     width: screenWidth * 0.5,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,

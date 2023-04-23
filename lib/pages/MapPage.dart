@@ -179,7 +179,7 @@ class _MywidState extends State<Mywid> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                    cardLancerList(),
+                                        OuAllezVous(),
                                   ));
                             },
                             readOnly: true,
