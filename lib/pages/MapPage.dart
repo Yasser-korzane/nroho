@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:appcouvoiturage/Shared/location.dart';
+import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/pages/details.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
@@ -265,7 +266,7 @@ class _MywidState extends State<Mywid> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const details()));
+                      builder: (context) => DemandesPassager()));
             },
             child: const Icon(
               Icons.notifications_none_outlined,
@@ -321,11 +322,11 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         children:  [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-            child: Text('Passager'),
+            child: Text('Passager',style: TextStyle(fontFamily: 'Popping'),),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-            child: Text('Conducteur'),
+            child: Text('Conducteur',style: TextStyle(fontFamily: 'Popping'),),
           ),
         ],
       ),

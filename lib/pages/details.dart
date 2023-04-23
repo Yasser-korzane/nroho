@@ -43,6 +43,7 @@ class details extends StatelessWidget {
                             fontSize: screenWidth * 0.05,
                             // responsive font size
                             fontWeight: FontWeight.bold,
+                              fontFamily: 'Popping'
                           ),
                         ),
                       ),
@@ -97,7 +98,7 @@ class details extends StatelessWidget {
                             flex: 1,
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
-                          child: Text('Mardi 31 février 2005 '),
+                          child: Text('Mardi 31 février 2005 ',style: TextStyle(fontFamily: 'Popping'),),
                           flex: 5,
                         ),
                       ],
@@ -107,7 +108,7 @@ class details extends StatelessWidget {
                       children: [
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
-                          child: Text('13:20 '),
+                          child: Text('13:20 ',style: TextStyle(fontFamily: 'Popping'),),
                           flex: 5,
                         ),
                       ],
@@ -163,7 +164,8 @@ class details extends StatelessWidget {
                                     'OUED Smar',
                                     style: TextStyle(
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Popping'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -177,7 +179,8 @@ class details extends StatelessWidget {
                                     'BAROUAGHIA Media',
                                     style: TextStyle(
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,fontFamily: 'Popping'),
+
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -224,6 +227,7 @@ class details extends StatelessWidget {
                                     textStyle: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
+                                        fontFamily: 'Popping'
                                     ),
                                   )),
                               SizedBox(height: 4.0),
@@ -262,6 +266,7 @@ class details extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.bold,
+                                            fontFamily: 'Popping'
                                         ),
                                       ),
                                     ],

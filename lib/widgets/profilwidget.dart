@@ -18,6 +18,10 @@ class Profilewidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    final double defaultPadding = 10;
     return GestureDetector(
       onTap: (){
         Get.to(transition: Transition.rightToLeftWithFade,() => context);
@@ -35,8 +39,13 @@ class Profilewidget extends StatelessWidget {
           child:  Icon(icon, color: Colors.blueGrey),
         ),
         title: Text(title,
-            style:
-            Theme.of(context).textTheme.bodyText1?.apply(color: textColor)),
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: screenHeight*0.018,
+              fontFamily: 'Poppins',
+              color: textColor,
+            ),
+            ),
         trailing: endIcon
             ? Container(
             width: 30,

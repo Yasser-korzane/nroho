@@ -109,7 +109,7 @@ class Emailgetter extends StatelessWidget {
                         },
                         child: Text(
                           ' suivant',
-                          style: TextStyle(fontSize: 18, color: Colors.white),
+                          style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'Popping'),
                         ),
                         style: ButtonStyle(
                           backgroundColor:

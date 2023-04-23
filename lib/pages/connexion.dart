@@ -176,7 +176,7 @@ class _MyConnexinState extends State<Connexin> {
                                           'Entrez votre adresse mail de l\'esi',
                                       hintStyle: TextStyle(
                                           color: Colors.grey[800],
-                                          fontSize: 14),
+                                          fontSize: 14,fontFamily: 'Popping'),
                                       fillColor: Colors.grey.shade100,
                                       filled: true,
                                     ),
@@ -211,7 +211,7 @@ class _MyConnexinState extends State<Connexin> {
                                         hintText: 'Entrez votre mot de passe ',
                                         hintStyle: TextStyle(
                                             color: Colors.grey[800],
-                                            fontSize: 14),
+                                            fontSize: 14,fontFamily: 'Popping'),
                                         fillColor: Colors.grey.shade100,
                                         filled: true,
                                         suffixIcon: IconButton(
@@ -278,7 +278,7 @@ class _MyConnexinState extends State<Connexin> {
                                     child: Text(
                                       'Connexion',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                          fontSize: 18, color: Colors.white,fontFamily: 'Popping'),
                                     ),
                                     style: ButtonStyle(
                                       backgroundColor:
@@ -296,7 +296,7 @@ class _MyConnexinState extends State<Connexin> {
                                     onPressed: () {
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => Emailgetter()));
                                     },
-                                    child: Text('Mot de passe oublié ?'),
+                                    child: Text('Mot de passe oublié ?',style: TextStyle(fontFamily: 'Popping'),),
                                   ),
                                 ),
                                 SizedBox(
@@ -309,7 +309,7 @@ class _MyConnexinState extends State<Connexin> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Oubien?'),
+                            Text('Oubien?',style: TextStyle(fontFamily: 'Popping'),),
                             TextButton(
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => Sinup(),));

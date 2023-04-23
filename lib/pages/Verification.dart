@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -80,9 +79,9 @@ class _VerificationState extends State<Verification> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
-              padding: EdgeInsets.symmetric(horizontal: screenHeight*0.01),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               height: MediaQuery.of(context).size.height,
-              width: screenWidth*0.01,
+              width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,25 +94,25 @@ class _VerificationState extends State<Verification> {
                       color: Colors.grey.shade200,
                     ) ,
                     child:Transform.rotate(
-                        angle: 38,
-                        child: Image.asset('assets/images/email.png'),
+                      angle: 38,
+                      child: Image.asset('assets/images/email.png'),
                     ) ,
                   ),
                   SizedBox(height: screenHeight*0.03,),
                   FadeInDown(
                       duration: Duration(milliseconds: 500),
-                      child: Text("Verification", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),)),
+                      child: Text("Verification", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Popping'))),
                   SizedBox(height: screenHeight*0.03,),
                   FadeInDown(
-                    delay: Duration(milliseconds: 500),
-                    duration: Duration(milliseconds: 500),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: screenWidth*0.05),
-                    child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n ly_korzane@esi.dz",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5),
-                      ),
-                  )
+                      delay: Duration(milliseconds: 500),
+                      duration: Duration(milliseconds: 500),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: screenWidth*0.05),
+                        child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n ly_korzane@esi.dz",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5,fontFamily: 'Popping'),
+                        ),
+                      )
                   ),
                   SizedBox(height: screenHeight*0.03,),
 
@@ -123,7 +122,7 @@ class _VerificationState extends State<Verification> {
                     duration: Duration(milliseconds: 500),
                     child: VerificationCode(
                       length: 4,
-                      textStyle: TextStyle(fontSize: 20, color: Colors.black),
+                      textStyle: TextStyle(fontSize: 20, color: Colors.black,fontFamily: 'Popping'),
                       underlineColor: Colors.black,
                       keyboardType: TextInputType.number,
                       underlineUnfocusedColor: Colors.black,
@@ -144,13 +143,13 @@ class _VerificationState extends State<Verification> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vous n'avez pas reçu le code OTP ?", style: TextStyle(fontSize: 14, color: Colors.grey.shade500),),
+                        Text("Vous n'avez pas reçu le code OTP ?", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Popping'),),
                         TextButton(
                             onPressed: () {
                               if (_isResendAgain) return;
                               resend();
                             },
-                            child: Text(_isResendAgain ? "Réessayez dans  " + _start.toString() : "Renvoyer", style: TextStyle(color: Colors.blueAccent),)
+                            child: Text(_isResendAgain ? "Réessayez dans  " + _start.toString() : "Renvoyer", style: TextStyle(fontSize:10 ,color: Colors.blueAccent,fontFamily: 'Popping'),)
                         )
                       ],
                     ),
@@ -162,9 +161,7 @@ class _VerificationState extends State<Verification> {
                     child: MaterialButton(
                       elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      onPressed: _code.length < 4 ? () => {} : () {
-                        verify();
-                        home(); },
+                      onPressed: _code.length < 4 ? () => {} : () { verify(); },
                       color: Colors.blue,
                       minWidth: MediaQuery.of(context).size.width * 0.8,
                       height: 50,
@@ -176,7 +173,7 @@ class _VerificationState extends State<Verification> {
                           strokeWidth: 3,
                           color: Colors.black,
                         ),
-                      ) : _isVerified ? Icon(Icons.check_circle, color: Colors.white, size: 30,) : Text("Verifier", style: TextStyle(color: Colors.white),),
+                      ) : _isVerified ? Icon(Icons.check_circle, color: Colors.white, size: 30,) : Text("Verifier", style: TextStyle(color: Colors.white,fontFamily: 'Popping'),),
                     ),
                   )
                 ],)

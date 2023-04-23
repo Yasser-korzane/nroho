@@ -26,7 +26,9 @@ class _optionconducState extends State<optionconduc> {
             },
             icon: const Icon(Icons.chevron_left, color: Colors.black)),
         title: Text('Plus d’informations',
-            style: Theme.of(context).textTheme.titleLarge),
+          style: TextStyle(fontWeight: FontWeight.normal,
+            fontSize: screenHeight*0.035,
+            fontFamily: 'Poppins',),),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -60,7 +62,7 @@ class _optionconducState extends State<optionconduc> {
                         items: nbPlaces
                             .map((item) => DropdownMenuItem(
                           value: item,
-                          child: Text(item),))
+                          child: Text(item,style: TextStyle(fontFamily: 'Popping'),),))
                             .toList(),
                         onChanged: (item) => setState(() => selectedNb = item)),
                   ),
@@ -70,6 +72,7 @@ class _optionconducState extends State<optionconduc> {
                   margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                   padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                   child: TextField(
+                    style: TextStyle(fontFamily: 'Popping'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
                         labelText: 'Proposer votre prix',
@@ -91,7 +94,7 @@ class _optionconducState extends State<optionconduc> {
                           side: BorderSide.none,
                           shape: const StadiumBorder()),
                       child: const Text('Valider',
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
                     )
                 ),
               ],

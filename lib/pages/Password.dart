@@ -78,14 +78,14 @@ class _MotdePasseState extends State<MotdePasse> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Ancien mot de passe incorrect!'),
-              content: Text('Échec de la mise à jour du mot de passe. Veuillez réessayer'),
+              title: Text('Ancien mot de passe incorrect!',style: TextStyle(fontFamily: 'Popping'),),
+              content: Text('Échec de la mise à jour du mot de passe. Veuillez réessayer',style: TextStyle(fontFamily: 'Popping'),),
               actions: [
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('OK'),
+                  child: Text('OK',style: TextStyle(fontFamily: 'Popping'),),
                 )
               ],
             );
@@ -106,7 +106,11 @@ class _MotdePasseState extends State<MotdePasse> {
   },
                 icon: const Icon(Icons.arrow_back, color: Color(0xff344d59))),
           title: Text('Mot de passe',
-              style: Theme.of(context).textTheme.titleLarge),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: screenHeight*0.035,
+                fontFamily: 'Poppins',
+              )),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
@@ -119,13 +123,18 @@ class _MotdePasseState extends State<MotdePasse> {
     // mainAxisAlignment: MainAxisAlignment.start,
     children: [
     SizedBox(height: screenHeight*0.04,),
+<<<<<<< Updated upstream
     Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),)
     ),
+=======
+    Center(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,fontFamily: 'Popping'),)),
+>>>>>>> Stashed changes
     SizedBox(height: screenHeight*0.1),
     Text('Ancien mot de passe',
-    style: TextStyle(fontWeight: FontWeight.bold),),
+    style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Popping'),),
 
     TextField(
+      style: TextStyle(fontFamily: 'Popping'),
     keyboardType: TextInputType.text,
     onChanged: (value) {
     setState(() {
@@ -148,8 +157,9 @@ class _MotdePasseState extends State<MotdePasse> {
     ),
     SizedBox(height: screenHeight*0.07),
     Text('Nouveau mot de passe ',
-    style: TextStyle(fontWeight: FontWeight.bold),),
+    style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Popping'),),
     TextField(
+      style: TextStyle(fontFamily: 'Popping'),
     keyboardType: TextInputType.text,
     onChanged: (value) {
     setState(() {
@@ -180,13 +190,14 @@ class _MotdePasseState extends State<MotdePasse> {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  "Vous devez verifier le mot de passe"),
+                  "Vous devez verifier le mot de passe",
+                style: TextStyle(fontFamily: 'Popping'),),
               duration: Duration(seconds: 2),
             )
         );
       }
     },
-    child: Center(child: Text('Valider les modifications',style: TextStyle(color: Colors.white),)),
+    child: Center(child: Text('Valider les modifications',style: TextStyle(color: Colors.white,fontFamily: 'Popping'),)),
 
     ),
     SizedBox(height: screenHeight*0.17),

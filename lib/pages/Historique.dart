@@ -36,7 +36,7 @@ class _HistoriqueState extends State<Historique> {
             labelColor: Colors.blue.shade700,
             unselectedLabelColor: Colors.blueGrey[900],
             tabs: [
-              Tab(text: 'Trajet lancer'),
+              Tab(text: 'Trajet lancer',),
               Tab(text: 'Trajet reserver'),
             ],
           ),

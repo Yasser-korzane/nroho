@@ -59,7 +59,7 @@ class _optionsState extends State<options> {
                     items: nbPlaces
                         .map((item) => DropdownMenuItem(
                           value: item,
-                          child: Text(item),))
+                          child: Text(item,style: TextStyle(fontFamily: 'Popping'),),))
                         .toList(),
                     onChanged: (item) => setState(() => selectedNb = item)),
                   ),
@@ -69,6 +69,11 @@ class _optionsState extends State<options> {
                 margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                 padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                 child: TextField(
+                     style: TextStyle(
+                       fontWeight: FontWeight.normal,
+                       fontSize: screenHeight*0.035,
+                       fontFamily: 'Poppins',
+                     ),
                       decoration: InputDecoration(
                       fillColor: Colors.grey.shade300,
                       labelText: 'Laisser un commentaire',
@@ -87,7 +92,7 @@ class _optionsState extends State<options> {
                     },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
                   )
               ),
             ],

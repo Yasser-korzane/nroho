@@ -65,11 +65,11 @@ class cardReserverListH extends StatelessWidget{
                                 children: [
                                   Row(
                                     children: [
-                                      Text(lancer.firstName),
-                                      Text(lancer.lastName),
+                                      Text(lancer.firstName,style: TextStyle(fontFamily: 'Popping'),),
+                                      Text(lancer.lastName,style: TextStyle(fontFamily: 'Popping'),),
                                       SizedBox(
                                         height: 1,
-                                        width: 90,
+                                        width: 50,
                                       )
                                     ],
                                   ),
@@ -77,7 +77,7 @@ class cardReserverListH extends StatelessWidget{
                                     //crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Icon(Icons.star , color: Colors.amber[600] ,),
-                                      Text(lancer.nombraStar.toString()),
+                                      Text(lancer.nombraStar.toString(),style: TextStyle(fontFamily: 'Popping'),),
                                       SizedBox(
                                         height: 1,
                                         width: 160,
@@ -88,8 +88,8 @@ class cardReserverListH extends StatelessWidget{
                               ),
                               Column(
                                   children : [
-                                    Text('Le court'),
-                                    Text(  lancer.price.toString() +' DA'),
+                                    Text('Le court',style: TextStyle(fontFamily: 'Popping'),),
+                                    Text(  lancer.price.toString() +' DA',style: TextStyle(fontFamily: 'Popping'),),
                                   ]
                               )
 
@@ -138,9 +138,10 @@ class cardReserverListH extends StatelessWidget{
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
+                                          fontFamily: 'Popping'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeDepart),
+                                    subtitle: Text(lancer.placeDepart,style: TextStyle(fontFamily: 'Popping'),),
                                     onTap: () {
                                       // handle onTap event
                                     },
@@ -155,9 +156,10 @@ class cardReserverListH extends StatelessWidget{
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
+                                          fontFamily: 'Popping'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeArrive),
+                                    subtitle: Text(lancer.placeArrive,style: TextStyle(fontFamily: 'Popping'),),
                                     onTap: () {
                                       // handle onTap event
                                     },

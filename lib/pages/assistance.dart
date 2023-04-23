@@ -1,17 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/widgets/profilwidget.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'package:flutter/gestures.dart';
 import 'package:appcouvoiturage/pages/contactezNous.dart';
+import 'package:appcouvoiturage/widgets/profilwidget.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Assistance extends StatelessWidget {
   const Assistance({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
@@ -19,11 +17,14 @@ class Assistance extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Center(
-            child: Text('Assistance',
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headlineMedium)),
+            child: Text(
+          'Assistance',
+          style: TextStyle(
+            fontWeight: FontWeight.normal,
+            fontSize: screenHeight*0.035,
+            fontFamily: 'Poppins',
+          ),
+        )),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -38,13 +39,19 @@ class Assistance extends StatelessWidget {
               icon: Icons.my_library_books,
               onPress: () {},
             ),
-            SizedBox(height: screenHeight* 0.02),
+            SizedBox(height: screenHeight * 0.02),
             Profilewidget(
               title: 'Contactez nous',
               icon: Icons.call,
-              onPress: () {Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs(),));},
+              onPress: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ContactUs(),
+                    ));
+              },
             ),
-            SizedBox(height: screenHeight* 0.02),
+            SizedBox(height: screenHeight * 0.02),
             Profilewidget(
               title: 'Avis',
               icon: Icons.comment,

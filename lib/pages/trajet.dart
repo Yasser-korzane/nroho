@@ -88,7 +88,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
           SliverAppBar(
             floating: false,
             pinned: true,
-            title: Text('Où allez-vous ?'),
+            title: Text('Où allez-vous ?',                                style: TextStyle(fontFamily: 'Popping'),
+            ),
+            leading: IconButton(
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => home()));
+              },
+              icon: Icon(Icons.arrow_back),
+            ),
             centerTitle: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
@@ -118,6 +125,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               width: size.width * 0.7,
                               height: size.height * 0.05,
                               child: TextField(
+                                style: TextStyle(fontFamily: 'Popping'),
+
                                 controller: _departController,
                                 onChanged: (value) {
                                   setState(() {
@@ -149,6 +158,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               width: size.width * 0.7,
                               height: size.height * 0.05,
                               child: TextField(
+                                style: TextStyle(fontFamily: 'Popping'),
+
                                 controller: _arriveController,
                                 onChanged: (value) {
                                   setState(() {
@@ -181,7 +192,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
               ),
             ),
-            expandedHeight: size.height * 0.247,
+            expandedHeight: size.height * 0.27,
             // your app bar properties here
           ),
           SliverToBoxAdapter(
@@ -211,7 +222,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                       title: Text(
                         'choisir sur la map',
-                        style: TextStyle(fontSize: size.width * 0.04),
+                        style: TextStyle(fontSize: size.width * 0.04,fontFamily: 'Popping'),
                       ),
                     ),
                   ),
@@ -240,7 +251,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                       title: Text(
                         'Utiliser ma position',
-                        style: TextStyle(fontSize: size.width * 0.04),
+                        style: TextStyle(fontSize: size.width * 0.04,fontFamily: 'Popping'),
                       ),
                     ),
                   ),
@@ -259,7 +270,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             tileColor: Color(0XFFD3D3D3),
                             title: Text(
                               'Historique des recherches',
-                              style: TextStyle(fontSize: size.width * 0.04),
+                              style: TextStyle(fontSize: size.width * 0.04,fontFamily: 'Popping'),
                             ),
                           ),
                         ),
@@ -277,7 +288,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             ),
                             title: Text(
                               'Maoklane-Setif',
-                              style: TextStyle(fontSize: size.width * 0.04),
+                              style: TextStyle(fontSize: size.width * 0.04,fontFamily: 'Popping'),
                             ),
                           ),
                         ),
@@ -295,7 +306,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             ),
                             title: Text(
                               'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
+                              style: TextStyle(fontSize: size.width * 0.04,fontFamily: 'Popping'),
                             ),
                           ),
                         ),
@@ -685,7 +696,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               return const Center();
                             }
                           } else {
-                            return const Text("Recherche...");
+                            return const Text("Recherche...",                                style: TextStyle(fontFamily: 'Popping'),
+                            );
                           }
                         }),
                   ),
@@ -794,7 +806,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content:
-                        Text("Please fill all the informations")));
+                        Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Popping'),
+                        )));
               }
             },
             style: ButtonStyle(
@@ -802,7 +815,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
             child: const Text(
               'Valider',
               style: TextStyle(
-                  color: Colors.white, fontSize: 16),
+                  color: Colors.white, fontSize: 16,fontFamily: 'Popping'),
             ),
           ),
         ),
