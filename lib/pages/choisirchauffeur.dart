@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/trajetdetails.dart';
 import 'package:flutter/material.dart';
 
 
@@ -88,7 +89,7 @@ class DriverListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Choisissez un chauffeur',
-          style: TextStyle(color: Color(0xff344D59), fontSize: 20),
+          style: TextStyle(color: Color(0xff344D59), fontSize: 20,fontFamily: 'Popping'),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -125,10 +126,10 @@ class DriverListPage extends StatelessWidget {
                       SizedBox(width: screenWidth*0.04),
                       Column(children: [
                         Text(driver.name,
-                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold),
+                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
                         ),
                         Text(driver.phoneNumber,
-                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold),
+                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
                         ),
                       ]),
                     ]),
@@ -163,7 +164,7 @@ class DriverListPage extends StatelessWidget {
                                   title: Text(
                                     driver.depart,
                                     style: TextStyle(
-                                        color: Color(0xff7A90A4), fontSize: 15),
+                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Popping'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -175,7 +176,7 @@ class DriverListPage extends StatelessWidget {
                                   title: Text(
                                     driver.arrivee,
                                     style: TextStyle(
-                                        color: Color(0xff7A90A4), fontSize: 15),
+                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Popping'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -189,8 +190,14 @@ class DriverListPage extends StatelessWidget {
                           padding:  EdgeInsets.all(screenWidth*0.04),
                           child: Expanded(
                             child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text('Choisir'),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Details(photoUrl: 'assets/images/user-profile.png', fullName: ' weal bougessa', rating: 2, phoneNumber: '0665996688', email: 'bougessa.hrach@esi.dz', carName: 'car_pooling'),));
+                              },
+                              child: Text('Choisir',
+                              style: TextStyle(
+                                  fontFamily: 'Popping',
+                              ),
+                              ),
                             ),
                           ),
                         ),

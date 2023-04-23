@@ -50,8 +50,11 @@ class _SelectableTextWidgetState extends State<SelectableTextWidget> {
               flex: 80,
               child: Text(
                 widget.text,
-                style: TextStyle(fontSize: 14),
-              ),
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  fontFamily: 'Poppins',
+                ),              ),
             ),
             Expanded(
               flex: 20,

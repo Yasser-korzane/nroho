@@ -41,6 +41,7 @@ class _CommancerState extends State<Commancer> {
                             color: Colors.black,
                             fontSize: 32.0,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Popping',
                           ),
                         ),
                         SizedBox(height: screenHeight*0.001),
@@ -49,6 +50,8 @@ class _CommancerState extends State<Commancer> {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 16.0,
+                            fontWeight: FontWeight.normal,
+                            fontFamily: 'Popping',
                           ),
                         ),
                       ],

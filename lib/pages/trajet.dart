@@ -2,12 +2,17 @@ import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/map.dart';
 import 'package:dio/dio.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/widgets/date_time.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import 'package:geocoding/geocoding.dart';
+import '../Services/base de donnee.dart';
+import 'optionsconducteur.dart';
+import 'optionspassager.dart';
 
 enum Selected { depart, arrivee, none }
 
@@ -21,6 +26,9 @@ class OuAllezVous extends StatefulWidget {
 class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _arriveController = TextEditingController();
+  BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  bool statut = false;
+
   String querry = "";
   bool fromMap = false;
   String? arrive, depart;
@@ -32,6 +40,20 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
+
+  Future getStatut() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        statut = snapshot.data()!['statut'];
+      } else {
+        throw Exception('Failed to get statut');
+      }
+    });
+  }
 
   Future<dynamic> getPlaceFromId(String placeID) async {
     var response = await Dio().get(
@@ -49,13 +71,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
 
   void setCustomMarker() {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, "assets/images/marker.png")
+            ImageConfiguration.empty, "assets/images/marker.png")
         .then((icon) => customMarker = icon);
   }
 
   @override
   void initState() {
     super.initState();
+    getStatut();
     _location.initialize(context);
     setCustomMarker();
     _placesService.initialize(
@@ -65,37 +88,43 @@ class _OuAllezVousState extends State<OuAllezVous> {
   @override
   Widget build(BuildContext context) {
     final position =
-    ModalRoute
-        .of(context)!
-        .settings
-        .arguments as CameraPosition?;
+        ModalRoute.of(context)!.settings.arguments as CameraPosition?;
     if (position != null) {
       GeocodingPlatform.instance
           .placemarkFromCoordinates(
-          position.target.latitude, position.target.longitude)
+              position.target.latitude, position.target.longitude)
           .then((value) {
         fromMap = true;
         arrive = value[0].locality!;
         _arriveController.text = arrive!;
       });
     }
-    final Size size = MediaQuery
-        .of(context)
-        .size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
             floating: false,
             pinned: true,
-            title: Text('Où allez-vous ?'),
+            title: Text(
+              'Où allez-vous ?',
+              style: TextStyle(fontFamily: 'Popping'),
+            ),
+            leading: IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => home()));
+              },
+              icon: Icon(Icons.arrow_back),
+            ),
             centerTitle: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 child: Column(
                   children: [
                     SizedBox(height: size.height * 0.1),
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Column(
                             children: [
@@ -113,11 +142,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             ],
                           ), //icons
                           Column(children: [
-                            SizedBox(height: size.height * 0.01,),
+                            SizedBox(
+                              height: size.height * 0.01,
+                            ),
                             SizedBox(
                               width: size.width * 0.7,
                               height: size.height * 0.05,
                               child: TextField(
+                                style: TextStyle(fontFamily: 'Popping'),
                                 controller: _departController,
                                 onChanged: (value) {
                                   setState(() {
@@ -128,12 +160,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 },
                                 decoration: const InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black),
+                                    borderSide: BorderSide(color: Colors.black),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black),
+                                    borderSide: BorderSide(color: Colors.black),
                                   ),
                                   fillColor: Colors.white,
                                   filled: true,
@@ -149,6 +179,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               width: size.width * 0.7,
                               height: size.height * 0.05,
                               child: TextField(
+                                style: TextStyle(fontFamily: 'Popping'),
                                 controller: _arriveController,
                                 onChanged: (value) {
                                   setState(() {
@@ -159,12 +190,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 },
                                 decoration: const InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black),
+                                    borderSide: BorderSide(color: Colors.black),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.black),
+                                    borderSide: BorderSide(color: Colors.black),
                                   ),
                                   fillColor: Colors.white,
                                   filled: true,
@@ -181,7 +210,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
               ),
             ),
-            expandedHeight: size.height * 0.247,
+            expandedHeight: size.height * 0.265,
             // your app bar properties here
           ),
           SliverToBoxAdapter(
@@ -211,7 +240,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                       title: Text(
                         'choisir sur la map',
-                        style: TextStyle(fontSize: size.width * 0.04),
+                        style: TextStyle(
+                            fontSize: size.width * 0.04, fontFamily: 'Popping'),
                       ),
                     ),
                   ),
@@ -240,7 +270,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                       title: Text(
                         'Utiliser ma position',
-                        style: TextStyle(fontSize: size.width * 0.04),
+                        style: TextStyle(
+                            fontSize: size.width * 0.04, fontFamily: 'Popping'),
                       ),
                     ),
                   ),
@@ -249,7 +280,12 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     thickness: 1,
                   ),
                   Visibility(
-                    visible: (_arriveController.text.isEmpty || _arriveController.text.contains('Current Position')) &&(_departController.text.isEmpty || _departController.text.contains('Current Position')),
+                    visible: (_arriveController.text.isEmpty ||
+                            _arriveController.text
+                                .contains('Current Position')) &&
+                        (_departController.text.isEmpty ||
+                            _departController.text
+                                .contains('Current Position')),
                     child: Column(
                       children: [
                         SizedBox(
@@ -259,7 +295,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             tileColor: Color(0XFFD3D3D3),
                             title: Text(
                               'Historique des recherches',
-                              style: TextStyle(fontSize: size.width * 0.04),
+                              style: TextStyle(
+                                  fontSize: size.width * 0.04,
+                                  fontFamily: 'Popping'),
                             ),
                           ),
                         ),
@@ -277,7 +315,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             ),
                             title: Text(
                               'Maoklane-Setif',
-                              style: TextStyle(fontSize: size.width * 0.04),
+                              style: TextStyle(
+                                  fontSize: size.width * 0.04,
+                                  fontFamily: 'Popping'),
                             ),
                           ),
                         ),
@@ -295,7 +335,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             ),
                             title: Text(
                               'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
+                              style: TextStyle(
+                                  fontSize: size.width * 0.04,
+                                  fontFamily: 'Popping'),
                             ),
                           ),
                         ),
@@ -625,7 +667,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         ),
                       ],
                     ),
-                    replacement:FutureBuilder(
+                    replacement: FutureBuilder(
                         future: getPredictions(querry),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -652,26 +694,26 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                             depart = prediction;
                                             _departController.value =
                                                 TextEditingValue(
-                                                  text: depart!,
-                                                  selection: TextSelection
-                                                      .fromPosition(
-                                                    TextPosition(
-                                                        offset: depart!.length),
-                                                  ),
-                                                );
+                                              text: depart!,
+                                              selection:
+                                                  TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: depart!.length),
+                                              ),
+                                            );
                                             break;
                                           case Selected.arrivee:
                                             ArriveData = data;
                                             arrive = prediction;
                                             _arriveController.value =
                                                 TextEditingValue(
-                                                  text: arrive!,
-                                                  selection: TextSelection
-                                                      .fromPosition(
-                                                    TextPosition(
-                                                        offset: arrive!.length),
-                                                  ),
-                                                );
+                                              text: arrive!,
+                                              selection:
+                                                  TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: arrive!.length),
+                                              ),
+                                            );
                                             break;
                                           default:
                                         }
@@ -685,11 +727,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               return const Center();
                             }
                           } else {
-                            return const Text("Recherche...");
+                            return const Text(
+                              "Recherche...",
+                              style: TextStyle(fontFamily: 'Popping'),
+                            );
                           }
                         }),
                   ),
-
                 ],
               ),
             ),
@@ -703,7 +747,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () {
-              if (depart != null && arrive != null) {
+              /*if (depart != null && arrive != null) {
                 if (departData != null) {
                   getPlaceFromId(departData!.placeId!).then((value) {
                     var lat =
@@ -790,19 +834,32 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     ]);
                   }
                 }
-              } else {
+              }*/
+
+              /*else {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content:
-                        Text("Please fill all the informations")));
+                        Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Popping'),
+                        )));
+              }*/
+              if (statut == false) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const options()));
+              } else {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const optionconduc()));
               }
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),),
+              backgroundColor: MaterialStateProperty.all(Colors.blue),
+            ),
             child: const Text(
               'Valider',
               style: TextStyle(
-                  color: Colors.white, fontSize: 16),
+                  color: Colors.white, fontSize: 16, fontFamily: 'Popping'),
             ),
           ),
         ),

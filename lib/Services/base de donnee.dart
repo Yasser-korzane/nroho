@@ -139,6 +139,22 @@ class BaseDeDonnee{
       throw Exception("Failed to get utilisateur.");
     }
   } /// end getdata
+  Future<dynamic> getStatut(String uid) async {
+    bool statut = false;
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        statut = snapshot.data()!['statut'];
+        return statut;
+      }else {
+        return null;
+      }
+    });
+  }
+
   /// ************************************ Fonctions de validation **************************************
   bool validerNomEtPrenom(String value) {
     String chaineTest = value;
@@ -176,4 +192,105 @@ class BaseDeDonnee{
     }
     return double.tryParse(str) != null;
   }
+  Future<List<Utilisateur>> getUtilisateursByName(String name) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Utilisateur')
+          .where('nom', isEqualTo: name)
+          .get();
+      List<Utilisateur> utilisateurs = [];
+      for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+        Utilisateur utilisateur = creerUtilisateurVide();
+        utilisateur.identifiant = data['identifiant'];
+        utilisateur.nom = data['nom'];
+        utilisateur.prenom = data['prenom'];
+        utilisateur.email = data['email'];
+        utilisateur.numeroTelephone = data['numeroTelephone'];
+        utilisateur.evaluation = Evaluation(
+          List<String>.from(data['evaluation']['feedback']),
+          data['evaluation']['etoiles'],
+          data['evaluation']['nbSignalement'],
+        );
+        utilisateur.vehicule = Vehicule(
+          data['vehicule']['marque'],
+          data['vehicule']['typevehicule'],
+          data['vehicule']['matricule'],
+          data['vehicule']['modele'],
+          data['vehicule']['policeAssurance'],
+          data['vehicule']['nbPlaces'],
+        );
+        utilisateur.statut = data['statut'];
+        utilisateurs.add(utilisateur);
+      }
+      return utilisateurs;
+    } catch (e) {
+      throw Exception("Failed to get utilisateurs by name: $e");
+    }
+  }
+
+  Future<List<Utilisateur>> chercherConductuersPossibles() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Utilisateur')
+      //.where()
+          .get();
+      List<Utilisateur> utilisateurs = [];
+      for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+        Utilisateur utilisateur = creerUtilisateurVide();
+        utilisateur.identifiant = data['identifiant'];
+        utilisateur.nom = data['nom'];
+        utilisateur.prenom = data['prenom'];
+        utilisateur.email = data['email'];
+        utilisateur.numeroTelephone = data['numeroTelephone'];
+        utilisateur.evaluation = Evaluation(
+          List<String>.from(data['evaluation']['feedback']),
+          data['evaluation']['etoiles'],
+          data['evaluation']['nbSignalement'],
+        );
+        utilisateur.vehicule = Vehicule(
+          data['vehicule']['marque'],
+          data['vehicule']['typevehicule'],
+          data['vehicule']['matricule'],
+          data['vehicule']['modele'],
+          data['vehicule']['policeAssurance'],
+          data['vehicule']['nbPlaces'],
+        );
+        utilisateur.statut = data['statut'];
+        utilisateurs.add(utilisateur);
+      }
+      return utilisateurs;
+    } catch (e) {
+      throw Exception("Failed to get utilisateurs by name: $e");
+    }
+  }
+
+
+/** Les criteres de recherche :
+    on a donne pour le trajet :
+    - 'ville departP' #
+    - 'ville arriveP' #
+    - 'date departP' #
+    - 'heure departP' #
+    les donnee qu'on va comparer :
+    - 'ville departC' #
+    - 'ville arriveC' #
+    - 'date departC' #
+    - 'heure departC' #
+    resultat :
+ * 'date departC' soit egale srictement :  'date departC' == 'date departP'
+ * 'heure departC' du conductuer soit compris entre: 'heure departP'-10<='heure departC'< 'heure departP'+20'
+ * 'ville departP' soit egale a 'ville departC' ou appartient au villeIntermedieres entre 'ville departC' et 'ville arriveC'
+ * 'ville arriveP' soit egale a 'ville arriveC' ou appartient au villeIntermedieres entre 'ville departC' et 'ville arriveC'
+
+    exemple : ville departP = 'BeauLieu'
+    ville arriveP = 'Esi'
+    ville departC = 'Bouraoui'
+    ville arriveC = 'Esi'
+    villesIntermedieres('Bouraoui','Esi') = ['garnaison','BeauLieu','Itemm']
+
+ **/
+
+
 } // end Bdd class

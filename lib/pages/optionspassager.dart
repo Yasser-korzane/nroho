@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class _optionsState extends State<options> {
             icon: const Icon(Icons.arrow_back, color: Color(0xff344D59))
         ),
         title: Text('Plus d’informations',
-            style: TextStyle(color: Color(0xff344D59))),        backgroundColor: Colors.transparent,
+            style: TextStyle(color: Color(0xff344D59),fontFamily: 'Popping')),        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
       ),
@@ -51,6 +52,7 @@ class _optionsState extends State<options> {
                     //child: CustomDropdown(options: [1, 2, 3, 4])),
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
+
                       enabledBorder: OutlineInputBorder(
                         //borderSide: BorderSide(color: Colors.black),
                       )
@@ -59,7 +61,7 @@ class _optionsState extends State<options> {
                     items: nbPlaces
                         .map((item) => DropdownMenuItem(
                           value: item,
-                          child: Text(item),))
+                          child: Text(item,style: TextStyle(fontFamily: 'Popping'),),))
                         .toList(),
                     onChanged: (item) => setState(() => selectedNb = item)),
                   ),
@@ -69,6 +71,11 @@ class _optionsState extends State<options> {
                 margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                 padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                 child: TextField(
+                     style: TextStyle(
+                       fontWeight: FontWeight.normal,
+                       fontSize: screenHeight*0.035,
+                       fontFamily: 'Poppins',
+                     ),
                       decoration: InputDecoration(
                       fillColor: Colors.grey.shade300,
                       labelText: 'Laisser un commentaire',
@@ -83,11 +90,11 @@ class _optionsState extends State<options> {
                   width: screenWidth * 0.6,
                   child: ElevatedButton(
                     onPressed: () {
-                      //Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DriverListPage(),));
                     },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
                   )
               ),
             ],

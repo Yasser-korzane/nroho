@@ -50,26 +50,10 @@ class _SinupState extends State<Sinup> {
 
     final AuthService _auth = AuthService();
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        // appBar: AppBar(
-        //   toolbarHeight: 100,
-        //   leading: null,
-        //   automaticallyImplyLeading: false,
-        //   backgroundColor: Colors.white,
-        //   title: Text(''),
-        //   flexibleSpace: Container(
-        //     decoration: BoxDecoration(
-        //         image: DecorationImage(
-        //           image: AssetImage('assets/images/Ellipse 5.png'),
-        //           fit: BoxFit.fill,
-        //         )),
-        //   ),
-        // ),
-
-        body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -79,7 +63,8 @@ class _SinupState extends State<Sinup> {
                           child: Text("Inscription", style: TextStyle(
                               color: Color.fromARGB(255, 79, 77, 77),
                               fontSize: 40,
-                              fontWeight: FontWeight.bold),),
+                              fontWeight: FontWeight.bold,fontFamily: 'Popping'),),
+
                         ),
                       ),
                       Form(
@@ -95,6 +80,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.06,
                               ),
                               TextFormField(
+                                style: TextStyle(fontFamily: 'Popping'),
                                   controller: _controllerNom,
                                   keyboardType: TextInputType.name,
                                   validator: (input) {
@@ -121,6 +107,10 @@ class _SinupState extends State<Sinup> {
                                     hintStyle: TextStyle(
                                         color: Colors.grey[700],
                                         fontSize: 14),
+                                       /* color: Colors.grey[800],
+                                        fontSize: 14,
+                                      fontFamily: 'Popping'*
+                                    ),*/
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
                                   ),
@@ -130,6 +120,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.013,
                               ),
                               TextFormField(
+                                style: TextStyle(fontFamily: 'Popping'),
                                 controller: _controllerPrenom,
                                 keyboardType: TextInputType.name,
                                 validator: (input) {
@@ -190,6 +181,10 @@ class _SinupState extends State<Sinup> {
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
                                       fontSize: 14),
+                                    /*  color: Colors.grey[800],
+                                      fontSize: 14,
+                                      fontFamily: 'Popping'
+                                  ),*/
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                 ),
@@ -198,6 +193,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.013,
                               ),
                               TextFormField(
+                                style: TextStyle(fontFamily: 'Popping'),
                                 controller: _controllerEmail,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input) {
@@ -224,6 +220,9 @@ class _SinupState extends State<Sinup> {
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
                                       fontSize: 14),
+                                     /* color: Colors.grey[800],
+                                      fontSize: 14,
+                                      fontFamily: 'Popping'),*/
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                 ),
@@ -232,6 +231,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.013,
                               ),
                               TextFormField(
+                                  style: TextStyle(fontFamily: 'Popping'),
                                   obscureText: _isObscured,
                                   //keyboardType: TextInputType.visiblePassword,
                                   controller: _controllerMotDePasse,
@@ -258,6 +258,9 @@ class _SinupState extends State<Sinup> {
                                       hintStyle: TextStyle(
                                           color: Colors.grey[700],
                                           fontSize: 14),
+                                         /* color: Colors.grey[800],
+                                          fontSize: 14,
+                                          fontFamily: 'Popping'),*/
                                       fillColor: Colors.grey.shade100,
                                       filled: true,
                                       suffixIcon: IconButton(
@@ -304,7 +307,9 @@ class _SinupState extends State<Sinup> {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                "Vous devez verifier les donnees"),
+                                                "Vous devez verifier les donnees",
+                                              style: TextStyle(fontFamily: 'Popping'),
+                                            ),
                                             duration: Duration(seconds: 2),
                                           ),
                                         );
@@ -312,7 +317,8 @@ class _SinupState extends State<Sinup> {
                                       else {
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
-                                            content: Text("Succes"),
+                                            content: Text("Succes",  style: TextStyle(fontFamily: 'Popping'),
+                                            ),
                                             duration: Duration(seconds: 2),
                                           ),
                                         );
@@ -328,7 +334,9 @@ class _SinupState extends State<Sinup> {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                "Vous devez verifier les donnees"),
+                                                "Vous devez verifier les donnees",
+                                              style: TextStyle(fontFamily: 'Popping'),
+                                            ),
                                             duration: Duration(seconds: 2),
                                           )
                                       );
@@ -337,7 +345,8 @@ class _SinupState extends State<Sinup> {
                                   child: Text(
                                     'S\'inscrire',
                                     style: TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                        fontSize: 20, color: Colors.white,
+                                        fontFamily: 'Popping'),
                                   ),
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -383,10 +392,10 @@ class _SinupState extends State<Sinup> {
                         ),
                       ),
                     ]),
-              ),
-              //),
-            )
+                //),
+              )
 
+          ),
         )
     );
   }
