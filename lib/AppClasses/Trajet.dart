@@ -1,10 +1,9 @@
 //import 'package:geoflutterfire/geoflutterfire.dart';
 import 'PlusInformations.dart';
 class Trajet {
-  String horaire;
+  String dateDepart;
+  String heureDepart;
   String tempsDePause;
-  String lieuDepart;
-  String lieuArrivee;
   double coutTrajet;
   String villeDepart;
   String villeArrivee;
@@ -19,10 +18,9 @@ class Trajet {
   bool probleme; // si false alors il n'as pas de probleme, si true alors il ya un probleme
 
   Trajet(
-      this.horaire,
+      this.dateDepart,
+      this.heureDepart,
       this.tempsDePause,
-      this.lieuDepart,
-      this.lieuArrivee,
       this.coutTrajet,
       this.villeDepart,
       this.villeArrivee,
@@ -38,10 +36,9 @@ class Trajet {
 
   Map<String, dynamic> toMap() {
     return {
-      'horaire': horaire,
-      'tempsDePause': tempsDePause,
-      'lieuDepart': lieuDepart,
-      'lieuArrivee': lieuArrivee,
+      'dateDepart' : dateDepart,
+      'heureDepart': heureDepart,
+      'tempsDePause': tempsDePause,,
       'coutTrajet': coutTrajet,
       'villeDepart': villeDepart,
       'villeArrivee': villeArrivee,

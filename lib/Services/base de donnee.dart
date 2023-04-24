@@ -229,11 +229,82 @@ class BaseDeDonnee{
     }
   }
 
-  Future<List<Utilisateur>> chercherConductuersPossibles() async {
+  Future<List<Utilisateur>> chercherConductuersPossibles(String uid , String idTrajetReserve) async {
+    /// 1) recuperer le trajet reserve par le passager --------------------
+    Trajet trajetReserve = Trajet('', '', '', 0, '', '',[] , PlusInformations(false,false,false,1), false, '', '', false);
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsReserves')
+        .doc(idTrajetReserve)
+        .get()
+        .then((snapshot) async {
+          if (snapshot.exists){
+            trajetReserve.tempsDePause = snapshot.data()!['tempsDePause'];
+            trajetReserve.coutTrajet = snapshot.data()!['coutTrajet'];
+            trajetReserve.villeDepart = snapshot.data()!['villeDepart'];
+            trajetReserve.villeArrivee = snapshot.data()!['villeArrivee'];
+            trajetReserve.villeIntermediaires = List<String>.from(snapshot.data()!['villeIntermediaires']);
+            trajetReserve.plusInformations = PlusInformations(
+                snapshot.data()!['plusInformations']['fumeur'],
+                snapshot.data()!['plusInformations']['bagage'],
+                snapshot.data()!['plusInformations']['animaux'],
+                snapshot.data()!['plusInformations']['nbPlaces']);
+            trajetReserve.trajetEstValide = snapshot.data()!['trajetEstValide'];
+            trajetReserve.confort = snapshot.data()!['confort'];
+            trajetReserve.avis = snapshot.data()!['avis'];
+            trajetReserve.probleme = snapshot.data()!['probleme'];
+            // completer tout les attributs
+          }
+    });
+    /// ----------------------------------------------------------------
+    /// 2) rechercher les utilisateurs (le conducteurs) qui ont un trajetLance similaire au trajetReserve -------
+    try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        //.where('vehicule.nbPlaces', isGreaterThanOrEqualTo: trajetReserve.plusInformations.nbPlaces)
+        .get();
+                /// querySnapshot contient tout les references de toute les Utilisateurs
+                /// querySnapshot.docs contient les utilisateurs avec leurs documents
+    /// utilisateurDoc va pointe sur chaque utilisateur et ses informations
+    List<Utilisateur> utilisateurs = [];
+    for (QueryDocumentSnapshot utilisateurDoc in querySnapshot.docs) {
+      QuerySnapshot trajetsSnapshot = await FirebaseFirestore.instance
+          .collection('Utilisateur')
+          .doc(utilisateurDoc.id)
+          .collection('trajetsLances')
+          //.where('plusInformations.nbPlaces', isGreaterThanOrEqualTo: trajetReserve.plusInformations.nbPlaces)
+          //.where('plusInformations.fumeur', isGreaterThanOrEqualTo: trajetReserve.plusInformations.fumeur)
+          //.where('plusInformations.animaux', isGreaterThanOrEqualTo: trajetReserve.plusInformations.animaux)
+          //.where('plusInformations.bagage', isGreaterThanOrEqualTo: trajetReserve.plusInformations.bagage)
+          //.where()
+          .get();
+      /// trajetsSnapshot contient tout les references de toute les trajetsLances de chaque utilisateur
+      /// trajetsSnapshot.docs contient les trajetsLancesavec leurs documents
+      if (trajetsSnapshot.docs.isNotEmpty) {
+        for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
+          /// trajetLanceDoc va pointe sur chaque trajetLance et ses informations
+          Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
+          /// trajetDoc va pointe sur chaque trajetLance d'un utilisateur
+
+          print(trajetLanceDoc.data());
+        } // end for trajetLanceDoc
+        /**
+            DONC ON VA PARCOURIR TOUT LES UTILISATEURS AVEC utilisateurDoc
+            ET POUR CHAQUE UTILISATEUR ON VA PARCOURIR CA LIST DE trajetsLances
+            AVEC trajetLanceDoc
+         **/
+      } else {
+      }
+      /// utilisateurDoc va pointe sur chaque utilisateur et ses informations
+    } // end for utilisateurDoc
+    } catch (e) {
+      throw Exception("Failed to get utilisateurs by name: $e");
+    }
+
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Utilisateur')
-      //.where()
           .get();
       List<Utilisateur> utilisateurs = [];
       for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
@@ -260,6 +331,7 @@ class BaseDeDonnee{
         utilisateur.statut = data['statut'];
         utilisateurs.add(utilisateur);
       }
+      for (Utilisateur u in utilisateurs) u.afficher();
       return utilisateurs;
     } catch (e) {
       throw Exception("Failed to get utilisateurs by name: $e");

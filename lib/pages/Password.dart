@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -17,6 +18,7 @@ class _MotdePasseState extends State<MotdePasse> {
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Utilisateur');
   String oldPassword = '';
   String newPassword = '';
+  List<Utilisateur> utilisateurs = [];
   void changePassword(BuildContext context) async {
     try {
       Navigator.push(
@@ -126,6 +128,8 @@ class _MotdePasseState extends State<MotdePasse> {
       Center(child:
       TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
         onPressed: ()async{
+          //utilisateurs = await _baseDeDonnee.chercherConductuersPossibles();
+          //for (Utilisateur u in utilisateurs) u.afficher();
         },
       ),
       ),
