@@ -38,7 +38,7 @@ class Trajet {
     return {
       'dateDepart' : dateDepart,
       'heureDepart': heureDepart,
-      'tempsDePause': tempsDePause,,
+      'tempsDePause': tempsDePause,
       'coutTrajet': coutTrajet,
       'villeDepart': villeDepart,
       'villeArrivee': villeArrivee,
