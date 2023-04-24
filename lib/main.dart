@@ -17,7 +17,7 @@ Future<void> main() async {
     runApp(
       MaterialApp(
         theme: ThemeData(fontFamily: 'Poppins'),
-        home: const MyApp(),
+        home: const home(),
         routes: {
           "trajet": (context) {
             return const OuAllezVous();
@@ -53,8 +53,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home:
-            const Wrapper(),
+        home: const Wrapper(),
       ),
     );
   }

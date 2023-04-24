@@ -26,7 +26,7 @@ class OuAllezVous extends StatefulWidget {
 class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _arriveController = TextEditingController();
-  BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   bool statut = false;
 
   String querry = "";
@@ -106,108 +106,106 @@ class _OuAllezVousState extends State<OuAllezVous> {
           SliverAppBar(
             floating: false,
             pinned: true,
-            title: Text(
+            title: const Text(
               'Où allez-vous ?',
               style: TextStyle(fontFamily: 'Popping'),
             ),
             leading: IconButton(
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => home()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const home()));
               },
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
             ),
             centerTitle: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                child: Column(
-                  children: [
-                    SizedBox(height: size.height * 0.1),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              const Icon(Icons.gps_fixed),
-                              // SizedBox(height: screenHeight * 0.03),
-                              Container(
-                                height: 32,
-                                width: 1,
-                                color: Colors.grey,
-                              ),
-                              // SizedBox(height: screenHeight * 0.03),
-                              const Icon(
-                                Icons.location_on,
-                              ),
-                            ],
-                          ), //icons
-                          Column(children: [
-                            SizedBox(
-                              height: size.height * 0.01,
+              background: Column(
+                children: [
+                  SizedBox(height: size.height * 0.1),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            const Icon(Icons.gps_fixed),
+                            // SizedBox(height: screenHeight * 0.03),
+                            Container(
+                              height: 32,
+                              width: 1,
+                              color: Colors.grey,
                             ),
-                            SizedBox(
-                              width: size.width * 0.7,
-                              height: size.height * 0.05,
-                              child: TextField(
-                                style: TextStyle(fontFamily: 'Popping'),
-                                controller: _departController,
-                                onChanged: (value) {
-                                  setState(() {
-                                    showSuggestion = true;
-                                    querry = value;
-                                    caseSelected = Selected.depart;
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  hintText: 'Départ',
-                                  labelText: 'Départ',
+                            // SizedBox(height: screenHeight * 0.03),
+                            const Icon(
+                              Icons.location_on,
+                            ),
+                          ],
+                        ), //icons
+                        Column(children: [
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SizedBox(
+                            width: size.width * 0.7,
+                            height: size.height * 0.05,
+                            child: TextField(
+                              style: const TextStyle(fontFamily: 'Popping'),
+                              controller: _departController,
+                              onChanged: (value) {
+                                setState(() {
+                                  showSuggestion = true;
+                                  querry = value;
+                                  caseSelected = Selected.depart;
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: size.height * 0.01,
-                            ),
-                            SizedBox(
-                              width: size.width * 0.7,
-                              height: size.height * 0.05,
-                              child: TextField(
-                                style: TextStyle(fontFamily: 'Popping'),
-                                controller: _arriveController,
-                                onChanged: (value) {
-                                  setState(() {
-                                    showSuggestion = true;
-                                    querry = value;
-                                    caseSelected = Selected.arrivee;
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                  fillColor: Colors.white,
-                                  filled: true,
-                                  hintText: 'Arrivée',
-                                  labelText: 'Arrivée',
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
                                 ),
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: 'Départ',
+                                labelText: 'Départ',
                               ),
                             ),
-                          ]),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.01,
+                          ),
+                          SizedBox(
+                            width: size.width * 0.7,
+                            height: size.height * 0.05,
+                            child: TextField(
+                              style: const TextStyle(fontFamily: 'Popping'),
+                              controller: _arriveController,
+                              onChanged: (value) {
+                                setState(() {
+                                  showSuggestion = true;
+                                  querry = value;
+                                  caseSelected = Selected.arrivee;
+                                });
+                              },
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: 'Arrivée',
+                                labelText: 'Arrivée',
+                              ),
+                            ),
+                          ),
                         ]),
-                    SizedBox(height: size.height * 0.01),
-                    DateTimePickerRow(),
-                  ],
-                ),
+                      ]),
+                  SizedBox(height: size.height * 0.01),
+                  const DateTimePickerRow(),
+                ],
               ),
             ),
             expandedHeight: size.height * 0.265,
@@ -215,7 +213,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
           ),
           SliverToBoxAdapter(
             child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               child: Column(
                 children: [
                   const Divider(
@@ -286,13 +284,79 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         (_departController.text.isEmpty ||
                             _departController.text
                                 .contains('Current Position')),
+                    replacement: FutureBuilder(
+                        future: getPredictions(querry),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasData && showSuggestion) {
+                              return ListView.separated(
+                                separatorBuilder: (context, index) {
+                                  return const Divider(
+                                    thickness: 1,
+                                  );
+                                },
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (context, index) {
+                                  var data = snapshot.data[index];
+                                  var prediction = data.description;
+                                  return ListTile(
+                                    onTap: () {
+                                      setState(() {
+                                        showSuggestion = false;
+                                        switch (caseSelected) {
+                                          case Selected.depart:
+                                            departData = data;
+                                            depart = prediction;
+                                            _departController.value =
+                                                TextEditingValue(
+                                              text: depart!,
+                                              selection:
+                                                  TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: depart!.length),
+                                              ),
+                                            );
+                                            break;
+                                          case Selected.arrivee:
+                                            ArriveData = data;
+                                            arrive = prediction;
+                                            _arriveController.value =
+                                                TextEditingValue(
+                                              text: arrive!,
+                                              selection:
+                                                  TextSelection.fromPosition(
+                                                TextPosition(
+                                                    offset: arrive!.length),
+                                              ),
+                                            );
+                                            break;
+                                          default:
+                                        }
+                                      });
+                                    },
+                                    title: Text(prediction),
+                                  );
+                                },
+                              );
+                            } else {
+                              return const Center();
+                            }
+                          } else {
+                            return const Text(
+                              "Recherche...",
+                              style: TextStyle(fontFamily: 'Popping'),
+                            );
+                          }
+                        }),
                     child: Column(
                       children: [
                         SizedBox(
                           height: size.height * 0.045,
                           child: ListTile(
                             onTap: () {},
-                            tileColor: Color(0XFFD3D3D3),
+                            tileColor: const Color(0XFFD3D3D3),
                             title: Text(
                               'Historique des recherches',
                               style: TextStyle(
@@ -667,72 +731,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         ),
                       ],
                     ),
-                    replacement: FutureBuilder(
-                        future: getPredictions(querry),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            if (snapshot.hasData && showSuggestion) {
-                              return ListView.separated(
-                                separatorBuilder: (context, index) {
-                                  return const Divider(
-                                    thickness: 1,
-                                  );
-                                },
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  var data = snapshot.data[index];
-                                  var prediction = data.description;
-                                  return ListTile(
-                                    onTap: () {
-                                      setState(() {
-                                        showSuggestion = false;
-                                        switch (caseSelected) {
-                                          case Selected.depart:
-                                            departData = data;
-                                            depart = prediction;
-                                            _departController.value =
-                                                TextEditingValue(
-                                              text: depart!,
-                                              selection:
-                                                  TextSelection.fromPosition(
-                                                TextPosition(
-                                                    offset: depart!.length),
-                                              ),
-                                            );
-                                            break;
-                                          case Selected.arrivee:
-                                            ArriveData = data;
-                                            arrive = prediction;
-                                            _arriveController.value =
-                                                TextEditingValue(
-                                              text: arrive!,
-                                              selection:
-                                                  TextSelection.fromPosition(
-                                                TextPosition(
-                                                    offset: arrive!.length),
-                                              ),
-                                            );
-                                            break;
-                                          default:
-                                        }
-                                      });
-                                    },
-                                    title: Text(prediction),
-                                  );
-                                },
-                              );
-                            } else {
-                              return const Center();
-                            }
-                          } else {
-                            return const Text(
-                              "Recherche...",
-                              style: TextStyle(fontFamily: 'Popping'),
-                            );
-                          }
-                        }),
                   ),
                 ],
               ),
