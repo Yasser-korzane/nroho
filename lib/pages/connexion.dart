@@ -317,8 +317,7 @@ class _MyConnexinState extends State<Connexin> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Oubien'),
-                            Text('Oubien?',style: TextStyle(fontFamily: 'Popping'),),
+                            Text('Oubien',style: TextStyle(fontFamily: 'Popping'),),
                             TextButton(
                               onPressed: () {
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sinup(),));

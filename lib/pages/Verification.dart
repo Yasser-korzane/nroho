@@ -1,11 +1,15 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:appcouvoiturage/pages/home.dart';
 
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 
 class Verification extends StatefulWidget {
-  const Verification({ Key? key }) : super(key: key);
+  final String email;
+
+  const Verification({ Key? key,required  this.email }) : super(key: key);
 
   @override
   _VerificationState createState() => _VerificationState();
@@ -108,7 +112,7 @@ class _VerificationState extends State<Verification> {
                       duration: Duration(milliseconds: 500),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: screenWidth*0.05),
-                        child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n ly_korzane@esi.dz",
+                        child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n "+widget.email,
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5,fontFamily: 'Popping'),
                         ),
@@ -161,7 +165,33 @@ class _VerificationState extends State<Verification> {
                     child: MaterialButton(
                       elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      onPressed: _code.length < 4 ? () => {} : () { verify(); },
+                      onPressed: (){
+                        FirebaseAuth.instance.currentUser!.reload();
+                        if(FirebaseAuth.instance.currentUser!.emailVerified){
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    home()),
+                                (Route<dynamic> route) => false,
+                          );
+                        };
+                        print(FirebaseAuth.instance.currentUser!.emailVerified);
+                      },
+                      /*onPressed: _code.length < 4 ? () => {
+                        if(FirebaseAuth.instance.currentUser!.emailVerified){
+                      Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              home()),
+                          (Route<dynamic> route) => false,
+                    )
+                        };
+
+
+                        print(FirebaseAuth.instance.currentUser!.emailVerified);
+                      } : () { verify(); },*/
                       color: Colors.blue,
                       minWidth: MediaQuery.of(context).size.width * 0.8,
                       height: 50,

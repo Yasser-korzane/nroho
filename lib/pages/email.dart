@@ -105,7 +105,7 @@ class Emailgetter extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Verification()));
+                          //Navigator.push(context, MaterialPageRoute(builder: (context) => Verification()));
                         },
                         child: Text(
                           ' suivant',

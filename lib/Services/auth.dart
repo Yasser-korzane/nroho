@@ -5,11 +5,15 @@ import 'package:appcouvoiturage/Services/base de donnee.dart';
 
 class AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Users _userfromfirebase(User? user){//User is a firebase class and Users is my own class that i had create
     return Users(user!.uid);
   }
   Stream<Users> get user{
     return _auth.authStateChanges().map(_userfromfirebase);//equivalent a .map((User? user) => _userfromfirebase(user) )
+  }
+  Future<void> sendEmailVerification(User user) async {
+    await user.sendEmailVerification();
   }
 
   // methode to login
@@ -29,8 +33,10 @@ class AuthService{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user =result.user;
       utilisateur.identifiant = user!.uid;
-      BaseDeDonnee().creerUtilisateur(utilisateur);
-      return _userfromfirebase(user);
+      await sendEmailVerification(user);
+     /* BaseDeDonnee().creerUtilisateur(utilisateur);*/
+     // return _userfromfirebase(user);
+      return user;
     }catch(e){
       print(e.toString());
       return null;
