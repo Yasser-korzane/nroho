@@ -95,7 +95,7 @@ class ContactUs extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '  Grine Mohammed',
+                    '      Grine Mohammed',
                     style: TextStyle(
                         fontSize: screenWidth * 0.0583,
                         fontWeight: FontWeight.bold,

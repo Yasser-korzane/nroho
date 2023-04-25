@@ -122,7 +122,7 @@ class _MotdePasseState extends State<MotdePasse> {
     int hour = dateTime.hour;
     int minute = dateTime.minute;
     DateTime timearrivee = DateTime(year,month,day,hour+1,minute-15) ;
-    Trajet trajetReserve = Trajet(dateTime, timearrivee, 300, 'BeauLieu', "Esi",lieuDepart,lieuArrive, ['Itemm'], PlusInformations(false,false,false,1), false, "", "", false);
+    Trajet trajetReserve = Trajet('' , dateTime, timearrivee, 300, 'BeauLieu', "Esi",lieuDepart,lieuArrive, ['Itemm'], PlusInformations(false,false,false,1), false, "", "", false);
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
@@ -151,7 +151,7 @@ class _MotdePasseState extends State<MotdePasse> {
       Center(child:
       TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
         onPressed: ()async{
-        await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'Nors1F4SriLnfvR8O5tG');
+        //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'Nors1F4SriLnfvR8O5tG');
         //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);

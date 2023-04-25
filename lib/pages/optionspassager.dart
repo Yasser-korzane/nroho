@@ -12,7 +12,9 @@ import 'package:places_service/places_service.dart';
 import '../AppClasses/PlusInformations.dart';
 
 class options extends StatefulWidget {
-  // variable
+  Trajet trajetReserve ;
+  options(this.trajetReserve);
+
   @override
   State<options> createState() => _optionsState();
 }
@@ -30,21 +32,16 @@ class _optionsState extends State<options> {
     // to get acces to variable do : widget.variable
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    final Size size = MediaQuery.of(context).size;
+    BaseDeDonnee baseDeDonnee = BaseDeDonnee();
     Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
     utilisateur.nom = "Grine";
     utilisateur.prenom = "Mohammed";
     utilisateur.email = "lm_grine@esi.dz";
-    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    PlacesAutoCompleteResult lieuDepart = lieuArrive;
-    DateTime date = DateTime.now();DateTime time = DateTime.now();
-    Trajet trajetLance = Trajet(date, time, 0, 'Bouira', 'Alger', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
-    c = ConducteurTrajet(utilisateur, trajetLance);
-    monListe.add(c);
+    utilisateur.numeroTelephone = "0776418929";
+    PlusInformations plusInformations = PlusInformations(false, false, false, 1);
+    Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
+    print('monListe.length = ${monListe.length}');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -64,8 +61,7 @@ class _optionsState extends State<options> {
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: screenHeight * 0.1),
-              SelectableTextWidget(
-                  text: 'Acceptez-vous un conducteur qui fume ?'),
+              SelectableTextWidget(text: 'Acceptez-vous un conducteur qui fume ?'),
               SizedBox(height: screenHeight * 0.03),
               SelectableTextWidget(text: 'Avez vous un bagage volumineux ?'),
               SizedBox(height: screenHeight * 0.03),
@@ -89,7 +85,11 @@ class _optionsState extends State<options> {
                           value: item,
                           child: Text(item,style: TextStyle(fontFamily: 'Poppins'),),))
                         .toList(),
-                    onChanged: (item) => setState(() => selectedNb = item)),
+                    onChanged: (item) {
+                      setState(() => selectedNb = item);
+                      plusInformations.nbPlaces = int.parse(item!);
+                    }
+                  ),
                   ),
               ),
               SizedBox(height: 10.0),
@@ -108,26 +108,47 @@ class _optionsState extends State<options> {
                       floatingLabelBehavior: FloatingLabelBehavior.auto,
                       // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
                       suffixIcon: Icon(Icons.insert_comment_rounded,
-                          color: Colors.black)),
+                          color: Colors.black)
+                      ),
+                  onChanged: (value) {
+                    trajetLance.avis = value ;
+                  },
+
                 ),
               ),
               SizedBox(height: screenHeight * 0.094),
-              SizedBox(
-                  width: screenWidth * 0.6,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => DriverListPage(monListe),));
-                    },
-                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
-                    child: const Text('Valider',
-                        style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
-                  )
-              ),
+
             ],
           ),
       ]
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: size.width * 0.51,
+          height: size.height * 0.048,
+          child: ElevatedButton(
+            onPressed: () async{
+              //monListe = await baseDeDonnee.chercherConductuersPossibles('', widget.trajetReserve);
+              c = ConducteurTrajet(utilisateur, trajetLance);
+              monListe.add(c);
+              print('nbPlaces = ${plusInformations.nbPlaces}');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DriverListPage(monListe)));
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.blue),
+            ),
+            child: const Text(
+              'Valider',
+              style: TextStyle(
+                  color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

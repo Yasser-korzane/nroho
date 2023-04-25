@@ -10,6 +10,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import 'package:geocoding/geocoding.dart';
+import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 import 'optionsconducteur.dart';
 import 'optionspassager.dart';
@@ -28,7 +29,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _arriveController = TextEditingController();
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   bool statut = false;
-
   String querry = "";
   bool fromMap = false;
   String? arrive, depart;
@@ -40,6 +40,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
+  DateTime dateTime = DateTime.now();
 
   Future getStatut() async {
     await FirebaseFirestore.instance
@@ -87,6 +88,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
 
   @override
   Widget build(BuildContext context) {
+    BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+    Trajet _trajet = _baseDeDonnee.creerTrajetVide();
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
     if (position != null) {
@@ -155,6 +158,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                   showSuggestion = true;
                                   querry = value;
                                   caseSelected = Selected.depart;
+                                  _trajet.villeDepart = value;
+                                  _trajet.lieuDepart = departData ;
                                 });
                               },
                               decoration: const InputDecoration(
@@ -167,7 +172,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 fillColor: Colors.white,
                                 filled: true,
                                 hintText: 'Départ',
-                                labelText: 'Départ',
                               ),
                             ),
                           ),
@@ -185,6 +189,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                   showSuggestion = true;
                                   querry = value;
                                   caseSelected = Selected.arrivee;
+                                  _trajet.villeArrivee = value;
+                                  _trajet.lieuArrivee = ArriveData;
                                 });
                               },
                               decoration: const InputDecoration(
@@ -197,14 +203,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 fillColor: Colors.white,
                                 filled: true,
                                 hintText: 'Arrivée',
-                                labelText: 'Arrivée',
                               ),
                             ),
                           ),
                         ]),
                       ]),
                   SizedBox(height: size.height * 0.01),
-                  const DateTimePickerRow(),
+                  DateTimePickerRow(dateTime),
                 ],
               ),
             ),
@@ -841,14 +846,16 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
                         )));
               }*/
+              _trajet.dateDepart = dateTime;
               if (statut == false) {
+                _trajet.afficher();
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>  options()));
+                    MaterialPageRoute(builder: (context) =>  options(_trajet)));
               } else {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const optionconduc()));
+                        builder: (context) =>  optionconduc(_trajet)));
               }
             },
             style: ButtonStyle(

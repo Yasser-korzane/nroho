@@ -142,6 +142,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       Row(
                         children: [
                           Expanded(
+                            flex : 1,
                             child: Text(
                               'Identifiant:',
                               style:
@@ -149,6 +150,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                           ),
                           Expanded(
+                            flex : 2,
                             child: Text(
                               _utilisateur.identifiant,
                               style:
@@ -160,6 +162,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       Row(
                         children: [
                           Expanded(
+                            flex : 1,
                             child: Text(
                               'Email: ',
                               style:
@@ -167,6 +170,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                           ),
                           Expanded(
+                            flex : 2,
                             child: Text(
                               _utilisateur.email,
                               style:

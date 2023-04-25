@@ -69,6 +69,18 @@ class BaseDeDonnee{
         Vehicule("", "", "", "", ""), false, [],[],[]
     );
   }
+  Trajet creerTrajetVide(){
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    PlacesAutoCompleteResult lieuDepart = lieuArrive;
+    DateTime date = DateTime.now();DateTime time = DateTime.now();
+    return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
+
+  }
   //------------------------------------------------------------------------------------------
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
@@ -77,29 +89,53 @@ class BaseDeDonnee{
   //------------------------------------------------------------------------------------------
   Future<void> saveTrajetLanceAsSubcollection(String uid, Trajet trajetLance) async {
     Map<String, dynamic> trajetLanceData = trajetLance.toMap();
-    await FirebaseFirestore.instance
+    DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .collection('trajetsLances')
         .add(trajetLanceData);
+    trajetLance.id = docRef.id;
+    trajetLanceData = trajetLance.toMap();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsLances')
+        .doc(docRef.id)
+        .set(trajetLanceData);
   }
   //------------------------------------------------------------------------------------------
   Future<void> saveTrajetReserveAsSubcollection(String uid, Trajet trajetReserve) async {
     Map<String, dynamic> trajetReserveData = trajetReserve.toMap();
-    await FirebaseFirestore.instance
+    DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .collection('trajetsReserves')
         .add(trajetReserveData);
+    trajetReserve.id = docRef.id;
+    trajetReserveData = trajetReserve.toMap();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsReserves')
+        .doc(docRef.id)
+        .set(trajetReserveData);
   }
   //------------------------------------------------------------------------------------------
   Future<void> saveHistoriqueAsSubcollection(String uid, Trajet historique)async{
     Map<String, dynamic> historiqueData = historique.toMap();
-    await FirebaseFirestore.instance
+    DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .collection('Historique')
         .add(historiqueData);
+    historique.id = docRef.id;
+    historiqueData = historique.toMap();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('Historique')
+        .doc(docRef.id)
+        .set(historiqueData);
   }
   //------------------------------------------------------------------------------------------
   Future<void> sauvegarderVillesIntermediaires(String uid, List<String> villes)async{
@@ -232,22 +268,9 @@ class BaseDeDonnee{
     }
   }
 
-  Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , String idTrajetReserve) async {
+  Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
     /// 1) recuperer le trajet reserve par le passager --------------------
-    DateTime date = DateTime.now();DateTime time = DateTime.now();
-    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    Trajet trajetReserve = Trajet(date, time, 0, '', '',lieuDepart,lieuArrive, [], PlusInformations(false, false, false, 1), false, '', '', false);
+    /*Trajet trajetReserve = creerTrajetVide();
     await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
@@ -285,6 +308,7 @@ class BaseDeDonnee{
         trajetReserve.probleme = snapshot.data()!['probleme'];
       }else print('ce trajetReserve n\'exist pas');
     }); // fin recuperation du trajetReserve
+    */
     DateTime TempsPmoins10 = trajetReserve.dateDepart.subtract(Duration(minutes: 10));
     DateTime TempsPplus20 = trajetReserve.dateDepart.add(Duration(minutes: 20));
     trajetReserve.afficher();
@@ -321,7 +345,7 @@ class BaseDeDonnee{
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
-                Trajet trajetLance = Trajet(date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
+                Trajet trajetLance = creerTrajetVide();
                 utilisateur.identifiant = dataUtilisateur['identifiant'];
                 utilisateur.nom = dataUtilisateur['nom'];
                 utilisateur.prenom = dataUtilisateur['prenom'];

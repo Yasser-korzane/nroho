@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DateTimePickerRow extends StatefulWidget {
-  const DateTimePickerRow({Key? key}) : super(key: key);
-
+  DateTime dateTime ;
+  DateTimePickerRow(this.dateTime);
   @override
   _DateTimePickerRowState createState() => _DateTimePickerRowState();
 }
@@ -28,6 +28,7 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
+        widget.dateTime = _selectedDate! ;
       });
     }
   }
@@ -40,6 +41,7 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
     if (picked != null && picked != _selectedTime) {
       setState(() {
         _selectedTime = picked;
+        widget.dateTime = DateTime(_selectedDate!.year,_selectedDate!.month,_selectedTime!.hour,_selectedTime!.minute);
       });
     }
   }
