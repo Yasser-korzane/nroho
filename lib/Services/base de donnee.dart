@@ -7,6 +7,13 @@ import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
 
+
+class ConducteurTrajet {
+  Utilisateur utilisateur;
+  Trajet trajetLance;
+  ConducteurTrajet(this.utilisateur, this.trajetLance);
+}
+
 class BaseDeDonnee{
   final CollectionReference utilisateurCollection = FirebaseFirestore.instance.collection('Utilisateur');
   /** *********************************** Seters (ajout et modifications) *********************************** **////
@@ -225,7 +232,7 @@ class BaseDeDonnee{
     }
   }
 
-  Future chercherConductuersPossibles(String uid , String idTrajetReserve) async {
+  Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , String idTrajetReserve) async {
     /// 1) recuperer le trajet reserve par le passager --------------------
     DateTime date = DateTime.now();DateTime time = DateTime.now();
     PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
@@ -285,7 +292,8 @@ class BaseDeDonnee{
     print("TempsPplus20 : ${TempsPplus20.year}/${TempsPplus20.month}/${TempsPplus20.day}/${TempsPplus20.hour}/${TempsPplus20.minute}");
     /// 2) rechercher les utilisateurs (le conducteurs) qui ont un trajetLance similaire au trajetReserve -------
     try {
-      List<Utilisateur> utilisateurs = [];
+      //List<Utilisateur> utilisateurs = [];
+      List<ConducteurTrajet> listConducteurTrajet = [];
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Utilisateur')
           .where('identifiant',isNotEqualTo: uid)
@@ -313,6 +321,7 @@ class BaseDeDonnee{
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
+                Trajet trajetLance = Trajet(date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
                 utilisateur.identifiant = dataUtilisateur['identifiant'];
                 utilisateur.nom = dataUtilisateur['nom'];
                 utilisateur.prenom = dataUtilisateur['prenom'];
@@ -331,17 +340,45 @@ class BaseDeDonnee{
                   dataUtilisateur['vehicule']['policeAssurance'],
                 );
                 utilisateur.statut = dataUtilisateur['statut'];
-                utilisateurs.add(utilisateur);
-                print("hello");
                 utilisateur.afficher();
+                trajetLance.dateDepart = data['dateDepart'].toDate();
+                trajetLance.tempsDePause = data['tempsDePause'].toDate();
+                trajetLance.coutTrajet = data['coutTrajet'] as double;
+                trajetLance.villeDepart = data['villeDepart'];
+                trajetLance.villeArrivee = data['villeArrivee'];
+                /*trajetLance.lieuDepart = PlacesAutoCompleteResult(
+            placeId: data['lieuDepart']['placeId'],
+            description: data['lieuDepart']['description'],
+            secondaryText: data['lieuDepart']['secondaryText'],
+            mainText: data['lieuDepart']['mainText'],
+        );
+        trajetLance.lieuArrivee = PlacesAutoCompleteResult(
+            placeId: data['lieuArrivee']['placeId'],
+            description: data['lieuArrivee']['description'],
+            secondaryText: data['lieuArrivee']['secondaryText'],
+            mainText: data['lieuArrivee']['mainText'],
+        );*/
+                trajetLance.villeIntermediaires = List<String>.from(data['villeIntermediaires']);
+                trajetLance.plusInformations = PlusInformations(
+                    data['plusInformations']['fumeur'],
+                    data['plusInformations']['bagage'],
+                    data['plusInformations']['animaux'],
+                    data['plusInformations']['nbPlaces']);
+                trajetLance.trajetEstValide = data['trajetEstValide'];
+                trajetLance.confort = data['confort'];
+                trajetLance.avis = data['avis'];
+                trajetLance.probleme = data['probleme'];
+                ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
+                listConducteurTrajet.add(conducteurTrajet);
               }else { print('Les conditions ne sont pas verifier pour ${data['villeDepart']} ${data['villeArrivee']}');
             }// end if conditions de recherche
           } // end for trajetLanceDoc
         }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur
       } // end for utilisateurDoc
       print('Resultat de recherche : ');
-      for (Utilisateur u in utilisateurs) u.afficher();
-      return utilisateurs;
+      //for (Utilisateur u in utilisateurs) u.afficher();
+      for(ConducteurTrajet c in listConducteurTrajet) c.utilisateur.afficher();
+      return listConducteurTrajet;
     } catch (e) {
       throw Exception("Failed to get utilisateurs : $e");
     }

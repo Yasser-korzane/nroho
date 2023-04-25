@@ -181,10 +181,14 @@ class _MyConnexinState extends State<Connexin> {
                                               Radius.circular(12)),
                                         ),
                                         labelText: 'Mot de passe',
+                                        labelStyle: TextStyle(
+                                          fontFamily:'Poppins'
+                                        ),
                                         hintText: 'Entrez votre mot de passe ',
                                         hintStyle: TextStyle(
                                             color: Colors.grey[700],
-                                            fontSize: 14),
+                                            fontSize: 14
+                                        ,fontFamily: 'Poppins'),
                                             /*color: Colors.grey[800],
                                             fontSize: 14,fontFamily: 'Poppins'),*/
                                         fillColor: Colors.grey.shade100,

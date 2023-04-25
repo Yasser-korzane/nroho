@@ -1,83 +1,11 @@
-import 'package:appcouvoiturage/pages/trajetdetails.dart';
+import 'package:appcouvoiturage/pages/trajetdetailsconducteurs.dart';
 import 'package:flutter/material.dart';
 
-
-class Driver {
-  final String name;
-  final String phoneNumber;
-  final String depart;
-  final String arrivee;
-  final String imageUrl;
-
-  Driver({
-    required this.name,
-    required this.phoneNumber,
-    required this.depart,
-    required this.arrivee,
-    required this.imageUrl,
-  });
-}
-
+import '../AppClasses/Utilisateur.dart';
+import '../Services/base de donnee.dart';
 class DriverListPage extends StatelessWidget {
-  final List<Driver> drivers = [ // Creation de 3 instances de la classe Driver afin de dérouler le code
-    Driver(
-      name: 'Ali Lapointe',
-      phoneNumber: '07786111801',
-      depart: 'Alger',
-      arrivee: 'Bejaia',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Mohamed Boudief',
-      phoneNumber: '05555555555',
-      depart: 'Constantine',
-      arrivee: 'Setif',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-  ];
-
+  List<ConducteurTrajet> listeUtilisateurs ;
+  DriverListPage(this.listeUtilisateurs) ;
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -85,7 +13,7 @@ class DriverListPage extends StatelessWidget {
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
     return Scaffold(
-      backgroundColor: Colors.grey.shade400,
+      backgroundColor: Color(0xffCDCACA),
       appBar: AppBar(
         title: Text(
           'Choisissez un chauffeur',
@@ -96,9 +24,9 @@ class DriverListPage extends StatelessWidget {
         elevation: 5,
       ),
       body: ListView.builder( // Utilisation du widget ListView.builder pour afficher à l'utilisateur l'ensemble des chauffeurs disponible correspandant a sa demande
-        itemCount: drivers.length,
+        itemCount: listeUtilisateurs.length,
         itemBuilder: (context, index) {
-          final driver = drivers[index];
+          final ConducteurTrajet conducteurTrajet = listeUtilisateurs[index];
           return Padding(
             padding:  EdgeInsets.all(screenWidth*0.015),
             child: Card(
@@ -118,18 +46,18 @@ class DriverListPage extends StatelessWidget {
                     Row(
                         children: [
                       Image.network(
-                        driver.imageUrl,
+                        'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80',
                         height: screenHeight*0.055,
                         width: screenWidth*0.12,
                         fit: BoxFit.cover,
                       ),
                       SizedBox(width: screenWidth*0.04),
                       Column(children: [
-                        Text(driver.name,
-                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
+                        Text(conducteurTrajet.utilisateur.nom,
+                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
                         ),
-                        Text(driver.phoneNumber,
-                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
+                        Text(conducteurTrajet.utilisateur.numeroTelephone,
+                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
                         ),
                       ]),
                     ]),
@@ -162,7 +90,7 @@ class DriverListPage extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    driver.depart,
+                                    conducteurTrajet.trajetLance.villeDepart,
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
@@ -174,7 +102,7 @@ class DriverListPage extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    driver.arrivee,
+                                    conducteurTrajet.trajetLance.villeArrivee,
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
