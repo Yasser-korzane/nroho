@@ -40,7 +40,7 @@ class _erreur_connexion_fenetreState extends State<erreur_connexion_fenetre> {
                 });
               }
             },
-            child: const Text('OK'),
+            child: const Text('Réessayer'),
           )
         ],
       )

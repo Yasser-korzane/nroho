@@ -1,8 +1,11 @@
+import 'package:appcouvoiturage/AppClasses/PlusInformations.dart';
+import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:places_service/places_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
@@ -99,11 +102,31 @@ class _MotdePasseState extends State<MotdePasse> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
+    Timestamp timestamp = Timestamp.now();
+    DateTime dateTime = timestamp.toDate();
+    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    int year = dateTime.year;
+    int month = dateTime.month;
+    int day = dateTime.day;
+    int hour = dateTime.hour;
+    int minute = dateTime.minute;
+    DateTime timearrivee = DateTime(year,month,day,hour+1,minute-15) ;
+    Trajet trajetReserve = Trajet(dateTime, timearrivee, 300, 'BeauLieu', "Esi",lieuDepart,lieuArrive, ['Itemm'], PlusInformations(false,false,false,1), false, "", "", false);
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
             onPressed: () {
-        // Navigator.pop(context)
         Navigator.pop(context);
   },
                 icon: const Icon(Icons.arrow_back, color: Color(0xff344d59))),
@@ -128,6 +151,10 @@ class _MotdePasseState extends State<MotdePasse> {
       Center(child:
       TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
         onPressed: ()async{
+        await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'Nors1F4SriLnfvR8O5tG');
+        //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
+        //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
+        //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
           //utilisateurs = await _baseDeDonnee.chercherConductuersPossibles();
           //for (Utilisateur u in utilisateurs) u.afficher();
         },

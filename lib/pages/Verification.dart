@@ -112,7 +112,7 @@ class _VerificationState extends State<Verification> {
                       duration: Duration(milliseconds: 500),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: screenWidth*0.05),
-                        child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n "+widget.email,
+                        child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n votre email",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5,fontFamily: 'Popping'),
                         ),

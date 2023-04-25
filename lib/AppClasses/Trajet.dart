@@ -1,16 +1,14 @@
-//import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:places_service/places_service.dart';
 import 'PlusInformations.dart';
 class Trajet {
-  String dateDepart;
-  String heureDepart;
-  String tempsDePause;
+  DateTime dateDepart ;
+  DateTime tempsDePause;
   double coutTrajet;
   String villeDepart;
   String villeArrivee;
+  PlacesAutoCompleteResult? lieuDepart;
+  PlacesAutoCompleteResult? lieuArrivee;
   List<String> villeIntermediaires;
-  /*GeoFirePoint cordonneesDepart;
-  GeoFirePoint cordonneesArrivee;
-  List<GeoPoint> chemin;*/
   PlusInformations plusInformations;
   bool trajetEstValide;
   String confort ;
@@ -19,29 +17,44 @@ class Trajet {
 
   Trajet(
       this.dateDepart,
-      this.heureDepart,
       this.tempsDePause,
       this.coutTrajet,
       this.villeDepart,
       this.villeArrivee,
+      this.lieuDepart,
+      this.lieuArrivee,
       this.villeIntermediaires,
-      /*this.cordonneesDepart,
-      this.cordonneesArrivee,
-      this.chemin,*/
       this.plusInformations,
       this.trajetEstValide,
       this.confort,
       this.avis,
       this.probleme);
-
+  void afficher() {
+    print('dateDepart: $dateDepart');
+    print('tempsDePause: $tempsDePause');
+    print('coutTrajet: $coutTrajet');
+    print('villeDepart: $villeDepart');
+    print('villeArrivee: $villeArrivee');
+    print('lieuDepart: ');
+    print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
+    print('lieuArrivee: ');
+    print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
+    print('villeIntermediaires: $villeIntermediaires');
+    print('plusInformations: $plusInformations');
+    print('trajetEstValide: $trajetEstValide');
+    print('confort: $confort');
+    print('avis: $avis');
+    print('probleme: $probleme');
+  }
   Map<String, dynamic> toMap() {
     return {
       'dateDepart' : dateDepart,
-      'heureDepart': heureDepart,
       'tempsDePause': tempsDePause,
       'coutTrajet': coutTrajet,
       'villeDepart': villeDepart,
       'villeArrivee': villeArrivee,
+      'lieuDepart': lieuDepart != null ? _convertPlaceResultToMap(lieuDepart!) : null,
+      'lieuArrivee': lieuArrivee != null ? _convertPlaceResultToMap(lieuArrivee!) : null,
       'villeIntermediaires': villeIntermediaires,
       'plusInformations': {
         'fumeur': plusInformations.fumeur,
@@ -53,6 +66,15 @@ class Trajet {
       'confort': confort,
       'avis': avis,
       'probleme': probleme,
+    };
+  }
+  Map<String, dynamic> _convertPlaceResultToMap(PlacesAutoCompleteResult place) {
+    return {
+      'placeId': place.placeId,
+      'description': place.description,
+      'secondaryText': place.secondaryText,
+      'mainText': place.mainText,
+      // Include other properties as needed
     };
   }
 }

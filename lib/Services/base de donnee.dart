@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
@@ -88,7 +91,7 @@ class BaseDeDonnee{
         .add(trajetReserveData);
   }
   //------------------------------------------------------------------------------------------
-  Future<void> sauvegarderHistoriqueAsSubcollection(String uid, Trajet historique)async{
+  Future<void> saveHistoriqueAsSubcollection(String uid, Trajet historique)async{
     Map<String, dynamic> historiqueData = historique.toMap();
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -229,9 +232,22 @@ class BaseDeDonnee{
     }
   }
 
-  Future<List<Utilisateur>> chercherConductuersPossibles(String uid , String idTrajetReserve) async {
+  Future chercherConductuersPossibles(String uid , String idTrajetReserve) async {
     /// 1) recuperer le trajet reserve par le passager --------------------
-    Trajet trajetReserve = Trajet('', '', '', 0, '', '',[] , PlusInformations(false,false,false,1), false, '', '', false);
+    DateTime date = DateTime.now();DateTime time = DateTime.now();
+    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    Trajet trajetReserve = Trajet(date, time, 0, '', '',lieuDepart,lieuArrive, [], PlusInformations(false, false, false, 1), false, '', '', false);
     await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
@@ -239,104 +255,122 @@ class BaseDeDonnee{
         .doc(idTrajetReserve)
         .get()
         .then((snapshot) async {
-          if (snapshot.exists){
-            trajetReserve.tempsDePause = snapshot.data()!['tempsDePause'];
-            trajetReserve.coutTrajet = snapshot.data()!['coutTrajet'];
-            trajetReserve.villeDepart = snapshot.data()!['villeDepart'];
-            trajetReserve.villeArrivee = snapshot.data()!['villeArrivee'];
-            trajetReserve.villeIntermediaires = List<String>.from(snapshot.data()!['villeIntermediaires']);
-            trajetReserve.plusInformations = PlusInformations(
-                snapshot.data()!['plusInformations']['fumeur'],
-                snapshot.data()!['plusInformations']['bagage'],
-                snapshot.data()!['plusInformations']['animaux'],
-                snapshot.data()!['plusInformations']['nbPlaces']);
-            trajetReserve.trajetEstValide = snapshot.data()!['trajetEstValide'];
-            trajetReserve.confort = snapshot.data()!['confort'];
-            trajetReserve.avis = snapshot.data()!['avis'];
-            trajetReserve.probleme = snapshot.data()!['probleme'];
-            // completer tout les attributs
-          }
-    });
-    /// ----------------------------------------------------------------
+      if (snapshot.exists) {
+        trajetReserve.dateDepart = snapshot.data()!['dateDepart'].toDate();
+        trajetReserve.tempsDePause = snapshot.data()!['tempsDePause'].toDate();
+        trajetReserve.coutTrajet = snapshot.data()!['coutTrajet'] as double;
+        trajetReserve.villeDepart = snapshot.data()!['villeDepart'];
+        trajetReserve.villeArrivee = snapshot.data()!['villeArrivee'];
+        trajetReserve.lieuDepart = PlacesAutoCompleteResult(
+            placeId: snapshot.data()!['lieuDepart']['placeId'],
+            description: snapshot.data()!['lieuDepart']['description'],
+            secondaryText: snapshot.data()!['lieuDepart']['secondaryText'],
+            mainText: snapshot.data()!['lieuDepart']['mainText'],
+        );
+        trajetReserve.lieuArrivee = PlacesAutoCompleteResult(
+            placeId: snapshot.data()!['lieuArrivee']['placeId'],
+            description: snapshot.data()!['lieuArrivee']['description'],
+            secondaryText: snapshot.data()!['lieuArrivee']['secondaryText'],
+            mainText: snapshot.data()!['lieuArrivee']['mainText'],
+        );
+        trajetReserve.villeIntermediaires = List<String>.from(snapshot.data()!['villeIntermediaires']);
+        trajetReserve.plusInformations = PlusInformations(
+            snapshot.data()!['plusInformations']['fumeur'],
+            snapshot.data()!['plusInformations']['bagage'],
+            snapshot.data()!['plusInformations']['animaux'],
+            snapshot.data()!['plusInformations']['nbPlaces']);
+        trajetReserve.trajetEstValide = snapshot.data()!['trajetEstValide'];
+        trajetReserve.confort = snapshot.data()!['confort'];
+        trajetReserve.avis = snapshot.data()!['avis'];
+        trajetReserve.probleme = snapshot.data()!['probleme'];
+      }
+    }); // fin recuperation du trajetReserve
+    DateTime TempsPmoins10 = trajetReserve.dateDepart.subtract(Duration(minutes: 10));
+    DateTime TempsPplus20 = trajetReserve.dateDepart.add(Duration(minutes: 20));
+    trajetReserve.afficher();
+    print("TempsPmoins10 : ${TempsPmoins10.year}/${TempsPmoins10.month}/${TempsPmoins10.day}/${TempsPmoins10.hour}/${TempsPmoins10.minute}");
+    print("TempsPplus20 : ${TempsPplus20.year}/${TempsPplus20.month}/${TempsPplus20.day}/${TempsPplus20.hour}/${TempsPplus20.minute}");
     /// 2) rechercher les utilisateurs (le conducteurs) qui ont un trajetLance similaire au trajetReserve -------
     try {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('Utilisateur')
-        //.where('vehicule.nbPlaces', isGreaterThanOrEqualTo: trajetReserve.plusInformations.nbPlaces)
-        .get();
-                /// querySnapshot contient tout les references de toute les Utilisateurs
-                /// querySnapshot.docs contient les utilisateurs avec leurs documents
-    /// utilisateurDoc va pointe sur chaque utilisateur et ses informations
-    List<Utilisateur> utilisateurs = [];
-    for (QueryDocumentSnapshot utilisateurDoc in querySnapshot.docs) {
-      QuerySnapshot trajetsSnapshot = await FirebaseFirestore.instance
-          .collection('Utilisateur')
-          .doc(utilisateurDoc.id)
-          .collection('trajetsLances')
-          //.where('plusInformations.nbPlaces', isGreaterThanOrEqualTo: trajetReserve.plusInformations.nbPlaces)
-          //.where('plusInformations.fumeur', isGreaterThanOrEqualTo: trajetReserve.plusInformations.fumeur)
-          //.where('plusInformations.animaux', isGreaterThanOrEqualTo: trajetReserve.plusInformations.animaux)
-          //.where('plusInformations.bagage', isGreaterThanOrEqualTo: trajetReserve.plusInformations.bagage)
-          //.where()
-          .get();
-      /// trajetsSnapshot contient tout les references de toute les trajetsLances de chaque utilisateur
-      /// trajetsSnapshot.docs contient les trajetsLancesavec leurs documents
-      if (trajetsSnapshot.docs.isNotEmpty) {
-        for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
-          /// trajetLanceDoc va pointe sur chaque trajetLance et ses informations
-          Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
-          /// trajetDoc va pointe sur chaque trajetLance d'un utilisateur
-
-          print(trajetLanceDoc.data());
-        } // end for trajetLanceDoc
-        /**
-            DONC ON VA PARCOURIR TOUT LES UTILISATEURS AVEC utilisateurDoc
-            ET POUR CHAQUE UTILISATEUR ON VA PARCOURIR CA LIST DE trajetsLances
-            AVEC trajetLanceDoc
-         **/
-      } else {
-      }
-      /// utilisateurDoc va pointe sur chaque utilisateur et ses informations
-    } // end for utilisateurDoc
-    } catch (e) {
-      throw Exception("Failed to get utilisateurs by name: $e");
-    }
-
-    try {
+      List<Utilisateur> utilisateurs = [];
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Utilisateur')
+          .where('identifiant',isNotEqualTo: uid)
           .get();
-      List<Utilisateur> utilisateurs = [];
-      for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-        Utilisateur utilisateur = creerUtilisateurVide();
-        utilisateur.identifiant = data['identifiant'];
-        utilisateur.nom = data['nom'];
-        utilisateur.prenom = data['prenom'];
-        utilisateur.email = data['email'];
-        utilisateur.numeroTelephone = data['numeroTelephone'];
-        utilisateur.evaluation = Evaluation(
-          List<String>.from(data['evaluation']['feedback']),
-          data['evaluation']['etoiles'],
-          data['evaluation']['nbSignalement'],
-        );
-        utilisateur.vehicule = Vehicule(
-          data['vehicule']['marque'],
-          data['vehicule']['typevehicule'],
-          data['vehicule']['matricule'],
-          data['vehicule']['modele'],
-          data['vehicule']['policeAssurance'],
-          data['vehicule']['nbPlaces'],
-        );
-        utilisateur.statut = data['statut'];
-        utilisateurs.add(utilisateur);
-      }
+      for (QueryDocumentSnapshot utilisateurDoc in querySnapshot.docs) {
+        Map<String, dynamic> dataUtilisateur = utilisateurDoc.data() as Map<String, dynamic>;
+        print(utilisateurDoc.get('nom'));
+        QuerySnapshot trajetsSnapshot = await FirebaseFirestore.instance
+            .collection('Utilisateur')
+            .doc(utilisateurDoc.id)
+            .collection('trajetsLances')
+            .where('dateDepart', isLessThanOrEqualTo: Timestamp.fromDate(TempsPplus20))
+            .where('dateDepart', isGreaterThanOrEqualTo: Timestamp.fromDate(TempsPmoins10))
+            .get();
+        if (trajetsSnapshot.docs.isNotEmpty) {
+          print("Le trajet Existe");
+          for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
+            Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
+            if ((trajetReserve.villeDepart == data['villeDepart']
+                || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeDepart))
+                && (trajetReserve.villeArrivee == data['villeArrivee']
+                    || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeArrivee))
+            ) {
+                print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
+                Utilisateur utilisateur = creerUtilisateurVide();
+                utilisateur.identifiant = dataUtilisateur['identifiant'];
+                utilisateur.nom = dataUtilisateur['nom'];
+                utilisateur.prenom = dataUtilisateur['prenom'];
+                utilisateur.email = dataUtilisateur['email'];
+                utilisateur.numeroTelephone = dataUtilisateur['numeroTelephone'];
+                utilisateur.evaluation = Evaluation(
+                  List<String>.from(dataUtilisateur['evaluation']['feedback']),
+                  dataUtilisateur['evaluation']['etoiles'],
+                  dataUtilisateur['evaluation']['nbSignalement'],
+                );
+                utilisateur.vehicule = Vehicule(
+                  dataUtilisateur['vehicule']['marque'],
+                  dataUtilisateur['vehicule']['typevehicule'],
+                  dataUtilisateur['vehicule']['matricule'],
+                  dataUtilisateur['vehicule']['modele'],
+                  dataUtilisateur['vehicule']['policeAssurance'],
+                  dataUtilisateur['vehicule']['nbPlaces'],
+                );
+                utilisateur.statut = dataUtilisateur['statut'];
+                utilisateurs.add(utilisateur);
+                print("hello");
+                utilisateur.afficher();
+              }else { print('Les conditions ne sont pas verifier pour ${data['villeDepart']} ${data['villeArrivee']}');
+            }// end if conditions de recherche
+          } // end for trajetLanceDoc
+        }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur
+      } // end for utilisateurDoc
+      print('Resultat de recherche : ');
       for (Utilisateur u in utilisateurs) u.afficher();
       return utilisateurs;
     } catch (e) {
-      throw Exception("Failed to get utilisateurs by name: $e");
+      throw Exception("Failed to get utilisateurs : $e");
     }
   }
+/// querySnapshot contient tout les references de toute les Utilisateurs
+/// querySnapshot.docs contient les utilisateurs avec leurs documents
+/// utilisateurDoc va pointe sur chaque utilisateur et ses informations
+/// trajetsSnapshot contient tout les references de toute les trajetsLances de chaque utilisateur
+/// trajetsSnapshot.docs contient les trajetsLancesavec leurs documents
+/// utilisateurDoc va pointe sur chaque utilisateur et ses informations
+/// trajetLanceDoc va pointe sur chaque trajetLance et ses informations
+/// trajetDoc va pointe sur chaque trajetLance d'un utilisateur
+    /**
+        DONC ON VA PARCOURIR TOUT LES UTILISATEURS AVEC utilisateurDoc
+        ET POUR CHAQUE UTILISATEUR ON VA PARCOURIR CA LIST DE trajetsLances
+        AVEC trajetLanceDoc
+
+        //.where('plusInformations.nbPlaces', isGreaterThanOrEqualTo: trajetReserve.plusInformations.nbPlaces)
+        //.where('plusInformations.fumeur', isGreaterThanOrEqualTo: trajetReserve.plusInformations.fumeur)
+        //.where('plusInformations.animaux', isGreaterThanOrEqualTo: trajetReserve.plusInformations.animaux)
+        //.where('plusInformations.bagage', isGreaterThanOrEqualTo: trajetReserve.plusInformations.bagage)
+
+     **/
 
 
 /** Les criteres de recherche :
@@ -351,8 +385,8 @@ class BaseDeDonnee{
     - 'date departC' #
     - 'heure departC' #
     resultat :
- * 'date departC' soit egale srictement :  'date departC' == 'date departP'
- * 'heure departC' du conductuer soit compris entre: 'heure departP'-10<='heure departC'< 'heure departP'+20'
+ * 'date departC' soit egale srictement :  'date departC' == 'date departP' ## OUI ##
+ * 'heure departC' du conductuer soit compris entre: 'heure departP'-10<='heure departC'< 'heure departP'+20'  ## OUI ##
  * 'ville departP' soit egale a 'ville departC' ou appartient au villeIntermedieres entre 'ville departC' et 'ville arriveC'
  * 'ville arriveP' soit egale a 'ville arriveC' ou appartient au villeIntermedieres entre 'ville departC' et 'ville arriveC'
 
@@ -362,6 +396,8 @@ class BaseDeDonnee{
     ville arriveC = 'Esi'
     villesIntermedieres('Bouraoui','Esi') = ['garnaison','BeauLieu','Itemm']
 
+    DateTime dateTime = timestamp.toDate();
+    Timestamp timestamp = Timestamp.fromDate(dateTime);
  **/
 
 

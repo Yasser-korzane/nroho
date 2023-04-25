@@ -22,7 +22,7 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2015, 8),
+      firstDate: DateTime(2023, 4),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != _selectedDate) {

@@ -2,6 +2,7 @@ import 'package:appcouvoiturage/AppClasses/Evaluation.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 import 'package:appcouvoiturage/pages/email.dart';
 import 'package:appcouvoiturage/pages/home.dart';
@@ -50,38 +51,6 @@ class _MyConnexinState extends State<Connexin> {
   }
 
   /*********************************************** Les Fonctions **********************************************/
-  bool validerNomEtPrenom(String value) {
-    String chaineTest = value;
-    String pattern = r'^[a-zA-Z\u0600-\u06FF ]+$';
-    RegExp regExp = new RegExp(pattern);
-    chaineTest = value.replaceAll(' ', '');
-    if (value.length > 20 ||
-        chaineTest.isEmpty ||
-        !regExp.hasMatch(chaineTest) ||
-        value.startsWith(' ') ||
-        value.endsWith(' ')) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  bool validerMotDePasse(String motDePasse) {
-    if (motDePasse.length >= 8)
-      return true;
-    else
-      return false;
-    /** Si on veut tester un mot de passe tres fort on va la faire autrement**/
-  }
-
-  bool validerEmail(String email) {
-    final regex = RegExp(r'[0-9]');
-    if (email.endsWith('@esi.dz') && !regex.hasMatch(email))
-      return true;
-    else
-      return false;
-  }
-
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom,
       String prenom, String email, String motDePasse) {
     return Utilisateur(
@@ -100,7 +69,7 @@ class _MyConnexinState extends State<Connexin> {
   /** *********************************** Les controlleurs ********************************************** **/
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerMotDePasse = TextEditingController();
-
+  BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   /** ************************************************************************************************** **/
 
   @override
@@ -155,7 +124,7 @@ class _MyConnexinState extends State<Connexin> {
                                     keyboardType: TextInputType.emailAddress,
                                     validator: (input) {
                                       if (input == null) {
-                                        return 'Entrez votre nom ';
+                                        return 'Entrez votre Email ';
                                       } else {
                                         return null;
                                       }
@@ -174,7 +143,7 @@ class _MyConnexinState extends State<Connexin> {
 
                                       labelText: 'Email',
                                       hintText:
-                                          'Entrez votre adresse email : exemple@esi.dz',
+                                          'Entrez votre adresse mail de l\'esi',
                                       hintStyle: TextStyle(
                                           color: Colors.grey[700],
                                           fontSize: 14),
@@ -239,8 +208,8 @@ class _MyConnexinState extends State<Connexin> {
                                   child: ElevatedButton(
                                     onPressed: () async {
                                       // MaterialPageRoute(builder: (context) => const home());
-                                      if (validerEmail(_controllerEmail.text) &&
-                                          validerMotDePasse(
+                                      if (_baseDeDonnee.validerEmail(_controllerEmail.text) &&
+                                          _baseDeDonnee.validerMotDePasse(
                                               _controllerMotDePasse.text)) {
                                         Navigator.push(
                                           context,
@@ -380,7 +349,7 @@ class _MyConnexinState extends State<Connexin> {
                 });
               }
             },
-            child: const Text('OK'),
+            child: const Text('Réessayez'),
           )
         ],
       )
