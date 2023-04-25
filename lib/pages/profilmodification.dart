@@ -59,7 +59,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
               snapshot.data()!['vehicule']['matricule'],
               snapshot.data()!['vehicule']['modele'],
               snapshot.data()!['vehicule']['policeAssurance'],
-              snapshot.data()!['vehicule']['nbPlaces'],
             );
             _utilisateur.statut = snapshot.data()!['statut'];
             //tests by printing
@@ -105,8 +104,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
     if (_utilisateur.vehicule.policeAssurance.isEmpty)
       _utilisateur.vehicule.policeAssurance =
           'Entrez la police d\'assurance de votre vehicule';
-    if (_utilisateur.vehicule.marque.isEmpty)
-      _utilisateur.vehicule.nbPlaces = 0;
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -178,24 +175,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Numero de telephone:',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              _utilisateur.numeroTelephone,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -254,6 +233,34 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         setState(() {
                           //_contrPrenom.text = value;
                           _utilisateur.prenom = value;
+                        });
+                      },
+                    )),
+                SizedBox(height: size.height * 0.02),
+                Text(
+                  'Numéro de telephone',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                    width: size.width * 0.7,
+                    height: size.height * 0.06,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: _utilisateur.numeroTelephone,
+                      ),
+                      onChanged: (value) {
+                        _changement = true;
+                        setState(() {
+                          //_contrPrenom.text = value;
+                          _utilisateur.numeroTelephone = value;
                         });
                       },
                     )),
@@ -412,37 +419,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         });
                       },
                     )),
-                SizedBox(height: 15),
-                Text(
-                  'Nombre de places',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextField(
-                      //controller: _contrNbPlaces,
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: _utilisateur.vehicule.nbPlaces.toString(),
-                      ),
-                      onChanged: (value) {
-                        _changement = true;
-                        setState(() {
-                          //_contrNbPlaces.text = value;
-                          _utilisateur.vehicule.nbPlaces = int.parse(value);
-                        });
-                      },
-                    )),
-                SizedBox(height: 12),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.pop(

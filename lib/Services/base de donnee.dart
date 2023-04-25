@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +17,6 @@ class BaseDeDonnee{
       'prenom': utilisateur.prenom,
       'email': utilisateur.email,
       'numeroTelephone': utilisateur.numeroTelephone,
-      //'motDePasse': utilisateur.motDePasse,
       'evaluation': {
         'feedback': utilisateur.evaluation.feedback,
         'etoiles': utilisateur.evaluation.etoiles,
@@ -31,7 +28,6 @@ class BaseDeDonnee{
         'matricule': utilisateur.vehicule.matricule,
         'modele': utilisateur.vehicule.modele,
         'policeAssurance': utilisateur.vehicule.policeAssurance,
-        'nbPlaces': utilisateur.vehicule.nbPlaces,
       },
       'statut': utilisateur.statut,
     });
@@ -56,7 +52,6 @@ class BaseDeDonnee{
         'matricule': utilisateur.vehicule.matricule,
         'modele': utilisateur.vehicule.modele,
         'policeAssurance': utilisateur.vehicule.policeAssurance,
-        'nbPlaces': utilisateur.vehicule.nbPlaces,
       },
       'statut': utilisateur.statut,
     });
@@ -64,7 +59,7 @@ class BaseDeDonnee{
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
     return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
-        Vehicule("", "", "", "", "", 0), false, [],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[]
     );
   }
   //------------------------------------------------------------------------------------------
@@ -130,7 +125,6 @@ class BaseDeDonnee{
               snapshot.data()!['vehicule']['matricule'],
               snapshot.data()!['vehicule']['modele'],
               snapshot.data()!['vehicule']['policeAssurance'],
-              snapshot.data()!['vehicule']['nbPlaces'],
             );
             utilisateur.statut = snapshot.data()!['statut'];
             //tests by printing
@@ -221,7 +215,6 @@ class BaseDeDonnee{
           data['vehicule']['matricule'],
           data['vehicule']['modele'],
           data['vehicule']['policeAssurance'],
-          data['vehicule']['nbPlaces'],
         );
         utilisateur.statut = data['statut'];
         utilisateurs.add(utilisateur);
@@ -261,7 +254,7 @@ class BaseDeDonnee{
         trajetReserve.coutTrajet = snapshot.data()!['coutTrajet'] as double;
         trajetReserve.villeDepart = snapshot.data()!['villeDepart'];
         trajetReserve.villeArrivee = snapshot.data()!['villeArrivee'];
-        trajetReserve.lieuDepart = PlacesAutoCompleteResult(
+        /*trajetReserve.lieuDepart = PlacesAutoCompleteResult(
             placeId: snapshot.data()!['lieuDepart']['placeId'],
             description: snapshot.data()!['lieuDepart']['description'],
             secondaryText: snapshot.data()!['lieuDepart']['secondaryText'],
@@ -272,7 +265,7 @@ class BaseDeDonnee{
             description: snapshot.data()!['lieuArrivee']['description'],
             secondaryText: snapshot.data()!['lieuArrivee']['secondaryText'],
             mainText: snapshot.data()!['lieuArrivee']['mainText'],
-        );
+        );*/
         trajetReserve.villeIntermediaires = List<String>.from(snapshot.data()!['villeIntermediaires']);
         trajetReserve.plusInformations = PlusInformations(
             snapshot.data()!['plusInformations']['fumeur'],
@@ -283,7 +276,7 @@ class BaseDeDonnee{
         trajetReserve.confort = snapshot.data()!['confort'];
         trajetReserve.avis = snapshot.data()!['avis'];
         trajetReserve.probleme = snapshot.data()!['probleme'];
-      }
+      }else print('ce trajetReserve n\'exist pas');
     }); // fin recuperation du trajetReserve
     DateTime TempsPmoins10 = trajetReserve.dateDepart.subtract(Duration(minutes: 10));
     DateTime TempsPplus20 = trajetReserve.dateDepart.add(Duration(minutes: 20));
@@ -311,10 +304,12 @@ class BaseDeDonnee{
           print("Le trajet Existe");
           for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
             Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
-            if ((trajetReserve.villeDepart == data['villeDepart']
+            if (
+            (trajetReserve.villeDepart == data['villeDepart']
                 || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeDepart))
                 && (trajetReserve.villeArrivee == data['villeArrivee']
                     || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeArrivee))
+                && data['plusInformations']['nbPlaces'] >= trajetReserve.plusInformations.nbPlaces
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
@@ -334,7 +329,6 @@ class BaseDeDonnee{
                   dataUtilisateur['vehicule']['matricule'],
                   dataUtilisateur['vehicule']['modele'],
                   dataUtilisateur['vehicule']['policeAssurance'],
-                  dataUtilisateur['vehicule']['nbPlaces'],
                 );
                 utilisateur.statut = dataUtilisateur['statut'];
                 utilisateurs.add(utilisateur);

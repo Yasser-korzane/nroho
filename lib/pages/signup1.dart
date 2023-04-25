@@ -45,7 +45,7 @@ class _SinupState extends State<Sinup> {
   /*********************************************** Les Fonctions **********************************************/
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse,String numero) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, numero, Evaluation([], 5, 0),
-        Vehicule("", "", "", "", "", 0), false, [],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[]
     );
   }
   /** ************************************************************************************************** **/
@@ -161,7 +161,7 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Prénom',
-                                  hintText: 'Entrer votre prenom',
+                                  hintText: 'Entrez votre prénom',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
                                       fontSize: 14),
@@ -234,7 +234,7 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Email',
-                                  hintText: 'Entrez votre adresse email exemple@esi.dz',
+                                  hintText: 'Entrez votre adresse mail de l\'esi',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
                                       fontSize: 14),
