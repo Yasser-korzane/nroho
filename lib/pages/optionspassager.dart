@@ -1,15 +1,25 @@
+import 'package:appcouvoiturage/AppClasses/Evaluation.dart';
+import 'package:appcouvoiturage/AppClasses/Trajet.dart';
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:places_service/places_service.dart';
+
+import '../AppClasses/PlusInformations.dart';
 
 class options extends StatefulWidget {
-  const options({Key? key}) : super(key: key);
-
+  // variable
   @override
   State<options> createState() => _optionsState();
 }
 
 class _optionsState extends State<options> {
+  late ConducteurTrajet c ;
+  late List<ConducteurTrajet> monListe = [] ;
   List<String> nbPlaces = ['1','2','3','4'];
   String ?selectedNb = '1';
   @override
@@ -17,8 +27,24 @@ class _optionsState extends State<options> {
     final Size screenSize = MediaQuery
         .of(context)
         .size;
+    // to get acces to variable do : widget.variable
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
+    utilisateur.nom = "Grine";
+    utilisateur.prenom = "Mohammed";
+    utilisateur.email = "lm_grine@esi.dz";
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    PlacesAutoCompleteResult lieuDepart = lieuArrive;
+    DateTime date = DateTime.now();DateTime time = DateTime.now();
+    Trajet trajetLance = Trajet(date, time, 0, 'Bouira', 'Alger', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
+    c = ConducteurTrajet(utilisateur, trajetLance);
+    monListe.add(c);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -90,7 +116,7 @@ class _optionsState extends State<options> {
                   width: screenWidth * 0.6,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => DriverListPage(),));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DriverListPage(monListe),));
                     },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',
