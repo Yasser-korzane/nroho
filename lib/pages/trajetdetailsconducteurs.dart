@@ -239,7 +239,7 @@ class Details extends StatelessWidget {
                     },
                     icon: Icon(Icons.map_outlined, size: 32),
                     label: Text(
-                      'Voir le  trajet  sur la map',
+                      'Voir le rajet sur la carte',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Color(0xff137c8b)),
                     ),

@@ -29,7 +29,7 @@ class _optionconducState extends State<optionconduc> {
               // Navigator.pop(context)
             },
             icon: const Icon(Icons.chevron_left, color: Colors.black)),
-        title: Text('Plus d’informations',
+        title: Text('Plus d\’informations',
           style: TextStyle(fontWeight: FontWeight.normal,
             fontSize: screenHeight*0.035,
             fontFamily: 'Poppins',),),
@@ -47,7 +47,7 @@ class _optionconducState extends State<optionconduc> {
                 SelectableTextWidget(
                     text: 'Etes-vous fumeur ?'),
                 SizedBox(height: screenHeight * 0.03),
-                SelectableTextWidget(text: ' Acceptez vous un bagages volumineux ?'),
+                SelectableTextWidget(text: ' Acceptez vous les bagages volumineux ?'),
                 SizedBox(height: screenHeight * 0.03),
                 SelectableTextWidget(text: 'Acceptez vous les animaux ?'),
                 SizedBox(height : screenHeight * 0.03),
@@ -80,7 +80,7 @@ class _optionconducState extends State<optionconduc> {
                     style: TextStyle(fontFamily: 'Poppins'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
-                        labelText: 'Proposer votre prix',
+                        labelText: 'Entrer votre prix',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
                         suffixIcon: Icon(Icons.monetization_on,

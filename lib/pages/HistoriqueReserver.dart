@@ -87,7 +87,7 @@ class cardReserverListH extends StatelessWidget{
                               ),
                               Column(
                                   children : [
-                                    Text('Le court',style: TextStyle(fontFamily: 'Poppins'),),
+                                    Text('Le cout',style: TextStyle(fontFamily: 'Poppins'),),
                                     Text(  lancer.price.toString() +' DA',style: TextStyle(fontFamily: 'Poppins'),),
                                   ]
                               )
