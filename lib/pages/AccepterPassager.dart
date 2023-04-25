@@ -43,7 +43,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
                             Padding(
                               padding: EdgeInsets.all(defaultPadding),
                               child: Text(
-                                'Les passages',
+                                'Les passagers',
                                 style: GoogleFonts.lato(
                                   textStyle: TextStyle(
                                     fontFamily: 'Poppins' ,

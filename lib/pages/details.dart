@@ -176,7 +176,7 @@ class details extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'BAROUAGHIA Media',
+                                    'BAROUAGHIA Medea',
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
@@ -297,7 +297,7 @@ class details extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 30),
                           child: Text(
-                            '400 DZ',
+                            '400 DA',
                             style: TextStyle(
                               // fontWeight: FontWeight.w400,
                               fontSize: 16.0,

@@ -407,7 +407,7 @@ class _SinupState extends State<Sinup> {
                             ),
                             children: [
                               TextSpan(
-                                text: ' Se Connecter',
+                                text: ' Connectez-Vous',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 12.0,
