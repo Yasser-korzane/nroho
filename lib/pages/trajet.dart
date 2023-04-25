@@ -108,7 +108,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
             pinned: true,
             title: const Text(
               'Où allez-vous ?',
-              style: TextStyle(fontFamily: 'Popping'),
+              style: TextStyle(fontFamily: 'Poppins'),
             ),
             leading: IconButton(
               onPressed: () {
@@ -148,7 +148,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             width: size.width * 0.7,
                             height: size.height * 0.05,
                             child: TextField(
-                              style: const TextStyle(fontFamily: 'Popping'),
+                              style: const TextStyle(fontFamily: 'Poppins'),
                               controller: _departController,
                               onChanged: (value) {
                                 setState(() {
@@ -178,7 +178,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             width: size.width * 0.7,
                             height: size.height * 0.05,
                             child: TextField(
-                              style: const TextStyle(fontFamily: 'Popping'),
+                              style: const TextStyle(fontFamily: 'Poppins'),
                               controller: _arriveController,
                               onChanged: (value) {
                                 setState(() {
@@ -239,7 +239,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       title: Text(
                         'choisir sur la map',
                         style: TextStyle(
-                            fontSize: size.width * 0.04, fontFamily: 'Popping'),
+                            fontSize: size.width * 0.04, fontFamily: 'Poppins'),
                       ),
                     ),
                   ),
@@ -269,7 +269,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       title: Text(
                         'Utiliser ma position',
                         style: TextStyle(
-                            fontSize: size.width * 0.04, fontFamily: 'Popping'),
+                            fontSize: size.width * 0.04, fontFamily: 'Poppins'),
                       ),
                     ),
                   ),
@@ -346,7 +346,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                           } else {
                             return const Text(
                               "Recherche...",
-                              style: TextStyle(fontFamily: 'Popping'),
+                              style: TextStyle(fontFamily: 'Poppins'),
                             );
                           }
                         }),
@@ -361,7 +361,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               'Historique des recherches',
                               style: TextStyle(
                                   fontSize: size.width * 0.04,
-                                  fontFamily: 'Popping'),
+                                  fontFamily: 'Poppins'),
                             ),
                           ),
                         ),
@@ -381,7 +381,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               'Maoklane-Setif',
                               style: TextStyle(
                                   fontSize: size.width * 0.04,
-                                  fontFamily: 'Popping'),
+                                  fontFamily: 'Poppins'),
                             ),
                           ),
                         ),
@@ -401,7 +401,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               'Oued Smar-Alger',
                               style: TextStyle(
                                   fontSize: size.width * 0.04,
-                                  fontFamily: 'Popping'),
+                                  fontFamily: 'Poppins'),
                             ),
                           ),
                         ),
@@ -838,7 +838,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                         content:
-                        Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Popping'),
+                        Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
                         )));
               }*/
               if (statut == false) {
@@ -857,7 +857,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
             child: const Text(
               'Valider',
               style: TextStyle(
-                  color: Colors.white, fontSize: 16, fontFamily: 'Popping'),
+                  color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
             ),
           ),
         ),

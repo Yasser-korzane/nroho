@@ -16,13 +16,13 @@ class _ressayerState extends State<ressayer> {
       child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Vous n'êtes pas connecté à Internet",style: TextStyle(fontFamily: 'Popping'),),
+        Text("Vous n'êtes pas connecté à Internet",style: TextStyle(fontFamily: 'Poppins'),),
         ElevatedButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => Wrapper(),));
     // Réessayer la connexion en rappelant la fonction de vérification de la connectivité
          },
-          child: Text("Réessayer",style: TextStyle(fontFamily: 'Popping'),),
+          child: Text("Réessayer",style: TextStyle(fontFamily: 'Poppins'),),
     ),
     ],
     ) ,

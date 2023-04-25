@@ -56,7 +56,7 @@ class ContactUs extends StatelessWidget {
             ),
             child: Text(
               'Contactez Nous',
-              style: TextStyle(color: Color(0xff344D59),fontFamily: 'Popping'),
+              style: TextStyle(color: Color(0xff344D59),fontFamily: 'Poppins'),
             ),
           ),
           centerTitle: true,
@@ -99,20 +99,20 @@ class ContactUs extends StatelessWidget {
                     style: TextStyle(
                         fontSize: screenWidth * 0.0583,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Popping'),
+                        fontFamily: 'Poppins'),
                   ),
                   SizedBox(height: screenHeight * 0.0112),
                   Text(
                     'Etudiant 2CP à ESI Alger',
-                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Popping'),
+                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                   Text(
                       'Développeur mobile (Flutter , Java , Kotlin)',
-                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Popping'),
+                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                   Text(
                     'Chef d’équipe de l\'application Nro7o',
-                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Popping'),
+                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                 ],
               ),
@@ -132,7 +132,7 @@ class ContactUs extends StatelessWidget {
                     child: Text(
                       'lm_grine@esi.dz',
                       style: TextStyle(
-                          color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Popping'),
+                          color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
                     ),
                   ),
                 ],
@@ -151,7 +151,7 @@ class ContactUs extends StatelessWidget {
                     onPressed:(){_launchLinkedIn(linkedInProfileUrl);},
                     child:Text(
                     'LinkedIn',
-                    style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Popping'),
+                    style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
                   ),
                   ),
                 ],

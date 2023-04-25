@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:appcouvoiturage/Shared/location.dart';
+import 'package:appcouvoiturage/pages/AccepterPassager.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/pages/details.dart';
@@ -179,7 +180,7 @@ class _MywidState extends State<Mywid> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        OuAllezVous(),
+                                        ListDemandePassager(),
                                   ));
                             },
                             readOnly: true,
@@ -322,11 +323,11 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         children:  [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-            child: Text('Passager',style: TextStyle(fontFamily: 'Popping'),),
+            child: Text('Passager',style: TextStyle(fontFamily: 'Poppins'),),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-            child: Text('Conducteur',style: TextStyle(fontFamily: 'Popping'),),
+            child: Text('Conducteur',style: TextStyle(fontFamily: 'Poppins'),),
           ),
         ],
       ),

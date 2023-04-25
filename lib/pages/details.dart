@@ -43,7 +43,7 @@ class details extends StatelessWidget {
                             fontSize: screenWidth * 0.05,
                             // responsive font size
                             fontWeight: FontWeight.bold,
-                              fontFamily: 'Popping'
+                              fontFamily: 'Poppins'
                           ),
                         ),
                       ),
@@ -98,7 +98,7 @@ class details extends StatelessWidget {
                             flex: 1,
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
-                          child: Text('Mardi 31 février 2005 ',style: TextStyle(fontFamily: 'Popping'),),
+                          child: Text('Mardi 31 février 2005 ',style: TextStyle(fontFamily: 'Poppins'),),
                           flex: 5,
                         ),
                       ],
@@ -108,7 +108,7 @@ class details extends StatelessWidget {
                       children: [
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
-                          child: Text('13:20 ',style: TextStyle(fontFamily: 'Popping'),),
+                          child: Text('13:20 ',style: TextStyle(fontFamily: 'Poppins'),),
                           flex: 5,
                         ),
                       ],
@@ -165,7 +165,7 @@ class details extends StatelessWidget {
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: 'Popping'),
+                                        fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -179,7 +179,7 @@ class details extends StatelessWidget {
                                     'BAROUAGHIA Media',
                                     style: TextStyle(
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold,fontFamily: 'Popping'),
+                                        fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
 
                                   ),
                                   onTap: () {
@@ -227,7 +227,7 @@ class details extends StatelessWidget {
                                     textStyle: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
-                                        fontFamily: 'Popping'
+                                        fontFamily: 'Poppins'
                                     ),
                                   )),
                               SizedBox(height: 4.0),
@@ -266,7 +266,7 @@ class details extends StatelessWidget {
                                         style: TextStyle(
                                           fontSize: 14.0,
                                           fontWeight: FontWeight.bold,
-                                            fontFamily: 'Popping'
+                                            fontFamily: 'Poppins'
                                         ),
                                       ),
                                     ],

@@ -89,7 +89,7 @@ class DriverListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Choisissez un chauffeur',
-          style: TextStyle(color: Color(0xff344D59), fontSize: 20,fontFamily: 'Popping'),
+          style: TextStyle(color: Color(0xff344D59), fontSize: 20,fontFamily: 'Poppins'),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -126,10 +126,10 @@ class DriverListPage extends StatelessWidget {
                       SizedBox(width: screenWidth*0.04),
                       Column(children: [
                         Text(driver.name,
-                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
+                          style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
                         ),
                         Text(driver.phoneNumber,
-                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
+                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
                         ),
                       ]),
                     ]),
@@ -164,7 +164,7 @@ class DriverListPage extends StatelessWidget {
                                   title: Text(
                                     driver.depart,
                                     style: TextStyle(
-                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Popping'),
+                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -176,7 +176,7 @@ class DriverListPage extends StatelessWidget {
                                   title: Text(
                                     driver.arrivee,
                                     style: TextStyle(
-                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Popping'),
+                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -195,7 +195,7 @@ class DriverListPage extends StatelessWidget {
                               },
                               child: Text('Choisir',
                               style: TextStyle(
-                                  fontFamily: 'Popping',
+                                  fontFamily: 'Poppins',
                               ),
                               ),
                             ),

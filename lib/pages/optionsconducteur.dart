@@ -62,7 +62,7 @@ class _optionconducState extends State<optionconduc> {
                         items: nbPlaces
                             .map((item) => DropdownMenuItem(
                           value: item,
-                          child: Text(item,style: TextStyle(fontFamily: 'Popping'),),))
+                          child: Text(item,style: TextStyle(fontFamily: 'Poppins'),),))
                             .toList(),
                         onChanged: (item) => setState(() => selectedNb = item)),
                   ),
@@ -73,7 +73,7 @@ class _optionconducState extends State<optionconduc> {
                   padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    style: TextStyle(fontFamily: 'Popping'),
+                    style: TextStyle(fontFamily: 'Poppins'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
                         labelText: 'Proposer votre prix',
@@ -94,7 +94,7 @@ class _optionconducState extends State<optionconduc> {
                           side: BorderSide.none,
                           shape: const StadiumBorder()),
                       child: const Text('Valider',
-                          style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
+                          style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
                     )
                 ),
               ],

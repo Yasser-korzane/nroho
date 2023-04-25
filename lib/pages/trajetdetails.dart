@@ -281,7 +281,7 @@ class Details extends StatelessWidget {
                 ),
               ),
               child: const Text('Demender un trajet',
-                  style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
+                  style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
             ),
             ElevatedButton(
               onPressed: () {
@@ -297,7 +297,7 @@ class Details extends StatelessWidget {
                 ),
               ),
               child: const Text('Annulez le trajet',
-                  style: TextStyle(color: Colors.red,fontFamily: 'Popping')),
+                  style: TextStyle(color: Colors.red,fontFamily: 'Poppins')),
             )
 
           ],

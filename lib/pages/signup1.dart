@@ -81,7 +81,7 @@ class _SinupState extends State<Sinup> {
                               color: Color.fromARGB(255, 79, 77, 77),
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Popping'),),
+                              fontFamily: 'Poppins'),),
 
                         ),
                       ),
@@ -98,7 +98,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.06,
                               ),
                               TextFormField(
-                                style: TextStyle(fontFamily: 'Popping'),
+                                style: TextStyle(fontFamily: 'Poppins'),
                                 controller: _controllerNom,
                                 keyboardType: TextInputType.name,
                                 validator: (input) {
@@ -127,7 +127,7 @@ class _SinupState extends State<Sinup> {
                                       fontSize: 14),
                                   /* color: Colors.grey[800],
                                         fontSize: 14,
-                                      fontFamily: 'Popping'*
+                                      fontFamily: 'Poppins'*
                                     ),*/
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
@@ -138,7 +138,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.013,
                               ),
                               TextFormField(
-                                style: TextStyle(fontFamily: 'Popping'),
+                                style: TextStyle(fontFamily: 'Poppins'),
                                 controller: _controllerPrenom,
                                 keyboardType: TextInputType.name,
                                 validator: (input) {
@@ -201,7 +201,7 @@ class _SinupState extends State<Sinup> {
                                       fontSize: 14),
                                   /*  color: Colors.grey[800],
                                       fontSize: 14,
-                                      fontFamily: 'Popping'
+                                      fontFamily: 'Poppins'
                                   ),*/
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
@@ -211,7 +211,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.013,
                               ),
                               TextFormField(
-                                style: TextStyle(fontFamily: 'Popping'),
+                                style: TextStyle(fontFamily: 'Poppins'),
                                 controller: _controllerEmail,
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input) {
@@ -240,7 +240,7 @@ class _SinupState extends State<Sinup> {
                                       fontSize: 14),
                                   /* color: Colors.grey[800],
                                       fontSize: 14,
-                                      fontFamily: 'Popping'),*/
+                                      fontFamily: 'Poppins'),*/
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                 ),
@@ -249,7 +249,7 @@ class _SinupState extends State<Sinup> {
                                 height: screenHeight * 0.013,
                               ),
                               TextFormField(
-                                  style: TextStyle(fontFamily: 'Popping'),
+                                  style: TextStyle(fontFamily: 'Poppins'),
                                   obscureText: _isObscured,
                                   //keyboardType: TextInputType.visiblePassword,
                                   controller: _controllerMotDePasse,
@@ -278,7 +278,7 @@ class _SinupState extends State<Sinup> {
                                           fontSize: 14),
                                       /* color: Colors.grey[800],
                                           fontSize: 14,
-                                          fontFamily: 'Popping'),*/
+                                          fontFamily: 'Poppins'),*/
                                       fillColor: Colors.grey.shade100,
                                       filled: true,
                                       suffixIcon: IconButton(
@@ -329,7 +329,7 @@ class _SinupState extends State<Sinup> {
                                             content: Text(
                                               "Vous devez verifier les donneees",
                                               style: TextStyle(
-                                                  fontFamily: 'Popping'),
+                                                  fontFamily: 'Poppins'),
                                             ),
                                             duration: Duration(seconds: 2),
                                           ),
@@ -341,7 +341,7 @@ class _SinupState extends State<Sinup> {
                                           SnackBar(
                                             content: Text("Succes",
                                               style: TextStyle(
-                                                  fontFamily: 'Popping'),
+                                                  fontFamily: 'Poppins'),
                                             ),
                                             duration: Duration(seconds: 2),
                                           ),
@@ -365,7 +365,7 @@ class _SinupState extends State<Sinup> {
                                           SnackBar(
                                             content: Text(
                                               "Vous devez verifier les donnees",
-                                              style: TextStyle(fontFamily: 'Popping'),
+                                              style: TextStyle(fontFamily: 'Poppins'),
                                             ),
                                             duration: Duration(seconds: 2),
                                           )
@@ -376,7 +376,7 @@ class _SinupState extends State<Sinup> {
                                     'S\'inscrire',
                                     style: TextStyle(
                                         fontSize: 20, color: Colors.white,
-                                        fontFamily: 'Popping'),
+                                        fontFamily: 'Poppins'),
                                   ),
                                   style: ButtonStyle(
                                     backgroundColor:

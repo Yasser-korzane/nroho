@@ -56,7 +56,7 @@ class _MapPageState extends State<MapPage> {
               onPressed: () {
                 Navigator.pushNamed(context, "trajet", arguments: pos);
               },
-              child: const Text("Valider",style: TextStyle(fontFamily: 'Popping'),)),
+              child: const Text("Valider",style: TextStyle(fontFamily: 'Poppins'),)),
         )
       ]),
     );

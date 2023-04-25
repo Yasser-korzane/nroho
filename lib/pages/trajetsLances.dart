@@ -72,10 +72,10 @@ class cardLancerList extends StatelessWidget{
                               children: [
                                 Row(
                                   children: [
-                                    Text(lancer.firstName,                                style: TextStyle(fontFamily: 'Popping'),
+                                    Text(lancer.firstName,                                style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     Text(lancer.lastName,
-                                      style: TextStyle(fontFamily: 'Popping'),
+                                      style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     SizedBox(
                                       height: 1,
@@ -87,7 +87,7 @@ class cardLancerList extends StatelessWidget{
                                   //crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Icon(Icons.star , color: Colors.amber[600] ,),
-                                    Text(lancer.nombraStar.toString(),                                style: TextStyle(fontFamily: 'Popping'),
+                                    Text(lancer.nombraStar.toString(),                                style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     SizedBox(
                                       height: 1,
@@ -99,9 +99,9 @@ class cardLancerList extends StatelessWidget{
                             ),
                             Column(
                                 children : [
-                                  Text('Le court',                                style: TextStyle(fontFamily: 'Popping'),
+                                  Text('Le court',                                style: TextStyle(fontFamily: 'Poppins'),
                                   ),
-                                  Text(  lancer.price.toString() +' DA',                                style: TextStyle(fontFamily: 'Popping'),
+                                  Text(  lancer.price.toString() +' DA',                                style: TextStyle(fontFamily: 'Poppins'),
                                   ),
                                 ]
                             )
@@ -151,10 +151,10 @@ class cardLancerList extends StatelessWidget{
                                       color: Colors.blue,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
-                                        fontFamily: 'Popping'
+                                        fontFamily: 'Poppins'
                                     ),
                                   ),
-                                  subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Popping'),
+                                  subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -170,10 +170,10 @@ class cardLancerList extends StatelessWidget{
                                       color: Colors.blue,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 14,
-                                        fontFamily: 'Popping'
+                                        fontFamily: 'Poppins'
                                     ),
                                   ),
-                                  subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Popping'),
+                                  subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -204,7 +204,7 @@ class cardLancerList extends StatelessWidget{
                                 color: Colors.blue,
                                 size: screenHeight*0.03,
                               ),
-                              Text(' '+ lancer.nbPassager.toString() +' passagers',style: TextStyle( color: Colors.blue , fontFamily: 'Popping' ),)
+                              Text(' '+ lancer.nbPassager.toString() +' passagers',style: TextStyle( color: Colors.blue , fontFamily: 'Poppins' ),)
                             ]),
                       ),
                     ),
