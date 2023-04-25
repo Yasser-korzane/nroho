@@ -105,7 +105,7 @@ class _VerificationState extends State<Verification> {
                   SizedBox(height: screenHeight*0.03,),
                   FadeInDown(
                       duration: Duration(milliseconds: 500),
-                      child: Text("Verification", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Popping'))),
+                      child: Text("Verification", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Poppins'))),
                   SizedBox(height: screenHeight*0.03,),
                   FadeInDown(
                       delay: Duration(milliseconds: 500),
@@ -114,7 +114,7 @@ class _VerificationState extends State<Verification> {
                         padding: EdgeInsets.symmetric(vertical: screenWidth*0.05),
                         child: Text("Veuillez entrer le code à 4 chiffres envoyé à \n votre email",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5,fontFamily: 'Popping'),
+                          style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5,fontFamily: 'Poppins'),
                         ),
                       )
                   ),
@@ -126,7 +126,7 @@ class _VerificationState extends State<Verification> {
                     duration: Duration(milliseconds: 500),
                     child: VerificationCode(
                       length: 4,
-                      textStyle: TextStyle(fontSize: 20, color: Colors.black,fontFamily: 'Popping'),
+                      textStyle: TextStyle(fontSize: 20, color: Colors.black,fontFamily: 'Poppins'),
                       underlineColor: Colors.black,
                       keyboardType: TextInputType.number,
                       underlineUnfocusedColor: Colors.black,
@@ -147,13 +147,13 @@ class _VerificationState extends State<Verification> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vous n'avez pas reçu le code OTP ?", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Popping'),),
+                        Text("Vous n'avez pas reçu le code OTP ?", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
                         TextButton(
                             onPressed: () {
                               if (_isResendAgain) return;
                               resend();
                             },
-                            child: Text(_isResendAgain ? "Réessayez dans  " + _start.toString() : "Renvoyer", style: TextStyle(fontSize:10 ,color: Colors.blueAccent,fontFamily: 'Popping'),)
+                            child: Text(_isResendAgain ? "Réessayez dans  " + _start.toString() : "Renvoyer", style: TextStyle(fontSize:10 ,color: Colors.blueAccent,fontFamily: 'Poppins'),)
                         )
                       ],
                     ),
@@ -203,7 +203,7 @@ class _VerificationState extends State<Verification> {
                           strokeWidth: 3,
                           color: Colors.black,
                         ),
-                      ) : _isVerified ? Icon(Icons.check_circle, color: Colors.white, size: 30,) : Text("Verifier", style: TextStyle(color: Colors.white,fontFamily: 'Popping'),),
+                      ) : _isVerified ? Icon(Icons.check_circle, color: Colors.white, size: 30,) : Text("Verifier", style: TextStyle(color: Colors.white,fontFamily: 'Poppins'),),
                     ),
                   )
                 ],)

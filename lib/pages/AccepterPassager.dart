@@ -46,7 +46,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
                                 'Les passages',
                                 style: GoogleFonts.lato(
                                   textStyle: TextStyle(
-                                    fontFamily: 'Popping' ,
+                                    fontFamily: 'Poppins' ,
                                     color: Colors.black,
                                     fontSize: screenWidth * 0.05,
                                     // responsive font size
@@ -83,7 +83,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
                         ),
                       ),
                       SizedBox(height: screenHeight*0.06,),
-                      Expanded(child: DemandesPassager()),
+                      DemandesPassager(),
                     ],
                   ),
                 ),

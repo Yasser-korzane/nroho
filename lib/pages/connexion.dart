@@ -119,7 +119,7 @@ class _MyConnexinState extends State<Connexin> {
                                 Container(
                                   height: screenHeight * 0.1,
                                   child: TextFormField(
-                                    style: TextStyle(fontFamily: 'Popping'),
+                                    style: TextStyle(fontFamily: 'Poppins'),
                                     controller: _controllerEmail,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: (input) {
@@ -148,7 +148,7 @@ class _MyConnexinState extends State<Connexin> {
                                           color: Colors.grey[700],
                                           fontSize: 14),
                                          /* color: Colors.grey[800],
-                                          fontSize: 14,fontFamily: 'Popping'),*/
+                                          fontSize: 14,fontFamily: 'Poppins'),*/
                                       fillColor: Colors.grey.shade100,
                                       filled: true,
                                     ),
@@ -159,7 +159,7 @@ class _MyConnexinState extends State<Connexin> {
                                 ),
                                 TextFormField(
                                     obscureText: !_isObscured,
-                                  style: TextStyle(fontFamily: 'Popping'),
+                                  style: TextStyle(fontFamily: 'Poppins'),
                                     //keyboardType: TextInputType.visiblePassword,
                                     controller: _controllerMotDePasse,
                                     keyboardType: TextInputType.visiblePassword,
@@ -181,12 +181,16 @@ class _MyConnexinState extends State<Connexin> {
                                               Radius.circular(12)),
                                         ),
                                         labelText: 'Mot de passe',
+                                        labelStyle: TextStyle(
+                                          fontFamily:'Poppins'
+                                        ),
                                         hintText: 'Entrez votre mot de passe ',
                                         hintStyle: TextStyle(
                                             color: Colors.grey[700],
-                                            fontSize: 14),
+                                            fontSize: 14
+                                        ,fontFamily: 'Poppins'),
                                             /*color: Colors.grey[800],
-                                            fontSize: 14,fontFamily: 'Popping'),*/
+                                            fontSize: 14,fontFamily: 'Poppins'),*/
                                         fillColor: Colors.grey.shade100,
                                         filled: true,
                                         suffixIcon: IconButton(
@@ -226,7 +230,7 @@ class _MyConnexinState extends State<Connexin> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                  "Veuillez verifier vos données ",                                  style: TextStyle(fontFamily: 'Popping'),
+                                                  "Veuillez verifier vos données ",                                  style: TextStyle(fontFamily: 'Poppins'),
                                               ),
                                               duration: Duration(seconds: 2),
                                             ),
@@ -245,7 +249,7 @@ class _MyConnexinState extends State<Connexin> {
                                             .showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                "Veuillez verifier vos données",                                  style: TextStyle(fontFamily: 'Popping'),
+                                                "Veuillez verifier vos données",                                  style: TextStyle(fontFamily: 'Poppins'),
                                             ),
                                             duration: Duration(seconds: 2),
                                           ),
@@ -255,7 +259,7 @@ class _MyConnexinState extends State<Connexin> {
                                     child: Text(
                                       'Connexion',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.white,fontFamily: 'Popping'),
+                                          fontSize: 18, color: Colors.white,fontFamily: 'Poppins'),
                                     ),
                                     style: ButtonStyle(
                                       backgroundColor:
@@ -273,7 +277,7 @@ class _MyConnexinState extends State<Connexin> {
                                     onPressed: () {
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => Emailgetter()));
                                     },
-                                    child: Text('Mot de passe oublié ?',style: TextStyle(fontFamily: 'Popping'),),
+                                    child: Text('Mot de passe oublié ?',style: TextStyle(fontFamily: 'Poppins'),),
                                   ),
                                 ),
                                 SizedBox(
@@ -286,7 +290,7 @@ class _MyConnexinState extends State<Connexin> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Oubien',style: TextStyle(fontFamily: 'Popping'),),
+                            Text('Oubien',style: TextStyle(fontFamily: 'Poppins'),),
                             TextButton(
                               onPressed: () {
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sinup(),));

@@ -43,7 +43,8 @@ class Emailgetter extends StatelessWidget {
                   duration: Duration(milliseconds: 500),
                   child: Text(
                     "Mot de passe oublié",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold,                          fontFamily:'Poppins'
+                    ),
                   )),
               SizedBox(
                 height: screenHeight * 0.01,
@@ -55,7 +56,8 @@ class Emailgetter extends StatelessWidget {
                   "Entrez votre adresse e-mail ci-dessous pour réinitialiser votre mot de passe.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: 16, color: Colors.grey.shade500, height: 1.5),
+                      fontSize: 16, color: Colors.grey.shade500, height: 1.5,                          fontFamily:'Poppins'
+                  ),
                 ),
               ),
               SizedBox(
@@ -87,11 +89,16 @@ class Emailgetter extends StatelessWidget {
                       ),
 
                       labelText: 'Email',
+                      labelStyle: TextStyle(
+                          fontFamily:'Poppins'
+                      ),
                       hintText: 'Entrez votre adresse mail abc@esi.dz',
                       hintStyle:
-                          TextStyle(color: Colors.grey[800], fontSize: 14),
+                          TextStyle(color: Colors.grey[800], fontSize: 14,                          fontFamily:'Poppins'
+                          ),
                       fillColor: Colors.grey.shade100,
                       filled: true,
+
                     ),
                   ),
                 ),
@@ -109,7 +116,7 @@ class Emailgetter extends StatelessWidget {
                         },
                         child: Text(
                           ' suivant',
-                          style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'Popping'),
+                          style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'Poppins'),
                         ),
                         style: ButtonStyle(
                           backgroundColor:

@@ -1,4 +1,3 @@
-import 'package:appcouvoiturage/pages/Commancer.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 
 import 'cardReserver.dart';
@@ -74,10 +73,10 @@ class cardReserverList extends StatelessWidget{
                                 children: [
                                   Row(
                                     children: [
-                                      Text(lancer.firstName,                                style: TextStyle(fontFamily: 'Popping'),
+                                      Text(lancer.firstName,                                style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                       Text(lancer.lastName,
-                                        style: TextStyle(fontFamily: 'Popping'),
+                                        style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                       SizedBox(
                                         height: 1,
@@ -90,7 +89,7 @@ class cardReserverList extends StatelessWidget{
                                     children: [
                                       Icon(Icons.star , color: Colors.amber[600] ,),
                                       Text(lancer.nombraStar.toString(),
-                                        style: TextStyle(fontFamily: 'Popping'),
+                                        style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                       SizedBox(
                                         height: 1,
@@ -102,10 +101,10 @@ class cardReserverList extends StatelessWidget{
                               ),
                               Column(
                                   children : [
-                                    Text('Le court',                                style: TextStyle(fontFamily: 'Popping'),
+                                    Text('Le court',                                style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     Text(  lancer.price.toString() +' DA',
-                                      style: TextStyle(fontFamily: 'Popping'),
+                                      style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                   ]
                               )
@@ -155,10 +154,10 @@ class cardReserverList extends StatelessWidget{
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
-                                          fontFamily: 'Popping'
+                                          fontFamily: 'Poppins'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Popping'),
+                                    subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     onTap: () {
                                       // handle onTap event
@@ -174,10 +173,10 @@ class cardReserverList extends StatelessWidget{
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
-                                          fontFamily: 'Popping'
+                                          fontFamily: 'Poppins'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Popping'),
+                                    subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     onTap: () {
                                       // handle onTap event

@@ -53,7 +53,7 @@ class _optionsState extends State<options> {
             icon: const Icon(Icons.arrow_back, color: Color(0xff344D59))
         ),
         title: Text('Plus d’informations',
-            style: TextStyle(color: Color(0xff344D59),fontFamily: 'Popping')),        backgroundColor: Colors.transparent,
+            style: TextStyle(color: Color(0xff344D59),fontFamily: 'Poppins')),        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
       ),
@@ -87,7 +87,7 @@ class _optionsState extends State<options> {
                     items: nbPlaces
                         .map((item) => DropdownMenuItem(
                           value: item,
-                          child: Text(item,style: TextStyle(fontFamily: 'Popping'),),))
+                          child: Text(item,style: TextStyle(fontFamily: 'Poppins'),),))
                         .toList(),
                     onChanged: (item) => setState(() => selectedNb = item)),
                   ),
@@ -99,7 +99,7 @@ class _optionsState extends State<options> {
                 child: TextField(
                      style: TextStyle(
                        fontWeight: FontWeight.normal,
-                       fontSize: screenHeight*0.035,
+                       fontSize: screenHeight*0.02,
                        fontFamily: 'Poppins',
                      ),
                       decoration: InputDecoration(
@@ -120,7 +120,7 @@ class _optionsState extends State<options> {
                     },
                     style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),),
                     child: const Text('Valider',
-                        style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
+                        style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
                   )
               ),
             ],

@@ -1,85 +1,9 @@
-import 'package:appcouvoiturage/pages/trajetdetails.dart';
+import 'package:appcouvoiturage/pages/trajetdetailsconducteurs.dart';
 import 'package:flutter/material.dart';
 
 import '../AppClasses/Utilisateur.dart';
 import '../Services/base de donnee.dart';
-
-
-class Driver {
-  final String name;
-  final String phoneNumber;
-  final String depart;
-  final String arrivee;
-  final String imageUrl;
-
-  Driver({
-    required this.name,
-    required this.phoneNumber,
-    required this.depart,
-    required this.arrivee,
-    required this.imageUrl,
-  });
-}
-
 class DriverListPage extends StatelessWidget {
-  final List<Driver> drivers = [ // Creation de 3 instances de la classe Driver afin de dérouler le code
-    Driver(
-      name: 'Ali Lapointe',
-      phoneNumber: '07786111801',
-      depart: 'Alger',
-      arrivee: 'Bejaia',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Mohamed Boudief',
-      phoneNumber: '05555555555',
-      depart: 'Constantine',
-      arrivee: 'Setif',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-    Driver(
-      name: 'Ferhat Abbas',
-      phoneNumber: '05513555655',
-      depart: 'Oran',
-      arrivee: 'Tlemcen',
-      imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5GqJhCPYeRpx_456iXN_bHMWVpQbqtcDreQ&usqp=CAU',
-    ),
-  ];
   List<ConducteurTrajet> listeUtilisateurs ;
   DriverListPage(this.listeUtilisateurs) ;
   @override
@@ -93,7 +17,7 @@ class DriverListPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Choisissez un chauffeur',
-          style: TextStyle(color: Color(0xff344D59), fontSize: 20,fontFamily: 'Popping'),
+          style: TextStyle(color: Color(0xff344D59), fontSize: 20,fontFamily: 'Poppins'),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -168,7 +92,7 @@ class DriverListPage extends StatelessWidget {
                                   title: Text(
                                     conducteurTrajet.trajetLance.villeDepart,
                                     style: TextStyle(
-                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Popping'),
+                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -180,7 +104,7 @@ class DriverListPage extends StatelessWidget {
                                   title: Text(
                                     conducteurTrajet.trajetLance.villeArrivee,
                                     style: TextStyle(
-                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Popping'),
+                                        color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -199,7 +123,7 @@ class DriverListPage extends StatelessWidget {
                               },
                               child: Text('Choisir',
                               style: TextStyle(
-                                  fontFamily: 'Popping',
+                                  fontFamily: 'Poppins',
                               ),
                               ),
                             ),

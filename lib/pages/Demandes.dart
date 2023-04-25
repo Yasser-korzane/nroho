@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/trajetdemandepassager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -63,16 +64,20 @@ class DemandesPassager extends StatelessWidget {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.grey.shade300,
-        body: ListView.builder(
-          itemCount: Demandes.length,
-          itemBuilder: (context, index) {
-            final demande = Demandes[index];
-            return Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035,
-                    vertical: screenHeight * 0.015),
+    return Scaffold(
+      backgroundColor: Colors.grey.shade300,
+      body: ListView.builder(
+        itemCount: Demandes.length,
+        itemBuilder: (context, index) {
+          final demande = Demandes[index];
+          return Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035,
+                  vertical: screenHeight * 0.015),
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Detailspassaer(photoUrl: 'assets/images/user-profile.png', fullName: ' weal bougessa', rating: 2, phoneNumber: '0665996688', email: 'bougessa.hrach@esi.dz', carName: 'car_pooling'),));
+
+                },
                 child: Card(
                   color: Colors.white,
                   elevation: 8,
@@ -91,7 +96,7 @@ class DemandesPassager extends StatelessWidget {
                     Padding(
                     padding: EdgeInsets.all(screenWidth*0.01),
                     child: ListTile(
-                      title: Text(demande.firstName + ' ' + demande.lastName,style: TextStyle(fontFamily: 'Popping'),),
+                      title: Text(demande.firstName + ' ' + demande.lastName,style: TextStyle(fontFamily: 'Poppins'),),
                       leading: Container(
                         height: screenHeight * 0.06,
                         width: screenHeight * 0.06,
@@ -105,8 +110,8 @@ class DemandesPassager extends StatelessWidget {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('De : ' + demande.placeDepar,style: TextStyle(fontFamily: 'Popping'),),
-                          Text('A : ' + demande.placeArrive,style: TextStyle(fontFamily: 'Popping'),),
+                          Text('De : ' + demande.placeDepar,style: TextStyle(fontFamily: 'Poppins'),),
+                          Text('A : ' + demande.placeArrive,style: TextStyle(fontFamily: 'Poppins'),),
                         ],
                       ),
                       isThreeLine: true,
@@ -152,7 +157,7 @@ class DemandesPassager extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.bold,
-                                  fontFamily: 'Popping'
+                                  fontFamily: 'Poppins'
                               ),
                             ),
                           ],
@@ -163,7 +168,8 @@ class DemandesPassager extends StatelessWidget {
                   ),
                       SizedBox(height: screenHeight * 0.005),
                       GestureDetector(
-                        onTap: (){},
+                        onTap: (){
+                        },
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: screenWidth*0.02),
                           decoration: BoxDecoration(
@@ -203,7 +209,7 @@ class DemandesPassager extends StatelessWidget {
                                   'Accepter le passager',
                                   style: GoogleFonts.lato(
                                     textStyle: TextStyle(
-                                      fontFamily: 'Popping',
+                                      fontFamily: 'Poppins',
                                       color: Color(0xff09CA3F),
                                       fontSize: screenWidth * 0.04,
                                       // responsive font size
@@ -218,7 +224,8 @@ class DemandesPassager extends StatelessWidget {
                       ),
                           SizedBox(height: screenHeight * 0.01),
                           GestureDetector(
-                            onTap: (){},
+                            onTap: (){
+                            },
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: screenWidth*0.02),
                               decoration: BoxDecoration(
@@ -258,7 +265,7 @@ class DemandesPassager extends StatelessWidget {
                                       'Refuser le passager',
                                       style: GoogleFonts.lato(
                                         textStyle: TextStyle(
-                                          fontFamily: 'Popping',
+                                          fontFamily: 'Poppins',
                                           color: Color(0xffFC0707),
                                           fontSize: screenWidth * 0.04,
                                           // responsive font size
@@ -275,11 +282,11 @@ class DemandesPassager extends StatelessWidget {
 
                         ]
                 )
-            )
-            )
-            );
-          },
-        ),
+          )
+          ),
+              )
+          );
+        },
       ),
     );
   }

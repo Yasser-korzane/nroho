@@ -141,7 +141,7 @@ class _ProfilepageState extends State<Profilepage> {
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
                         child: const Text('Modifier Profile',
-                            style: TextStyle(color: Colors.white,fontFamily: 'Popping')),
+                            style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
                       ),
                     )),
                 SizedBox(height: screenHeight * 0.04),
