@@ -38,13 +38,13 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: EdgeInsets.all(defaultPadding),
                               child: Text(
                                 'Les passages',
-                                style: GoogleFonts.lato(
+                                style: GoogleFonts.poppins(
                                   textStyle: TextStyle(
                                     fontFamily: 'Poppins' ,
                                     color: Colors.black,
