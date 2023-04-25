@@ -229,7 +229,6 @@ class Details extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenHeight * 0.03),
-
             Row(
               children: [
                 Expanded(
