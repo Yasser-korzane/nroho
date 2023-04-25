@@ -121,10 +121,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Nom',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Enterez votre nom',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   /* color: Colors.grey[800],
                                         fontSize: 14,
                                       fontFamily: 'Poppins'*
@@ -161,10 +165,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Prénom',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Entrez votre prénom',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                 ),
@@ -195,10 +203,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Numéro de Téléphone',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Entrez votre numéro de téléphone',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   /*  color: Colors.grey[800],
                                       fontSize: 14,
                                       fontFamily: 'Poppins'
@@ -234,10 +246,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Email',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Entrez votre adresse mail de l\'esi',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   /* color: Colors.grey[800],
                                       fontSize: 14,
                                       fontFamily: 'Poppins'),*/
@@ -272,10 +288,15 @@ class _SinupState extends State<Sinup> {
                                             Radius.circular(12)),
                                       ),
                                       labelText: 'Mot de passe',
+                                      labelStyle: TextStyle(
+                                          fontFamily:'Poppins'
+                                      ),
                                       hintText: 'Entrez votre mot de passe ',
                                       hintStyle: TextStyle(
                                           color: Colors.grey[700],
-                                          fontSize: 14),
+                                          fontSize: 14,
+                                          fontFamily:'Poppins'
+                                      ),
                                       /* color: Colors.grey[800],
                                           fontSize: 14,
                                           fontFamily: 'Poppins'),*/
