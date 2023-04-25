@@ -73,7 +73,7 @@ class _optionsState extends State<options> {
                 child: TextField(
                      style: TextStyle(
                        fontWeight: FontWeight.normal,
-                       fontSize: screenHeight*0.035,
+                       fontSize: screenHeight*0.02,
                        fontFamily: 'Poppins',
                      ),
                       decoration: InputDecoration(

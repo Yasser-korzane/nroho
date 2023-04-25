@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class Details extends StatelessWidget {
+class Detailspassaer extends StatelessWidget {
   final String photoUrl;
   final String fullName;
   final double rating;
@@ -10,7 +10,7 @@ class Details extends StatelessWidget {
   final String email;
   final String carName;
 
-  Details({
+  Detailspassaer({
     required this.photoUrl,
     required this.fullName,
     required this.rating,
@@ -66,7 +66,7 @@ class Details extends StatelessWidget {
                     Row(
                       children: List.generate(
                         5,
-                        (index) => Icon(
+                            (index) => Icon(
                           Icons.star,
                           size: 20.0,
                           color: index < rating.round()
@@ -120,22 +120,6 @@ class Details extends StatelessWidget {
               ],
             ),
             SizedBox(height: screenHeight*0.014),
-            Row(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Text("Modéle de voiture = ",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xff137c8b),
-                        ),
-                      )),
-                ),
-                Expanded(child: Text(carName), flex: 5),
-              ],
-            ),
             SizedBox(height: screenHeight*0.04),
             Row(
               children: [
@@ -223,26 +207,7 @@ class Details extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: 4,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // handle left button press
-                    },
-                    icon: Icon(Icons.map_outlined, size: 32),
-                    label: Text(
-                      'Voir le  trajet  sur la map',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Color(0xff137c8b)),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xffb8cbd0),
-                        side: BorderSide.none,
-                        shape: StadiumBorder(side: BorderSide())
-                    ),
-                  ),
-                ),
-                Expanded(
-                    flex: 1,
+                    flex: 5,
                     child: SizedBox(width: 5,)),
                 Expanded(
                   flex: 4,
@@ -252,7 +217,7 @@ class Details extends StatelessWidget {
                     },
                     icon: Icon(Icons.phone_in_talk_outlined, size: 32),
                     label: Text(
-                      'Contacter le chauffeur',
+                      'Contacter le passager',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Color(0xff137cb8)),
                     ),
@@ -272,7 +237,7 @@ class Details extends StatelessWidget {
 
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.27)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.1)),
                 backgroundColor: MaterialStateProperty.all<Color>( Color(0xff137c8b)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -280,7 +245,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('Demender un trajet',
+              child: const Text('Accepter la demande',
                   style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
             ),
             ElevatedButton(
@@ -288,7 +253,7 @@ class Details extends StatelessWidget {
               },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(0.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.27)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.1)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -296,7 +261,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('Annulez le trajet',
+              child: const Text('Refuser la demande',
                   style: TextStyle(color: Colors.red,fontFamily: 'Poppins')),
             )
 

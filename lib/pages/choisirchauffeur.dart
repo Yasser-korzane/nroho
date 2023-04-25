@@ -1,4 +1,4 @@
-import 'package:appcouvoiturage/pages/trajetdetails.dart';
+import 'package:appcouvoiturage/pages/trajetdetailsconducteurs.dart';
 import 'package:flutter/material.dart';
 
 
