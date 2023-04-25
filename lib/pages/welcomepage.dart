@@ -10,7 +10,7 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage>
-    with SingleTickerProviderStateMixin {
+  with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
   final heightDevice = ui.window.physicalSize.height;
@@ -55,34 +55,7 @@ class _WelcomePageState extends State<WelcomePage>
                   ),
                 ),
               ),
-            ElevatedButton(
-        onPressed: () {
-         // action à effectuer lorsque le bouton est cliqué
-         },
-         
-        style: ElevatedButton.styleFrom(
-          
-             primary: Color.fromARGB(255, 1, 31, 56), // couleur de fond du bouton
-             onPrimary: Colors.white, // couleur du texte du bouton
-             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0), // forme du bouton
-              ),
-           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 0), // padding du bouton
-              ),
-          child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-         children: [
-         Text(
-        'Appuyer ici pour commencer',
-        
-        style: TextStyle(fontSize: 20.0,
-        fontFamily: 'Poppins',
-        ),
-      ),
-      Icon(Icons.arrow_forward, size: 30.0),
-    ],
-  ),
-),
+           
             ],
           ),
         ),

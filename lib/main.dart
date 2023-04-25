@@ -22,7 +22,7 @@ Future<void> main() async {
         home: const MyApp(),
         routes: {
           "trajet": (context) {
-            return const OuAllezVous();
+            return const WelcomePage();
           },
           "home": (context) {
             return const home();

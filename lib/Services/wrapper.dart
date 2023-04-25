@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/pages/begin.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:appcouvoiturage/pages/welcomepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,6 @@ import 'package:appcouvoiturage/main.dart';
 import 'package:appcouvoiturage/pages/connexion.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
-import 'package:appcouvoiturage/pages/login.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -62,7 +62,7 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     final user = Provider.of<Users?>(context);
      if (user == null) {
-      return Commancer();
+      return WelcomePage();
     } else {
       return home();
     }
