@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/Verification.dart';
@@ -45,7 +46,7 @@ class _SinupState extends State<Sinup> {
   /*********************************************** Les Fonctions **********************************************/
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse,String numero) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, numero, Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[],[]
     );
   }
   /** ************************************************************************************************** **/
@@ -428,7 +429,7 @@ class _SinupState extends State<Sinup> {
                             ),
                             children: [
                               TextSpan(
-                                text: ' Se Connecter',
+                                text: ' Connectez-Vous',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 12.0,

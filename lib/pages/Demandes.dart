@@ -1,7 +1,12 @@
 import 'package:appcouvoiturage/pages/trajetdemandepassager.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../AppClasses/Notifications.dart';
+import '../AppClasses/Utilisateur.dart';
 
 
 class Demande {
@@ -21,55 +26,88 @@ class Demande {
 }
 
 
-class DemandesPassager extends StatelessWidget {
+class DemandesPassager extends StatefulWidget {
+  @override
+  State<DemandesPassager> createState() => _DemandesPassagerState();
+}
 
-  final List<Demande> Demandes = [
-    Demande(firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-  ];
+class _DemandesPassagerState extends State<DemandesPassager> {
+  List<Notifications> listeNotifications = [];
+  Future _getNotifications() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          List<dynamic> notificationsData = snapshot.data()!['notifications'];
+          for (var notificationData in notificationsData) {
+            Notifications notification = Notifications(
+              notificationData['id_conducteur'],
+              notificationData['id_pasagers'],
+              notificationData['id_trajet'],
+            );
+            listeNotifications.add(notification);
+            print(listeNotifications);
+          }
+        });
+      }
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getNotifications();
 
+  }
+
+/*[
+    Demande(firstName: 'yasser',
+        lastName: 'korzane',
+        placeDepar: 'Maoklane - Setif',
+        placeArrive: 'OuedSmar - Alger',
+        phone: '+213665300362'),
+    Demande(firstName: 'yasser',
+        lastName: 'korzane',
+        placeDepar: 'Maoklane - Setif',
+        placeArrive: 'OuedSmar - Alger',
+        phone: '+213665300362'),
+    Demande(firstName: 'yasser',
+        lastName: 'korzane',
+        placeDepar: 'Maoklane - Setif',
+        placeArrive: 'OuedSmar - Alger',
+        phone: '+213665300362'),
+    Demande(firstName: 'yasser',
+        lastName: 'korzane',
+        placeDepar: 'Maoklane - Setif',
+        placeArrive: 'OuedSmar - Alger',
+        phone: '+213665300362'),
+    Demande(firstName: 'yasser',
+        lastName: 'korzane',
+        placeDepar: 'Maoklane - Setif',
+        placeArrive: 'OuedSmar - Alger',
+        phone: '+213665300362'),
+    Demande(firstName: 'yasser',
+        lastName: 'korzane',
+        placeDepar: 'Maoklane - Setif',
+        placeArrive: 'OuedSmar - Alger',
+        phone: '+213665300362'),
+  ];*/
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-    return Scaffold(
+    return listeNotifications.isEmpty ? Scaffold(backgroundColor: Colors.grey.shade300,body: Center(child:Text("pas de notifications maintenant"
+    ,style: TextStyle(fontFamily: 'poppins',fontSize: 18,fontWeight: FontWeight.bold , color: Colors.black54),))) : Scaffold(
       backgroundColor: Colors.grey.shade300,
       body: ListView.builder(
-        itemCount: Demandes.length,
+        itemCount: listeNotifications.length,
         itemBuilder: (context, index) {
-          final demande = Demandes[index];
+          final demande = listeNotifications[index];
           return Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035,
                   vertical: screenHeight * 0.015),
@@ -96,7 +134,7 @@ class DemandesPassager extends StatelessWidget {
                     Padding(
                     padding: EdgeInsets.all(screenWidth*0.01),
                     child: ListTile(
-                      title: Text(demande.firstName + ' ' + demande.lastName,style: TextStyle(fontFamily: 'Poppins'),),
+                      title: Text('id Conducteur : ${demande.id_conducteur}',style: TextStyle(fontFamily: 'Poppins'),),
                       leading: Container(
                         height: screenHeight * 0.06,
                         width: screenHeight * 0.06,
@@ -110,8 +148,8 @@ class DemandesPassager extends StatelessWidget {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('De : ' + demande.placeDepar,style: TextStyle(fontFamily: 'Poppins'),),
-                          Text('A : ' + demande.placeArrive,style: TextStyle(fontFamily: 'Poppins'),),
+                          Text('De : idPassager : ${demande.id_pasagers}',style: TextStyle(fontFamily: 'Poppins'),),
+                          Text('A : idTrajet : ${demande.id_trajet}',style: TextStyle(fontFamily: 'Poppins'),),
                         ],
                       ),
                       isThreeLine: true,

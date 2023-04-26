@@ -1,6 +1,7 @@
 import 'package:places_service/places_service.dart';
 import 'PlusInformations.dart';
 class Trajet {
+  String id ;
   DateTime dateDepart ;
   DateTime tempsDePause;
   double coutTrajet;
@@ -16,6 +17,7 @@ class Trajet {
   bool probleme; // si false alors il n'as pas de probleme, si true alors il ya un probleme
 
   Trajet(
+      this.id,
       this.dateDepart,
       this.tempsDePause,
       this.coutTrajet,
@@ -30,6 +32,7 @@ class Trajet {
       this.avis,
       this.probleme);
   void afficher() {
+    print('id : $id');
     print('dateDepart: $dateDepart');
     print('tempsDePause: $tempsDePause');
     print('coutTrajet: $coutTrajet');
@@ -48,6 +51,7 @@ class Trajet {
   }
   Map<String, dynamic> toMap() {
     return {
+      'id' : id,
       'dateDepart' : dateDepart,
       'tempsDePause': tempsDePause,
       'coutTrajet': coutTrajet,

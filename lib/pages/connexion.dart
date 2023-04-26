@@ -12,6 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 
 class Connexin extends StatefulWidget {
   @override
@@ -62,7 +63,7 @@ class _MyConnexinState extends State<Connexin> {
         "",
         Evaluation([], 0, 0),
         Vehicule("", "", "", "", ""),
-        false, [], [], []);
+        false, [], [], [],[]);
   }
 
   /** ************************************************************************************************** **/
@@ -290,14 +291,13 @@ class _MyConnexinState extends State<Connexin> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text('Oubien',style: TextStyle(fontFamily: 'Poppins'),),
                             TextButton(
                               onPressed: () {
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sinup(),));
                               },
                               child: Text.rich(
                                 TextSpan(
-                                  text: 'Vous n\'avez pas compte? ',
+                                  text: 'Vous n\'avez encore un compte? ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 14.0,
@@ -306,7 +306,7 @@ class _MyConnexinState extends State<Connexin> {
                                   ),
                                   children: [
                                     TextSpan(
-                                      text: 'S\'inscrire',
+                                      text: 'Inscrivez-Vous',
                                       style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12.0,

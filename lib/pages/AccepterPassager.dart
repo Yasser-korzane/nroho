@@ -18,6 +18,20 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
     final double defaultPadding = 10;
     return SafeArea(
         child: Scaffold(
+          appBar: AppBar(
+            title:  Text(
+              'Les passages',
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                  fontFamily: 'Poppins' ,
+                  color: Colors.black,
+                  fontSize: screenWidth * 0.05,
+                  // responsive font size
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
           body:
           SingleChildScrollView(
             child: Column(
@@ -31,58 +45,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(defaultPadding),
-                        decoration: BoxDecoration(
-                          color: Color(0xFFBAF1F9),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(defaultPadding),
-                              child: Text(
-                                'Les passages',
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    fontFamily: 'Poppins' ,
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.05,
-                                    // responsive font size
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // Add your logic here to navigate back to the previous page
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF3FE6FE),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(defaultPadding),
-                                  child: InkWell(
-                                    onTap: (){
-                                      Navigator.pop(context);
-                                    },
-                                    child: Icon(
-                                      Icons.cancel,
-                                      color: Colors.black,
-                                      size: screenWidth * 0.04, // responsive icon size
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: screenHeight*0.06,),
+                      // SizedBox(height: screenHeight*0.06,),
                       DemandesPassager(),
                     ],
                   ),

@@ -237,7 +237,7 @@ class Detailspassaer extends StatelessWidget {
 
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.2354)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.20)),
                 backgroundColor: MaterialStateProperty.all<Color>( Color(0xff137c8b)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(

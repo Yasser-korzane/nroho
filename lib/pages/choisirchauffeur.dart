@@ -53,7 +53,7 @@ class DriverListPage extends StatelessWidget {
                       ),
                       SizedBox(width: screenWidth*0.04),
                       Column(children: [
-                        Text(conducteurTrajet.utilisateur.nom,
+                        Text('${conducteurTrajet.utilisateur.nom} ${conducteurTrajet.utilisateur.prenom}',
                           style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
                         ),
                         Text(conducteurTrajet.utilisateur.numeroTelephone,

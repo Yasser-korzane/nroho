@@ -239,7 +239,7 @@ class Details extends StatelessWidget {
                     },
                     icon: Icon(Icons.map_outlined, size: 32),
                     label: Text(
-                      'Voir le  trajet  sur la map',
+                      'Voir le rajet sur la carte',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600,color: Color(0xff137c8b)),
                     ),
@@ -297,7 +297,7 @@ class Details extends StatelessWidget {
               },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(0.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.25)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.20)),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(

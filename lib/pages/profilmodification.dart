@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Notifications.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
@@ -61,6 +62,15 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
               snapshot.data()!['vehicule']['policeAssurance'],
             );
             _utilisateur.statut = snapshot.data()!['statut'];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajet'],
+              );
+              _utilisateur.notifications.add(notification);
+            }
             //tests by printing
           }); // end setState
         } else {
@@ -142,6 +152,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       Row(
                         children: [
                           Expanded(
+                            flex : 1,
                             child: Text(
                               'Identifiant:',
                               style:
@@ -149,6 +160,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                           ),
                           Expanded(
+                            flex : 2,
                             child: Text(
                               _utilisateur.identifiant,
                               style:
@@ -160,6 +172,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       Row(
                         children: [
                           Expanded(
+                            flex : 1,
                             child: Text(
                               'Email: ',
                               style:
@@ -167,6 +180,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                           ),
                           Expanded(
+                            flex : 2,
                             child: Text(
                               _utilisateur.email,
                               style:

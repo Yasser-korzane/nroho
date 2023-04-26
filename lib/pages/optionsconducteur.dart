@@ -1,9 +1,12 @@
+import 'package:appcouvoiturage/pages/TrajetLanceEstSauvegarder.dart';
+import 'package:appcouvoiturage/pages/lancer_reserver.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:flutter/material.dart';
+import '../AppClasses/Trajet.dart';
 
 class optionconduc extends StatefulWidget {
-  const optionconduc({Key? key}) : super(key: key);
-
+  Trajet trajetLance ;
+  optionconduc(this.trajetLance);
   @override
   State<optionconduc> createState() => _optionconducState();
 }
@@ -18,6 +21,7 @@ class _optionconducState extends State<optionconduc> {
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -25,7 +29,7 @@ class _optionconducState extends State<optionconduc> {
               // Navigator.pop(context)
             },
             icon: const Icon(Icons.chevron_left, color: Colors.black)),
-        title: Text('Plus d’informations',
+        title: Text('Plus d\’informations',
           style: TextStyle(fontWeight: FontWeight.normal,
             fontSize: screenHeight*0.035,
             fontFamily: 'Poppins',),),
@@ -43,7 +47,7 @@ class _optionconducState extends State<optionconduc> {
                 SelectableTextWidget(
                     text: 'Etes-vous fumeur ?'),
                 SizedBox(height: screenHeight * 0.03),
-                SelectableTextWidget(text: ' Acceptez vous un bagages volumineux ?'),
+                SelectableTextWidget(text: ' Acceptez vous les bagages volumineux ?'),
                 SizedBox(height: screenHeight * 0.03),
                 SelectableTextWidget(text: 'Acceptez vous les animaux ?'),
                 SizedBox(height : screenHeight * 0.03),
@@ -76,32 +80,45 @@ class _optionconducState extends State<optionconduc> {
                     style: TextStyle(fontFamily: 'Poppins'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
-                        labelText: 'Proposer votre prix',
+                        labelText: 'Entrer votre prix',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
                         suffixIcon: Icon(Icons.monetization_on,
                             color: Colors.black)),
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.25),
-                SizedBox(
-                    width: screenWidth * 0.5,
-                    child: ElevatedButton(
-                      onPressed: () {
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          side: BorderSide.none,
-                          shape: const StadiumBorder()),
-                      child: const Text('Valider',
-                          style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
-                    )
-                ),
+                SizedBox(height: screenHeight * 0.094),
               ],
             ),
             ]
         ),
       ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          width: size.width * 0.51,
+          height: size.height * 0.048,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) {
+                  return TrajetLanceEstSauvegarder();
+                },
+              )
+              );
+            },
+              style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.blue),
+            ),
+            child: const Text(
+              'Valider',
+              style: TextStyle(
+                  color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
