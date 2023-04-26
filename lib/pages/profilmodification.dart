@@ -436,35 +436,19 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => Loading()),
-                    );
-                    await _baseDeDonnee.modifierUtilisateur(
-                        FirebaseAuth.instance.currentUser!.uid, _utilisateur);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Modifications avec succes'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
                     if (_changement) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Modifications avec succes'),
-                          duration: Duration(seconds: 3),
-                        ),
-                      );
                       Navigator.pop(
                         context,
                         MaterialPageRoute(builder: (context) => Loading()),
                       );
                       await _baseDeDonnee.modifierUtilisateur(
                           FirebaseAuth.instance.currentUser!.uid, _utilisateur);
-                    } else {
-                      Navigator.pop(
-                        context,
-                        MaterialPageRoute(builder: (context) => Loading()),
+                      Navigator.pop(context,);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Modifications avec succes'),
+                          duration: Duration(seconds: 3),
+                        ),
                       );
                     }
                   },

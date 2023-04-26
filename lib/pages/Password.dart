@@ -152,13 +152,13 @@ class _MotdePasseState extends State<MotdePasse> {
       Center(child:
       TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
         onPressed: ()async{
-        //Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv');
-        //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
+        Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv');
+        // await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
+        // await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
+        // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
+        // await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
-        //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
-        //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
-        //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
-        },
+         },
       ),
       ),
     SizedBox(height: screenHeight*0.1),

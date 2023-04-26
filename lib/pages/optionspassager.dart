@@ -74,21 +74,26 @@ class _optionsState extends State<options> {
                     //child: CustomDropdown(options: [1, 2, 3, 4])),
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
-
-                      enabledBorder: OutlineInputBorder(
-                        //borderSide: BorderSide(color: Colors.black),
-                      )
+                      enabledBorder: OutlineInputBorder(),
                     ),
                     value: selectedNb,
                     items: nbPlaces
-                        .map((item) => DropdownMenuItem(
-                          value: item,
-                          child: Text(item,style: TextStyle(fontFamily: 'Poppins'),),))
+                        .map(
+                          (item) => DropdownMenuItem(
+                        value: item,
+                        child: Text(
+                          item,
+                          style: TextStyle(fontFamily: 'Poppins'),
+                        ),
+                      ),
+                    )
                         .toList(),
                     onChanged: (item) {
-                      setState(() => selectedNb = item);
-                      plusInformations.nbPlaces = int.parse(item!);
-                    }
+                      setState(() {
+                        selectedNb = item;
+                        widget.trajetReserve.plusInformations.nbPlaces = int.parse(item!);
+                      });
+                    },
                   ),
                   ),
               ),
@@ -130,6 +135,7 @@ class _optionsState extends State<options> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
+              widget.trajetReserve.afficher();
               //monListe = await baseDeDonnee.chercherConductuersPossibles('', widget.trajetReserve);
               c = ConducteurTrajet(utilisateur, trajetLance);
               monListe.add(c);

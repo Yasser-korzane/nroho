@@ -43,7 +43,7 @@ class Trajet {
     print('lieuArrivee: ');
     print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
     print('villeIntermediaires: $villeIntermediaires');
-    print('plusInformations: $plusInformations');
+    print('plusInformations: fumeur:${plusInformations.fumeur} , bagage:${plusInformations.bagage} , animeaux:${plusInformations.animaux} , nbPlaces:${plusInformations.nbPlaces}');
     print('trajetEstValide: $trajetEstValide');
     print('confort: $confort');
     print('avis: $avis');

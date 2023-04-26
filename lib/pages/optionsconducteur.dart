@@ -14,11 +14,10 @@ class optionconduc extends StatefulWidget {
 class _optionconducState extends State<optionconduc> {
   List<String> nbPlaces = ['1','2','3','4'];
   String ?selectedNb = '1';
+    TextEditingController _coutController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final Size size = MediaQuery.of(context).size;
@@ -44,43 +43,149 @@ class _optionconducState extends State<optionconduc> {
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: screenHeight * 0.1),
-                SelectableTextWidget(
-                    text: 'Etes-vous fumeur ?'),
-                SizedBox(height: screenHeight * 0.03),
-                SelectableTextWidget(text: ' Acceptez vous les bagages volumineux ?'),
-                SizedBox(height: screenHeight * 0.03),
-                SelectableTextWidget(text: 'Acceptez vous les animaux ?'),
-                SizedBox(height : screenHeight * 0.03),
+                //SelectableTextWidget(text: 'Etes-vous fumeur ?'),
+                Card(color: Colors.white60,margin: EdgeInsets.all(16),
+                  shape:   RoundedRectangleBorder(
+                    side:  BorderSide(color: Colors.grey,width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(15)
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                           Text('Etes-vous fumeur ?',
+                          style: TextStyle(
+                            fontSize: screenHeight*0.017,
+                            fontFamily: 'Poppins',
+                          ),),
+                        //SizedBox(width: screenWidth*0.35,),
+                           Checkbox(
+                            value: widget.trajetLance.plusInformations.fumeur,
+                            onChanged: (value) {
+                              setState(() {
+                                widget.trajetLance.plusInformations.fumeur = value ?? false; // Update 'yes' with the selected value or false if value is null
+                              });
+                            },
+                            activeColor: Colors.blue, // Optional: change the color of the checkbox when selected
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.002),
+                Card(color: Colors.white60,margin: EdgeInsets.all(16),
+                  shape:   RoundedRectangleBorder(
+                    side:  BorderSide(color: Colors.grey,width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(15)
+                    ),
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Acceptez vous les bagages volumineux ?',
+                          style: TextStyle(
+                            fontSize: screenHeight*0.016,
+                            fontFamily: 'Poppins',
+                          ),),
+                        Checkbox(
+                          value: widget.trajetLance.plusInformations.bagage,
+                          onChanged: (value) {
+                            setState(() {
+                              widget.trajetLance.plusInformations.bagage = value ?? false; // Update 'yes' with the selected value or false if value is null
+                            });
+                          },
+                          activeColor: Colors.blue, // Optional: change the color of the checkbox when selected
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.002),
+                Card(color: Colors.white60,margin: EdgeInsets.all(16),
+                  shape:   RoundedRectangleBorder(
+                    side:  BorderSide(color: Colors.grey,width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(15)
+                    ),
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Acceptez vous les animaux ?',
+                          style: TextStyle(
+                            fontSize: screenHeight*0.017,
+                            fontFamily: 'Poppins',
+                          ),),
+                        Checkbox(
+                          value: widget.trajetLance.plusInformations.animaux,
+                          onChanged: (value) {
+                            setState(() {
+                              widget.trajetLance.plusInformations.animaux = value ?? false; // Update 'yes' with the selected value or false if value is null
+                            });
+                          },
+                          activeColor: Colors.blue, // Optional: change the color of the checkbox when selected
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.002),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Container(
                     //margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                     //child: CustomDropdown(options: [1, 2, 3, 4])),
-                    child: DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              //borderSide: BorderSide(color: Colors.black),
-                            )
-                        ),
-                        value: selectedNb,
-                        items: nbPlaces
-                            .map((item) => DropdownMenuItem(
+                    child:
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(),
+                      ),
+                      value: selectedNb,
+                      items: nbPlaces
+                          .map(
+                            (item) => DropdownMenuItem(
                           value: item,
-                          child: Text(item,style: TextStyle(fontFamily: 'Poppins'),),))
-                            .toList(),
-                        onChanged: (item) => setState(() => selectedNb = item)),
+                          child: Text(
+                            item,
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          ),
+                        ),
+                      )
+                          .toList(),
+                      onChanged: (item) {
+                        setState(() {
+                          selectedNb = item;
+                          widget.trajetLance.plusInformations.nbPlaces = int.parse(item!);
+                        });
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: 10.0),
                 Container(
                   margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                   padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
+                  child: TextFormField(
+                    controller: _coutController ,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    validator: (input) {
+                      if (input == null) {
+                        return 'Entrez votre numero de téléphone ';
+                      } else {
+                        return null;
+                      }
+                    },
                     style: TextStyle(fontFamily: 'Poppins'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
-                        labelText: 'Entrer votre prix',
+                        hintText: 'Entrer votre prix',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
                         // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
                         suffixIcon: Icon(Icons.monetization_on,
@@ -100,12 +205,14 @@ class _optionconducState extends State<optionconduc> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
+              widget.trajetLance.coutTrajet = double.parse(_coutController.text);
+              /*Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return TrajetLanceEstSauvegarder();
                 },
-              )
-              );
+              ),
+              );*/
+              widget.trajetLance.afficher();
             },
               style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
