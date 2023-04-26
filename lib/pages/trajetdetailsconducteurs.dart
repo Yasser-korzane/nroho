@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+
 class Details extends StatelessWidget {
   final String photoUrl;
   final String fullName;
@@ -9,6 +10,16 @@ class Details extends StatelessWidget {
   final String phoneNumber;
   final String email;
   final String carName;
+
+
+  final List<String> commentaires=[
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+
+  ];
 
   Details({
     required this.photoUrl,
@@ -277,8 +288,39 @@ class Details extends StatelessWidget {
             SizedBox(height: screenHeight*0.06,),
             ElevatedButton(
               onPressed: () {
-              },
+                showModalBottomSheet(
+                  isDismissible: false,
+                  context: context,
+                  builder: (context) => Builder(
+                    builder: (context) {
+                      if (commentaires.isEmpty) {
+                        // If the list is empty, display a message
+                        return Center(child: Text('This conducteur has no commentaires'));
+                      } else {
+                        // If the list is not empty, display the commentaires in a ListView
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => Divider(
+                            thickness: 1.0,
+                            color: Colors.grey[300],
+                          ),
+                          itemCount: commentaires.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(commentaires[index],style: TextStyle(
+                                fontFamily: 'poppins',
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
 
+                              ),),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                );
+              },
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),
                 padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.25)),
@@ -289,8 +331,10 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('Demender un trajet',
-                  style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
+              child: Text(
+                'Demander un trajet',
+                style: TextStyle(color: Colors.white,fontFamily: 'Poppins'),
+              ),
             ),
             ElevatedButton(
               onPressed: () {

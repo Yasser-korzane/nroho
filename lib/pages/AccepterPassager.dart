@@ -19,6 +19,12 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.cancel_outlined) ,
+              onPressed:(){
+                Navigator.pop(context);
+              } ,
+            ),
             title:  Text(
               'Les passages',
               style: GoogleFonts.poppins(
@@ -31,29 +37,10 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
                 ),
               ),
             ),
+            centerTitle: true,
+            backgroundColor: Colors.grey.shade300,
           ),
-          body:
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    defaultPadding,
-                    defaultPadding * 2,
-                    defaultPadding,
-                    defaultPadding * 2,
-                  ),
-                  child: Column(
-                    children: [
-                      // SizedBox(height: screenHeight*0.06,),
-                      DemandesPassager(),
-                    ],
-                  ),
-                ),
-
-              ],
-            ),
-          ),
+          body: DemandesPassager(),
         )
     );
   }

@@ -5,6 +5,7 @@ import 'package:appcouvoiturage/pages/AccepterPassager.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/pages/details.dart';
+import 'package:appcouvoiturage/pages/notificationPassager.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:appcouvoiturage/pages/trajetsLances.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -267,7 +268,7 @@ class _MywidState extends State<Mywid> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DemandesPassager()));
+                      builder: (context) => DemandesPassagerResultat()));
             },
             child: const Icon(
               Icons.notifications_none_outlined,
