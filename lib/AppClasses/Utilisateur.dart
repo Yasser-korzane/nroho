@@ -11,10 +11,10 @@ class Utilisateur extends Personne{
   List<Trajet> trajetsReserves;
   List<Trajet> Historique;
   static int nbUtilisateurs = 0;
-  List<Notifications> notification;
+  List<Notifications> notifications;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
       super.numeroTelephone,this.evaluation, this.vehicule, this.statut,
-      this.trajetsReserves,this.trajetsLances,this.Historique,this.notification);
+      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications);
 
   void lancerTrajet() {
     // Code pour lancer un trajet

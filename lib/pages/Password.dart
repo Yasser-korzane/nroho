@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/AppClasses/PlusInformations.dart';
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
@@ -151,12 +152,12 @@ class _MotdePasseState extends State<MotdePasse> {
       Center(child:
       TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
         onPressed: ()async{
-        //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'Nors1F4SriLnfvR8O5tG');
+        //Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv');
+        //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
+        //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
         //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
-          //utilisateurs = await _baseDeDonnee.chercherConductuersPossibles();
-          //for (Utilisateur u in utilisateurs) u.afficher();
         },
       ),
       ),

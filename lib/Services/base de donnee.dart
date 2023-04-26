@@ -1,15 +1,12 @@
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Notifications.dart';
-
-
 class ConducteurTrajet {
   Utilisateur utilisateur;
   Trajet trajetLance;
@@ -39,6 +36,11 @@ class BaseDeDonnee{
         'policeAssurance': utilisateur.vehicule.policeAssurance,
       },
       'statut': utilisateur.statut,
+      'notifications': utilisateur.notifications.map((notif) => {
+        'id_conducteur': notif.id_conducteur,
+        'id_pasagers': notif.id_pasagers,
+        'id_trajet': notif.id_trajet,
+      }).toList(),
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
@@ -49,7 +51,6 @@ class BaseDeDonnee{
       'prenom': utilisateur.prenom,
       'email': utilisateur.email,
       'numeroTelephone': utilisateur.numeroTelephone,
-      //'motDePasse': utilisateur.motDePasse,
       'evaluation': {
         'feedback': utilisateur.evaluation.feedback,
         'etoiles': utilisateur.evaluation.etoiles,
@@ -63,6 +64,11 @@ class BaseDeDonnee{
         'policeAssurance': utilisateur.vehicule.policeAssurance,
       },
       'statut': utilisateur.statut,
+      'notifications': utilisateur.notifications.map((notif) => {
+        'id_conducteur': notif.id_conducteur,
+        'id_pasagers': notif.id_pasagers,
+        'id_trajet': notif.id_trajet,
+      }).toList(),
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
@@ -81,14 +87,20 @@ class BaseDeDonnee{
     PlacesAutoCompleteResult lieuDepart = lieuArrive;
     DateTime date = DateTime.now();DateTime time = DateTime.now();
     return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
-
   }
   //------------------------------------------------------------------------------------------
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'statut': newStatut});
   }
-  //------------------------------------------------------------------------------------------
+  Future<void> ajouterNotification(String uidRecepteur, Notifications not) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uidRecepteur);
+    Map<String, dynamic> notMap = not.toMap();
+    await utilisateurDocRef.update({
+      'notifications': FieldValue.arrayUnion([notMap]),
+    });
+  }
+    //------------------------------------------------------------------------------------------
   Future<void> saveTrajetLanceAsSubcollection(String uid, Trajet trajetLance) async {
     Map<String, dynamic> trajetLanceData = trajetLance.toMap();
     DocumentReference docRef = await FirebaseFirestore.instance
@@ -158,7 +170,6 @@ class BaseDeDonnee{
             utilisateur.prenom = snapshot.data()!['prenom'];
             utilisateur.email = snapshot.data()!['email'];
             utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
-            //utilisateur.motDePasse = snapshot.data()!['motDePasse'];
             utilisateur.evaluation = Evaluation(
               List<String>.from(snapshot.data()!['evaluation']['feedback']),
               snapshot.data()!['evaluation']['etoiles'],
@@ -172,11 +183,16 @@ class BaseDeDonnee{
               snapshot.data()!['vehicule']['policeAssurance'],
             );
             utilisateur.statut = snapshot.data()!['statut'];
-          /*  utilisateur.notification= Notifications(
-            snapshot.data()!['notification']['id_conducteur'],
-            snapshot.data()!['notification'][''],
-            snapshot.data()!['notification'][''],
-            );*/
+            utilisateur.notifications = [];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajet'],
+              );
+              utilisateur.notifications.add(notification);
+            }
             //tests by printing
         } else { // end snapshot exist
           throw Exception("Utilisateur does not exist.");
@@ -267,6 +283,15 @@ class BaseDeDonnee{
           data['vehicule']['policeAssurance'],
         );
         utilisateur.statut = data['statut'];
+        List<dynamic> notificationsData = data['notifications'];
+        for (var notificationData in notificationsData) {
+          Notifications notification = Notifications(
+            notificationData['id_conducteur'],
+            notificationData['id_pasagers'],
+            notificationData['id_trajet'],
+          );
+          utilisateur.notifications.add(notification);
+        }
         utilisateurs.add(utilisateur);
       }
       return utilisateurs;
@@ -371,6 +396,15 @@ class BaseDeDonnee{
                   dataUtilisateur['vehicule']['policeAssurance'],
                 );
                 utilisateur.statut = dataUtilisateur['statut'];
+                List<dynamic> notificationsData = dataUtilisateur['notifications'];
+                for (var notificationData in notificationsData) {
+                  Notifications notification = Notifications(
+                    notificationData['id_conducteur'],
+                    notificationData['id_pasagers'],
+                    notificationData['id_trajet'],
+                  );
+                  utilisateur.notifications.add(notification);
+                }
                 utilisateur.afficher();
                 trajetLance.dateDepart = data['dateDepart'].toDate();
                 trajetLance.tempsDePause = data['tempsDePause'].toDate();

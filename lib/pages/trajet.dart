@@ -234,7 +234,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             builder: (context) {
                               return const MapPage();
                             },
-                          ));
+                          )
+                          );
                         });
                       },
                       leading: const Icon(
