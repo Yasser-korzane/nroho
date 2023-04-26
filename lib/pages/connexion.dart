@@ -12,6 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 
 class Connexin extends StatefulWidget {
   @override
@@ -62,7 +63,7 @@ class _MyConnexinState extends State<Connexin> {
         "",
         Evaluation([], 0, 0),
         Vehicule("", "", "", "", ""),
-        false, [], [], []);
+        false, [], [], [],[]);
   }
 
   /** ************************************************************************************************** **/

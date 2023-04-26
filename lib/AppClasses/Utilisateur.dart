@@ -2,6 +2,7 @@ import 'Evaluation.dart';
 import 'Personne.dart';
 import 'Trajet.dart';
 import 'Vehicule.dart';
+import 'Notifications.dart';
 class Utilisateur extends Personne{
   Evaluation evaluation;
   Vehicule vehicule;
@@ -10,9 +11,11 @@ class Utilisateur extends Personne{
   List<Trajet> trajetsReserves;
   List<Trajet> Historique;
   static int nbUtilisateurs = 0;
+  List<Notifications> notification;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
       super.numeroTelephone,this.evaluation, this.vehicule, this.statut,
-      this.trajetsReserves,this.trajetsLances,this.Historique);
+      this.trajetsReserves,this.trajetsLances,this.Historique,this.notification);
+
   void lancerTrajet() {
     // Code pour lancer un trajet
   }

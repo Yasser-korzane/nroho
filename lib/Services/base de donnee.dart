@@ -1,11 +1,13 @@
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
+import '../AppClasses/Notifications.dart';
 
 
 class ConducteurTrajet {
@@ -66,7 +68,7 @@ class BaseDeDonnee{
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
     return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[],[]
     );
   }
   Trajet creerTrajetVide(){
@@ -170,6 +172,11 @@ class BaseDeDonnee{
               snapshot.data()!['vehicule']['policeAssurance'],
             );
             utilisateur.statut = snapshot.data()!['statut'];
+          /*  utilisateur.notification= Notifications(
+            snapshot.data()!['notification']['id_conducteur'],
+            snapshot.data()!['notification'][''],
+            snapshot.data()!['notification'][''],
+            );*/
             //tests by printing
         } else { // end snapshot exist
           throw Exception("Utilisateur does not exist.");
