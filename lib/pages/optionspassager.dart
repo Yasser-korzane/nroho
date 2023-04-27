@@ -3,8 +3,10 @@ import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:appcouvoiturage/pages/Page%20De%20Recherche.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:places_service/places_service.dart';
@@ -20,32 +22,29 @@ class options extends StatefulWidget {
 }
 
 class _optionsState extends State<options> {
-  late ConducteurTrajet c ;
-  late List<ConducteurTrajet> monListe = [] ;
+
   List<String> nbPlaces = ['1','2','3','4'];
   String ?selectedNb = '1';
+  BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
         .of(context)
         .size;
-    // to get acces to variable do : widget.variable
+    // to get acces to trajetReserve do : widget.trajetReserve
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final Size size = MediaQuery.of(context).size;
-    BaseDeDonnee baseDeDonnee = BaseDeDonnee();
     Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
     utilisateur.nom = "Grine";
     utilisateur.prenom = "Mohammed";
     utilisateur.email = "lm_grine@esi.dz";
     utilisateur.numeroTelephone = "0776418929";
-    PlusInformations plusInformations = PlusInformations(false, false, false, 1);
-    Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
-    print('monListe.length = ${monListe.length}');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back, color: Color(0xff344D59))
         ),
@@ -61,18 +60,107 @@ class _optionsState extends State<options> {
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: screenHeight * 0.1),
-              SelectableTextWidget(text: 'Acceptez-vous un conducteur qui fume ?'),
-              SizedBox(height: screenHeight * 0.03),
-              SelectableTextWidget(text: 'Avez vous un bagage volumineux ?'),
-              SizedBox(height: screenHeight * 0.03),
-              SelectableTextWidget(text: 'Avez vous  des animaux ?'),
-              SizedBox(height : screenHeight * 0.03),
+              //SelectableTextWidget(text: 'Etes-vous fumeur ?'),
+              Card(color: Colors.white60,margin: EdgeInsets.all(16),
+                shape:   RoundedRectangleBorder(
+                  side:  BorderSide(color: Colors.grey,width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(15)
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Acceptez-vous un conducteur qui fume ?',
+                        style: TextStyle(
+                          fontSize: screenHeight*0.0158,
+                          fontFamily: 'Poppins',
+                        ),),
+                      //SizedBox(width: screenWidth*0.35,),
+                      Checkbox(
+                        value: widget.trajetReserve.plusInformations.fumeur,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.trajetReserve.plusInformations.fumeur = value ?? false; // Update 'yes' with the selected value or false if value is null
+                          });
+                        },
+                        activeColor: Colors.blue, // Optional: change the color of the checkbox when selected
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.002),
+              Card(color: Colors.white60,margin: EdgeInsets.all(16),
+                shape:   RoundedRectangleBorder(
+                  side:  BorderSide(color: Colors.grey,width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(15)
+                  ),
+                ),
+
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Avez vous un bagage volumineux ?',
+                        style: TextStyle(
+                          fontSize: screenHeight*0.016,
+                          fontFamily: 'Poppins',
+                        ),),
+                      Checkbox(
+                        value: widget.trajetReserve.plusInformations.bagage,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.trajetReserve.plusInformations.bagage = value ?? false; // Update 'yes' with the selected value or false if value is null
+                          });
+                        },
+                        activeColor: Colors.blue, // Optional: change the color of the checkbox when selected
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.002),
+              Card(color: Colors.white60,margin: EdgeInsets.all(16),
+                shape:   RoundedRectangleBorder(
+                  side:  BorderSide(color: Colors.grey,width: 2),
+                  borderRadius: BorderRadius.all(Radius.circular(15)
+                  ),
+                ),
+
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Avez vous  des animaux ?',
+                        style: TextStyle(
+                          fontSize: screenHeight*0.017,
+                          fontFamily: 'Poppins',
+                        ),),
+                      Checkbox(
+                        value: widget.trajetReserve.plusInformations.animaux,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.trajetReserve.plusInformations.animaux = value ?? false; // Update 'yes' with the selected value or false if value is null
+                          });
+                        },
+                        activeColor: Colors.blue, // Optional: change the color of the checkbox when selected
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.002),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
-                    //margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
-                    //child: CustomDropdown(options: [1, 2, 3, 4])),
-                  child: DropdownButtonFormField<String>(
+                  //margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
+                  //child: CustomDropdown(options: [1, 2, 3, 4])),
+                  child:
+                  DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(),
                     ),
@@ -95,9 +183,8 @@ class _optionsState extends State<options> {
                       });
                     },
                   ),
-                  ),
+                ),
               ),
-              SizedBox(height: 10.0),
               Container(
                 margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                 padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
@@ -116,9 +203,8 @@ class _optionsState extends State<options> {
                           color: Colors.black)
                       ),
                   onChanged: (value) {
-                    trajetLance.avis = value ;
+                    widget.trajetReserve.avis = value ;
                   },
-
                 ),
               ),
               SizedBox(height: screenHeight * 0.094),
@@ -135,13 +221,10 @@ class _optionsState extends State<options> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
-              widget.trajetReserve.afficher();
-              //monListe = await baseDeDonnee.chercherConductuersPossibles('', widget.trajetReserve);
-              c = ConducteurTrajet(utilisateur, trajetLance);
-              monListe.add(c);
-              print('nbPlaces = ${plusInformations.nbPlaces}');
+              //widget.trajetReserve.afficher();
+              //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => DriverListPage(monListe)));
+                  MaterialPageRoute(builder: (context) => PageDeRecherche(widget.trajetReserve)));
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),

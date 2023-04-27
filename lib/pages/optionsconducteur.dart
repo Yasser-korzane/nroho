@@ -1,6 +1,8 @@
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/TrajetLanceEstSauvegarder.dart';
 import 'package:appcouvoiturage/pages/lancer_reserver.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 
@@ -15,6 +17,7 @@ class _optionconducState extends State<optionconduc> {
   List<String> nbPlaces = ['1','2','3','4'];
   String ?selectedNb = '1';
     TextEditingController _coutController = TextEditingController();
+    BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -175,13 +178,6 @@ class _optionconducState extends State<optionconduc> {
                   child: TextFormField(
                     controller: _coutController ,
                     keyboardType: TextInputType.numberWithOptions(decimal: true),
-                    validator: (input) {
-                      if (input == null) {
-                        return 'Entrez votre numero de téléphone ';
-                      } else {
-                        return null;
-                      }
-                    },
                     style: TextStyle(fontFamily: 'Poppins'),
                     decoration: InputDecoration(
                         fillColor: Colors.grey.shade300,
@@ -204,14 +200,16 @@ class _optionconducState extends State<optionconduc> {
           width: size.width * 0.51,
           height: size.height * 0.048,
           child: ElevatedButton(
-            onPressed: () {
-              widget.trajetLance.coutTrajet = double.parse(_coutController.text);
-              /*Navigator.push(context, MaterialPageRoute(
+            onPressed: () async{
+              if (_coutController.text.isNotEmpty) widget.trajetLance.coutTrajet = double.parse(_coutController.text);
+              else widget.trajetLance.coutTrajet = 0.0;
+              //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetLance);
+              Navigator.push(context, MaterialPageRoute(
                 builder: (context) {
                   return TrajetLanceEstSauvegarder();
                 },
               ),
-              );*/
+              );
               widget.trajetLance.afficher();
             },
               style: ButtonStyle(

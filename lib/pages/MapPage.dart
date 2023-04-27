@@ -187,6 +187,7 @@ class _MywidState extends State<Mywid> {
                             readOnly: true,
                             decoration: InputDecoration(
                               hintText: 'Choisir un point de depart',
+                              hintStyle: TextStyle(fontFamily: 'Poppins'),
                               floatingLabelBehavior:
                               FloatingLabelBehavior.auto,
                               border: InputBorder.none,
@@ -231,6 +232,7 @@ class _MywidState extends State<Mywid> {
                             readOnly: true,
                             decoration: const InputDecoration(
                               hintText: 'Choisir une destination',
+                              hintStyle: TextStyle(fontFamily: 'Poppins'),
                               floatingLabelBehavior:
                               FloatingLabelBehavior.auto,
                               // remove the border of the TextField
@@ -310,11 +312,11 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
           else if (index == 1 && _isSelected[index] == false) statut = true ;
           else if (index == 1 && _isSelected[index] == true) statut = false ;
           else if (index == 0 && _isSelected[index] == true) statut = true ;
-          await BaseDeDonnee().updateUtilisateurStatut(FirebaseAuth.instance.currentUser!.uid, statut);
           setState(() {
             _isSelected[index] = !_isSelected[index];
             _isSelected[1 - index] = !_isSelected[1 - index];
           });
+          await BaseDeDonnee().updateUtilisateurStatut(FirebaseAuth.instance.currentUser!.uid, statut);
         },
         selectedColor: Colors.white,
         disabledBorderColor: Colors.blue,

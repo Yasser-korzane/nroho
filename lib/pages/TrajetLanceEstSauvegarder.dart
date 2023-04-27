@@ -1,5 +1,3 @@
-import 'package:appcouvoiturage/pages/MapPage.dart';
-import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:flutter/material.dart';
 class TrajetLanceEstSauvegarder extends StatelessWidget {
   @override

@@ -443,7 +443,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       );
                       await _baseDeDonnee.modifierUtilisateur(
                           FirebaseAuth.instance.currentUser!.uid, _utilisateur);
-                      Navigator.pop(context,);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Modifications avec succes'),
@@ -451,6 +450,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                       );
                     }
+                    Navigator.pop(context,);
                   },
                   child: Text(
                     'Valider les modifications',

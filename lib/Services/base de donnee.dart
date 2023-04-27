@@ -7,6 +7,7 @@ import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Notifications.dart';
+
 class ConducteurTrajet {
   Utilisateur utilisateur;
   Trajet trajetLance;
@@ -236,7 +237,7 @@ class BaseDeDonnee{
   }
   bool validerEmail(String email){
     final regex = RegExp(r'[0-9]');
-    return (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty);
+    return (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty && !email.contains(' '));
   }
   bool validatePhoneNumber(String phoneNumber) {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s|-'), '');
@@ -255,6 +256,8 @@ class BaseDeDonnee{
     }
     return double.tryParse(str) != null;
   }
+  /// *********************************************************************************************************
+
   Future<List<Utilisateur>> getUtilisateursByName(String name) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance

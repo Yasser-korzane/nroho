@@ -41,7 +41,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
   DateTime dateTime = DateTime.now();
-
+  Trajet _trajet = BaseDeDonnee().creerTrajetVide();
   Future getStatut() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -88,8 +88,25 @@ class _OuAllezVousState extends State<OuAllezVous> {
 
   @override
   Widget build(BuildContext context) {
-    BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
-    Trajet _trajet = _baseDeDonnee.creerTrajetVide();
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: 'idPlace',
+      description: 'une place',
+      secondaryText: 'Algerie',
+      mainText: 'Alger',
+    );
+    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
+      placeId: 'idPlace',
+      description: 'une place',
+      secondaryText: 'Algerie',
+      mainText: 'Bouira',
+    );
+    _trajet = _baseDeDonnee.creerTrajetVide();
+    _trajet.id = 'idTrajetLance';
+    _trajet.villeArrivee = 'Alger';
+    _trajet.villeDepart = 'Bouira';
+    _trajet.lieuDepart = lieuDepart;
+    _trajet.lieuArrivee = lieuArrive;
+    _trajet.villeIntermediaires = ['Kharouba','Harrach'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
     if (position != null) {
@@ -158,8 +175,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                   showSuggestion = true;
                                   querry = value;
                                   caseSelected = Selected.depart;
-                                  _trajet.villeDepart = value;
-                                  _trajet.lieuDepart = departData ;
                                 });
                               },
                               decoration: const InputDecoration(
@@ -189,8 +204,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                   showSuggestion = true;
                                   querry = value;
                                   caseSelected = Selected.arrivee;
-                                  _trajet.villeArrivee = value;
-                                  _trajet.lieuArrivee = ArriveData;
                                 });
                               },
                               decoration: const InputDecoration(
@@ -846,10 +859,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         content:
                         Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
                         )));
-              }*/
-              _trajet.dateDepart = dateTime;
-              if (statut == false) {
-                _trajet.afficher();
+              }*/ if (statut == false) {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) =>  options(_trajet)));
               } else {
