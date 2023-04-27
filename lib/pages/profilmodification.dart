@@ -68,6 +68,11 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 notificationData['id_conducteur'],
                 notificationData['id_pasagers'],
                 notificationData['id_trajet'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
               );
               _utilisateur.notifications.add(notification);
             }

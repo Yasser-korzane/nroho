@@ -46,6 +46,11 @@ class _DemandesPassagerState extends State<DemandesPassager> {
               notificationData['id_conducteur'],
               notificationData['id_pasagers'],
               notificationData['id_trajet'],
+              notificationData['nom'],
+              notificationData['prenom'],
+              notificationData['villeDepart'],
+              notificationData['villeArrive'],
+              notificationData['accepte_refuse'],
             );
             listeNotifications.add(notification);
             print(listeNotifications);

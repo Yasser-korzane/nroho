@@ -41,6 +41,11 @@ class BaseDeDonnee{
         'id_conducteur': notif.id_conducteur,
         'id_pasagers': notif.id_pasagers,
         'id_trajet': notif.id_trajet,
+        'nom': notif.nom ,
+        'prenom': notif.prenom,
+        'villeDepart': notif.villeDepart,
+        'villeArrive': notif.villeArrive,
+        'accepte_refuse': notif.accepte_refuse,
       }).toList(),
     });
   } // Fin creerUtilisateur
@@ -69,6 +74,11 @@ class BaseDeDonnee{
         'id_conducteur': notif.id_conducteur,
         'id_pasagers': notif.id_pasagers,
         'id_trajet': notif.id_trajet,
+        'nom': notif.nom ,
+        'prenom': notif.prenom,
+        'villeDepart': notif.villeDepart,
+        'villeArrive': notif.villeArrive,
+        'accepte_refuse': notif.accepte_refuse,
       }).toList(),
     });
   } // Fin creerUtilisateur
@@ -191,6 +201,11 @@ class BaseDeDonnee{
                 notificationData['id_conducteur'],
                 notificationData['id_pasagers'],
                 notificationData['id_trajet'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
               );
               utilisateur.notifications.add(notification);
             }
@@ -292,6 +307,11 @@ class BaseDeDonnee{
             notificationData['id_conducteur'],
             notificationData['id_pasagers'],
             notificationData['id_trajet'],
+            notificationData['nom'],
+            notificationData['prenom'],
+            notificationData['villeDepart'],
+            notificationData['villeArrive'],
+            notificationData['accepte_refuse'],
           );
           utilisateur.notifications.add(notification);
         }
@@ -405,6 +425,11 @@ class BaseDeDonnee{
                     notificationData['id_conducteur'],
                     notificationData['id_pasagers'],
                     notificationData['id_trajet'],
+                    notificationData['nom'],
+                    notificationData['prenom'],
+                    notificationData['villeDepart'],
+                    notificationData['villeArrive'],
+                    notificationData['accepte_refuse'],
                   );
                   utilisateur.notifications.add(notification);
                 }
