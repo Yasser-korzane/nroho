@@ -7,7 +7,7 @@ import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/pages/detailsconducteur.dart';
 import 'package:appcouvoiturage/pages/notificationPassager.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
-import 'package:appcouvoiturage/pages/trajetsLances.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -37,6 +37,7 @@ class _MywidState extends State<Mywid> {
   final Set<Polyline> _polylineSet = <Polyline>{};
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
+  bool statut = false ;
   @override
   void initState() {
     super.initState();
@@ -50,6 +51,20 @@ class _MywidState extends State<Mywid> {
         addMarker();
       },
     );
+  }
+
+  Future getStatut() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        statut = snapshot.data()!['statut'];
+      } else {
+        throw Exception('Failed to get statut');
+      }
+    });
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -266,11 +281,19 @@ class _MywidState extends State<Mywid> {
           top: screenHeight * 0.03,
           right: screenWidth * 0.04,
           child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DemandesPassagerResultat()));
+            onTap: ()async {
+              await getStatut();
+              if (!statut){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DemandesPassagerResultat()));
+              }else {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ListDemandePassager()));
+              }
             },
             child: const Icon(
               Icons.notifications_none_outlined,

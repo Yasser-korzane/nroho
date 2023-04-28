@@ -34,6 +34,7 @@ class _PageDeRechercheState extends State<PageDeRecherche> {
               Text('Page de Recherche'),
               ElevatedButton(onPressed: (){
                 //monListe = await baseDeDonnee.chercherConductuersPossibles('', widget.trajetReserve);
+                widget.trajetReserve.coutTrajet = 200.0;
                 c = ConducteurTrajet(BaseDeDonnee().creerUtilisateurVide(), widget.trajetReserve);
                 c.utilisateur.nom = 'Grine';
                 c.utilisateur.prenom = 'Mohammed';

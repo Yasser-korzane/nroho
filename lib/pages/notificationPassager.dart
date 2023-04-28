@@ -4,25 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
 import '../AppClasses/Notifications.dart';
-
-class DemandeResutlat {
-  final String firstName;
-  final String lastName;
-  final String placeDepar;
-
-  final String placeArrive;
-
-  final bool accept;
-
-  DemandeResutlat(
-      {required this.firstName,
-        required this.lastName,
-        required this.placeDepar,
-        required this.placeArrive,
-        required this.accept});
-}
 
 class DemandesPassagerResultat extends StatefulWidget {
   @override
@@ -30,63 +12,59 @@ class DemandesPassagerResultat extends StatefulWidget {
 }
 
 class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
-
-  final List<DemandeResutlat> Demandes = [
-    DemandeResutlat(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        accept: false),
-    DemandeResutlat(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        accept: true),
-    DemandeResutlat(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        accept: false),
-    DemandeResutlat(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        accept: true),
-    DemandeResutlat(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        accept: false),
-    DemandeResutlat(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        accept: true),
-  ];
-
+  List<Notifications> listeNotifications = [];
+  Future _getNotifications() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          List<dynamic> notificationsData = snapshot.data()!['notifications'];
+          for (var notificationData in notificationsData) {
+            Notifications notification = Notifications(
+              notificationData['id_conducteur'],
+              notificationData['id_pasagers'],
+              notificationData['id_trajet'],
+              notificationData['nom'],
+              notificationData['prenom'],
+              notificationData['villeDepart'],
+              notificationData['villeArrive'],
+              notificationData['accepte_refuse'],
+            );
+            listeNotifications.add(notification);
+            print(listeNotifications);
+          }
+        });
+      }
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getNotifications();
+  }
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-    return Demandes.isEmpty
+    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+    listeNotifications.add(notifications);
+    return listeNotifications.isEmpty
         ? Scaffold(
         backgroundColor: Colors.grey.shade300,
         body: Center(
             child: Text(
-              "pas de notifications maintenant",
+              "Pas de notifications maintenant",
               style: TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black54),
+                  color: Colors.black45),
             )))
         : Scaffold(
       appBar: AppBar(
@@ -114,9 +92,9 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
 
       backgroundColor: Colors.grey.shade300,
       body: ListView.builder(
-        itemCount: Demandes.length,
+        itemCount: listeNotifications.length,
         itemBuilder: (context, index) {
-          final demande = Demandes[index];
+          final demande = listeNotifications[index];
           return Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.035,
@@ -139,7 +117,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                           padding: EdgeInsets.all(screenWidth * 0.01),
                           child: ListTile(
                             title: Text(
-                              demande.firstName+' '+demande.lastName,
+                              '${demande.nom} ${demande.prenom}',
                               style: TextStyle(fontFamily: 'Poppins'),
                             ),
                             leading: Container(
@@ -158,12 +136,12 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'De : '+demande.placeDepar,
+                                  'De : '+demande.villeDepart,
                                   style:
                                   TextStyle(fontFamily: 'Poppins'),
                                 ),
                                 Text(
-                                  'A : '+demande.placeArrive,
+                                  'A : '+demande.villeArrive,
                                   style:
                                   TextStyle(fontFamily: 'Poppins'),
                                 ),
@@ -183,9 +161,9 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                                 fontFamily: 'Poppins',
                               ),),
                               Text(
-                                demande.accept ? 'Acceptee' : 'Refuse', // Ternary operator to conditionally display text
+                                demande.accepte_refuse ? 'Acceptee' : 'Refuse', // Ternary operator to conditionally display text
                                 style: TextStyle(
-                                  color: demande.accept ? Colors.green : Colors.red, // Ternary operator to conditionally set text color
+                                  color: demande.accepte_refuse ? Colors.green : Colors.red, // Ternary operator to conditionally set text color
                                   fontSize: 16.0, // Replace with your own font size
                                 ),
                               )

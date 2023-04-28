@@ -4,25 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
 import '../AppClasses/Notifications.dart';
 
-class Demande {
-  final String firstName;
-  final String lastName;
-  final String placeDepar;
+/**
+    Je doit afficher pour le conducteur :
+      -Le nom et prenom du passager
+      - ville depart et ville arrivee
+      - Le commentaire
+ **/
 
-  final String placeArrive;
-
-  final String phone;
-
-  Demande(
-      {required this.firstName,
-      required this.lastName,
-      required this.placeDepar,
-      required this.placeArrive,
-      required this.phone});
-}
 
 class DemandesPassager extends StatefulWidget {
   @override
@@ -31,7 +21,6 @@ class DemandesPassager extends StatefulWidget {
 
 class _DemandesPassagerState extends State<DemandesPassager> {
   List<Notifications> listeNotifications = [];
-
   Future _getNotifications() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -66,63 +55,25 @@ class _DemandesPassagerState extends State<DemandesPassager> {
     super.initState();
     _getNotifications();
   }
-
-  final List<Demande> Demandes = [
-    Demande(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-    Demande(
-        firstName: 'yasser',
-        lastName: 'korzane',
-        placeDepar: 'Maoklane - Setif',
-        placeArrive: 'OuedSmar - Alger',
-        phone: '+213665300362'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
+    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+    //listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(
             backgroundColor: Colors.grey.shade300,
             body: Center(
                 child: Text(
-              "pas de notifications maintenant",
+              "Pas de notifications maintenant",
               style: TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black54),
+                  color: Colors.black45),
             )))
         : Scaffold(
             backgroundColor: Colors.grey.shade300,
@@ -166,7 +117,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                   padding: EdgeInsets.all(screenWidth * 0.01),
                                   child: ListTile(
                                     title: Text(
-                                      'id Conducteur : ${demande.id_conducteur}',
+                                      '${demande.nom} ${demande.prenom}',
                                       style: TextStyle(fontFamily: 'Poppins'),
                                     ),
                                     leading: Container(
@@ -185,12 +136,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'De : idPassager : ${demande.id_pasagers}',
+                                          'Ville départ : ${demande.villeDepart}',
                                           style:
                                               TextStyle(fontFamily: 'Poppins'),
                                         ),
                                         Text(
-                                          'A : idTrajet : ${demande.id_trajet}',
+                                          'Ville arrivée : ${demande.villeArrive}',
                                           style:
                                               TextStyle(fontFamily: 'Poppins'),
                                         ),

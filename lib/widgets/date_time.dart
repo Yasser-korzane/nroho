@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DateTimePickerRow extends StatefulWidget {
-  DateTime dateTime ;
-  DateTimePickerRow(this.dateTime);
+  DateTime monDateEtTime ;
+  DateTimePickerRow(this.monDateEtTime);
   @override
   _DateTimePickerRowState createState() => _DateTimePickerRowState();
 }
@@ -28,7 +28,10 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        widget.dateTime = _selectedDate! ;
+        widget.monDateEtTime = DateTime(
+            picked.year, picked.month, picked.day,
+            _selectedTime!.hour, _selectedTime!.minute
+        );
       });
     }
   }
@@ -41,16 +44,17 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
     if (picked != null && picked != _selectedTime) {
       setState(() {
         _selectedTime = picked;
-        widget.dateTime = DateTime(_selectedDate!.year,_selectedDate!.month,_selectedTime!.hour,_selectedTime!.minute);
+        widget.monDateEtTime = DateTime(
+            _selectedDate!.year, _selectedDate!.month, _selectedDate!.day,
+            picked.hour, picked.minute
+        );
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return Padding(

@@ -51,14 +51,9 @@ class DriverListPage extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                       SizedBox(width: screenWidth*0.04),
-                      Column(children: [
                         Text('${conducteurTrajet.utilisateur.nom} ${conducteurTrajet.utilisateur.prenom}',
                           style: TextStyle( color: Color(0xff137C8B),fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
                         ),
-                        Text(conducteurTrajet.utilisateur.numeroTelephone,
-                          style: TextStyle( color: Color(0xff7A90A4),fontSize: 14,fontWeight: FontWeight.bold,fontFamily: 'Popping'),
-                        ),
-                      ]),
                     ]),
                     Row(
                       children: [
@@ -84,12 +79,12 @@ class DriverListPage extends StatelessWidget {
                           flex: 4,
                           child: Column(
                             //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            //crossAxisAlignment:CrossAxisAlignment.start ,
+                            crossAxisAlignment:CrossAxisAlignment.end ,
                             children: [
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    conducteurTrajet.trajetLance.villeDepart,
+                                    '${conducteurTrajet.trajetLance.villeDepart}\n${conducteurTrajet.trajetLance.dateDepart.year}-${conducteurTrajet.trajetLance.dateDepart.month}-${conducteurTrajet.trajetLance.dateDepart.day} à ${conducteurTrajet.trajetLance.dateDepart.hour}:${conducteurTrajet.trajetLance.dateDepart.minute}',
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
@@ -101,13 +96,21 @@ class DriverListPage extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    conducteurTrajet.trajetLance.villeArrivee,
+                                    '${conducteurTrajet.trajetLance.villeArrivee}\n${conducteurTrajet.trajetLance.tempsDePause.year}-${conducteurTrajet.trajetLance.tempsDePause.month}-${conducteurTrajet.trajetLance.tempsDePause.day} à ${conducteurTrajet.trajetLance.tempsDePause.hour}:${conducteurTrajet.trajetLance.tempsDePause.minute}',
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
                                   },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text('Cout du Trajet : ${conducteurTrajet.trajetLance.coutTrajet} DA',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                  ),
                                 ),
                               ),
                             ],
