@@ -13,26 +13,26 @@ class Details extends StatelessWidget {
 
 
   final List<String> commentaires=[
-  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
 
   ];
 
@@ -141,7 +141,7 @@ class Details extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: 5,
+                  flex: 6,
                   child: Text("Marque de voiture = ",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
@@ -229,6 +229,53 @@ class Details extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                Expanded(
+                    child:Column(
+                      children: [
+                        Container(
+                          height: screenHeight*0.13,
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.comment_outlined),
+                          iconSize: 30,
+                          onPressed: () {
+                            showModalBottomSheet(
+                              isDismissible: true,
+                              context: context,
+                              builder: (context) => Builder(
+                                builder: (context) {
+                                  if (commentaires.isEmpty) {
+                                    // If the list is empty, display a message
+                                    return Center(child: Text('This conducteur has no commentaires'));
+                                  } else {
+                                    // If the list is not empty, display the commentaires in a ListView
+                                    return ListView.separated(
+                                      separatorBuilder: (context, index) => Divider(
+                                        thickness: 1.0,
+                                        color: Colors.grey[300],
+                                      ),
+                                      itemCount: commentaires.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(commentaires[index],style: TextStyle(
+                                            fontFamily: 'poppins',
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 14,
+
+                                          ),),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    )
                 )
               ],
             ),
@@ -303,42 +350,10 @@ class Details extends StatelessWidget {
             SizedBox(height: screenHeight*0.06,),
             ElevatedButton(
               onPressed: () {
-                showModalBottomSheet(
-                  isDismissible: true,
-                  context: context,
-                  builder: (context) => Builder(
-                    builder: (context) {
-                      if (commentaires.isEmpty) {
-                        // If the list is empty, display a message
-                        return Center(child: Text('This conducteur has no commentaires'));
-                      } else {
-                        // If the list is not empty, display the commentaires in a ListView
-                        return ListView.separated(
-                          separatorBuilder: (context, index) => Divider(
-                            thickness: 1.0,
-                            color: Colors.grey[300],
-                          ),
-                          itemCount: commentaires.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(commentaires[index],style: TextStyle(
-                                fontFamily: 'poppins',
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14,
-
-                              ),),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                );
               },
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.25)),
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(vertical: screenHeight*0.001,horizontal:screenWidth*0.23)),
                 backgroundColor: MaterialStateProperty.all<Color>( Color(0xff137c8b)),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
