@@ -13,11 +13,26 @@ class Details extends StatelessWidget {
 
 
   final List<String> commentaires=[
-  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  // 'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
+  //   'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
 
   ];
 

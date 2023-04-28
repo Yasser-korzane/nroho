@@ -1,8 +1,8 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/TrajetLanceEstSauvegarder.dart';
-import 'package:appcouvoiturage/pages/lancer_reserver.dart';
-import 'package:appcouvoiturage/widgets/selectabletext.dart';
+import 'package:appcouvoiturage/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 
@@ -33,7 +33,6 @@ class _optionconducState extends State<optionconduc> {
             icon: const Icon(Icons.chevron_left, color: Colors.black)),
         title: Text('Plus d\’informations',
           style: TextStyle(fontWeight: FontWeight.normal,
-            fontSize: screenHeight*0.035,
             fontFamily: 'Poppins',),),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -92,7 +91,7 @@ class _optionconducState extends State<optionconduc> {
                       children: [
                         Text('Acceptez vous les bagages volumineux ?',
                           style: TextStyle(
-                            fontSize: screenHeight*0.016,
+                            fontSize: screenHeight*0.013,
                             fontFamily: 'Poppins',
                           ),),
                         Checkbox(
@@ -200,19 +199,38 @@ class _optionconducState extends State<optionconduc> {
           width: size.width * 0.51,
           height: size.height * 0.048,
           child: ElevatedButton(
-            onPressed: () async{
-              if (_coutController.text.isNotEmpty) widget.trajetLance.coutTrajet = double.parse(_coutController.text);
-              else widget.trajetLance.coutTrajet = 0.0;
-              //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetLance);
-              Navigator.push(context, MaterialPageRoute(
+            onPressed: () async {
+              if (_coutController.text.isNotEmpty) {
+                widget.trajetLance.coutTrajet = double.parse(_coutController.text);
+              } else {
+                widget.trajetLance.coutTrajet = 0.0;
+              }
+              Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+              showDialog(
+                context: context,
+                barrierDismissible: false,
                 builder: (context) {
-                  return TrajetLanceEstSauvegarder();
+                  return AlertDialog(
+                    title: Text("Trajet lance"),
+                    content: Text("Votre trajet a ete bien lance"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetLance);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => TrajetLanceEstSauvegarder()),
+                          // );
+                        },
+                      ),
+                    ],
+                  );
                 },
-              ),
               );
-              widget.trajetLance.afficher();
             },
-              style: ButtonStyle(
+            style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
             ),
             child: const Text(

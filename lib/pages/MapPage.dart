@@ -4,7 +4,7 @@ import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/AccepterPassager.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
-import 'package:appcouvoiturage/pages/details.dart';
+import 'package:appcouvoiturage/pages/detailsconducteur.dart';
 import 'package:appcouvoiturage/pages/notificationPassager.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:appcouvoiturage/pages/trajetsLances.dart';

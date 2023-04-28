@@ -49,7 +49,7 @@ class _optionsState extends State<options> {
             icon: const Icon(Icons.arrow_back, color: Color(0xff344D59))
         ),
         title: Text('Plus d’informations',
-            style: TextStyle(color: Color(0xff344D59),fontFamily: 'Poppins')),        backgroundColor: Colors.transparent,
+            style: TextStyle(color: Color(0xff344D59),fontFamily: 'Poppins',)),        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
       ),
@@ -74,7 +74,7 @@ class _optionsState extends State<options> {
                     children: [
                       Text('Acceptez-vous un conducteur qui fume ?',
                         style: TextStyle(
-                          fontSize: screenHeight*0.0158,
+                          fontSize: screenHeight*0.0135,
                           fontFamily: 'Poppins',
                         ),),
                       //SizedBox(width: screenWidth*0.35,),
