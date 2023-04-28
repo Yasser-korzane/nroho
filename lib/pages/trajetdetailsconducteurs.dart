@@ -289,7 +289,7 @@ class Details extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 showModalBottomSheet(
-                  isDismissible: false,
+                  isDismissible: true,
                   context: context,
                   builder: (context) => Builder(
                     builder: (context) {
