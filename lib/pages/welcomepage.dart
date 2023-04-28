@@ -1,6 +1,6 @@
+import 'package:appcouvoiturage/Services/wrapper.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui; // import dart:ui with a prefix
-import 'package:flutter/services.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key});
@@ -10,7 +10,7 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage>
-  with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
   final heightDevice = ui.window.physicalSize.height;
@@ -21,22 +21,30 @@ class _WelcomePageState extends State<WelcomePage>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 1500),
     );
     _animation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeIn,
     );
     _animationController.forward();
+    _animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (_) => Wrapper(),
+          ),
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    //SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       home: SafeArea(
         child: Scaffold(
-          body: Column(
+          body: Stack(
             children: [
               ClipPath(
                 clipper: CustomClipper1(),
@@ -46,8 +54,8 @@ class _WelcomePageState extends State<WelcomePage>
                 ),
               ),
               Center(
-                child: ScaleTransition(
-                  scale: _animation,
+                child: FadeTransition(
+                  opacity: _animation,
                   child: Image(
                     image: AssetImage('assets/images/logo.png'),
                     height: heightDevice / 5,
@@ -55,7 +63,6 @@ class _WelcomePageState extends State<WelcomePage>
                   ),
                 ),
               ),
-           
             ],
           ),
         ),
