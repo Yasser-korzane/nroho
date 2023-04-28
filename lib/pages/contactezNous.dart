@@ -95,7 +95,7 @@ class ContactUs extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '  Grine Mohammed',
+                    '        Grine Mohammed',
                     style: TextStyle(
                         fontSize: screenWidth * 0.0583,
                         fontWeight: FontWeight.bold,
@@ -108,6 +108,7 @@ class ContactUs extends StatelessWidget {
                   ),
                   Text(
                       'Développeur mobile (Flutter , Java , Kotlin)',
+                    textAlign: TextAlign.center,
                     style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                   Text(

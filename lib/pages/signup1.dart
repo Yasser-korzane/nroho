@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/Verification.dart';
@@ -45,7 +46,7 @@ class _SinupState extends State<Sinup> {
   /*********************************************** Les Fonctions **********************************************/
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse,String numero) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, numero, Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[],[]
     );
   }
   /** ************************************************************************************************** **/
@@ -121,10 +122,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Nom',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Enterez votre nom',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   /* color: Colors.grey[800],
                                         fontSize: 14,
                                       fontFamily: 'Poppins'*
@@ -161,10 +166,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Prénom',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Entrez votre prénom',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                 ),
@@ -195,10 +204,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Numéro de Téléphone',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Entrez votre numéro de téléphone',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   /*  color: Colors.grey[800],
                                       fontSize: 14,
                                       fontFamily: 'Poppins'
@@ -234,10 +247,14 @@ class _SinupState extends State<Sinup> {
                                   ),
 
                                   labelText: 'Email',
+                                  labelStyle: TextStyle(
+                                      fontFamily:'Poppins'
+                                  ),
                                   hintText: 'Entrez votre adresse mail de l\'esi',
                                   hintStyle: TextStyle(
                                       color: Colors.grey[700],
-                                      fontSize: 14),
+                                      fontSize: 14,                          fontFamily:'Poppins'
+                                  ),
                                   /* color: Colors.grey[800],
                                       fontSize: 14,
                                       fontFamily: 'Poppins'),*/
@@ -272,10 +289,15 @@ class _SinupState extends State<Sinup> {
                                             Radius.circular(12)),
                                       ),
                                       labelText: 'Mot de passe',
+                                      labelStyle: TextStyle(
+                                          fontFamily:'Poppins'
+                                      ),
                                       hintText: 'Entrez votre mot de passe ',
                                       hintStyle: TextStyle(
                                           color: Colors.grey[700],
-                                          fontSize: 14),
+                                          fontSize: 14,
+                                          fontFamily:'Poppins'
+                                      ),
                                       /* color: Colors.grey[800],
                                           fontSize: 14,
                                           fontFamily: 'Poppins'),*/
@@ -407,7 +429,7 @@ class _SinupState extends State<Sinup> {
                             ),
                             children: [
                               TextSpan(
-                                text: ' Se Connecter',
+                                text: ' Connectez-Vous',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 12.0,

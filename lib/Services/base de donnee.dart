@@ -6,6 +6,13 @@ import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
+import '../AppClasses/Notifications.dart';
+
+class ConducteurTrajet {
+  Utilisateur utilisateur;
+  Trajet trajetLance;
+  ConducteurTrajet(this.utilisateur, this.trajetLance);
+}
 
 class BaseDeDonnee{
   final CollectionReference utilisateurCollection = FirebaseFirestore.instance.collection('Utilisateur');
@@ -30,6 +37,16 @@ class BaseDeDonnee{
         'policeAssurance': utilisateur.vehicule.policeAssurance,
       },
       'statut': utilisateur.statut,
+      'notifications': utilisateur.notifications.map((notif) => {
+        'id_conducteur': notif.id_conducteur,
+        'id_pasagers': notif.id_pasagers,
+        'id_trajet': notif.id_trajet,
+        'nom': notif.nom ,
+        'prenom': notif.prenom,
+        'villeDepart': notif.villeDepart,
+        'villeArrive': notif.villeArrive,
+        'accepte_refuse': notif.accepte_refuse,
+      }).toList(),
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
@@ -40,7 +57,6 @@ class BaseDeDonnee{
       'prenom': utilisateur.prenom,
       'email': utilisateur.email,
       'numeroTelephone': utilisateur.numeroTelephone,
-      //'motDePasse': utilisateur.motDePasse,
       'evaluation': {
         'feedback': utilisateur.evaluation.feedback,
         'etoiles': utilisateur.evaluation.etoiles,
@@ -54,45 +70,97 @@ class BaseDeDonnee{
         'policeAssurance': utilisateur.vehicule.policeAssurance,
       },
       'statut': utilisateur.statut,
+      'notifications': utilisateur.notifications.map((notif) => {
+        'id_conducteur': notif.id_conducteur,
+        'id_pasagers': notif.id_pasagers,
+        'id_trajet': notif.id_trajet,
+        'nom': notif.nom ,
+        'prenom': notif.prenom,
+        'villeDepart': notif.villeDepart,
+        'villeArrive': notif.villeArrive,
+        'accepte_refuse': notif.accepte_refuse,
+      }).toList(),
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
     return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[],[]
     );
+  }
+  Trajet creerTrajetVide(){
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
+    );
+    PlacesAutoCompleteResult lieuDepart = lieuArrive;
+    DateTime date = DateTime.now();DateTime time = DateTime.now();
+    return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
   }
   //------------------------------------------------------------------------------------------
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'statut': newStatut});
   }
-  //------------------------------------------------------------------------------------------
+  Future<void> ajouterNotification(String uidRecepteur, Notifications not) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uidRecepteur);
+    Map<String, dynamic> notMap = not.toMap();
+    await utilisateurDocRef.update({
+      'notifications': FieldValue.arrayUnion([notMap]),
+    });
+  }
+    //------------------------------------------------------------------------------------------
   Future<void> saveTrajetLanceAsSubcollection(String uid, Trajet trajetLance) async {
     Map<String, dynamic> trajetLanceData = trajetLance.toMap();
-    await FirebaseFirestore.instance
+    DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .collection('trajetsLances')
         .add(trajetLanceData);
+    trajetLance.id = docRef.id;
+    trajetLanceData = trajetLance.toMap();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsLances')
+        .doc(docRef.id)
+        .set(trajetLanceData);
   }
   //------------------------------------------------------------------------------------------
   Future<void> saveTrajetReserveAsSubcollection(String uid, Trajet trajetReserve) async {
     Map<String, dynamic> trajetReserveData = trajetReserve.toMap();
-    await FirebaseFirestore.instance
+    DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .collection('trajetsReserves')
         .add(trajetReserveData);
+    trajetReserve.id = docRef.id;
+    trajetReserveData = trajetReserve.toMap();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsReserves')
+        .doc(docRef.id)
+        .set(trajetReserveData);
   }
   //------------------------------------------------------------------------------------------
   Future<void> saveHistoriqueAsSubcollection(String uid, Trajet historique)async{
     Map<String, dynamic> historiqueData = historique.toMap();
-    await FirebaseFirestore.instance
+    DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .collection('Historique')
         .add(historiqueData);
+    historique.id = docRef.id;
+    historiqueData = historique.toMap();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('Historique')
+        .doc(docRef.id)
+        .set(historiqueData);
   }
   //------------------------------------------------------------------------------------------
   Future<void> sauvegarderVillesIntermediaires(String uid, List<String> villes)async{
@@ -113,7 +181,6 @@ class BaseDeDonnee{
             utilisateur.prenom = snapshot.data()!['prenom'];
             utilisateur.email = snapshot.data()!['email'];
             utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
-            //utilisateur.motDePasse = snapshot.data()!['motDePasse'];
             utilisateur.evaluation = Evaluation(
               List<String>.from(snapshot.data()!['evaluation']['feedback']),
               snapshot.data()!['evaluation']['etoiles'],
@@ -127,6 +194,21 @@ class BaseDeDonnee{
               snapshot.data()!['vehicule']['policeAssurance'],
             );
             utilisateur.statut = snapshot.data()!['statut'];
+            utilisateur.notifications = [];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajet'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
+              );
+              utilisateur.notifications.add(notification);
+            }
             //tests by printing
         } else { // end snapshot exist
           throw Exception("Utilisateur does not exist.");
@@ -170,7 +252,7 @@ class BaseDeDonnee{
   }
   bool validerEmail(String email){
     final regex = RegExp(r'[0-9]');
-    return (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty);
+    return (email.endsWith('@esi.dz') && !regex.hasMatch(email) && email.isNotEmpty && !email.contains(' '));
   }
   bool validatePhoneNumber(String phoneNumber) {
     phoneNumber = phoneNumber.replaceAll(RegExp(r'\s|-'), '');
@@ -189,6 +271,8 @@ class BaseDeDonnee{
     }
     return double.tryParse(str) != null;
   }
+  /// *********************************************************************************************************
+
   Future<List<Utilisateur>> getUtilisateursByName(String name) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -217,6 +301,20 @@ class BaseDeDonnee{
           data['vehicule']['policeAssurance'],
         );
         utilisateur.statut = data['statut'];
+        List<dynamic> notificationsData = data['notifications'];
+        for (var notificationData in notificationsData) {
+          Notifications notification = Notifications(
+            notificationData['id_conducteur'],
+            notificationData['id_pasagers'],
+            notificationData['id_trajet'],
+            notificationData['nom'],
+            notificationData['prenom'],
+            notificationData['villeDepart'],
+            notificationData['villeArrive'],
+            notificationData['accepte_refuse'],
+          );
+          utilisateur.notifications.add(notification);
+        }
         utilisateurs.add(utilisateur);
       }
       return utilisateurs;
@@ -225,22 +323,9 @@ class BaseDeDonnee{
     }
   }
 
-  Future chercherConductuersPossibles(String uid , String idTrajetReserve) async {
+  Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
     /// 1) recuperer le trajet reserve par le passager --------------------
-    DateTime date = DateTime.now();DateTime time = DateTime.now();
-    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    Trajet trajetReserve = Trajet(date, time, 0, '', '',lieuDepart,lieuArrive, [], PlusInformations(false, false, false, 1), false, '', '', false);
+    /*Trajet trajetReserve = creerTrajetVide();
     await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
@@ -278,6 +363,7 @@ class BaseDeDonnee{
         trajetReserve.probleme = snapshot.data()!['probleme'];
       }else print('ce trajetReserve n\'exist pas');
     }); // fin recuperation du trajetReserve
+    */
     DateTime TempsPmoins10 = trajetReserve.dateDepart.subtract(Duration(minutes: 10));
     DateTime TempsPplus20 = trajetReserve.dateDepart.add(Duration(minutes: 20));
     trajetReserve.afficher();
@@ -285,7 +371,8 @@ class BaseDeDonnee{
     print("TempsPplus20 : ${TempsPplus20.year}/${TempsPplus20.month}/${TempsPplus20.day}/${TempsPplus20.hour}/${TempsPplus20.minute}");
     /// 2) rechercher les utilisateurs (le conducteurs) qui ont un trajetLance similaire au trajetReserve -------
     try {
-      List<Utilisateur> utilisateurs = [];
+      //List<Utilisateur> utilisateurs = [];
+      List<ConducteurTrajet> listConducteurTrajet = [];
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Utilisateur')
           .where('identifiant',isNotEqualTo: uid)
@@ -313,6 +400,7 @@ class BaseDeDonnee{
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
+                Trajet trajetLance = creerTrajetVide();
                 utilisateur.identifiant = dataUtilisateur['identifiant'];
                 utilisateur.nom = dataUtilisateur['nom'];
                 utilisateur.prenom = dataUtilisateur['prenom'];
@@ -331,17 +419,59 @@ class BaseDeDonnee{
                   dataUtilisateur['vehicule']['policeAssurance'],
                 );
                 utilisateur.statut = dataUtilisateur['statut'];
-                utilisateurs.add(utilisateur);
-                print("hello");
+                List<dynamic> notificationsData = dataUtilisateur['notifications'];
+                for (var notificationData in notificationsData) {
+                  Notifications notification = Notifications(
+                    notificationData['id_conducteur'],
+                    notificationData['id_pasagers'],
+                    notificationData['id_trajet'],
+                    notificationData['nom'],
+                    notificationData['prenom'],
+                    notificationData['villeDepart'],
+                    notificationData['villeArrive'],
+                    notificationData['accepte_refuse'],
+                  );
+                  utilisateur.notifications.add(notification);
+                }
                 utilisateur.afficher();
+                trajetLance.dateDepart = data['dateDepart'].toDate();
+                trajetLance.tempsDePause = data['tempsDePause'].toDate();
+                trajetLance.coutTrajet = data['coutTrajet'] as double;
+                trajetLance.villeDepart = data['villeDepart'];
+                trajetLance.villeArrivee = data['villeArrivee'];
+                /*trajetLance.lieuDepart = PlacesAutoCompleteResult(
+            placeId: data['lieuDepart']['placeId'],
+            description: data['lieuDepart']['description'],
+            secondaryText: data['lieuDepart']['secondaryText'],
+            mainText: data['lieuDepart']['mainText'],
+        );
+        trajetLance.lieuArrivee = PlacesAutoCompleteResult(
+            placeId: data['lieuArrivee']['placeId'],
+            description: data['lieuArrivee']['description'],
+            secondaryText: data['lieuArrivee']['secondaryText'],
+            mainText: data['lieuArrivee']['mainText'],
+        );*/
+                trajetLance.villeIntermediaires = List<String>.from(data['villeIntermediaires']);
+                trajetLance.plusInformations = PlusInformations(
+                    data['plusInformations']['fumeur'],
+                    data['plusInformations']['bagage'],
+                    data['plusInformations']['animaux'],
+                    data['plusInformations']['nbPlaces']);
+                trajetLance.trajetEstValide = data['trajetEstValide'];
+                trajetLance.confort = data['confort'];
+                trajetLance.avis = data['avis'];
+                trajetLance.probleme = data['probleme'];
+                ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
+                listConducteurTrajet.add(conducteurTrajet);
               }else { print('Les conditions ne sont pas verifier pour ${data['villeDepart']} ${data['villeArrivee']}');
             }// end if conditions de recherche
           } // end for trajetLanceDoc
         }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur
       } // end for utilisateurDoc
       print('Resultat de recherche : ');
-      for (Utilisateur u in utilisateurs) u.afficher();
-      return utilisateurs;
+      //for (Utilisateur u in utilisateurs) u.afficher();
+      for(ConducteurTrajet c in listConducteurTrajet) c.utilisateur.afficher();
+      return listConducteurTrajet;
     } catch (e) {
       throw Exception("Failed to get utilisateurs : $e");
     }

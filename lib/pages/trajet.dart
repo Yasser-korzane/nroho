@@ -5,11 +5,11 @@ import 'package:dio/dio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/widgets/date_time.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import 'package:geocoding/geocoding.dart';
+import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 import 'optionsconducteur.dart';
 import 'optionspassager.dart';
@@ -28,7 +28,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _arriveController = TextEditingController();
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   bool statut = false;
-
   String querry = "";
   bool fromMap = false;
   String? arrive, depart;
@@ -40,7 +39,44 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
+  DateTime monDateEtTime = DateTime.now();
+  DateTime monDateEtTime2 = DateTime.now();
+  Trajet _trajet = BaseDeDonnee().creerTrajetVide();
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2023, 4),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        monDateEtTime = DateTime(
+            picked.year, picked.month, picked.day,
+            _selectedTime!.hour, _selectedTime!.minute
+        );
+      });
+    }
+  }
 
+  Future<void> _selectTime() async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+        monDateEtTime2 = DateTime(
+            _selectedDate!.year, _selectedDate!.month, _selectedDate!.day,
+            picked.hour, picked.minute
+        );
+      });
+    }
+  }
   Future getStatut() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -54,13 +90,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
       }
     });
   }
-
   Future<dynamic> getPlaceFromId(String placeID) async {
     var response = await Dio().get(
         "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
     return response.data;
   }
-
   Future<dynamic> getPredictions(String querry) async {
     List<PlacesAutoCompleteResult>? response;
     if (querry != "") {
@@ -68,13 +102,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
     }
     return response;
   }
-
   void setCustomMarker() {
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration.empty, "assets/images/marker.png")
         .then((icon) => customMarker = icon);
   }
-
   @override
   void initState() {
     super.initState();
@@ -83,10 +115,33 @@ class _OuAllezVousState extends State<OuAllezVous> {
     setCustomMarker();
     _placesService.initialize(
         apiKey: "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
+    _selectedDate = DateTime.now();
+    _selectedTime = TimeOfDay.now();
   }
-
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
+    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
+      placeId: 'idPlace',
+      description: 'une place',
+      secondaryText: 'Algerie',
+      mainText: 'Alger',
+    );
+    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
+      placeId: 'idPlace',
+      description: 'une place',
+      secondaryText: 'Algerie',
+      mainText: 'Bouira',
+    );
+    _trajet = _baseDeDonnee.creerTrajetVide();
+    _trajet.id = 'idTrajetLance';
+    _trajet.villeArrivee = 'Alger';
+    _trajet.villeDepart = 'Bouira';
+    _trajet.lieuDepart = lieuDepart;
+    _trajet.lieuArrivee = lieuArrive;
+    _trajet.villeIntermediaires = ['Kharouba','Harrach'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
     if (position != null) {
@@ -167,7 +222,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 fillColor: Colors.white,
                                 filled: true,
                                 hintText: 'Départ',
-                                labelText: 'Départ',
                               ),
                             ),
                           ),
@@ -197,14 +251,66 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 fillColor: Colors.white,
                                 filled: true,
                                 hintText: 'Arrivée',
-                                labelText: 'Arrivée',
                               ),
                             ),
                           ),
                         ]),
                       ]),
                   SizedBox(height: size.height * 0.01),
-                  const DateTimePickerRow(),
+                  //DateTimePickerRow(monDateEtTime),
+              Padding(
+                padding: EdgeInsets.fromLTRB(screenWidth*0.07, 0, screenWidth*0.075, 0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: _selectDate,
+                        icon: Icon(Icons.calendar_today),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: TextField(
+                        readOnly: true,
+                        onTap: _selectDate,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(top: screenHeight*0.00001,left: screenWidth*0.04),
+                          hintText: _selectedDate == null
+                              ? 'Select a date'
+                              : '${_selectedDate!.toString().split(" ")[0]}',
+                          border: OutlineInputBorder(),
+                          fillColor: Colors.white,
+                          filled: true,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: IconButton(
+                        onPressed: _selectTime,
+                        icon: Icon(Icons.access_time),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: TextFormField(
+                        readOnly: true,
+                        onTap: _selectTime,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(top: screenHeight*0.0001,left: screenWidth*0.04),
+                          hintText: _selectedTime == null
+                              ? 'Select a time'
+                              : '${_selectedTime!.format(context)}',
+                          border: OutlineInputBorder(),
+                          fillColor: Colors.white,
+                          filled: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
                 ],
               ),
             ),
@@ -229,7 +335,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             builder: (context) {
                               return const MapPage();
                             },
-                          ));
+                          )
+                          );
                         });
                       },
                       leading: const Icon(
@@ -841,14 +948,16 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
                         )));
               }*/
+              _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
+              _trajet.afficher();
               if (statut == false) {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const options()));
+                    MaterialPageRoute(builder: (context) =>  options(_trajet)));
               } else {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const optionconduc()));
+                        builder: (context) =>  optionconduc(_trajet)));
               }
             },
             style: ButtonStyle(

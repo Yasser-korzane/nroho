@@ -36,7 +36,7 @@ class _CommancerState extends State<Commancer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'NRO7O',
+                          'nroho',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 32.0,
@@ -46,10 +46,10 @@ class _CommancerState extends State<Commancer> {
                         ),
                         SizedBox(height: screenHeight*0.001),
                         Text(
-                          'La premiére et la meilleur application de covoiturage dans l\'Algérie',
+                          'La premiére application de covoiturage en Algérie',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 16.0,
+                            fontSize: 13.0,
                             fontWeight: FontWeight.normal,
                             fontFamily: 'Poppins',
                           ),
@@ -80,7 +80,7 @@ class _CommancerState extends State<Commancer> {
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(),));
                             },
-                            child: Center(child: Text('Connecter', style: TextStyle(color: Colors.white))),
+                            child: Center(child: Text('Se Connecter', style: TextStyle(color: Colors.white))),
                           ),
                         ),
                         Container(

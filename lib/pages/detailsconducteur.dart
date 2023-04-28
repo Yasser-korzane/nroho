@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-class details extends StatelessWidget {
-  const details({Key? key}) : super(key: key);
+class detailsConducteur extends StatelessWidget {
+  const detailsConducteur({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +176,7 @@ class details extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'BAROUAGHIA Media',
+                                    'BAROUAGHIA Medea',
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
@@ -297,7 +297,7 @@ class details extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 30),
                           child: Text(
-                            '400 DZ',
+                            '400 DA',
                             style: TextStyle(
                               // fontWeight: FontWeight.w400,
                               fontSize: 16.0,

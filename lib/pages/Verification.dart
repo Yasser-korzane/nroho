@@ -120,26 +120,6 @@ class _VerificationState extends State<Verification> {
                   ),
                   SizedBox(height: screenHeight*0.03,),
 
-                  // Verification Code Input
-                  FadeInDown(
-                    delay: Duration(milliseconds: 600),
-                    duration: Duration(milliseconds: 500),
-                    child: VerificationCode(
-                      length: 4,
-                      textStyle: TextStyle(fontSize: 20, color: Colors.black,fontFamily: 'Poppins'),
-                      underlineColor: Colors.black,
-                      keyboardType: TextInputType.number,
-                      underlineUnfocusedColor: Colors.black,
-                      onCompleted: (value) {
-                        setState(() {
-                          _code = value;
-                        });
-                      },
-                      onEditing: (value) {},
-                    ),
-                  ),
-
-
                   SizedBox(height: screenHeight*0.03,),
                   FadeInDown(
                     delay: Duration(milliseconds: 700),
@@ -147,7 +127,7 @@ class _VerificationState extends State<Verification> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vous n'avez pas reçu le code OTP ?", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
+                        Text("Vous n'avez pas reçu le mail de validation ?", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
                         TextButton(
                             onPressed: () {
                               if (_isResendAgain) return;

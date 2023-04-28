@@ -4,9 +4,10 @@ import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/AccepterPassager.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
-import 'package:appcouvoiturage/pages/details.dart';
+import 'package:appcouvoiturage/pages/detailsconducteur.dart';
+import 'package:appcouvoiturage/pages/notificationPassager.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
-import 'package:appcouvoiturage/pages/trajetsLances.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -36,6 +37,7 @@ class _MywidState extends State<Mywid> {
   final Set<Polyline> _polylineSet = <Polyline>{};
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
+  bool statut = false ;
   @override
   void initState() {
     super.initState();
@@ -49,6 +51,20 @@ class _MywidState extends State<Mywid> {
         addMarker();
       },
     );
+  }
+
+  Future getStatut() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        statut = snapshot.data()!['statut'];
+      } else {
+        throw Exception('Failed to get statut');
+      }
+    });
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -180,12 +196,13 @@ class _MywidState extends State<Mywid> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        ListDemandePassager(),
+                                        OuAllezVous(),
                                   ));
                             },
                             readOnly: true,
                             decoration: InputDecoration(
                               hintText: 'Choisir un point de depart',
+                              hintStyle: TextStyle(fontFamily: 'Poppins'),
                               floatingLabelBehavior:
                               FloatingLabelBehavior.auto,
                               border: InputBorder.none,
@@ -230,6 +247,7 @@ class _MywidState extends State<Mywid> {
                             readOnly: true,
                             decoration: const InputDecoration(
                               hintText: 'Choisir une destination',
+                              hintStyle: TextStyle(fontFamily: 'Poppins'),
                               floatingLabelBehavior:
                               FloatingLabelBehavior.auto,
                               // remove the border of the TextField
@@ -263,11 +281,19 @@ class _MywidState extends State<Mywid> {
           top: screenHeight * 0.03,
           right: screenWidth * 0.04,
           child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DemandesPassager()));
+            onTap: ()async {
+              await getStatut();
+              if (!statut){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DemandesPassagerResultat()));
+              }else {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ListDemandePassager()));
+              }
             },
             child: const Icon(
               Icons.notifications_none_outlined,
@@ -309,11 +335,11 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
           else if (index == 1 && _isSelected[index] == false) statut = true ;
           else if (index == 1 && _isSelected[index] == true) statut = false ;
           else if (index == 0 && _isSelected[index] == true) statut = true ;
-          await BaseDeDonnee().updateUtilisateurStatut(FirebaseAuth.instance.currentUser!.uid, statut);
           setState(() {
             _isSelected[index] = !_isSelected[index];
             _isSelected[1 - index] = !_isSelected[1 - index];
           });
+          await BaseDeDonnee().updateUtilisateurStatut(FirebaseAuth.instance.currentUser!.uid, statut);
         },
         selectedColor: Colors.white,
         disabledBorderColor: Colors.blue,

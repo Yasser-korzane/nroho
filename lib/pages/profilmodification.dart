@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Notifications.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
@@ -61,6 +62,20 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
               snapshot.data()!['vehicule']['policeAssurance'],
             );
             _utilisateur.statut = snapshot.data()!['statut'];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajet'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
+              );
+              _utilisateur.notifications.add(notification);
+            }
             //tests by printing
           }); // end setState
         } else {
@@ -142,6 +157,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       Row(
                         children: [
                           Expanded(
+                            flex : 1,
                             child: Text(
                               'Identifiant:',
                               style:
@@ -149,6 +165,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                           ),
                           Expanded(
+                            flex : 2,
                             child: Text(
                               _utilisateur.identifiant,
                               style:
@@ -160,6 +177,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       Row(
                         children: [
                           Expanded(
+                            flex : 1,
                             child: Text(
                               'Email: ',
                               style:
@@ -167,6 +185,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                           ),
                           Expanded(
+                            flex : 2,
                             child: Text(
                               _utilisateur.email,
                               style:
@@ -422,37 +441,21 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => Loading()),
-                    );
-                    await _baseDeDonnee.modifierUtilisateur(
-                        FirebaseAuth.instance.currentUser!.uid, _utilisateur);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Modifications avec succes'),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
                     if (_changement) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Modifications avec succes'),
-                          duration: Duration(seconds: 3),
-                        ),
-                      );
                       Navigator.pop(
                         context,
                         MaterialPageRoute(builder: (context) => Loading()),
                       );
                       await _baseDeDonnee.modifierUtilisateur(
                           FirebaseAuth.instance.currentUser!.uid, _utilisateur);
-                    } else {
-                      Navigator.pop(
-                        context,
-                        MaterialPageRoute(builder: (context) => Loading()),
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Modifications avec succes'),
+                          duration: Duration(seconds: 3),
+                        ),
                       );
                     }
+                    Navigator.pop(context,);
                   },
                   child: Text(
                     'Valider les modifications',

@@ -1,21 +1,23 @@
 import 'package:places_service/places_service.dart';
 import 'PlusInformations.dart';
 class Trajet {
-  DateTime dateDepart ;
-  DateTime tempsDePause;
-  double coutTrajet;
-  String villeDepart;
-  String villeArrivee;
-  PlacesAutoCompleteResult? lieuDepart;
-  PlacesAutoCompleteResult? lieuArrivee;
-  List<String> villeIntermediaires;
-  PlusInformations plusInformations;
+  String id ;
+  DateTime dateDepart ; //oui
+  DateTime tempsDePause;//oui
+  double coutTrajet;//oui
+  String villeDepart;//oui
+  String villeArrivee;//oui
+  PlacesAutoCompleteResult? lieuDepart;//oui
+  PlacesAutoCompleteResult? lieuArrivee;//oui
+  List<String> villeIntermediaires; // mazal
+  PlusInformations plusInformations;//mazal mazal mazal mazal
   bool trajetEstValide;
   String confort ;
   String avis;
   bool probleme; // si false alors il n'as pas de probleme, si true alors il ya un probleme
 
   Trajet(
+      this.id,
       this.dateDepart,
       this.tempsDePause,
       this.coutTrajet,
@@ -30,6 +32,7 @@ class Trajet {
       this.avis,
       this.probleme);
   void afficher() {
+    print('id : $id');
     print('dateDepart: $dateDepart');
     print('tempsDePause: $tempsDePause');
     print('coutTrajet: $coutTrajet');
@@ -40,7 +43,7 @@ class Trajet {
     print('lieuArrivee: ');
     print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
     print('villeIntermediaires: $villeIntermediaires');
-    print('plusInformations: $plusInformations');
+    print('plusInformations: fumeur:${plusInformations.fumeur} , bagage:${plusInformations.bagage} , animeaux:${plusInformations.animaux} , nbPlaces:${plusInformations.nbPlaces}');
     print('trajetEstValide: $trajetEstValide');
     print('confort: $confort');
     print('avis: $avis');
@@ -48,6 +51,7 @@ class Trajet {
   }
   Map<String, dynamic> toMap() {
     return {
+      'id' : id,
       'dateDepart' : dateDepart,
       'tempsDePause': tempsDePause,
       'coutTrajet': coutTrajet,

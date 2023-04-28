@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-
-
 class SelectableTextWidget extends StatefulWidget {
   final String text;
   final bool isSelected;

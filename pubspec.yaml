@@ -58,6 +58,7 @@ dependencies:
   flutter_verification_code: ^1.1.6
   connectivity_plus: ^3.0.4
   internet_connection_checker: ^1.0.0+1
+  modal_bottom_sheet: ^2.1.2
 
 dev_dependencies:
 

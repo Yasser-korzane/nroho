@@ -68,7 +68,7 @@ class Assistance extends StatelessWidget {
                 ),
                 children: [
                   TextSpan(
-                    text: ' Click ici',
+                    text: ' Cliquez ici',
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 16.0,

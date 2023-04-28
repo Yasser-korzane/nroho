@@ -28,7 +28,9 @@ class _TrajetsState extends State<Trajets> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text('Mes Trajets',
-              style: Theme.of(context).textTheme.titleLarge),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontFamily: 'Poppins',
+              ),),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
@@ -37,7 +39,7 @@ class _TrajetsState extends State<Trajets> {
             labelColor: Colors.blue.shade700,
             unselectedLabelColor: Colors.blueGrey[900],
               tabs: [
-                Tab(text: 'Trajet lancer'),
+                Tab(text: 'Trajet lancer',),
                 Tab(text: 'Trajet reserver'),
               ],
           ),
