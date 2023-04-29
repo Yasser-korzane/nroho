@@ -24,6 +24,8 @@ class OuAllezVous extends StatefulWidget {
 }
 
 class _OuAllezVousState extends State<OuAllezVous> {
+  List<String> Places = ['Oued smar', 'Barougia', 'El Azizia', 'Bougaa', 'Maouklane','Oued smar', 'Barougia', 'El Azizia', 'Bougaa', 'Maouklane'];
+  
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _arriveController = TextEditingController();
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
@@ -476,366 +478,33 @@ class _OuAllezVousState extends State<OuAllezVous> {
                           color: Colors.black,
                           thickness: 1,
                         ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Maoklane-Setif',
-                              style: TextStyle(
-                                  fontSize: size.width * 0.04,
-                                  fontFamily: 'Poppins'),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(
-                                  fontSize: size.width * 0.04,
-                                  fontFamily: 'Poppins'),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                          height: size.height * 0.05,
-                          child: ListTile(
-                            onTap: () {},
-                            leading: const Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                            ),
-                            title: Text(
-                              'Oued Smar-Alger',
-                              style: TextStyle(fontSize: size.width * 0.04),
-                            ),
-                          ),
-                        ),
+                      // Expanded(
+                      //   child: ListView.separated(
+                      //     // separatorBuilder: (context, index) => Divider(
+                      //     //   thickness: 1.0,
+                      //     //   color: Colors.grey[300],
+                      //     // ),
+                      //     itemCount: Places.length,
+                      //     itemBuilder: (context, index) {
+                      //       return Padding(
+                      //         padding: const EdgeInsets.all(8.0),
+                      //         child: ListTile(
+                      //           onTap: () {},
+                      //           leading: const Icon(
+                      //             Icons.location_on,
+                      //             color: Colors.black,
+                      //           ),
+                      //           title: Text(
+                      //             Places[index],
+                      //             style: TextStyle(
+                      //                 fontSize: size.width * 0.04,
+                      //                 fontFamily: 'Poppins'),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // )
                       ],
                     ),
                   ),

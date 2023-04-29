@@ -219,10 +219,6 @@ class _optionconducState extends State<optionconduc> {
                         onPressed: () async {
                           Navigator.pop(context);
                           //await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetLance);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => TrajetLanceEstSauvegarder()),
-                          // );
                         },
                       ),
                     ],
