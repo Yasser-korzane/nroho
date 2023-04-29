@@ -1,16 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../AppClasses/Evaluation.dart';
-import '../AppClasses/Notifications.dart';
-import '../AppClasses/PlusInformations.dart';
-import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
-import '../AppClasses/Vehicule.dart';
 import '../Services/base de donnee.dart';
-import '../Shared/lodingEffect.dart';
-
 class ModifierProfilePage extends StatefulWidget {
+  Utilisateur _utilisateur;
+  ModifierProfilePage(this._utilisateur);
   @override
   _ModifierProfilePageState createState() => _ModifierProfilePageState();
 }
@@ -32,92 +26,29 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
     // Implementer la logique pour changer la photo de profil
   }
 
-  late Utilisateur _utilisateur;
-
-  Future _getDataFromDataBase() async {
-    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
-    try {
-      await FirebaseFirestore.instance
-          .collection('Utilisateur')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get()
-          .then((snapshot) async {
-        if (snapshot.exists) {
-          setState(() {
-            _utilisateur.identifiant = snapshot.data()!['identifiant'];
-            _utilisateur.nom = snapshot.data()!['nom'];
-            _utilisateur.prenom = snapshot.data()!['prenom'];
-            _utilisateur.email = snapshot.data()!['email'];
-            _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
-            _utilisateur.evaluation = Evaluation(
-              List<String>.from(snapshot.data()!['evaluation']['feedback']),
-              snapshot.data()!['evaluation']['etoiles'],
-              snapshot.data()!['evaluation']['nbSignalement'],
-            );
-            _utilisateur.vehicule = Vehicule(
-              snapshot.data()!['vehicule']['marque'],
-              snapshot.data()!['vehicule']['typevehicule'],
-              snapshot.data()!['vehicule']['matricule'],
-              snapshot.data()!['vehicule']['modele'],
-              snapshot.data()!['vehicule']['policeAssurance'],
-            );
-            _utilisateur.statut = snapshot.data()!['statut'];
-            List<dynamic> notificationsData = snapshot.data()!['notifications'];
-            for (var notificationData in notificationsData) {
-              Notifications notification = Notifications(
-                notificationData['id_conducteur'],
-                notificationData['id_pasagers'],
-                notificationData['id_trajet'],
-                notificationData['nom'],
-                notificationData['prenom'],
-                notificationData['villeDepart'],
-                notificationData['villeArrive'],
-                notificationData['accepte_refuse'],
-              );
-              _utilisateur.notifications.add(notification);
-            }
-            //tests by printing
-          }); // end setState
-        } else {
-          // end snapshot exist
-          throw Exception("Utilisateur does not exist.");
-        }
-      });
-    } catch (e) {
-      throw Exception("Failed to get utilisateur.");
-    }
-  }
-
-  /// end getdata
-  @override
-  void initState() {
-    super.initState();
-    _getDataFromDataBase();
-  }
-
   @override
   Widget build(BuildContext context) {
-    /*_contrNom.text = _utilisateur.nom;
-    _contrPrenom.text = _utilisateur.prenom;
-    _contrMarque.text = _utilisateur.vehicule.marque;
-    _contrType.text = _utilisateur.vehicule.typevehicule;
-    _contrMatricule.text = _utilisateur.vehicule.matricule;
-    _contrModele.text = _utilisateur.vehicule.modele;
-    _contrPolice.text = _utilisateur.vehicule.policeAssurance;
-    _contrNbPlaces.text = _utilisateur.vehicule.nbPlaces.toString();*/
-    if (_utilisateur.nom.isEmpty) _utilisateur.nom = 'Entrer votre nom';
-    if (_utilisateur.prenom.isEmpty)
-      _utilisateur.prenom = 'Entrer votre prenom';
-    if (_utilisateur.vehicule.marque.isEmpty)
-      _utilisateur.vehicule.marque = 'Entrez la marque de votre vehicule';
-    if (_utilisateur.vehicule.typevehicule.isEmpty)
-      _utilisateur.vehicule.typevehicule = 'Entrez le type de votre vehicule';
-    if (_utilisateur.vehicule.matricule.isEmpty)
-      _utilisateur.vehicule.matricule = 'Entrez la matircule de votre vehicule';
-    if (_utilisateur.vehicule.modele.isEmpty)
-      _utilisateur.vehicule.modele = 'Entrez le modele de votre vehicule';
-    if (_utilisateur.vehicule.policeAssurance.isEmpty)
-      _utilisateur.vehicule.policeAssurance =
+    /*_contrNom.text = widget._utilisateur.nom;
+    _contrPrenom.text = widget._utilisateur.prenom;
+    _contrMarque.text = widget._utilisateur.vehicule.marque;
+    _contrType.text = widget._utilisateur.vehicule.typevehicule;
+    _contrMatricule.text = widget._utilisateur.vehicule.matricule;
+    _contrModele.text = widget._utilisateur.vehicule.modele;
+    _contrPolice.text = widget._utilisateur.vehicule.policeAssurance;
+    _contrNbPlaces.text = widget._utilisateur.vehicule.nbPlaces.toString();*/
+    if (widget._utilisateur.nom.isEmpty) widget._utilisateur.nom = 'Entrer votre nom';
+    if (widget._utilisateur.prenom.isEmpty)
+      widget._utilisateur.prenom = 'Entrer votre prenom';
+    if (widget._utilisateur.vehicule.marque.isEmpty)
+      widget._utilisateur.vehicule.marque = 'Entrez la marque de votre vehicule';
+    if (widget._utilisateur.vehicule.typevehicule.isEmpty)
+      widget._utilisateur.vehicule.typevehicule = 'Entrez le type de votre vehicule';
+    if (widget._utilisateur.vehicule.matricule.isEmpty)
+      widget._utilisateur.vehicule.matricule = 'Entrez la matircule de votre vehicule';
+    if (widget._utilisateur.vehicule.modele.isEmpty)
+      widget._utilisateur.vehicule.modele = 'Entrez le modele de votre vehicule';
+    if (widget._utilisateur.vehicule.policeAssurance.isEmpty)
+      widget._utilisateur.vehicule.policeAssurance =
           'Entrez la police d\'assurance de votre vehicule';
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
@@ -167,7 +98,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           Expanded(
                             flex : 2,
                             child: Text(
-                              _utilisateur.identifiant,
+                              widget._utilisateur.identifiant,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12),
                             ),
@@ -187,7 +118,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           Expanded(
                             flex : 2,
                             child: Text(
-                              _utilisateur.email,
+                              widget._utilisateur.email,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 12),
                             ),
@@ -216,12 +147,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       ),
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: _utilisateur.nom,
+                      hintText: widget._utilisateur.nom,
                     ),
                     onChanged: (value) {
                       _changement = true;
                       setState(() {
-                        _utilisateur.nom = value;
+                        widget._utilisateur.nom = value;
                       });
                     },
                   ),
@@ -245,13 +176,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.prenom,
+                        hintText: widget._utilisateur.prenom,
                       ),
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
                           //_contrPrenom.text = value;
-                          _utilisateur.prenom = value;
+                          widget._utilisateur.prenom = value;
                         });
                       },
                     )),
@@ -273,13 +204,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.numeroTelephone,
+                        hintText: widget._utilisateur.numeroTelephone,
                       ),
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
                           //_contrPrenom.text = value;
-                          _utilisateur.numeroTelephone = value;
+                          widget._utilisateur.numeroTelephone = value;
                         });
                       },
                     )),
@@ -312,13 +243,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.vehicule.marque,
+                        hintText: widget._utilisateur.vehicule.marque,
                       ),
                       onChanged: (value) {
                         setState(() {
                           _changement = true;
                           //_contrMarque.text = value;
-                          _utilisateur.vehicule.marque = value;
+                          widget._utilisateur.vehicule.marque = value;
                         });
                       },
                     )),
@@ -341,13 +272,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.vehicule.typevehicule,
+                        hintText: widget._utilisateur.vehicule.typevehicule,
                       ),
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
                           //_contrType.text = value;
-                          _utilisateur.vehicule.typevehicule = value;
+                          widget._utilisateur.vehicule.typevehicule = value;
                         });
                       },
                     )),
@@ -370,13 +301,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.vehicule.matricule,
+                        hintText: widget._utilisateur.vehicule.matricule,
                       ),
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
                           //_contrMatricule.text = value;
-                          _utilisateur.vehicule.matricule = value;
+                          widget._utilisateur.vehicule.matricule = value;
                         });
                       },
                     )),
@@ -399,13 +330,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.vehicule.modele,
+                        hintText: widget._utilisateur.vehicule.modele,
                       ),
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
                           //_contrModele.text = value;
-                          _utilisateur.vehicule.modele = value;
+                          widget._utilisateur.vehicule.modele = value;
                         });
                       },
                     )),
@@ -428,13 +359,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: _utilisateur.vehicule.policeAssurance,
+                        hintText: widget._utilisateur.vehicule.policeAssurance,
                       ),
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
                           //_contrPolice.text = value;
-                          _utilisateur.vehicule.policeAssurance = value;
+                          widget._utilisateur.vehicule.policeAssurance = value;
                         });
                       },
                     )),
@@ -442,12 +373,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_changement) {
-                      Navigator.pop(
-                        context,
-                        MaterialPageRoute(builder: (context) => Loading()),
-                      );
-                      await _baseDeDonnee.modifierUtilisateur(
-                          FirebaseAuth.instance.currentUser!.uid, _utilisateur);
+                      await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, widget._utilisateur);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Modifications avec succes'),

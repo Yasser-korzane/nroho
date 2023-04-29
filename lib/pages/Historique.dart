@@ -1,18 +1,15 @@
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/pages/HistoriqueLancer.dart';
 import 'package:appcouvoiturage/pages/HistoriqueReserver.dart';
-import 'package:appcouvoiturage/pages/trajetsLances.dart';
-import 'package:appcouvoiturage/pages/trajetsReserves.dart';
 import 'package:flutter/material.dart';
 
 
-
 class Historique extends StatefulWidget {
-  const Historique({Key? key}) : super(key: key);
-
+  Utilisateur _utilisateur;
+  Historique(this._utilisateur);
   @override
   State<Historique> createState() => _HistoriqueState();
 }
-
 class _HistoriqueState extends State<Historique> {
   @override
   Widget build(BuildContext context) {
@@ -43,8 +40,8 @@ class _HistoriqueState extends State<Historique> {
         ),
         body: TabBarView(
           children: [
-            cardLancerListH(),
-            cardReserverListH(),
+            cardLancerListH(widget._utilisateur.Historique),
+            cardReserverListH(widget._utilisateur.Historique),
           ],
         ),
       ),

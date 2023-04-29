@@ -24,8 +24,6 @@ class OuAllezVous extends StatefulWidget {
 }
 
 class _OuAllezVousState extends State<OuAllezVous> {
-  List<String> Places = ['Oued smar', 'Barougia', 'El Azizia', 'Bougaa', 'Maouklane','Oued smar', 'Barougia', 'El Azizia', 'Bougaa', 'Maouklane'];
-  
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _arriveController = TextEditingController();
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();

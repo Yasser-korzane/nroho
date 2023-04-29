@@ -205,7 +205,7 @@ class _optionconducState extends State<optionconduc> {
               } else {
                 widget.trajetLance.coutTrajet = 0.0;
               }
-              Navigator.push(context, MaterialPageRoute(builder: (context) => home(),));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
               showDialog(
                 context: context,
                 barrierDismissible: false,

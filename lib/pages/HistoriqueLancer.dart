@@ -1,20 +1,8 @@
-
-import 'cardLancer.dart';
+import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
-
-
-
-
 class cardLancerListH extends StatelessWidget{
-  final List<cardLancer> cardLancers = [
-    cardLancer(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 3,nombraStar: 4.5 ,price: 50 ),
-    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
-    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
-    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
-    cardLancer(firstName: 'korzane',lastName: 'yasser',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nbPassager: 2,nombraStar: 3.7 ,price: 55 ),
-
-  ];
-  // Widget cardLancerTamplate (cardLancer){
+  List<Trajet> _trajetLances;
+  cardLancerListH(this._trajetLances);
   @override
   Widget build (BuildContext context){
     final Size screenSize = MediaQuery
@@ -22,12 +10,11 @@ class cardLancerListH extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       body: ListView.builder(
-        itemCount: cardLancers.length,
+        itemCount: _trajetLances.length,
         itemBuilder: (context, index) {
-          final lancer = cardLancers[index];
+          final lancer = _trajetLances[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: Card(
@@ -55,7 +42,7 @@ class cardLancerListH extends StatelessWidget{
                                 width: screenHeight*0.06,
                                 child: CircleAvatar(
                                   //backGrounndImage: AssetImage('your image path'),
-                                  backgroundImage: AssetImage('asset/images/profile.png',),
+                                  backgroundImage: NetworkImage('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
                                   radius: 50,
                                 ),
                               ),
@@ -63,8 +50,8 @@ class cardLancerListH extends StatelessWidget{
                                 children: [
                                   Row(
                                     children: [
-                                      Text(lancer.firstName,style: TextStyle(fontFamily: 'Poppins'),),
-                                      Text(lancer.lastName,style: TextStyle(fontFamily: 'Poppins'),),
+                                      Text('nom',style: TextStyle(fontFamily: 'Poppins'),),
+                                      Text('prenom',style: TextStyle(fontFamily: 'Poppins'),),
                                       SizedBox(
                                         height: 1,
                                         width: 50,
@@ -75,7 +62,7 @@ class cardLancerListH extends StatelessWidget{
                                     //crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Icon(Icons.star , color: Colors.amber[600] ,),
-                                      Text(lancer.nombraStar.toString(),style: TextStyle(fontFamily: 'Poppins'),),
+                                      Text('4',style: TextStyle(fontFamily: 'Poppins'),),
                                       SizedBox(
                                         height: 1,
                                         width: 160,
@@ -86,8 +73,8 @@ class cardLancerListH extends StatelessWidget{
                               ),
                               Column(
                                   children : [
-                                    Text('Le court',style: TextStyle(fontFamily: 'Poppins'),),
-                                    Text(  lancer.price.toString() +' DA',style: TextStyle(fontFamily: 'Poppins'),),
+                                    Text('Cout',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
+                                    Text(  '${lancer.coutTrajet} DA',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
                                   ]
                               )
 
@@ -131,7 +118,7 @@ class cardLancerListH extends StatelessWidget{
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      lancer.heurDepar,
+                                      '${lancer.dateDepart}',
                                       style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -139,7 +126,7 @@ class cardLancerListH extends StatelessWidget{
                                           fontFamily: 'Poppins'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeDepart,style: TextStyle(fontFamily: 'Poppins'),),
+                                    subtitle: Text(lancer.villeDepart,style: TextStyle(fontFamily: 'Poppins'),),
                                     onTap: () {
                                       // handle onTap event
                                     },
@@ -149,7 +136,7 @@ class cardLancerListH extends StatelessWidget{
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      lancer.heureArrive,
+                                      '${lancer.tempsDePause}',
                                       style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -157,7 +144,7 @@ class cardLancerListH extends StatelessWidget{
                                           fontFamily: 'Poppins'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeArrive,style: TextStyle(fontFamily: 'Poppins'),),
+                                    subtitle: Text(lancer.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),),
                                     onTap: () {
                                       // handle onTap event
                                     },
@@ -187,7 +174,7 @@ class cardLancerListH extends StatelessWidget{
                                   color: Colors.blue,
                                   size: screenHeight*0.03,
                                 ),
-                                Text(' '+ lancer.nbPassager.toString() +' passagers',style: TextStyle( color: Colors.blue , fontFamily: 'Poppins' ),)
+                                Text('${lancer.plusInformations.nbPlaces} passagers',style: TextStyle( color: Colors.blue , fontFamily: 'Poppins' ),)
                               ]),
                         ),
                       ),

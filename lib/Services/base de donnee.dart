@@ -1,6 +1,5 @@
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
@@ -164,18 +163,18 @@ class BaseDeDonnee{
   }
   //------------------------------------------------------------------------------------------
   Future<void> sauvegarderVillesIntermediaires(String uid, List<String> villes)async{
-
   }
   //------------------------------------------------------------------------------------------
   /** ************************************** Geters ****************************************** **////
-  Future getDataFromDataBase(Utilisateur utilisateur)async {
-    utilisateur = creerUtilisateurVide();
+  Future<Utilisateur> getDataFromDataBase(String uid)async {
+    Utilisateur? utilisateur = creerUtilisateurVide();
     try {
       await FirebaseFirestore.instance.collection('Utilisateur')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(uid)
           .get()
           .then((snapshot) async {
         if (snapshot.exists) {
+            print('Oui utilisateur ${snapshot.data()!['nom']} existe');
             utilisateur.identifiant = snapshot.data()!['identifiant'];
             utilisateur.nom = snapshot.data()!['nom'];
             utilisateur.prenom = snapshot.data()!['prenom'];
@@ -196,19 +195,23 @@ class BaseDeDonnee{
             utilisateur.statut = snapshot.data()!['statut'];
             utilisateur.notifications = [];
             List<dynamic> notificationsData = snapshot.data()!['notifications'];
-            for (var notificationData in notificationsData) {
-              Notifications notification = Notifications(
-                notificationData['id_conducteur'],
-                notificationData['id_pasagers'],
-                notificationData['id_trajet'],
-                notificationData['nom'],
-                notificationData['prenom'],
-                notificationData['villeDepart'],
-                notificationData['villeArrive'],
-                notificationData['accepte_refuse'],
-              );
-              utilisateur.notifications.add(notification);
+            if (notificationsData.isNotEmpty){
+              for (var notificationData in notificationsData) {
+                Notifications notification = Notifications(
+                  notificationData['id_conducteur'],
+                  notificationData['id_pasagers'],
+                  notificationData['id_trajet'],
+                  notificationData['nom'],
+                  notificationData['prenom'],
+                  notificationData['villeDepart'],
+                  notificationData['villeArrive'],
+                  notificationData['accepte_refuse'],
+                );
+                utilisateur.notifications.add(notification);
+              }
             }
+            utilisateur.afficher();
+            return utilisateur;
             //tests by printing
         } else { // end snapshot exist
           throw Exception("Utilisateur does not exist.");
@@ -217,21 +220,37 @@ class BaseDeDonnee{
     } catch (e) {
       throw Exception("Failed to get utilisateur.");
     }
+    return BaseDeDonnee().creerUtilisateurVide();
   } /// end getdata
-  Future<dynamic> getStatut(String uid) async {
-    bool statut = false;
+  // Future<dynamic> getStatut(String uid) async {
+  //   bool statut = false;
+  //   await FirebaseFirestore.instance
+  //       .collection('Utilisateur')
+  //       .doc(uid)
+  //       .get()
+  //       .then((snapshot) async {
+  //     if (snapshot.exists) {
+  //       statut = snapshot.data()!['statut'];
+  //       return statut;
+  //     }else {
+  //       return null;
+  //     }
+  //   });
+  // }
+  Future<bool?> getStatut(String uid) async {
+    bool? statut;
     await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .get()
-        .then((snapshot) async {
+        .then((snapshot) {
       if (snapshot.exists) {
-        statut = snapshot.data()!['statut'];
-        return statut;
-      }else {
-        return null;
+        statut = snapshot.data()!['statut'] as bool?;
+      } else {
+        statut = null;
       }
     });
+    return statut;
   }
 
   /// ************************************ Fonctions de validation **************************************

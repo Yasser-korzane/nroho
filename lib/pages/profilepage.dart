@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/pages/Historique.dart';
 import 'package:appcouvoiturage/pages/Password.dart';
@@ -7,18 +8,21 @@ import 'package:appcouvoiturage/widgets/profilwidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-//import 'package:connectivity/connectivity.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:places_service/places_service.dart';
 
 import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Notifications.dart';
+import '../AppClasses/PlusInformations.dart';
+import '../AppClasses/Trajet.dart';
+import '../AppClasses/Vehicule.dart';
+import '../Services/base de donnee.dart';
 
 class Profilepage extends StatefulWidget {
   const Profilepage({Key? key}) : super(key: key);
-
   @override
   State<Profilepage> createState() => _ProfilepageState();
 }
@@ -28,36 +32,109 @@ class _ProfilepageState extends State<Profilepage> {
   var isDeviceConnected = false;
   bool isAlertSet=false;
   final AuthService _auth = AuthService();
-  String _email = '';
-  String _nom = '';
-  String _prenom = '';
-  Evaluation _evaluation = Evaluation([], 0, 0);
-
-  Future _getProfileInfo() async {
-    await FirebaseFirestore.instance
+  late Utilisateur _utilisateur;
+  Future _getDataFromDataBase() async {
+    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
+    try {
+      await FirebaseFirestore.instance
+          .collection('Utilisateur')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          setState(() {
+            _utilisateur.identifiant = snapshot.data()!['identifiant'];
+            _utilisateur.nom = snapshot.data()!['nom'];
+            _utilisateur.prenom = snapshot.data()!['prenom'];
+            _utilisateur.email = snapshot.data()!['email'];
+            _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
+            _utilisateur.evaluation = Evaluation(
+              List<String>.from(snapshot.data()!['evaluation']['feedback']),
+              snapshot.data()!['evaluation']['etoiles'],
+              snapshot.data()!['evaluation']['nbSignalement'],
+            );
+            _utilisateur.vehicule = Vehicule(
+              snapshot.data()!['vehicule']['marque'],
+              snapshot.data()!['vehicule']['typevehicule'],
+              snapshot.data()!['vehicule']['matricule'],
+              snapshot.data()!['vehicule']['modele'],
+              snapshot.data()!['vehicule']['policeAssurance'],
+            );
+            _utilisateur.statut = snapshot.data()!['statut'];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajet'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
+              );
+              _utilisateur.notifications.add(notification);
+            }
+            //tests by printing
+          }); // end setState
+        } else {
+          // end snapshot exist
+          throw Exception("Utilisateur does not exist.");
+        }
+      });
+    } catch (e) {
+      throw Exception("Failed to get utilisateur.");
+    }
+  }
+  Future _getHistorique() async {
+    QuerySnapshot trajetsSnapshot = await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((snapshot) async {
-      if (snapshot.exists) {
+        .collection('Historique')
+        .get();
+    if (trajetsSnapshot.docs.isNotEmpty) {
+      print("Le trajet Existe");
+      for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
+        Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
+        Trajet historique = BaseDeDonnee().creerTrajetVide();
+        historique.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
+        historique.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));
+        historique.coutTrajet = data['coutTrajet'] as double;
+        historique.villeDepart = data['villeDepart'];
+        historique.villeArrivee = data['villeArrivee'];
+        historique.lieuDepart = PlacesAutoCompleteResult(
+          placeId: data['lieuDepart']['placeId'],
+          description: data['lieuDepart']['description'],
+          secondaryText: data['lieuDepart']['secondaryText'],
+          mainText: data['lieuDepart']['mainText'],
+        );
+        historique.lieuArrivee = PlacesAutoCompleteResult(
+          placeId: data['lieuArrivee']['placeId'],
+          description: data['lieuArrivee']['description'],
+          secondaryText: data['lieuArrivee']['secondaryText'],
+          mainText: data['lieuArrivee']['mainText'],
+        );
+        historique.villeIntermediaires = List<String>.from(data['villeIntermediaires']);
+        historique.plusInformations = PlusInformations(
+            data['plusInformations']['fumeur'],
+            data['plusInformations']['bagage'],
+            data['plusInformations']['animaux'],
+            data['plusInformations']['nbPlaces']);
+        historique.trajetEstValide = data['trajetEstValide'];
+        historique.confort = data['confort'];
+        historique.avis = data['avis'];
+        historique.probleme = data['probleme'];
         setState(() {
-          _nom = snapshot.data()!['nom'];
-          _prenom = snapshot.data()!['prenom'];
-          _email = snapshot.data()!['email'];
-          _evaluation = Evaluation(
-            List<String>.from(snapshot.data()!['evaluation']['feedback']),
-            snapshot.data()!['evaluation']['etoiles'],
-            snapshot.data()!['evaluation']['nbSignalement'],
-          );
+        _utilisateur.Historique.add(historique);
         });
       }
-    });
+    }
   }
-
   @override
   void initState() {
     super.initState();
-    _getProfileInfo();
+    _getDataFromDataBase();
+    _getHistorique();
     getConnectivity();
   }
 
@@ -84,7 +161,6 @@ class _ProfilepageState extends State<Profilepage> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -110,30 +186,24 @@ class _ProfilepageState extends State<Profilepage> {
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.015),
-                Text("$_nom $_prenom",
+                Text("${_utilisateur.nom} ${_utilisateur.prenom}",
                     style: Theme.of(context).textTheme.headlineSmall),
                 RatingWidget(
                     color: Colors.yellow,
-                    rating: _evaluation.etoiles.toDouble(),
+                    rating: _utilisateur.evaluation.etoiles.toDouble(),
                     size: screenWidth * 0.05),
                 SizedBox(height: screenHeight * 0.005),
-                Text(_email, style: Theme.of(context).textTheme.bodyMedium),
+                Text(_utilisateur.email, style: Theme.of(context).textTheme.bodyMedium),
                 SizedBox(height: screenHeight * 0.02),
                 SizedBox(
                     width: screenWidth * 0.5,
                     child: GestureDetector(
-                      onTap: () {
-                        Get.to(
-                          () => ModifierProfilePage(),
-                          transition: Transition.zoom,
-                        );
-                      },
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ModifierProfilePage(),
+                                builder: (context) => ModifierProfilePage(_utilisateur),
                               ));
                         },
                         style: ElevatedButton.styleFrom(
@@ -153,7 +223,8 @@ class _ProfilepageState extends State<Profilepage> {
                   title: 'Mes Courses',
                   icon: Icons.navigation_rounded,
                   onPress: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(),));
+                    _utilisateur.afficher();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(_utilisateur),));
                   },
                 ),
                 SizedBox(height: screenHeight * 0.008),

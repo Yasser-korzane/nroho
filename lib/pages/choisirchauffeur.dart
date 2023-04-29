@@ -118,7 +118,6 @@ class DriverListPage extends StatelessWidget {
                         ),
                         Padding(
                           padding:  EdgeInsets.all(screenWidth*0.04),
-                          child: Expanded(
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => Details(photoUrl: 'assets/images/user-profile.png', fullName: ' weal bougessa', rating: 2, phoneNumber: '0665996688', email: 'bougessa.hrach@esi.dz', carName: 'car_pooling'),));
@@ -129,7 +128,6 @@ class DriverListPage extends StatelessWidget {
                               ),
                               ),
                             ),
-                          ),
                         ),
                       ],
                     ),

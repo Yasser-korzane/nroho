@@ -1,21 +1,8 @@
-
-import 'cardReserver.dart';
+import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
-
-
-
-
 class cardReserverListH extends StatelessWidget{
-  final List<cardReserver> cardReservers = [
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-
-  ];
-  // Widget cardLancerTamplate (cardLancer){
+  List<Trajet> _trajetReserves;
+  cardReserverListH(this._trajetReserves);
   @override
   Widget build (BuildContext context){
     final Size screenSize = MediaQuery
@@ -23,12 +10,11 @@ class cardReserverListH extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       body: ListView.builder(
-        itemCount: cardReservers.length,
+        itemCount: _trajetReserves.length,
         itemBuilder: (context, index) {
-          final lancer = cardReservers[index];
+          final reserve = _trajetReserves[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: Card(
@@ -56,7 +42,7 @@ class cardReserverListH extends StatelessWidget{
                                 width: screenHeight*0.06,
                                 child: CircleAvatar(
                                   //backGrounndImage: AssetImage('your image path'),
-                                  backgroundImage: AssetImage('asset/images/profile.png',),
+                                  backgroundImage: NetworkImage('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
                                   radius: 50,
                                 ),
                               ),
@@ -64,8 +50,8 @@ class cardReserverListH extends StatelessWidget{
                                 children: [
                                   Row(
                                     children: [
-                                      Text(lancer.firstName,style: TextStyle(fontFamily: 'Poppins'),),
-                                      Text(lancer.lastName,style: TextStyle(fontFamily: 'Poppins'),),
+                                      Text('nom',style: TextStyle(fontFamily: 'Poppins'),),
+                                      Text('prenom',style: TextStyle(fontFamily: 'Poppins'),),
                                       SizedBox(
                                         height: 1,
                                         width: 50,
@@ -76,7 +62,7 @@ class cardReserverListH extends StatelessWidget{
                                     //crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Icon(Icons.star , color: Colors.amber[600] ,),
-                                      Text(lancer.nombraStar.toString(),style: TextStyle(fontFamily: 'Poppins'),),
+                                      Text('4',style: TextStyle(fontFamily: 'Poppins'),),
                                       SizedBox(
                                         height: 1,
                                         width: 160,
@@ -87,8 +73,8 @@ class cardReserverListH extends StatelessWidget{
                               ),
                               Column(
                                   children : [
-                                    Text('Le cout',style: TextStyle(fontFamily: 'Poppins'),),
-                                    Text(  lancer.price.toString() +' DA',style: TextStyle(fontFamily: 'Poppins'),),
+                                    Text('Cout',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
+                                    Text('${reserve.coutTrajet} DA',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
                                   ]
                               )
 
@@ -132,7 +118,7 @@ class cardReserverListH extends StatelessWidget{
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      lancer.heurDepar,
+                                      '${reserve.dateDepart}',
                                       style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -140,7 +126,7 @@ class cardReserverListH extends StatelessWidget{
                                           fontFamily: 'Poppins'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeDepart,style: TextStyle(fontFamily: 'Poppins'),),
+                                    subtitle: Text(reserve.villeDepart,style: TextStyle(fontFamily: 'Poppins'),),
                                     onTap: () {
                                       // handle onTap event
                                     },
@@ -150,7 +136,7 @@ class cardReserverListH extends StatelessWidget{
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      lancer.heureArrive,
+                                      '${reserve.tempsDePause}',
                                       style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -158,7 +144,7 @@ class cardReserverListH extends StatelessWidget{
                                           fontFamily: 'Poppins'
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeArrive,style: TextStyle(fontFamily: 'Poppins'),),
+                                    subtitle: Text(reserve.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),),
                                     onTap: () {
                                       // handle onTap event
                                     },

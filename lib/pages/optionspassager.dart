@@ -221,7 +221,7 @@ class _optionsState extends State<options> {
           child: ElevatedButton(
             onPressed: () async{
               widget.trajetReserve.afficher();
-              await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+              //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PageDeRecherche(widget.trajetReserve)));
             },
