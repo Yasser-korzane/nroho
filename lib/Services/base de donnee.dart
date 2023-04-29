@@ -243,7 +243,6 @@ class BaseDeDonnee{
     return!(
         value.length > 20 || chaineTest.isEmpty
         || !regExp.hasMatch(chaineTest)
-        || value.startsWith(' ') || value.endsWith(' ')
     );
   }
   bool validerMotDePasse(String motDePasse){
@@ -334,8 +333,8 @@ class BaseDeDonnee{
         .get()
         .then((snapshot) async {
       if (snapshot.exists) {
-        trajetReserve.dateDepart = snapshot.data()!['dateDepart'].toDate();
-        trajetReserve.tempsDePause = snapshot.data()!['tempsDePause'].toDate();
+        trajetReserve.dateDepart = snapshot.data()!['dateDepart'].toDate().add(Duration(hours: 1));
+        trajetReserve.tempsDePause = snapshot.data()!['tempsDePause'].toDate().add(Duration(hours: 1));
         trajetReserve.coutTrajet = snapshot.data()!['coutTrajet'] as double;
         trajetReserve.villeDepart = snapshot.data()!['villeDepart'];
         trajetReserve.villeArrivee = snapshot.data()!['villeArrivee'];
@@ -364,14 +363,11 @@ class BaseDeDonnee{
       }else print('ce trajetReserve n\'exist pas');
     }); // fin recuperation du trajetReserve
     */
-    DateTime TempsPmoins10 = trajetReserve.dateDepart.subtract(Duration(minutes: 10));
-    DateTime TempsPplus20 = trajetReserve.dateDepart.add(Duration(minutes: 20));
+    DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 15));
+    DateTime TempsPplus4h = trajetReserve.dateDepart.add(Duration(hours: 4));
     trajetReserve.afficher();
-    print("TempsPmoins10 : ${TempsPmoins10.year}/${TempsPmoins10.month}/${TempsPmoins10.day}/${TempsPmoins10.hour}/${TempsPmoins10.minute}");
-    print("TempsPplus20 : ${TempsPplus20.year}/${TempsPplus20.month}/${TempsPplus20.day}/${TempsPplus20.hour}/${TempsPplus20.minute}");
     /// 2) rechercher les utilisateurs (le conducteurs) qui ont un trajetLance similaire au trajetReserve -------
     try {
-      //List<Utilisateur> utilisateurs = [];
       List<ConducteurTrajet> listConducteurTrajet = [];
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Utilisateur')
@@ -384,19 +380,21 @@ class BaseDeDonnee{
             .collection('Utilisateur')
             .doc(utilisateurDoc.id)
             .collection('trajetsLances')
-            .where('dateDepart', isLessThanOrEqualTo: Timestamp.fromDate(TempsPplus20))
-            .where('dateDepart', isGreaterThanOrEqualTo: Timestamp.fromDate(TempsPmoins10))
             .get();
         if (trajetsSnapshot.docs.isNotEmpty) {
           print("Le trajet Existe");
           for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
             Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
+            DateTime t1 = data['dateDepart'].toDate();
+            t1 = t1.add(Duration(hours: 1));
             if (
             (trajetReserve.villeDepart == data['villeDepart']
                 || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeDepart))
                 && (trajetReserve.villeArrivee == data['villeArrivee']
                     || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeArrivee))
                 && data['plusInformations']['nbPlaces'] >= trajetReserve.plusInformations.nbPlaces
+                 && ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) )
+                 && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h) )
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
@@ -434,12 +432,12 @@ class BaseDeDonnee{
                   utilisateur.notifications.add(notification);
                 }
                 utilisateur.afficher();
-                trajetLance.dateDepart = data['dateDepart'].toDate();
-                trajetLance.tempsDePause = data['tempsDePause'].toDate();
+                trajetLance.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
+                trajetLance.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));
                 trajetLance.coutTrajet = data['coutTrajet'] as double;
                 trajetLance.villeDepart = data['villeDepart'];
                 trajetLance.villeArrivee = data['villeArrivee'];
-                /*trajetLance.lieuDepart = PlacesAutoCompleteResult(
+                trajetLance.lieuDepart = PlacesAutoCompleteResult(
             placeId: data['lieuDepart']['placeId'],
             description: data['lieuDepart']['description'],
             secondaryText: data['lieuDepart']['secondaryText'],
@@ -450,7 +448,7 @@ class BaseDeDonnee{
             description: data['lieuArrivee']['description'],
             secondaryText: data['lieuArrivee']['secondaryText'],
             mainText: data['lieuArrivee']['mainText'],
-        );*/
+        );
                 trajetLance.villeIntermediaires = List<String>.from(data['villeIntermediaires']);
                 trajetLance.plusInformations = PlusInformations(
                     data['plusInformations']['fumeur'],
@@ -461,15 +459,15 @@ class BaseDeDonnee{
                 trajetLance.confort = data['confort'];
                 trajetLance.avis = data['avis'];
                 trajetLance.probleme = data['probleme'];
+                trajetLance.afficher();
                 ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
                 listConducteurTrajet.add(conducteurTrajet);
-              }else { print('Les conditions ne sont pas verifier pour ${data['villeDepart']} ${data['villeArrivee']}');
+              }else { print('Les conditions ne sont pas verifier pour ${dataUtilisateur['nom']} ');
             }// end if conditions de recherche
           } // end for trajetLanceDoc
         }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur
       } // end for utilisateurDoc
       print('Resultat de recherche : ');
-      //for (Utilisateur u in utilisateurs) u.afficher();
       for(ConducteurTrajet c in listConducteurTrajet) c.utilisateur.afficher();
       return listConducteurTrajet;
     } catch (e) {

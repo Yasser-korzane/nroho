@@ -125,25 +125,25 @@ class _OuAllezVousState extends State<OuAllezVous> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    // pour tester
     PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
       placeId: 'idPlace',
       description: 'une place',
       secondaryText: 'Algerie',
-      mainText: 'Alger',
+      mainText: 'Esi',
     );
     PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
       placeId: 'idPlace',
       description: 'une place',
       secondaryText: 'Algerie',
-      mainText: 'Bouira',
+      mainText: 'Bouraoui',
     );
     _trajet = _baseDeDonnee.creerTrajetVide();
-    _trajet.id = 'idTrajetLance';
-    _trajet.villeArrivee = 'Alger';
-    _trajet.villeDepart = 'Bouira';
+    _trajet.villeArrivee = 'Esi';
+    _trajet.villeDepart = 'Bouraoui';
     _trajet.lieuDepart = lieuDepart;
     _trajet.lieuArrivee = lieuArrive;
-    _trajet.villeIntermediaires = ['Kharouba','Harrach'];
+    _trajet.villeIntermediaires = ['BeauLieu','Itemm'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
     if (position != null) {
@@ -520,7 +520,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
           width: size.width * 0.51,
           height: size.height * 0.048,
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async{
               /*if (depart != null && arrive != null) {
                 if (departData != null) {
                   getPlaceFromId(departData!.placeId!).then((value) {

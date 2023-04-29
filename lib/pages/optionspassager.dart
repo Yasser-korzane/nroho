@@ -35,11 +35,11 @@ class _optionsState extends State<options> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final Size size = MediaQuery.of(context).size;
-    Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
+    /*Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
     utilisateur.nom = "Grine";
     utilisateur.prenom = "Mohammed";
     utilisateur.email = "lm_grine@esi.dz";
-    utilisateur.numeroTelephone = "0776418929";
+    utilisateur.numeroTelephone = "0776418929";*/
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -60,7 +60,6 @@ class _optionsState extends State<options> {
             // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: screenHeight * 0.1),
-              //SelectableTextWidget(text: 'Etes-vous fumeur ?'),
               Card(color: Colors.white60,margin: EdgeInsets.all(16),
                 shape:   RoundedRectangleBorder(
                   side:  BorderSide(color: Colors.grey,width: 2),
@@ -221,8 +220,8 @@ class _optionsState extends State<options> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
-              //widget.trajetReserve.afficher();
-              //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+              widget.trajetReserve.afficher();
+              await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => PageDeRecherche(widget.trajetReserve)));
             },
