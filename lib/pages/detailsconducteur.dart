@@ -4,8 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../AppClasses/Trajet.dart';
+
 class detailsConducteur extends StatelessWidget {
-  Trajet _trajet ;
+  Trajet _trajet;
   detailsConducteur(this._trajet);
   @override
   Widget build(BuildContext context) {
@@ -41,12 +42,11 @@ class detailsConducteur extends StatelessWidget {
                         'Informations de la course',
                         style: GoogleFonts.lato(
                           textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.05,
-                            // responsive font size
-                            fontWeight: FontWeight.bold,
-                              fontFamily: 'Poppins'
-                          ),
+                              color: Colors.black,
+                              fontSize: screenWidth * 0.05,
+                              // responsive font size
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Poppins'),
                         ),
                       ),
                     ),
@@ -62,7 +62,7 @@ class detailsConducteur extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(defaultPadding),
                           child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               Navigator.pop(context);
                             },
                             child: Icon(
@@ -84,7 +84,7 @@ class detailsConducteur extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Date et Heure',
+                          'Date et Heure de depart',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -100,7 +100,10 @@ class detailsConducteur extends StatelessWidget {
                             flex: 1,
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
-                          child: Text('${_trajet.dateDepart.year}-${_trajet.dateDepart.month}-${_trajet.dateDepart.day}',style: TextStyle(fontFamily: 'Poppins'),),
+                          child: Text(
+                            '${_trajet.dateDepart.year}-${_trajet.dateDepart.month}-${_trajet.dateDepart.day}',
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          ),
                           flex: 5,
                         ),
                       ],
@@ -110,7 +113,10 @@ class detailsConducteur extends StatelessWidget {
                       children: [
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
-                          child: Text('${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',style: TextStyle(fontFamily: 'Poppins'),),
+                          child: Text(
+                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          ),
                           flex: 5,
                         ),
                       ],
@@ -119,7 +125,7 @@ class detailsConducteur extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Itinéraire',
+                          'Date et Heure d rivee',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -128,12 +134,35 @@ class detailsConducteur extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: screenHeight * 0.01),
-                    Image.network(
-                      'https://assets.website-files.com/5e832e12eb7ca02ee9064d42/5f7db426b676b95755fb2844_Group%20805.jpg',
-                      height: screenHeight * 0.25,
-                      width: screenWidth * 0.9,
+                    SizedBox(height: screenHeight * 0.02),
+                    Row(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Icon(Icons.calendar_month_outlined)),
+                        Expanded(
+                          child: Text(
+                            '${_trajet.dateDepart.year}-${_trajet.dateDepart.month}-${_trajet.dateDepart.day}',
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          ),
+                          flex: 5,
+                        ),
+                      ],
                     ),
+                    SizedBox(height: screenHeight * 0.02),
+                    Row(
+                      children: [
+                        Expanded(flex: 1, child: Icon(Icons.access_time)),
+                        Expanded(
+                          child: Text(
+                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                            style: TextStyle(fontFamily: 'Poppins'),
+                          ),
+                          flex: 5,
+                        ),
+                      ],
+                    ),
+                    Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.01),
                     Row(
                       children: [
@@ -181,7 +210,8 @@ class detailsConducteur extends StatelessWidget {
                                     '${_trajet.villeArrivee}',
                                     style: TextStyle(
                                         color: Colors.blue,
-                                        fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins'),
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -207,7 +237,8 @@ class detailsConducteur extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    Row( /// Faire une List view
+                    Row(
+                      /// Faire une List view
                       children: [
                         Expanded(
                           flex: 2,
@@ -226,15 +257,15 @@ class detailsConducteur extends StatelessWidget {
                               Text("HICHEM Boulacheb",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.bold,
-                                        fontFamily: 'Poppins'
-                                    ),
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins'),
                                   )),
                               SizedBox(height: 4.0),
                               OutlinedButton(
                                 onPressed: () {
-                                  launchUrlString("tel:+213 65498325");// Handle button press
+                                  launchUrlString(
+                                      "tel:+213 65498325"); // Handle button press
                                 },
                                 style: ButtonStyle(
                                   shape: MaterialStateProperty.all<
@@ -265,10 +296,9 @@ class detailsConducteur extends StatelessWidget {
                                       Text(
                                         '+213 65498325',
                                         style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.bold,
-                                            fontFamily: 'Poppins'
-                                        ),
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins'),
                                       ),
                                     ],
                                   ),
@@ -341,7 +371,7 @@ class detailsConducteur extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20,top: 4),
+                          padding: const EdgeInsets.only(left: 20, top: 4),
                           child: Text(
                             '" ${_trajet.avis} "',
                             style: TextStyle(
@@ -385,7 +415,8 @@ class detailsConducteur extends StatelessWidget {
                       child: Flexible(
                         child: Text.rich(
                           TextSpan(
-                            text: 'Si vous avez un problème avec ce trajet, contactez notre service client pour plus d’aide ou signalez directement par ',
+                            text:
+                                'Si vous avez un problème avec ce trajet, contactez notre service client pour plus d’aide ou signalez directement par ',
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 16.0,

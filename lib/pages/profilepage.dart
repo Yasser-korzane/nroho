@@ -225,7 +225,7 @@ class _ProfilepageState extends State<Profilepage> {
                   icon: Icons.navigation_rounded,
                   onPress: () {
                     _utilisateur.afficher();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(_utilisateur),));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(_utilisateur,),));
                   },
                 ),
                 SizedBox(height: screenHeight * 0.008),
