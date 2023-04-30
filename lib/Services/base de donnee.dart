@@ -46,6 +46,7 @@ class BaseDeDonnee{
         'villeArrive': notif.villeArrive,
         'accepte_refuse': notif.accepte_refuse,
       }).toList(),
+      'imageUrl': utilisateur.imageUrl,
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
@@ -79,12 +80,13 @@ class BaseDeDonnee{
         'villeArrive': notif.villeArrive,
         'accepte_refuse': notif.accepte_refuse,
       }).toList(),
+      'imageUrl': utilisateur.imageUrl,
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
     return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[],[]
+        Vehicule("", "", "", "", ""), false, [],[],[],[],'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png'
     );
   }
   Trajet creerTrajetVide(){
@@ -102,6 +104,10 @@ class BaseDeDonnee{
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'statut': newStatut});
+  }
+  Future<void> updateUtilisateurImage(String uid, String imageUrl) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    await utilisateurDocRef.update({'imageUrl': imageUrl});
   }
   Future<void> ajouterNotification(String uidRecepteur, Notifications not) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uidRecepteur);
@@ -210,6 +216,7 @@ class BaseDeDonnee{
                 utilisateur.notifications.add(notification);
               }
             }
+            utilisateur.imageUrl = snapshot.data()!['imageUrl'];
             utilisateur.afficher();
             return utilisateur;
             //tests by printing
@@ -333,6 +340,7 @@ class BaseDeDonnee{
           );
           utilisateur.notifications.add(notification);
         }
+        utilisateur.imageUrl = data['imageUrl'];
         utilisateurs.add(utilisateur);
       }
       return utilisateurs;
@@ -450,6 +458,7 @@ class BaseDeDonnee{
                   );
                   utilisateur.notifications.add(notification);
                 }
+                utilisateur.imageUrl = dataUtilisateur['imageUrl'];
                 utilisateur.afficher();
                 trajetLance.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
                 trajetLance.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));

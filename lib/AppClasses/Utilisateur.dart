@@ -12,9 +12,10 @@ class Utilisateur extends Personne{
   List<Trajet> Historique;
   static int nbUtilisateurs = 0;
   List<Notifications> notifications;
+  String imageUrl ;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
       super.numeroTelephone,this.evaluation, this.vehicule, this.statut,
-      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications);
+      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications,this.imageUrl);
 
   void lancerTrajet() {
     // Code pour lancer un trajet

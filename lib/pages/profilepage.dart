@@ -75,6 +75,8 @@ class _ProfilepageState extends State<Profilepage> {
               );
               _utilisateur.notifications.add(notification);
             }
+            _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
+            if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
             //tests by printing
           }); // end setState
         } else {
@@ -177,12 +179,11 @@ class _ProfilepageState extends State<Profilepage> {
                     SizedBox(
                         width: screenHeight * 0.15,
                         height: screenHeight * 0.15,
-                        child: ClipRRect(
+                        child: ClipRRect( 
                             borderRadius: BorderRadius.circular(100),
-                            child: const Image(
-                              image: NetworkImage(
-                                  'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
-                            ))),
+                            child: Image.network(_utilisateur.imageUrl),
+                        ),
+                    ),
                   ],
                 ),
                 SizedBox(height: screenHeight * 0.015),

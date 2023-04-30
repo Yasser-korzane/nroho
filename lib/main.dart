@@ -1,10 +1,6 @@
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
-import 'package:appcouvoiturage/pages/annulertrajet.dart';
-import 'package:appcouvoiturage/pages/confirmation.dart';
 import 'package:appcouvoiturage/pages/home.dart';
-import 'package:appcouvoiturage/pages/rating.dart';
-import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/Services/wrapper.dart';
 import 'package:provider/provider.dart';

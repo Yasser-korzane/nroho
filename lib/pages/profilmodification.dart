@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../Services/base de donnee.dart';
 class ModifierProfilePage extends StatefulWidget {
@@ -12,6 +15,7 @@ class ModifierProfilePage extends StatefulWidget {
 class _ModifierProfilePageState extends State<ModifierProfilePage> {
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   bool _changement = false;
+  String imageUrl = '';
 
   /*TextEditingController _contrNom = TextEditingController();
   TextEditingController _contrPrenom = TextEditingController();
@@ -22,12 +26,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   TextEditingController _contrPolice = TextEditingController();
   TextEditingController _contrNbPlaces = TextEditingController();*/
   // Methode pour changer la photo de profil
-  void _changerPhoto() {
-    // Implementer la logique pour changer la photo de profil
-  }
+  ImagePicker _imagePicker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double screenHeight = screenSize.height;
     /*_contrNom.text = widget._utilisateur.nom;
     _contrPrenom.text = widget._utilisateur.prenom;
     _contrMarque.text = widget._utilisateur.vehicule.marque;
@@ -61,23 +65,42 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Center(
-                  child: GestureDetector(
-                    onTap: _changerPhoto,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(
-                          'https://media.istockphoto.com/id/1210939712/vector/user-icon-people-icon-isolated-on-white-background-vector-illustration.jpg?s=612x612&w=0&k=20&c=vKDH9j7PPMN-AiUX8vsKlmOonwx7wjqdKiLge7PX1ZQ='),
+                  child :SizedBox(
+                    width: screenHeight * 0.15,
+                    height: screenHeight * 0.15,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(widget._utilisateur.imageUrl),
                     ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.014),
                 Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    'changer votre photo',
-                    style: TextStyle(
+                  child: TextButton(
+                    onPressed:() async{
+                      /// 1) get the image from gallery
+                      XFile? file = await _imagePicker.pickImage(source: ImageSource.gallery);
+                      /// 2) upload the image in firebase storage
+                      if (file == null) return;
+                      Reference referenceRoot = FirebaseStorage. instance.ref();
+                      Reference referenceDirImages=referenceRoot.child('images');
+                      Reference referenceImageToUpload = referenceDirImages.child(FirebaseAuth.instance.currentUser!.uid);
+                      try{
+                        await referenceImageToUpload.putFile(File(file.path));
+                        imageUrl = await referenceImageToUpload.getDownloadURL();
+                        print('****************************************** imageUrl = $imageUrl');
+                        setState(() {
+                          widget._utilisateur.imageUrl = imageUrl ;
+                        });
+                        await _baseDeDonnee.updateUtilisateurImage(FirebaseAuth.instance.currentUser!.uid, imageUrl);
+                      }catch(error) {
+                        throw Exception('Failed to set the image');
+                      }
+                    },
+                    child : Text('changer votre photo',style: TextStyle(
                       color: Color(0xff271BAB),
-                    ),
+                    ),),
                   ),
                 ),
                 Card(

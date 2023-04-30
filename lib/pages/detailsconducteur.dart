@@ -2,9 +2,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-class detailsConducteur extends StatelessWidget {
-  const detailsConducteur({Key? key}) : super(key: key);
 
+import '../AppClasses/Trajet.dart';
+class detailsConducteur extends StatelessWidget {
+  Trajet _trajet ;
+  detailsConducteur(this._trajet);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -98,7 +100,7 @@ class detailsConducteur extends StatelessWidget {
                             flex: 1,
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
-                          child: Text('Mardi 31 février 2005 ',style: TextStyle(fontFamily: 'Poppins'),),
+                          child: Text('${_trajet.dateDepart.year}-${_trajet.dateDepart.month}-${_trajet.dateDepart.day}',style: TextStyle(fontFamily: 'Poppins'),),
                           flex: 5,
                         ),
                       ],
@@ -108,7 +110,7 @@ class detailsConducteur extends StatelessWidget {
                       children: [
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
-                          child: Text('13:20 ',style: TextStyle(fontFamily: 'Poppins'),),
+                          child: Text('${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',style: TextStyle(fontFamily: 'Poppins'),),
                           flex: 5,
                         ),
                       ],
@@ -161,7 +163,7 @@ class detailsConducteur extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'OUED Smar',
+                                    '${_trajet.villeDepart}',
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -176,11 +178,10 @@ class detailsConducteur extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'BAROUAGHIA Medea',
+                                    '${_trajet.villeArrivee}',
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,fontFamily: 'Poppins'),
-
                                   ),
                                   onTap: () {
                                     // handle onTap event
@@ -196,7 +197,7 @@ class detailsConducteur extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Le chauffeur/Le passagé :',
+                          'Le conducteur/Les passagers :',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -206,7 +207,7 @@ class detailsConducteur extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    Row(
+                    Row( /// Faire une List view
                       children: [
                         Expanded(
                           flex: 2,
@@ -297,7 +298,7 @@ class detailsConducteur extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 30),
                           child: Text(
-                            '400 DA',
+                            '${_trajet.coutTrajet} DA',
                             style: TextStyle(
                               // fontWeight: FontWeight.w400,
                               fontSize: 16.0,
@@ -340,12 +341,12 @@ class detailsConducteur extends StatelessWidget {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 30),
+                          padding: const EdgeInsets.only(left: 20,top: 4),
                           child: Text(
-                            'Aucun commentaire',
+                            '" ${_trajet.avis} "',
                             style: TextStyle(
                               fontWeight: FontWeight.w200,
-                              fontSize: 16.0,
+                              fontSize: 15.5,
                               fontFamily: 'Poppins',
                             ),
                           ),
