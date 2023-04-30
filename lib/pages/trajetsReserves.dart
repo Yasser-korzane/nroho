@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/pages/trajet.dart';
 
+import 'InfoTrajetLancerReserve.dart';
 import 'cardReserver.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,6 @@ class cardReserverList extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
@@ -40,155 +40,118 @@ class cardReserverList extends StatelessWidget{
           final lancer = cardReservers[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
-              child: Card(
-                color: Colors.white,
-                elevation: 8,
-                margin: EdgeInsets.symmetric(horizontal: screenHeight*0.01,vertical: screenWidth*0.001),
-                borderOnForeground:true,
-                shape:   RoundedRectangleBorder(
-                  side:  BorderSide(color: Colors.grey,width: 2),
-                  borderRadius: BorderRadius.all(Radius.circular(15)
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis()));
+                },
+                child: Card(
+                  color: Colors.white,
+                  elevation: 8,
+                  margin: EdgeInsets.symmetric(horizontal: screenHeight*0.01,vertical: screenWidth*0.001),
+                  borderOnForeground:true,
+                  shape:   RoundedRectangleBorder(
+                    side:  BorderSide(color: Colors.grey,width: 2),
+                    borderRadius: BorderRadius.all(Radius.circular(15)
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding:  EdgeInsets.all(screenWidth*0.02),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding:  EdgeInsets.all(screenWidth*0.015),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget> [
-                              //Image،
-                              Container(
-                                height: screenHeight*0.06,
-                                width: screenHeight*0.06,
-                                child: CircleAvatar(
-                                  //backGrounndImage: AssetImage('your image path'),
-                                  backgroundImage: AssetImage('asset/images/profile.png',),
-                                  radius: 50,
+                  child: Padding(
+                    padding:  EdgeInsets.all(screenWidth*0.02),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding:  EdgeInsets.all(screenWidth*0.015),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget> [
+                                Text(
+                                  ' 21 janvier 2024 a 18:10',
+                                  style: TextStyle(fontFamily: 'poppins'),
                                 ),
-                              ),
-                              Column(
+                                Column(
+                                    children : [
+                                      Text('Le cout',                                style: TextStyle(fontFamily: 'Poppins'),
+                                      ),
+                                      Text(  lancer.price.toString() +' DA',
+                                        style: TextStyle(fontFamily: 'Poppins'),
+                                      ),
+                                    ]
+                                )
+
+                              ]
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left:10.0, right: 10),
+                          child: Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Colors.black,
+                          ),
+                        ),
+                        //SizedBox(height: screenHeight*0.04),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(lancer.firstName,                                style: TextStyle(fontFamily: 'Poppins'),
-                                      ),
-                                      Text(lancer.lastName,
-                                        style: TextStyle(fontFamily: 'Poppins'),
-                                      ),
-                                      SizedBox(
-                                        height: 1,
-                                        width: 50,
-                                      )
-                                    ],
+                                  Icon(Icons.circle, color: Colors.purple),
+                                  // SizedBox(height: 20),
+                                  Container(
+                                    height: screenHeight* 0.05,
+                                    width: 1,
+                                    color: Colors.grey,
                                   ),
-                                  Row(
-                                    //crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Icon(Icons.star , color: Colors.amber[600] ,),
-                                      Text(lancer.nombraStar.toString(),
-                                        style: TextStyle(fontFamily: 'Poppins'),
-                                      ),
-                                      SizedBox(
-                                        height: 1,
-                                        width: 160,
-                                      )
-                                    ],
-                                  )
+                                  // SizedBox(height: 8),
+                                  Icon(
+                                    Icons.circle_outlined,
+                                    color: Colors.purple,
+                                  ),
                                 ],
                               ),
-                              Column(
-                                  children : [
-                                    Text('Le cout',                                style: TextStyle(fontFamily: 'Poppins'),
-                                    ),
-                                    Text(  lancer.price.toString() +' DA',
-                                      style: TextStyle(fontFamily: 'Poppins'),
-                                    ),
-                                  ]
-                              )
-
-                            ]
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left:10.0, right: 10),
-                        child: Divider(
-                          height: 1,
-                          thickness: 1,
-                          color: Colors.black,
-                        ),
-                      ),
-                      //SizedBox(height: screenHeight*0.04),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Icon(Icons.circle, color: Colors.purple),
-                                // SizedBox(height: 20),
-                                Container(
-                                  height: screenHeight* 0.05,
-                                  width: 1,
-                                  color: Colors.grey,
-                                ),
-                                // SizedBox(height: 8),
-                                Icon(
-                                  Icons.circle_outlined,
-                                  color: Colors.purple,
-                                ),
-                              ],
                             ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Column(
-                              children: [
-                                Container(
-                                  child: ListTile(
-                                    title: Text(
-                                      lancer.heurDepar,
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                          fontFamily: 'Poppins'
+                            Expanded(
+                              flex: 4,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    child: ListTile(
+                                      title: Text(
+                                        lancer.heurDepar,
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                            fontFamily: 'Poppins'
+                                        ),
+                                      ),
+                                      subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Poppins'),
-                                    ),
-                                    onTap: () {
-                                      // handle onTap event
-                                    },
                                   ),
-                                ),
-                                //SizedBox(height: screenHeight*0.03),
-                                Container(
-                                  child: ListTile(
-                                    title: Text(
-                                      lancer.heureArrive,
-                                      style: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                          fontFamily: 'Poppins'
+                                  //SizedBox(height: screenHeight*0.03),
+                                  Container(
+                                    child: ListTile(
+                                      title: Text(
+                                        lancer.heureArrive,
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                            fontFamily: 'Poppins'
+                                        ),
+                                      ),
+                                      subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
-                                    subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Poppins'),
-                                    ),
-                                    onTap: () {
-                                      // handle onTap event
-                                    },
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               )

@@ -2,7 +2,7 @@ import 'package:appcouvoiturage/pages/contactezNous.dart';
 import 'package:appcouvoiturage/widgets/profilwidget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Assistance extends StatelessWidget {
   const Assistance({Key? key}) : super(key: key);
@@ -12,7 +12,6 @@ class Assistance extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -78,12 +77,8 @@ class Assistance extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launchUrlString('https://tresor.cse.club/');
+                        launch('https://karimiarkane.github.io/');
                       },
-                    // ),
-                    // TextSpan(
-                    //   text: ' .',
-                    // ),
                   )
                 ],
               ),

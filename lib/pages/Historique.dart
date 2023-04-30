@@ -1,14 +1,11 @@
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/pages/detailsconducteur.dart';
-import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
 
 
 class Historique extends StatelessWidget {
   Utilisateur _utilisateur;
-  Historique(this._utilisateur,this._trajetLances);
-
-  List<Trajet> _trajetLances;
+  Historique(this._utilisateur);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -31,9 +28,9 @@ class Historique extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemCount: _trajetLances.length,
+        itemCount: _utilisateur.Historique.length,
         itemBuilder: (context, index) {
-          final lancer = _trajetLances[index];
+          final lancer = _utilisateur.Historique[index];
           return  Padding(
             padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
             child: GestureDetector(
@@ -119,9 +116,6 @@ class Historique extends StatelessWidget {
                                       ),
                                     ),
                                     subtitle: Text(lancer.villeDepart,style: TextStyle(fontFamily: 'Poppins'),),
-                                    onTap: () {
-                                      // handle onTap event
-                                    },
                                   ),
                                 ),
                                 //SizedBox(height: screenHeight*0.03),
@@ -137,9 +131,6 @@ class Historique extends StatelessWidget {
                                       ),
                                     ),
                                     subtitle: Text(lancer.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),),
-                                    onTap: () {
-                                      // handle onTap event
-                                    },
                                   ),
                                 ),
                               ],

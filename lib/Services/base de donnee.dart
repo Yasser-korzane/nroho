@@ -15,6 +15,9 @@ class ConducteurTrajet {
 
 class BaseDeDonnee{
   final CollectionReference utilisateurCollection = FirebaseFirestore.instance.collection('Utilisateur');
+  final CollectionReference gestionConfilits = FirebaseFirestore.instance.collection('ConsultationDesConfilits');
+  final CollectionReference mauvaisUtilisateurs = FirebaseFirestore.instance.collection('Mauvais_Utilisateurs');
+
   /** *********************************** Seters (ajout et modifications) *********************************** **////
   Future<void> creerUtilisateur(Utilisateur utilisateur) async {
     await utilisateurCollection.doc(utilisateur.identifiant).set({
@@ -169,6 +172,21 @@ class BaseDeDonnee{
   }
   //------------------------------------------------------------------------------------------
   Future<void> sauvegarderVillesIntermediaires(String uid, List<String> villes)async{
+  }
+  Future<void> ajouterConflit(String idConducteur , String idPassager, String idTrajetConductuer ,String idTrajetPassager) async {
+    String uid = alternerChaines(idConducteur, idPassager);
+    await utilisateurCollection.doc(uid).set({
+      'idConducteur': idConducteur,
+      'idPassager': idPassager,
+      'idTrajetConductuer': idTrajetConductuer,
+      'idTrajetPassager': idTrajetPassager,
+    });
+  }
+  Future<void> ajouterMauvaisUtilisateur(String uid, String email) async {
+    await mauvaisUtilisateurs.doc(uid).set({
+      'id': uid,
+      'email': email,
+    });
   }
   //------------------------------------------------------------------------------------------
   /** ************************************** Geters ****************************************** **////
@@ -501,6 +519,21 @@ class BaseDeDonnee{
     } catch (e) {
       throw Exception("Failed to get utilisateurs : $e");
     }
+  }
+  String alternerChaines(String chaine1, String chaine2) {
+    StringBuffer resultat = StringBuffer();
+    int longueurMin = chaine1.length < chaine2.length ? chaine1.length : chaine2.length;
+    for (int i = 0; i < longueurMin; i+=2) {
+      if (i+1>=chaine1.length || i+1>=chaine2.length) break;
+      resultat.write(chaine1[i]);
+      resultat.write(chaine2[i+1]);
+    }
+    if (chaine1.length > chaine2.length) {
+      resultat.write(chaine1.substring(longueurMin));
+    } else if (chaine2.length > chaine1.length) {
+      resultat.write(chaine2.substring(longueurMin));
+    }
+    return resultat.toString();
   }
 /// querySnapshot contient tout les references de toute les Utilisateurs
 /// querySnapshot.docs contient les utilisateurs avec leurs documents

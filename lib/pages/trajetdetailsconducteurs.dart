@@ -40,8 +40,6 @@ class Details extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
-        margin:
-            EdgeInsets.fromLTRB(0, 0, screenWidth * 0.025, 0),
         padding: EdgeInsets.all(screenWidth * 0.03),
         child: Column(
           children: [
@@ -241,18 +239,18 @@ class Details extends StatelessWidget {
                           );
                         },
                         child: Text('Villes intermedieres',
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,
                                 color: Color(0xff137c8b),
                               ),
-                            )
                         )
 
                     ),
                   ),
                 ),
+                SizedBox(width: 8,),
                 Expanded(
                   child: OutlinedButton(
                       style: ButtonStyle(
@@ -280,7 +278,8 @@ class Details extends StatelessWidget {
                                   // If the list is empty, display a message
                                   return Center(
                                       child: Text(
-                                          'Il y a pas de ville intermidiere'));
+                                          'Il y a pas de ville intermidiere'
+                                      ,style: TextStyle(fontFamily: 'Poppins',),));
                                 } else {
                                   // If the list is not empty, display the commentaires in a ListView
                                   return ListView.separated(

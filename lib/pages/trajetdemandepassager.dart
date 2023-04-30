@@ -26,7 +26,6 @@ class Detailspassaer extends StatelessWidget {
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

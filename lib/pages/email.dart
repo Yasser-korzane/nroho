@@ -1,8 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:appcouvoiturage/pages/Verification.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-
 class Emailgetter extends StatelessWidget {
   const Emailgetter({super.key});
 
@@ -11,7 +8,6 @@ class Emailgetter extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

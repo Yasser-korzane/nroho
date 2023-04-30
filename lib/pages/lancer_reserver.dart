@@ -12,16 +12,8 @@ class Trajets extends StatefulWidget {
 }
 
 class _TrajetsState extends State<Trajets> {
-  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
-    final double screenWidth = screenSize.width;
-    final double screenHeight = screenSize.height;
-    const double defaultPadding = 10;
-
     return  DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -35,11 +27,13 @@ class _TrajetsState extends State<Trajets> {
           elevation: 0,
           centerTitle: true,
           bottom: TabBar(
+            labelStyle: TextStyle(fontFamily: 'Poppins'),
             indicatorColor: Colors.blue,
             labelColor: Colors.blue.shade700,
             unselectedLabelColor: Colors.blueGrey[900],
               tabs: [
-                Tab(text: 'Trajet lancer',),
+                Tab(text: 'Trajet lancer',
+                ),
                 Tab(text: 'Trajet reserver'),
               ],
           ),

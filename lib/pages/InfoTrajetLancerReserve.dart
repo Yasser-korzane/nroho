@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 class detailsPassagerConducteurHis extends StatelessWidget {
-  const detailsPassagerConducteurHis({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;

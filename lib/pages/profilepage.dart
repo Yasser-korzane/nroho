@@ -174,12 +174,13 @@ class _ProfilepageState extends State<Profilepage> {
                   children: [
                     Text("Profil",
                         style: TextStyle(
+                            fontFamily: 'Poppins',
                             color: Color(0xff344d59),
                             fontSize: screenHeight * 0.038)),
                     SizedBox(
                         width: screenHeight * 0.15,
                         height: screenHeight * 0.15,
-                        child: ClipRRect( 
+                        child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: Image.network(_utilisateur.imageUrl),
                         ),
@@ -188,13 +189,13 @@ class _ProfilepageState extends State<Profilepage> {
                 ),
                 SizedBox(height: screenHeight * 0.015),
                 Text("${_utilisateur.nom} ${_utilisateur.prenom}",
-                    style: Theme.of(context).textTheme.headlineSmall),
+                    style: TextStyle(fontFamily: 'Poppins',fontSize: 24)),
                 RatingWidget(
                     color: Colors.yellow,
                     rating: _utilisateur.evaluation.etoiles.toDouble(),
                     size: screenWidth * 0.05),
                 SizedBox(height: screenHeight * 0.005),
-                Text(_utilisateur.email, style: Theme.of(context).textTheme.bodyMedium),
+                Text(_utilisateur.email,style: TextStyle(fontFamily: 'Poppins',fontSize: 15)),
                 SizedBox(height: screenHeight * 0.02),
                 SizedBox(
                     width: screenWidth * 0.5,
