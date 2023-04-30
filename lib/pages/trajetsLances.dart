@@ -57,6 +57,14 @@ class cardLancerList extends StatelessWidget {
         price: 55),
   ];
 
+  final List<String> Passagers = [
+    'allah akbar',
+    'allah akbar ',
+    'allah akbar ',
+
+  ];
+
+
   // Widget cardLancerTamplate (cardLancer){
   @override
   Widget build(BuildContext context) {
@@ -252,19 +260,62 @@ class cardLancerList extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: screenWidth * 0.06),
-                        child: Container(
-                          child: Row(children: [
-                            Icon(
-                              Icons.person,
-                              color: Colors.blue,
-                              size: screenHeight * 0.03,
-                            ),
-                            Text(
-                              ' ' + lancer.nbPassager.toString() + ' passagers',
-                              style: TextStyle(
-                                  color: Colors.blue, fontFamily: 'Poppins'),
+                        child: GestureDetector(
+                          onTap: (){
+                            showModalBottomSheet(
+                                isDismissible: true,
+                                context: context,
+                                builder: (context) => Builder(
+                              builder: (context) {
+                                if (Passagers.isEmpty) {
+                                  // If the list is empty, display a message
+                                  return Center(
+                                      child: Text(
+                                          'Il y a pas de ville intermidiere'));
+                                } else {
+                                  // If the list is not empty, display the commentaires in a ListView
+                                  return ListView.separated(
+                                    separatorBuilder: (context, index) => Divider(
+                                      thickness: 1.0,
+                                      color: Colors.grey[300],
+                                    ),
+                                    itemCount: Passagers.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons.person_outline_outlined),
+                                          title: Text(
+                                            Passagers[index],
+                                            style: TextStyle(
+                                              fontFamily: 'poppins',
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              },
                             )
-                          ]),
+                            );
+                          },
+                          child: Container(
+                            child: Row(children: [
+                              Icon(
+                                Icons.person,
+                                color: Colors.blue,
+                                size: screenHeight * 0.03,
+                              ),
+                              Text(
+                                ' ' + lancer.nbPassager.toString() + ' passagers',
+                                style: TextStyle(
+                                    color: Colors.blue, fontFamily: 'Poppins'),
+                              )
+                            ]),
+                          ),
                         ),
                       ),
                       // SizedBox(height: screenHeight * 0.03),

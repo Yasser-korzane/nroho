@@ -41,8 +41,8 @@ class Details extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Container(
         margin:
-            EdgeInsets.fromLTRB(screenWidth * 0.025, 0, screenWidth * 0.025, 0),
-        padding: EdgeInsets.all(screenWidth * 0.05),
+            EdgeInsets.fromLTRB(0, 0, screenWidth * 0.025, 0),
+        padding: EdgeInsets.all(screenWidth * 0.03),
         child: Column(
           children: [
             SizedBox(
@@ -83,62 +83,6 @@ class Details extends StatelessWidget {
               ],
             ),
             SizedBox(height: screenHeight * 0.025),
-            Row(
-              children: [
-                TextButton(
-                 onPressed: () {
-                      showModalBottomSheet(
-                          isDismissible: true,
-                          context: context,
-                          builder: (context) => Builder(
-                        builder: (context) {
-                          if (Viles.isEmpty) {
-                            // If the list is empty, display a message
-                            return Center(
-                                child: Text(
-                                    'Il y a pas de ville intermidiere'));
-                          } else {
-                            // If the list is not empty, display the commentaires in a ListView
-                            return ListView.separated(
-                              separatorBuilder: (context, index) => Divider(
-                                thickness: 1.0,
-                                color: Colors.grey[300],
-                              ),
-                              itemCount: Viles.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ListTile(
-                                    leading: Icon(Icons.location_on_outlined),
-                                    title: Text(
-                                     Viles[index],
-                                      style: TextStyle(
-                                        fontFamily: 'poppins',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                        },
-                      )
-                      );
-                    },
-                    child: Text('Villes intermedieres',
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xff137c8b),
-                          ),
-                        )
-                    )
-                )
-              ],
-            ),
             // SizedBox(height: screenHeight * 0.014),
             Row(
               children: [
@@ -156,7 +100,7 @@ class Details extends StatelessWidget {
                 Expanded(child: Text(email), flex: 8),
               ],
             ),
-            SizedBox(height: screenHeight * 0.014),
+            SizedBox(height: screenHeight * 0.01),
             Row(
               children: [
                 Expanded(
@@ -173,7 +117,6 @@ class Details extends StatelessWidget {
                 Expanded(child: Text(carName), flex: 5),
               ],
             ),
-            SizedBox(height: screenHeight * 0.014),
             Row(
               children: [
                 Expanded(
@@ -187,7 +130,198 @@ class Details extends StatelessWidget {
                         ),
                       )),
                 ),
-                Expanded(child: Text(carName), flex: 5),
+                Expanded(child: Text(carName), flex: 3),
+                Expanded(
+                  child: IconButton(
+                    icon: Icon(Icons.add_circle_outline),
+                    iconSize: 20,
+                    onPressed: () {
+                      showModalBottomSheet(
+                        isDismissible: true,
+                        context: context,
+                        builder: (context) => Builder(
+                          builder: (context) {
+                            if (commentaires.isEmpty) {
+                              // If the list is empty, display a message
+                              return Center(
+                                  child: Text(
+                                      'This conducteur has no commentaires'));
+                            } else {
+                              // If the list is not empty, display the commentaires in a ListView
+                              return ListView.separated(
+                                separatorBuilder: (context, index) => Divider(
+                                  thickness: 1.0,
+                                  color: Colors.grey[300],
+                                ),
+                                itemCount: commentaires.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      commentaires[index],
+                                      style: TextStyle(
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<
+                              RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: BorderSide(color: Colors.blue),
+                            ),
+                          ),
+                          backgroundColor:
+                          MaterialStateProperty.all<Color>(
+                              Colors.white),
+                          foregroundColor:
+                          MaterialStateProperty.all<Color>(
+                              Color(0xff137c8b)),
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              isDismissible: true,
+                              context: context,
+                              builder: (context) => Builder(
+                                builder: (context) {
+                                  if (Viles.isEmpty) {
+                                    // If the list is empty, display a message
+                                    return Center(
+                                        child: Text(
+                                            'Il y a pas de ville intermidiere'));
+                                  } else {
+                                    // If the list is not empty, display the commentaires in a ListView
+                                    return ListView.separated(
+                                      separatorBuilder: (context, index) => Divider(
+                                        thickness: 1.0,
+                                        color: Colors.grey[300],
+                                      ),
+                                      itemCount: Viles.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: ListTile(
+                                            leading: Icon(Icons.location_on_outlined),
+                                            title: Text(
+                                              Viles[index],
+                                              style: TextStyle(
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                },
+                              )
+                          );
+                        },
+                        child: Text('Villes intermedieres',
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff137c8b),
+                              ),
+                            )
+                        )
+
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: OutlinedButton(
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<
+                            RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.blue),
+                          ),
+                        ),
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(
+                            Colors.white),
+                        foregroundColor:
+                        MaterialStateProperty.all<Color>(
+                            Color(0xff137c8b)),
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet(
+                            isDismissible: true,
+                            context: context,
+                            builder: (context) => Builder(
+                              builder: (context) {
+                                if (Viles.isEmpty) {
+                                  // If the list is empty, display a message
+                                  return Center(
+                                      child: Text(
+                                          'Il y a pas de ville intermidiere'));
+                                } else {
+                                  // If the list is not empty, display the commentaires in a ListView
+                                  return ListView.separated(
+                                    separatorBuilder: (context, index) => Divider(
+                                      thickness: 1.0,
+                                      color: Colors.grey[300],
+                                    ),
+                                    itemCount: Viles.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ListTile(
+                                          leading: Icon(Icons.location_on_outlined),
+                                          title: Text(
+                                            Viles[index],
+                                            style: TextStyle(
+                                              fontFamily: 'poppins',
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                            )
+                        );
+                      },
+                      child: Text('avis sur le conducteur',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff137c8b),
+                            ),
+                          )
+                      )
+                  ),
+                ),
               ],
             ),
             SizedBox(height: screenHeight * 0.04),
@@ -248,56 +382,6 @@ class Details extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
-                    child: Column(
-                  children: [
-                    Container(
-                      height: screenHeight * 0.13,
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.comment_outlined),
-                      iconSize: 30,
-                      onPressed: () {
-                        showModalBottomSheet(
-                          isDismissible: true,
-                          context: context,
-                          builder: (context) => Builder(
-                            builder: (context) {
-                              if (commentaires.isEmpty) {
-                                // If the list is empty, display a message
-                                return Center(
-                                    child: Text(
-                                        'This conducteur has no commentaires'));
-                              } else {
-                                // If the list is not empty, display the commentaires in a ListView
-                                return ListView.separated(
-                                  separatorBuilder: (context, index) => Divider(
-                                    thickness: 1.0,
-                                    color: Colors.grey[300],
-                                  ),
-                                  itemCount: commentaires.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        commentaires[index],
-                                        style: TextStyle(
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ))
               ],
             ),
             SizedBox(height: screenHeight * 0.04),

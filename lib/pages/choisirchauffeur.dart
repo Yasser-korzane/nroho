@@ -10,7 +10,6 @@ class DriverListPage extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
       backgroundColor: Color(0xffCDCACA),
       appBar: AppBar(
