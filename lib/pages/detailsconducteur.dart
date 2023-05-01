@@ -198,9 +198,6 @@ class detailsConducteur extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Poppins'),
                                   ),
-                                  onTap: () {
-                                    // handle onTap event
-                                  },
                                 ),
                               ),
                               SizedBox(height: screenHeight * 0.005),
@@ -213,9 +210,6 @@ class detailsConducteur extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Poppins'),
                                   ),
-                                  onTap: () {
-                                    // handle onTap event
-                                  },
                                 ),
                               ),
                             ],

@@ -133,9 +133,6 @@ class cardLancerListH extends StatelessWidget{
                                         ),
                                       ),
                                       subtitle: Text(lancer.villeDepart,style: TextStyle(fontFamily: 'Poppins'),),
-                                      onTap: () {
-                                        // handle onTap event
-                                      },
                                     ),
                                   ),
                                   //SizedBox(height: screenHeight*0.03),
@@ -151,9 +148,6 @@ class cardLancerListH extends StatelessWidget{
                                         ),
                                       ),
                                       subtitle: Text(lancer.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),),
-                                      onTap: () {
-                                        // handle onTap event
-                                      },
                                     ),
                                   ),
                                 ],
