@@ -1,79 +1,18 @@
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/InfoTrajetLancerReserve.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
-
-import 'cardLancer.dart';
-
+import '../AppClasses/Trajet.dart';
 class cardLancerList extends StatelessWidget {
-  final List<cardLancer> cardLancers = [
-    cardLancer(
-        firstName: 'boulachabe',
-        lastName: 'hicham',
-        heurDepar: '08:30 AM',
-        heureArrive: '08:45 AM',
-        placeArrive: 'harache',
-        placeDepart: 'oued smar',
-        nbPassager: 3,
-        nombraStar: 4.5,
-        price: 50),
-    cardLancer(
-        firstName: 'korzane',
-        lastName: 'yasser',
-        heurDepar: '08:30 AM',
-        heureArrive: '08:45 AM',
-        placeArrive: 'harache',
-        placeDepart: 'oued smar',
-        nbPassager: 2,
-        nombraStar: 3.7,
-        price: 55),
-    cardLancer(
-        firstName: 'korzane',
-        lastName: 'yasser',
-        heurDepar: '08:30 AM',
-        heureArrive: '08:45 AM',
-        placeArrive: 'harache',
-        placeDepart: 'oued smar',
-        nbPassager: 2,
-        nombraStar: 3.7,
-        price: 55),
-    cardLancer(
-        firstName: 'korzane',
-        lastName: 'yasser',
-        heurDepar: '08:30 AM',
-        heureArrive: '08:45 AM',
-        placeArrive: 'harache',
-        placeDepart: 'oued smar',
-        nbPassager: 2,
-        nombraStar: 3.7,
-        price: 55),
-    cardLancer(
-        firstName: 'korzane',
-        lastName: 'yasser',
-        heurDepar: '08:30 AM',
-        heureArrive: '08:45 AM',
-        placeArrive: 'harache',
-        placeDepart: 'oued smar',
-        nbPassager: 2,
-        nombraStar: 3.7,
-        price: 55),
-  ];
-
-  final List<String> Passagers = [
-    'allah akbar',
-    'allah akbar ',
-    'allah akbar ',
-
-  ];
-
-
-  // Widget cardLancerTamplate (cardLancer){
+  List<Trajet> trajetsLances ;
+  cardLancerList(this.trajetsLances);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => OuAllezVous()));
@@ -81,11 +20,11 @@ class cardLancerList extends StatelessWidget {
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
         shape: CircleBorder(),
-      ),
+      ),*/
       body: ListView.builder(
-        itemCount: cardLancers.length,
+        itemCount: trajetsLances.length,
         itemBuilder: (context, index) {
-          final lancer = cardLancers[index];
+          final lancer = trajetsLances[index];
           return Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.035,
@@ -115,7 +54,7 @@ class cardLancerList extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Text(
-                                  ' 21 janvier 2024 a 18:10',
+                                  '${lancer.dateDepart.day} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
                                   style: TextStyle(fontFamily: 'poppins'),
                                 ),
                                 Column(children: [
@@ -124,7 +63,7 @@ class cardLancerList extends StatelessWidget {
                                     style: TextStyle(fontFamily: 'Poppins'),
                                   ),
                                   Text(
-                                    lancer.price.toString() + ' DA',
+                                    lancer.coutTrajet.toString() + ' DA',
                                     style: TextStyle(fontFamily: 'Poppins'),
                                   ),
                                 ])
@@ -138,7 +77,6 @@ class cardLancerList extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        //SizedBox(height: screenHeight*0.04),
                         Row(
                           children: [
                             Expanded(
@@ -167,7 +105,7 @@ class cardLancerList extends StatelessWidget {
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        lancer.heurDepar,
+                                        '${lancer.dateDepart.hour}:${lancer.dateDepart.minute}',
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontWeight: FontWeight.bold,
@@ -175,7 +113,7 @@ class cardLancerList extends StatelessWidget {
                                             fontFamily: 'Poppins'),
                                       ),
                                       subtitle: Text(
-                                        lancer.placeDepart,
+                                        lancer.villeDepart,
                                         style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
@@ -184,7 +122,7 @@ class cardLancerList extends StatelessWidget {
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        lancer.heureArrive,
+                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute}',
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontWeight: FontWeight.bold,
@@ -192,7 +130,7 @@ class cardLancerList extends StatelessWidget {
                                             fontFamily: 'Poppins'),
                                       ),
                                       subtitle: Text(
-                                        lancer.placeArrive,
+                                        lancer.villeArrivee,
                                         style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
@@ -202,7 +140,6 @@ class cardLancerList extends StatelessWidget {
                             )
                           ],
                         ),
-                        //SizedBox(height: screenHeight*0.018),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, right: 10),
                           child: Divider(
@@ -212,7 +149,7 @@ class cardLancerList extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: screenWidth * 0.06),
+                          padding: EdgeInsets.only(left: screenWidth * 0.08),
                           child: GestureDetector(
                             onTap: (){
                               showModalBottomSheet(
@@ -220,7 +157,7 @@ class cardLancerList extends StatelessWidget {
                                   context: context,
                                   builder: (context) => Builder(
                                 builder: (context) {
-                                  if (Passagers.isEmpty) {
+                                  if (lancer.villeIntermediaires.isEmpty) {
                                     // If the list is empty, display a message
                                     return Center(
                                         child: Text(
@@ -232,14 +169,14 @@ class cardLancerList extends StatelessWidget {
                                         thickness: 1.0,
                                         color: Colors.grey[300],
                                       ),
-                                      itemCount: Passagers.length,
+                                      itemCount: lancer.villeIntermediaires.length,
                                       itemBuilder: (context, index) {
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: ListTile(
                                             leading: Icon(Icons.person_outline_outlined),
                                             title: Text(
-                                              Passagers[index],
+                                              lancer.villeIntermediaires[index],
                                               style: TextStyle(
                                                 fontFamily: 'poppins',
                                                 fontWeight: FontWeight.w700,
@@ -255,19 +192,22 @@ class cardLancerList extends StatelessWidget {
                               )
                               );
                             },
-                            child: Container(
-                              child: Row(children: [
-                                Icon(
-                                  Icons.person,
-                                  color: Colors.blue,
-                                  size: screenHeight * 0.03,
-                                ),
-                                Text(
-                                  ' ' + lancer.nbPassager.toString() + ' passagers',
-                                  style: TextStyle(
-                                      color: Colors.blue, fontFamily: 'Poppins'),
-                                )
-                              ]),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: Row(children: [
+                                  Icon(
+                                    Icons.person,
+                                    color: Colors.blue,
+                                    size: screenHeight * 0.03,
+                                  ),
+                                  Text(
+                                    '${lancer.plusInformations.nbPlaces} passagers',
+                                    style: TextStyle(
+                                        color: Colors.blue, fontFamily: 'Poppins'),
+                                  )
+                                ]),
+                              ),
                             ),
                           ),
                         ),

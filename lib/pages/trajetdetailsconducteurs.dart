@@ -1,42 +1,20 @@
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:url_launcher/url_launcher_string.dart';
 class Details extends StatelessWidget {
-  final String photoUrl;
-  final String fullName;
-  final double rating;
-  final String phoneNumber;
-  final String email;
-  final String carName;
-
-  final List<String> commentaires = [
-    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-    'allah akbar allah akbar allah akbar allah akbar allah akbar allah akbar',
-  ];
-  final List<String> Viles = [
-    'allah akbar',
-    'allah akbar ',
-    'allah akbar ',
-
-  ];
-
-
-  Details({
-    required this.photoUrl,
-    required this.fullName,
-    required this.rating,
-    required this.phoneNumber,
-    required this.email,
-    required this.carName,
-  });
-
+  ConducteurTrajet _conducteurTrajet ;
+  Details(this._conducteurTrajet);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
+    List plusInformations =
+      ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.fumeur)}',
+      'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.bagage)}',
+      'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.animaux)}',
+      'Le nombre de passager que le conducteur accepte : ${_conducteurTrajet.trajetLance.plusInformations.nbPlaces.toString()}'];
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -50,13 +28,13 @@ class Details extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 38.0,
-                  backgroundImage: NetworkImage('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
+                  backgroundImage: NetworkImage(_conducteurTrajet.utilisateur.imageUrl),
                 ),
                 SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(fullName,
+                    Text(_conducteurTrajet.utilisateur.nom +' '+ _conducteurTrajet.utilisateur.prenom,
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                             fontSize: 20.0,
@@ -70,7 +48,7 @@ class Details extends StatelessWidget {
                         (index) => Icon(
                           Icons.star,
                           size: 20.0,
-                          color: index < rating.round()
+                          color: index < _conducteurTrajet.utilisateur.evaluation.etoiles.round()
                               ? Colors.yellow
                               : Colors.grey,
                         ),
@@ -95,7 +73,7 @@ class Details extends StatelessWidget {
                         ),
                       )),
                 ),
-                Expanded(child: Text(email), flex: 8),
+                Expanded(child: Text(_conducteurTrajet.utilisateur.email), flex: 8),
               ],
             ),
             SizedBox(height: screenHeight * 0.01),
@@ -112,7 +90,7 @@ class Details extends StatelessWidget {
                         ),
                       )),
                 ),
-                Expanded(child: Text(carName), flex: 5),
+                Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.marque), flex: 5),
               ],
             ),
             Row(
@@ -128,7 +106,7 @@ class Details extends StatelessWidget {
                         ),
                       )),
                 ),
-                Expanded(child: Text(carName), flex: 3),
+                Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.matricule), flex: 3),
                 Expanded(
                   child: IconButton(
                     icon: Icon(Icons.add_circle_outline),
@@ -139,24 +117,17 @@ class Details extends StatelessWidget {
                         context: context,
                         builder: (context) => Builder(
                           builder: (context) {
-                            if (commentaires.isEmpty) {
-                              // If the list is empty, display a message
-                              return Center(
-                                  child: Text(
-                                      'This conducteur has no commentaires'));
-                            } else {
-                              // If the list is not empty, display the commentaires in a ListView
                               return ListView.separated(
                                 separatorBuilder: (context, index) => Divider(
                                   thickness: 1.0,
                                   color: Colors.grey[300],
                                 ),
-                                itemCount: commentaires.length,
+                                itemCount: plusInformations.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      commentaires[index],
+                                      plusInformations[index],
                                       style: TextStyle(
                                         fontFamily: 'poppins',
                                         fontWeight: FontWeight.normal,
@@ -166,7 +137,6 @@ class Details extends StatelessWidget {
                                   );
                                 },
                               );
-                            }
                           },
                         ),
                       );
@@ -203,7 +173,7 @@ class Details extends StatelessWidget {
                               context: context,
                               builder: (context) => Builder(
                                 builder: (context) {
-                                  if (Viles.isEmpty) {
+                                  if (_conducteurTrajet.trajetLance.villeIntermediaires.isEmpty) {
                                     // If the list is empty, display a message
                                     return Center(
                                         child: Text(
@@ -215,14 +185,14 @@ class Details extends StatelessWidget {
                                         thickness: 1.0,
                                         color: Colors.grey[300],
                                       ),
-                                      itemCount: Viles.length,
+                                      itemCount: _conducteurTrajet.trajetLance.villeIntermediaires.length,
                                       itemBuilder: (context, index) {
                                         return Padding(
                                           padding: const EdgeInsets.all(5.0),
                                           child: ListTile(
                                             leading: Icon(Icons.location_on_outlined),
                                             title: Text(
-                                              Viles[index],
+                                              _conducteurTrajet.trajetLance.villeIntermediaires[index],
                                               style: TextStyle(
                                                 fontFamily: 'poppins',
                                                 fontWeight: FontWeight.w700,
@@ -274,11 +244,11 @@ class Details extends StatelessWidget {
                             context: context,
                             builder: (context) => Builder(
                               builder: (context) {
-                                if (Viles.isEmpty) {
+                                if (_conducteurTrajet.utilisateur.evaluation.feedback.isEmpty) {
                                   // If the list is empty, display a message
                                   return Center(
                                       child: Text(
-                                          'Il y a pas de ville intermidiere'
+                                          'Aucun avis'
                                       ,style: TextStyle(fontFamily: 'Poppins',),));
                                 } else {
                                   // If the list is not empty, display the commentaires in a ListView
@@ -287,14 +257,14 @@ class Details extends StatelessWidget {
                                       thickness: 1.0,
                                       color: Colors.grey[300],
                                     ),
-                                    itemCount: Viles.length,
+                                    itemCount: _conducteurTrajet.utilisateur.evaluation.feedback.length,
                                     itemBuilder: (context, index) {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: ListTile(
                                           leading: Icon(Icons.location_on_outlined),
                                           title: Text(
-                                            Viles[index],
+                                            _conducteurTrajet.utilisateur.evaluation.feedback[index],
                                             style: TextStyle(
                                               fontFamily: 'poppins',
                                               fontWeight: FontWeight.w700,
@@ -352,12 +322,12 @@ class Details extends StatelessWidget {
                       Container(
                         child: ListTile(
                           title: Text(
-                            '18 : 30 PM',
+                            '${_conducteurTrajet.trajetLance.dateDepart.hour}:${_conducteurTrajet.trajetLance.dateDepart.minute}',
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text('OUED Smar'),
+                          subtitle: Text(_conducteurTrajet.trajetLance.villeDepart),
                           onTap: () {
                             // handle onTap event
                           },
@@ -367,12 +337,12 @@ class Details extends StatelessWidget {
                       Container(
                         child: ListTile(
                           title: Text(
-                            '20 : 30 PM',
+                            '${_conducteurTrajet.trajetLance.tempsDePause.hour}:${_conducteurTrajet.trajetLance.tempsDePause.minute}',
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold),
                           ),
-                          subtitle: Text('BAROUAGHIA Media'),
+                          subtitle: Text(_conducteurTrajet.trajetLance.villeArrivee),
                           onTap: () {
                             // handle onTap event
                           },
@@ -398,12 +368,11 @@ class Details extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "28 Fevrier 2023",
+                  Text('${_conducteurTrajet.trajetLance.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_conducteurTrajet.trajetLance.dateDepart.month)} ${_conducteurTrajet.trajetLance.dateDepart.year}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "240 DZ",
+                    _conducteurTrajet.trajetLance.coutTrajet.toString()+' DA',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -442,7 +411,10 @@ class Details extends StatelessWidget {
                   flex: 4,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // handle right button press
+                      if (BaseDeDonnee().validatePhoneNumber(_conducteurTrajet.utilisateur.numeroTelephone)){
+                        launchUrlString(
+                            "tel:${_conducteurTrajet.utilisateur.numeroTelephone}");
+                      }
                     },
                     icon: Icon(Icons.phone_in_talk_outlined, size: 32),
                     label: Text(
@@ -481,7 +453,7 @@ class Details extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Demander un trajet',
+                'Demander',
                 style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
               ),
             ),
@@ -501,7 +473,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('Annulez le trajet',
+              child: const Text('Annulez',
                   style: TextStyle(color: Colors.red, fontFamily: 'Poppins')),
             )
           ],
