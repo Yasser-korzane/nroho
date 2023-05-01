@@ -1,13 +1,23 @@
+import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../Services/base de donnee.dart';
 class detailsPassagerConducteurHis extends StatelessWidget {
+  Trajet _trajet ;
+  detailsPassagerConducteurHis(this._trajet);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-
+    String prixText = '';
+    String valeurPrix = '';
+    if (_trajet.coutTrajet != 0.0) {
+      prixText = 'Prix : ';
+      valeurPrix = '${_trajet.coutTrajet} DA';
+    }
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -94,7 +104,7 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
                           child: Text(
-                            'Mardi 31 février 2005 ',
+                            '${_trajet.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -107,14 +117,16 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '13:20 ',
+                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
                         ),
                       ],
                     ),
+                    SizedBox(height: screenHeight * 0.01),
                     Divider(color: Colors.black, thickness: 1),
+                    SizedBox(height: screenHeight * 0.01),
                     Row(
                       children: [
                         Text(
@@ -135,7 +147,7 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
                           child: Text(
-                            'Mardi 31 février 2005 ',
+                            '${_trajet.tempsDePause.day} ${BaseDeDonnee().moisAuChaine(_trajet.tempsDePause.month)} ${_trajet.tempsDePause.year}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -148,13 +160,15 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '13:20 ',
+                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
                         ),
                       ],
                     ),
+                    SizedBox(height: screenHeight * 0.01),
+                    Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.01),
                     Row(
                       children: [
@@ -184,7 +198,7 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'OUED Smar',
+                                    _trajet.villeDepart,
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -199,7 +213,7 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                               Container(
                                 child: ListTile(
                                   title: Text(
-                                    'BAROUAGHIA Medea',
+                                    _trajet.villeArrivee,
                                     style: TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -216,25 +230,21 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                       ],
                     ),
                     Divider(color: Colors.black, thickness: 1),
+                    SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
                         Text(
-                          'Prix : ',
+                          prixText,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
                             fontFamily: 'Poppins',
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
-                    Row(
-                      children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 30),
                           child: Text(
-                            '400 DA',
+                            valeurPrix,
                             style: TextStyle(
                               // fontWeight: FontWeight.w400,
                               fontSize: 16.0,

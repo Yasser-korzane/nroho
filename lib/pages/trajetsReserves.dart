@@ -1,4 +1,3 @@
-import 'package:appcouvoiturage/pages/trajet.dart';
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 import 'InfoTrajetLancerReserve.dart';
@@ -30,7 +29,7 @@ class cardReserverList extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis(lancer)));
                 },
                 child: Card(
                   color: Colors.white,

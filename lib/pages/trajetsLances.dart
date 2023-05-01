@@ -1,6 +1,5 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/InfoTrajetLancerReserve.dart';
-import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 class cardLancerList extends StatelessWidget {
@@ -31,7 +30,7 @@ class cardLancerList extends StatelessWidget {
                   vertical: screenHeight * 0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis(lancer)));
                 },
                 child: Card(
                   color: Colors.white,
@@ -150,64 +149,21 @@ class cardLancerList extends StatelessWidget {
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: screenWidth * 0.08),
-                          child: GestureDetector(
-                            onTap: (){
-                              showModalBottomSheet(
-                                  isDismissible: true,
-                                  context: context,
-                                  builder: (context) => Builder(
-                                builder: (context) {
-                                  if (lancer.villeIntermediaires.isEmpty) {
-                                    // If the list is empty, display a message
-                                    return Center(
-                                        child: Text(
-                                            'Il y a pas de ville intermidiere'));
-                                  } else {
-                                    // If the list is not empty, display the commentaires in a ListView
-                                    return ListView.separated(
-                                      separatorBuilder: (context, index) => Divider(
-                                        thickness: 1.0,
-                                        color: Colors.grey[300],
-                                      ),
-                                      itemCount: lancer.villeIntermediaires.length,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ListTile(
-                                            leading: Icon(Icons.person_outline_outlined),
-                                            title: Text(
-                                              lancer.villeIntermediaires[index],
-                                              style: TextStyle(
-                                                fontFamily: 'poppins',
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  }
-                                },
-                              )
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Row(children: [
-                                  Icon(
-                                    Icons.person,
-                                    color: Colors.blue,
-                                    size: screenHeight * 0.03,
-                                  ),
-                                  Text(
-                                    '${lancer.plusInformations.nbPlaces} passagers',
-                                    style: TextStyle(
-                                        color: Colors.blue, fontFamily: 'Poppins'),
-                                  )
-                                ]),
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: Row(children: [
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.blue,
+                                  size: screenHeight * 0.03,
+                                ),
+                                Text(
+                                  '${lancer.plusInformations.nbPlaces} passagers',
+                                  style: TextStyle(
+                                      color: Colors.blue, fontFamily: 'Poppins'),
+                                )
+                              ]),
                             ),
                           ),
                         ),
