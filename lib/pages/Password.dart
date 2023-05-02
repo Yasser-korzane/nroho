@@ -102,7 +102,6 @@ class _MotdePasseState extends State<MotdePasse> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     Timestamp timestamp = Timestamp.now();
     DateTime dateTime = timestamp.toDate();
     PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
@@ -150,9 +149,9 @@ class _MotdePasseState extends State<MotdePasse> {
     children: [
     SizedBox(height: screenHeight*0.04,),
       Center(child:
-      TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+      TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),),
         onPressed: ()async{
-        Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv','Grine','Mohammed','Alger','Bouira',false);
+        //Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv','Grine','Mohammed','Alger','Bouira',false);
         // await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
         // await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);

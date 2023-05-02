@@ -127,9 +127,6 @@ class cardReserverListH extends StatelessWidget{
                                       ),
                                     ),
                                     subtitle: Text(reserve.villeDepart,style: TextStyle(fontFamily: 'Poppins'),),
-                                    onTap: () {
-                                      // handle onTap event
-                                    },
                                   ),
                                 ),
                                 //SizedBox(height: screenHeight*0.03),
@@ -145,9 +142,6 @@ class cardReserverListH extends StatelessWidget{
                                       ),
                                     ),
                                     subtitle: Text(reserve.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),),
-                                    onTap: () {
-                                      // handle onTap event
-                                    },
                                   ),
                                 ),
                               ],
@@ -160,7 +154,8 @@ class cardReserverListH extends StatelessWidget{
                 ),
               )
           );
-        },),
+        },
+        ),
     );
   }
 }

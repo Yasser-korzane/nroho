@@ -1,23 +1,10 @@
-import 'package:appcouvoiturage/pages/trajet.dart';
-
+import '../AppClasses/Trajet.dart';
+import '../Services/base de donnee.dart';
 import 'InfoTrajetLancerReserve.dart';
-import 'cardReserver.dart';
 import 'package:flutter/material.dart';
-
-
-
-
 class cardReserverList extends StatelessWidget{
-  final List<cardReserver> cardReservers = [
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-    cardReserver(firstName: 'boulachabe',lastName: 'hicham',heurDepar: '08:30 AM',heureArrive: '08:45 AM',placeArrive: 'harache',placeDepart: 'oued smar',nombraStar: 4.5 ,price: 50 ),
-
-  ];
-  // Widget cardLancerTamplate (cardLancer){
+  List<Trajet> trajetsReserve ;
+  cardReserverList(this.trajetsReserve);
   @override
   Widget build (BuildContext context){
     final Size screenSize = MediaQuery
@@ -26,23 +13,23 @@ class cardReserverList extends StatelessWidget{
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous()));
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
         shape: CircleBorder(),
-      ),
+      ),*/
       body: ListView.builder(
-        itemCount: cardReservers.length,
+        itemCount: trajetsReserve.length,
         itemBuilder: (context, index) {
-          final lancer = cardReservers[index];
+          final lancer = trajetsReserve[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis(lancer)));
                 },
                 child: Card(
                   color: Colors.white,
@@ -59,25 +46,10 @@ class cardReserverList extends StatelessWidget{
                     child: Column(
                       children: [
                         Padding(
-                          padding:  EdgeInsets.all(screenWidth*0.015),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget> [
-                                Text(
-                                  ' 21 janvier 2024 a 18:10',
-                                  style: TextStyle(fontFamily: 'poppins'),
-                                ),
-                                Column(
-                                    children : [
-                                      Text('Le cout',                                style: TextStyle(fontFamily: 'Poppins'),
-                                      ),
-                                      Text(  lancer.price.toString() +' DA',
-                                        style: TextStyle(fontFamily: 'Poppins'),
-                                      ),
-                                    ]
-                                )
-
-                              ]
+                          padding:  EdgeInsets.all(screenWidth*0.04),
+                          child: Text(
+                            '${lancer.dateDepart.day} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
+                            style: TextStyle(fontFamily: 'poppins'),
                           ),
                         ),
                         Padding(
@@ -117,7 +89,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        lancer.heurDepar,
+                                        '${lancer.dateDepart.hour}:${lancer.dateDepart.minute}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -125,7 +97,7 @@ class cardReserverList extends StatelessWidget{
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(lancer.placeDepart,                                style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(lancer.villeDepart,style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),
@@ -133,7 +105,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        lancer.heureArrive,
+                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -141,7 +113,7 @@ class cardReserverList extends StatelessWidget{
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(lancer.placeArrive,                                style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(lancer.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),
@@ -150,6 +122,16 @@ class cardReserverList extends StatelessWidget{
                             )
                           ],
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10),
+                          child: Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Center(child: Text('Commentaire : '),),
+                        Center(child: Text('``${lancer.avis}``',style: TextStyle(fontWeight: FontWeight.bold),)),
                       ],
                     ),
                   ),

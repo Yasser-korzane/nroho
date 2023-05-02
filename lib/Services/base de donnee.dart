@@ -535,6 +535,25 @@ class BaseDeDonnee{
     }
     return resultat.toString();
   }
+  String tranlsateToFrensh(bool info){
+    if (info) return 'Oui'; else return 'Non';
+  }
+  String moisAuChaine(int mois){
+    switch (mois){
+      case 1 : return 'Janvier';
+      case 2 : return 'février';
+      case 3 : return 'Mars';
+      case 4 : return 'Avril';
+      case 5 : return 'juin';
+      case 6 : return 'Juillet';
+      case 8 : return 'Août';
+      case 9 : return 'Septembre';
+      case 10 : return 'Octobre';
+      case 11 : return 'Novembre';
+      case 12 : return 'Décembre';
+    }
+    return 'Mois inconnu';
+  }
 /// querySnapshot contient tout les references de toute les Utilisateurs
 /// querySnapshot.docs contient les utilisateurs avec leurs documents
 /// utilisateurDoc va pointe sur chaque utilisateur et ses informations
