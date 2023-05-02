@@ -231,7 +231,8 @@ class _MyConnexinState extends State<Connexin> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                  "Veuillez verifier vos données ",                                  style: TextStyle(fontFamily: 'Poppins'),
+                                                  "Veuillez verifier vos données ",       
+                                                style: TextStyle(fontFamily: 'Poppins'),
                                               ),
                                               duration: Duration(seconds: 2),
                                             ),
