@@ -151,6 +151,7 @@ class _MotdePasseState extends State<MotdePasse> {
       Center(child:
       TextButton(child: Text('changer le mot de passe ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,fontFamily: 'Poppins'),),
         onPressed: ()async{
+        //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
         //Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv','Grine','Mohammed','Alger','Bouira',false);
         // await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
         // await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);

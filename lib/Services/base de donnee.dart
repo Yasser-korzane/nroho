@@ -188,6 +188,60 @@ class BaseDeDonnee{
       'email': email,
     });
   }
+  Future <void> incrementerNbPlacesConducteur(String uid, String idTrajet)async {
+    PlusInformations plusInformations = PlusInformations(false, false, false, 1);
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsLances')
+        .doc(idTrajet)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        plusInformations = PlusInformations(
+            snapshot.data()!['plusInformations']['fumeur'],
+            snapshot.data()!['plusInformations']['bagage'],
+            snapshot.data()!['plusInformations']['animaux'],
+            snapshot.data()!['plusInformations']['nbPlaces']);
+      }else print('ce trajet n\'exist pas');
+    });
+    plusInformations.nbPlaces++;
+    Map<String, dynamic> plusInformationsMap = plusInformations.toMap();
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid).collection('trajetsLances').doc(idTrajet);
+    await utilisateurDocRef.update({'plusInformations': plusInformationsMap});
+  }
+  Future <void> decrementerNbPlacesConducteur(String uid, String idTrajet)async {
+    PlusInformations plusInformations = PlusInformations(false, false, false, 1);
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsLances')
+        .doc(idTrajet)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        plusInformations = PlusInformations(
+            snapshot.data()!['plusInformations']['fumeur'],
+            snapshot.data()!['plusInformations']['bagage'],
+            snapshot.data()!['plusInformations']['animaux'],
+            snapshot.data()!['plusInformations']['nbPlaces']);
+      }else print('ce trajet n\'exist pas');
+    });
+    plusInformations.nbPlaces--;
+    if (plusInformations.nbPlaces >=0){
+    Map<String, dynamic> plusInformationsMap = plusInformations.toMap();
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid).collection('trajetsLances').doc(idTrajet);
+    await utilisateurDocRef.update({'plusInformations': plusInformationsMap});
+    }else throw Exception('nbPlaces est negative');
+  }
+  Future<void>annulerTrajetLance(String uid, String idTrajetLance) async{
+    DocumentReference trajetRef = utilisateurCollection.doc(uid).collection('trajetsLances').doc(idTrajetLance);
+    trajetRef.delete();
+  }
+  Future<void>annulerTrajetReserve(String uid, String idTrajetLance) async{
+    DocumentReference trajetRef = utilisateurCollection.doc(uid).collection('trajetsReserves').doc(idTrajetLance);
+    trajetRef.delete();
+  }
   //------------------------------------------------------------------------------------------
   /** ************************************** Geters ****************************************** **////
   Future<Utilisateur> getDataFromDataBase(String uid)async {
@@ -314,6 +368,11 @@ class BaseDeDonnee{
     }
     return double.tryParse(str) != null;
   }
+  bool validerInfoVehicule(String vehicule) {
+    RegExp alphanumeric = RegExp(r'^[a-zA-Z0-9]+$');
+    return alphanumeric.hasMatch(vehicule);
+  }
+
   /// *********************************************************************************************************
 
   Future<List<Utilisateur>> getUtilisateursByName(String name) async {
@@ -369,45 +428,6 @@ class BaseDeDonnee{
 
   Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
     /// 1) recuperer le trajet reserve par le passager --------------------
-    /*Trajet trajetReserve = creerTrajetVide();
-    await FirebaseFirestore.instance
-        .collection('Utilisateur')
-        .doc(uid)
-        .collection('trajetsReserves')
-        .doc(idTrajetReserve)
-        .get()
-        .then((snapshot) async {
-      if (snapshot.exists) {
-        trajetReserve.dateDepart = snapshot.data()!['dateDepart'].toDate().add(Duration(hours: 1));
-        trajetReserve.tempsDePause = snapshot.data()!['tempsDePause'].toDate().add(Duration(hours: 1));
-        trajetReserve.coutTrajet = snapshot.data()!['coutTrajet'] as double;
-        trajetReserve.villeDepart = snapshot.data()!['villeDepart'];
-        trajetReserve.villeArrivee = snapshot.data()!['villeArrivee'];
-        /*trajetReserve.lieuDepart = PlacesAutoCompleteResult(
-            placeId: snapshot.data()!['lieuDepart']['placeId'],
-            description: snapshot.data()!['lieuDepart']['description'],
-            secondaryText: snapshot.data()!['lieuDepart']['secondaryText'],
-            mainText: snapshot.data()!['lieuDepart']['mainText'],
-        );
-        trajetReserve.lieuArrivee = PlacesAutoCompleteResult(
-            placeId: snapshot.data()!['lieuArrivee']['placeId'],
-            description: snapshot.data()!['lieuArrivee']['description'],
-            secondaryText: snapshot.data()!['lieuArrivee']['secondaryText'],
-            mainText: snapshot.data()!['lieuArrivee']['mainText'],
-        );*/
-        trajetReserve.villeIntermediaires = List<String>.from(snapshot.data()!['villeIntermediaires']);
-        trajetReserve.plusInformations = PlusInformations(
-            snapshot.data()!['plusInformations']['fumeur'],
-            snapshot.data()!['plusInformations']['bagage'],
-            snapshot.data()!['plusInformations']['animaux'],
-            snapshot.data()!['plusInformations']['nbPlaces']);
-        trajetReserve.trajetEstValide = snapshot.data()!['trajetEstValide'];
-        trajetReserve.confort = snapshot.data()!['confort'];
-        trajetReserve.avis = snapshot.data()!['avis'];
-        trajetReserve.probleme = snapshot.data()!['probleme'];
-      }else print('ce trajetReserve n\'exist pas');
-    }); // fin recuperation du trajetReserve
-    */
     DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 15));
     DateTime TempsPplus4h = trajetReserve.dateDepart.add(Duration(hours: 4));
     trajetReserve.afficher();
@@ -520,6 +540,7 @@ class BaseDeDonnee{
       throw Exception("Failed to get utilisateurs : $e");
     }
   }
+  /// *********************************************** Autres **************************************************
   String alternerChaines(String chaine1, String chaine2) {
     StringBuffer resultat = StringBuffer();
     int longueurMin = chaine1.length < chaine2.length ? chaine1.length : chaine2.length;
@@ -554,6 +575,7 @@ class BaseDeDonnee{
     }
     return 'Mois inconnu';
   }
+  /// *******************************************************************************************************
 /// querySnapshot contient tout les references de toute les Utilisateurs
 /// querySnapshot.docs contient les utilisateurs avec leurs documents
 /// utilisateurDoc va pointe sur chaque utilisateur et ses informations

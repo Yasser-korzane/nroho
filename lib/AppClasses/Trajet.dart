@@ -32,22 +32,22 @@ class Trajet {
       this.avis,
       this.probleme);
   void afficher() {
-    print('id : $id');
-    print('dateDepart: $dateDepart');
-    print('tempsDePause: $tempsDePause');
-    print('coutTrajet: $coutTrajet');
-    print('villeDepart: $villeDepart');
-    print('villeArrivee: $villeArrivee');
-    print('lieuDepart: ');
-    print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
-    print('lieuArrivee: ');
-    print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
-    print('villeIntermediaires: $villeIntermediaires');
-    print('plusInformations: fumeur:${plusInformations.fumeur} , bagage:${plusInformations.bagage} , animeaux:${plusInformations.animaux} , nbPlaces:${plusInformations.nbPlaces}');
-    print('trajetEstValide: $trajetEstValide');
-    print('confort: $confort');
-    print('avis: $avis');
-    print('probleme: $probleme');
+    // print('id : $id');
+    // print('dateDepart: $dateDepart');
+    // print('tempsDePause: $tempsDePause');
+    // print('coutTrajet: $coutTrajet');
+    // print('villeDepart: $villeDepart');
+    // print('villeArrivee: $villeArrivee');
+    // print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
+    // print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
+    print(lieuDepart);
+    print(lieuArrivee);
+    // print('villeIntermediaires: $villeIntermediaires');
+    // print('plusInformations: fumeur:${plusInformations.fumeur} , bagage:${plusInformations.bagage} , animeaux:${plusInformations.animaux} , nbPlaces:${plusInformations.nbPlaces}');
+    // print('trajetEstValide: $trajetEstValide');
+    // print('confort: $confort');
+    // print('avis: $avis');
+    // print('probleme: $probleme');
   }
   Map<String, dynamic> toMap() {
     return {

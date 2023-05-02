@@ -9,10 +9,6 @@ import 'package:appcouvoiturage/pages/page_recherche.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:places_service/places_service.dart';
-import '../AppClasses/PlusInformations.dart';
-
 class options extends StatefulWidget {
   Trajet trajetReserve ;
   options(this.trajetReserve);
@@ -35,11 +31,6 @@ class _optionsState extends State<options> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final Size size = MediaQuery.of(context).size;
-    /*Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
-    utilisateur.nom = "Grine";
-    utilisateur.prenom = "Mohammed";
-    utilisateur.email = "lm_grine@esi.dz";
-    utilisateur.numeroTelephone = "0776418929";*/
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -57,7 +48,6 @@ class _optionsState extends State<options> {
         margin: EdgeInsets.fromLTRB(screenWidth*0.03, 0, 10, screenWidth*0.03),
         child: ListView(
           children:[ Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(height: screenHeight * 0.1),
               Card(color: Colors.white60,margin: EdgeInsets.all(16),
@@ -223,11 +213,10 @@ class _optionsState extends State<options> {
               widget.trajetReserve.afficher();
               //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               Navigator.push(context,
-                  //MaterialPageRoute(builder: (context) => PageDeRecherche(widget.trajetReserve)));
                   MaterialPageRoute(builder:(context)=> Page_recherche()));
               List<ConducteurTrajet> monListe = [];
               final stopwatch = Stopwatch()..start();
-              while (stopwatch.elapsed < Duration(seconds: 30) && monListe.isEmpty) { // Répéter jusqu'à 15 secondes écoulées
+              while (stopwatch.elapsed < Duration(seconds: 10) ) { // Répéter jusqu'à 15 secondes écoulées
                 monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               }
               stopwatch.stop();

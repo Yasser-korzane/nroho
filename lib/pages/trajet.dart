@@ -27,7 +27,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final TextEditingController _departController = TextEditingController();
   final TextEditingController _arriveController = TextEditingController();
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
-  bool statut = false;
   String querry = "";
   bool fromMap = false;
   String? arrive, depart;
@@ -39,6 +38,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
+  //////////////////////////////////////////////////////////////////////////
+  bool statut = false;
   DateTime monDateEtTime = DateTime.now();
   DateTime monDateEtTime2 = DateTime.now();
   Trajet _trajet = BaseDeDonnee().creerTrajetVide();
@@ -125,22 +126,22 @@ class _OuAllezVousState extends State<OuAllezVous> {
     final double screenHeight = screenSize.height;
     // pour tester
     PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
-      placeId: 'idPlace',
-      description: 'une place',
-      secondaryText: 'Algerie',
-      mainText: 'Esi',
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
     );
     PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
-      placeId: 'idPlace',
-      description: 'une place',
-      secondaryText: 'Algerie',
-      mainText: 'Bouraoui',
+      placeId: '',
+      description: '',
+      secondaryText: '',
+      mainText: '',
     );
     _trajet = _baseDeDonnee.creerTrajetVide();
     _trajet.villeArrivee = 'Esi';
     _trajet.villeDepart = 'Bouraoui';
-    _trajet.lieuDepart = lieuDepart;
-    _trajet.lieuArrivee = lieuArrive;
+    // _trajet.lieuDepart = lieuDepart;
+    // _trajet.lieuArrivee = lieuArrive;
     _trajet.villeIntermediaires = ['BeauLieu','Itemm'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
@@ -383,129 +384,105 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     color: Colors.black,
                     thickness: 1,
                   ),
-                  Visibility(
-                    visible: (_arriveController.text.isEmpty ||
-                            _arriveController.text
-                                .contains('Current Position')) &&
-                        (_departController.text.isEmpty ||
-                            _departController.text
-                                .contains('Current Position')),
-                    replacement: FutureBuilder(
-                        future: getPredictions(querry),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            if (snapshot.hasData && showSuggestion) {
-                              return ListView.separated(
-                                separatorBuilder: (context, index) {
-                                  return const Divider(
-                                    thickness: 1,
-                                  );
-                                },
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.length,
-                                itemBuilder: (context, index) {
-                                  var data = snapshot.data[index];
-                                  var prediction = data.description;
-                                  return ListTile(
-                                    onTap: () {
-                                      setState(() {
-                                        showSuggestion = false;
-                                        switch (caseSelected) {
-                                          case Selected.depart:
-                                            departData = data;
-                                            depart = prediction;
-                                            _departController.value =
-                                                TextEditingValue(
-                                              text: depart!,
-                                              selection:
-                                                  TextSelection.fromPosition(
-                                                TextPosition(
-                                                    offset: depart!.length),
-                                              ),
-                                            );
-                                            break;
-                                          case Selected.arrivee:
-                                            ArriveData = data;
-                                            arrive = prediction;
-                                            _arriveController.value =
-                                                TextEditingValue(
-                                              text: arrive!,
-                                              selection:
-                                                  TextSelection.fromPosition(
-                                                TextPosition(
-                                                    offset: arrive!.length),
-                                              ),
-                                            );
-                                            break;
-                                          default:
-                                        }
-                                      });
-                                    },
-                                    title: Text(prediction),
-                                  );
-                                },
+              Visibility(
+                visible: (_arriveController.text.isEmpty ||
+                    _arriveController.text.contains('Current Position')) &&
+                    (_departController.text.isEmpty ||
+                        _departController.text.contains('Current Position')),
+                replacement: FutureBuilder(
+                    future: getPredictions(querry),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData && showSuggestion) {
+                          return ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const Divider(
+                                thickness: 1,
                               );
-                            } else {
-                              return const Center();
-                            }
-                          } else {
-                            return const Text(
-                              "Recherche...",
-                              style: TextStyle(fontFamily: 'Poppins'),
-                            );
-                          }
-                        }),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: size.height * 0.045,
-                          child: ListTile(
-                            onTap: () {},
-                            tileColor: const Color(0XFFD3D3D3),
-                            title: Text(
-                              'Historique des recherches',
-                              style: TextStyle(
-                                  fontSize: size.width * 0.04,
-                                  fontFamily: 'Poppins'),
-                            ),
+                            },
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data[index];
+                              var prediction = data.description;
+                              return ListTile(
+                                onTap: () {
+                                  setState(() {
+                                    showSuggestion = false;
+                                    switch (caseSelected) {
+                                      case Selected.depart:
+                                        departData = data;
+                                         //print('data depart : ${data}');
+                                        // print('${data.placeId} , ${data.description} , ${data.secondaryText} , ${data.mainText}');
+                                        // print('********************************************************');
+                                        depart = prediction;
+                                         _trajet.lieuDepart = PlacesAutoCompleteResult(
+                                           placeId: data.placeId as String,
+                                           description: data.description as String,
+                                           secondaryText: data.secondaryText as String,
+                                           mainText: data.mainText as String,
+                                         );
+                                         //print('_trajet.lieuDepart = ${_trajet.lieuDepart}');
+                                        _trajet.afficher();
+                                        _departController.value = TextEditingValue(
+                                          text: depart!,
+                                          selection: TextSelection.fromPosition(
+                                            TextPosition(offset: depart!.length),
+                                          ),
+                                        );
+                                        break;
+                                      case Selected.arrivee:
+                                        ArriveData = data;
+                                        //print('data arrivee = $data');
+                                        arrive = prediction;
+                                         _trajet.lieuArrivee = data;
+                                         //print('_trajet.lieuArrivee = ${_trajet.lieuArrivee}');
+                                        _arriveController.value = TextEditingValue(
+                                          text: arrive!,
+                                          selection: TextSelection.fromPosition(
+                                            TextPosition(offset: arrive!.length),
+                                          ),
+                                        );
+                                        break;
+                                      default:
+                                    }
+                                  });
+                                },
+                                title: Text(prediction),
+                              );
+                            },
+                          );
+                        } else {
+                          return const Center();
+                        }
+                      } else {
+                        return const Text(
+                          "Recherche...",
+                          style: TextStyle(fontFamily: 'Poppins'),
+                        );
+                      }
+                    }
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.045,
+                      child: ListTile(
+                        tileColor: const Color(0XFFD3D3D3),
+                        title: Text(
+                          'Historique des recherches',
+                          style: TextStyle(
+                              fontSize: size.width * 0.04,
+                              fontFamily: 'Poppins'
                           ),
                         ),
-                        const Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                      // Expanded(
-                      //   child: ListView.separated(
-                      //     // separatorBuilder: (context, index) => Divider(
-                      //     //   thickness: 1.0,
-                      //     //   color: Colors.grey[300],
-                      //     // ),
-                      //     itemCount: Places.length,
-                      //     itemBuilder: (context, index) {
-                      //       return Padding(
-                      //         padding: const EdgeInsets.all(8.0),
-                      //         child: ListTile(
-                      //           onTap: () {},
-                      //           leading: const Icon(
-                      //             Icons.location_on,
-                      //             color: Colors.black,
-                      //           ),
-                      //           title: Text(
-                      //             Places[index],
-                      //             style: TextStyle(
-                      //                 fontSize: size.width * 0.04,
-                      //                 fontFamily: 'Poppins'),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     },
-                      //   ),
-                      // )
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+
+              ],
               ),
             ),
           ),
@@ -617,8 +594,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
               _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
               _trajet.afficher();
               if (statut == false) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) =>  options(_trajet)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));
               } else {
                 Navigator.push(
                     context,
