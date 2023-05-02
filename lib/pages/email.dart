@@ -1,10 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:appcouvoiturage/Services/auth.dart';
 class Emailgetter extends StatelessWidget {
   const Emailgetter({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controllerEmail = TextEditingController();
+    final AuthService _auth = AuthService();
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
@@ -65,7 +68,9 @@ class Emailgetter extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                   height: screenHeight * 0.1,
                   child: TextFormField(
+                    style: TextStyle(fontFamily: "Poppins"),
                     keyboardType: TextInputType.emailAddress,
+                    controller: _controllerEmail,
                     validator: (input) {
                       if (input == null) {
                         return 'Entrez votre e_mail adress';
@@ -107,7 +112,43 @@ class Emailgetter extends StatelessWidget {
                     child: Material(
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          print(_controllerEmail.text);
+                          var email_correct = await _auth.resetPassword(_controllerEmail.text.trim());
+                          print(email_correct);
+                          if(email_correct == true){
+                            showDialog(context: context,
+                                builder: (context){
+                                  return AlertDialog(
+                                    content: Text("Mot de passe réinitialisé , vérifier votre email et essayer de vous connecter"),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          onPressed:(){
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      },
+                                          child: Text("ok"))
+                                    ],
+                                  );
+                                }
+                            );
+                          }else{
+                            showDialog(context: context,
+                                builder: (context){
+                                  return AlertDialog(
+                                    content: Text("Adresse email invalide, essayer d'entrer une adresse email correcte"),
+                                    actions: <Widget>[
+                                      Center(
+                                        child: TextButton(onPressed:(){
+                                          Navigator.pop(context);
+                                        },
+                                            child: Text("réssayer")),
+                                      )
+                                    ],
+                                  );
+                                }
+                            );
+                          }
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => Verification()));
                         },
                         child: Text(

@@ -1,10 +1,14 @@
 import 'package:appcouvoiturage/pages/trajetdemandepassager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../AppClasses/Notifications.dart';
+import 'package:appcouvoiturage/Services/base de donnee.dart';
+
+import '../Services/localNotification.dart';
 
 /**
     Je doit afficher pour le conducteur :
@@ -21,6 +25,7 @@ class DemandesPassager extends StatefulWidget {
 
 class _DemandesPassagerState extends State<DemandesPassager> {
   List<Notifications> listeNotifications = [];
+  BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
   Future _getNotifications() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -41,13 +46,16 @@ class _DemandesPassagerState extends State<DemandesPassager> {
               notificationData['villeArrive'],
               notificationData['accepte_refuse'],
             );
-            listeNotifications.add(notification);
-            print(listeNotifications);
+            if(notification.id_conducteur==FirebaseAuth.instance.currentUser!.uid){
+              listeNotifications.add(notification);
+              print(listeNotifications);
+            }
           }
         });
       }
     });
   }
+
 
   @override
   void initState() {
@@ -202,7 +210,14 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 ),
                                 SizedBox(height: screenHeight * 0.005),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    print("hichem");
+                                    baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",true));
+                                    LocalNotification.initialize();
+                                    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+                                      LocalNotification.showNotification(message);
+                                    });
+                                  },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: screenWidth * 0.02),
@@ -234,7 +249,9 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                     vertical:
                                                         screenHeight * 0.005),
                                                 child: InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    print("khaled");
+                                                  },
                                                   child: Icon(
                                                     Icons.check_outlined,
                                                     color: Colors.white,
@@ -267,7 +284,13 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 ),
                                 SizedBox(height: screenHeight * 0.01),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",false));
+                                    LocalNotification.initialize();
+                                    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+                                      LocalNotification.showNotification(message);
+                                    });
+                                  },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: screenWidth * 0.02),
@@ -284,7 +307,6 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                         ),
                                         InkWell(
                                             onTap: () {
-                                              // Add your logic here to navigate back to the previous page
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -299,7 +321,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                     vertical:
                                                         screenHeight * 0.005),
                                                 child: InkWell(
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                  },
                                                   child: Icon(
                                                     Icons.close,
                                                     color: Colors.white,

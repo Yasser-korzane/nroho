@@ -19,6 +19,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
 
 import '../Services/base de donnee.dart';
+import '../AppClasses/Notifications.dart';
 
 
 class Mywid extends StatefulWidget {
@@ -29,6 +30,36 @@ class Mywid extends StatefulWidget {
 }
 
 class _MywidState extends State<Mywid> {
+  List<Notifications> listeNotifications = [];
+  BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+  Future _getNotifications() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          List<dynamic> notificationsData = snapshot.data()!['notifications'];
+          for (var notificationData in notificationsData) {
+            Notifications notification = Notifications(
+              notificationData['id_conducteur'],
+              notificationData['id_pasagers'],
+              notificationData['id_trajet'],
+              notificationData['nom'],
+              notificationData['prenom'],
+              notificationData['villeDepart'],
+              notificationData['villeArrive'],
+              notificationData['accepte_refuse'],
+            );
+            listeNotifications.add(notification);
+            print(listeNotifications);
+          }
+        });
+      }
+    });
+  }
+
   late HashSet<Marker> markers;
   int _selectedIndex = 0;
   Position? current_location;
@@ -38,6 +69,7 @@ class _MywidState extends State<Mywid> {
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
   bool statut = false ;
+  bool notification_recus=false;
   @override
   void initState() {
     super.initState();
@@ -140,9 +172,15 @@ class _MywidState extends State<Mywid> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     const double defaultPadding = 10;
+    _getNotifications();
+    if(listeNotifications.isEmpty){
+      notification_recus=false;
+    }else{
+      notification_recus=true;
+    }
     return  current_location == null
         ? const Center(
-      child: CircularProgressIndicator(
+          child: CircularProgressIndicator(
         color: Colors.blue,
       ),
 
@@ -295,11 +333,15 @@ class _MywidState extends State<Mywid> {
                         builder: (context) => ListDemandePassager()));
               }
             },
-            child: const Icon(
+            child: notification_recus ? const Icon(
+               Icons.notifications_active,
+              color: Colors.blue,
+              size: 50,
+            ) : const Icon(
               Icons.notifications_none_outlined,
               color: Colors.blue,
               size: 50,
-            ),
+            )
           ),
         ),
       ],
