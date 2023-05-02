@@ -452,7 +452,6 @@ class Details extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-
                 baseDeDonnee.ajouterNotification("N4sMJH5Un6aqWNuwGaTnQ34cPqt1",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Grine","Mohammed","Alger","el Aziziya",true));
                 LocalNotification.initialize();
                 FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -474,7 +473,7 @@ class Details extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'Demander',
+                'Choisir ce conducteur',
                 style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
               ),
             ),

@@ -11,7 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:places_service/places_service.dart';
-
 import '../AppClasses/PlusInformations.dart';
 
 class options extends StatefulWidget {
@@ -228,7 +227,7 @@ class _optionsState extends State<options> {
                   MaterialPageRoute(builder:(context)=> Page_recherche()));
               List<ConducteurTrajet> monListe = [];
               final stopwatch = Stopwatch()..start();
-              while (stopwatch.elapsed < Duration(seconds: 15)) { // Répéter jusqu'à 15 secondes écoulées
+              while (stopwatch.elapsed < Duration(seconds: 30) && monListe.isEmpty) { // Répéter jusqu'à 15 secondes écoulées
                 monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               }
               stopwatch.stop();
