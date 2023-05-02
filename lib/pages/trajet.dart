@@ -167,8 +167,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
             ),
             leading: IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const home()));
+                Navigator.pop(context);
               },
               icon: const Icon(Icons.arrow_back),
             ),

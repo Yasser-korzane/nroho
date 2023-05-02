@@ -33,8 +33,10 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
               notificationData['villeArrive'],
               notificationData['accepte_refuse'],
             );
-            listeNotifications.add(notification);
-            print(listeNotifications);
+            if(notification.id_conducteur!=FirebaseAuth.instance.currentUser!.uid){
+              listeNotifications.add(notification);
+              print(listeNotifications);
+            }
           }
         });
       }
@@ -52,8 +54,8 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
-    listeNotifications.add(notifications);
+   /* Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+    listeNotifications.add(notifications);*/
     return listeNotifications.isEmpty
         ? Scaffold(
         backgroundColor: Colors.grey.shade300,

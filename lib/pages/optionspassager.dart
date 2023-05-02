@@ -5,6 +5,7 @@ import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/Page%20De%20Recherche.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
+import 'package:appcouvoiturage/pages/page_recherche.dart';
 import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -223,7 +224,35 @@ class _optionsState extends State<options> {
               widget.trajetReserve.afficher();
               //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PageDeRecherche(widget.trajetReserve)));
+                  //MaterialPageRoute(builder: (context) => PageDeRecherche(widget.trajetReserve)));
+                  MaterialPageRoute(builder:(context)=> Page_recherche()));
+              List<ConducteurTrajet> monListe = [];
+              final stopwatch = Stopwatch()..start();
+              while (stopwatch.elapsed < Duration(seconds: 15)) { // Répéter jusqu'à 15 secondes écoulées
+                monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+              }
+              stopwatch.stop();
+              if(monListe.isEmpty){
+                showDialog(context: context,
+                    builder: (context){
+                      return AlertDialog(
+                        content: Text("Il y'a pas de chauffeurs disponible pour le moment , essayer ultérieurment"),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed:(){
+                                Navigator.pop(context);
+                              },
+                              child: Text("ok"))
+                        ],
+                      );
+                    }
+                );
+                Navigator.pop(context);
+                Navigator.pop(context);
+              }else{
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DriverListPage(monListe)));
+              }
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
