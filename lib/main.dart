@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
+import 'package:appcouvoiturage/Services/localNotification.dart';
 import 'package:appcouvoiturage/pages/begin.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,10 @@ Future<void> main() async {
   await Firebase.initializeApp();
   final fcm =await FirebaseMessaging.instance.getToken();
   print(fcm);
+  LocalNotification.initialize();
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    LocalNotification.showNotification(message);
+  });
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {

@@ -1,10 +1,13 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:appcouvoiturage/Services/base de donnee.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+import '../Services/localNotification.dart';
 
 class Details extends StatelessWidget {
   ConducteurTrajet _conducteurTrajet ;
@@ -451,6 +454,10 @@ class Details extends StatelessWidget {
               onPressed: () {
 
                 baseDeDonnee.ajouterNotification("N4sMJH5Un6aqWNuwGaTnQ34cPqt1",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Grine","Mohammed","Alger","el Aziziya",true));
+                LocalNotification.initialize();
+                FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+                  LocalNotification.showNotification(message);
+                });
               },
               style:  ButtonStyle(
                 elevation: MaterialStateProperty.all<double>(4.0),

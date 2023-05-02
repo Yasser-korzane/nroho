@@ -1,11 +1,14 @@
 import 'package:appcouvoiturage/pages/trajetdemandepassager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/Services/base de donnee.dart';
+
+import '../Services/localNotification.dart';
 
 /**
     Je doit afficher pour le conducteur :
@@ -210,6 +213,10 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                   onTap: () {
                                     print("hichem");
                                     baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",true));
+                                    LocalNotification.initialize();
+                                    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+                                      LocalNotification.showNotification(message);
+                                    });
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -279,6 +286,10 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 GestureDetector(
                                   onTap: () {
                                     baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",false));
+                                    LocalNotification.initialize();
+                                    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+                                      LocalNotification.showNotification(message);
+                                    });
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(

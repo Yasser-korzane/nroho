@@ -61,6 +61,7 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   firebase_storage: ^11.1.1
   firebase_messaging: ^14.4.1
+  flutter_local_notifications: ^14.0.0+1
 
 dev_dependencies:
 
