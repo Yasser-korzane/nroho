@@ -38,6 +38,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
+  String? idD ;
+  String? descriptionD ;
+  String? mainTextD ;
+  String? secondaryTextD ;
+  String? idA ;
+  String? descriptionA ;
+  String? mainTextA ;
+  String? secondaryTextA ;
   //////////////////////////////////////////////////////////////////////////
   bool statut = false;
   DateTime monDateEtTime = DateTime.now();
@@ -200,10 +208,10 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             height: size.height * 0.01,
                           ),
                           SizedBox(
-                            width: size.width * 0.7,
+                            width: size.width * 0.8,
                             height: size.height * 0.05,
                             child: TextField(
-                              style: const TextStyle(fontFamily: 'Poppins'),
+                              style: const TextStyle(fontFamily: 'Poppins',fontSize: 14),
                               controller: _departController,
                               onChanged: (value) {
                                 setState(() {
@@ -229,7 +237,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             height: size.height * 0.01,
                           ),
                           SizedBox(
-                            width: size.width * 0.7,
+                            width: size.width * 0.8,
                             height: size.height * 0.05,
                             child: TextField(
                               style: const TextStyle(fontFamily: 'Poppins'),
@@ -412,18 +420,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                     switch (caseSelected) {
                                       case Selected.depart:
                                         departData = data;
-                                         //print('data depart : ${data}');
-                                        // print('${data.placeId} , ${data.description} , ${data.secondaryText} , ${data.mainText}');
-                                        // print('********************************************************');
+                                        idD = departData!.placeId;
+                                        descriptionD = departData!.description;
+                                        mainTextD =  departData!.mainText;
+                                        secondaryTextD = departData!.secondaryText;
                                         depart = prediction;
-                                         _trajet.lieuDepart = PlacesAutoCompleteResult(
-                                           placeId: data.placeId as String,
-                                           description: data.description as String,
-                                           secondaryText: data.secondaryText as String,
-                                           mainText: data.mainText as String,
-                                         );
-                                         //print('_trajet.lieuDepart = ${_trajet.lieuDepart}');
-                                        _trajet.afficher();
                                         _departController.value = TextEditingValue(
                                           text: depart!,
                                           selection: TextSelection.fromPosition(
@@ -433,10 +434,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                         break;
                                       case Selected.arrivee:
                                         ArriveData = data;
-                                        //print('data arrivee = $data');
+                                        idA = ArriveData!.placeId;
+                                        descriptionA = ArriveData!.description;
+                                        mainTextA = ArriveData!.mainText;
+                                        secondaryTextA = ArriveData!.secondaryText;
                                         arrive = prediction;
-                                         _trajet.lieuArrivee = data;
-                                         //print('_trajet.lieuArrivee = ${_trajet.lieuArrivee}');
                                         _arriveController.value = TextEditingValue(
                                           text: arrive!,
                                           selection: TextSelection.fromPosition(
@@ -592,6 +594,16 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         )));
               }*/
               _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
+              _trajet.lieuDepart = PlacesAutoCompleteResult(
+                  placeId: idD,
+                  description: descriptionD,
+                  mainText: mainTextD,
+                  secondaryText: secondaryTextD);
+              _trajet.lieuArrivee = PlacesAutoCompleteResult(
+                  placeId: idA,
+                  description: descriptionA,
+                  mainText: mainTextA,
+                  secondaryText: secondaryTextA);
               _trajet.afficher();
               if (statut == false) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));

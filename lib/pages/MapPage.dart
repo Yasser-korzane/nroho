@@ -172,7 +172,7 @@ class _MywidState extends State<Mywid> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     const double defaultPadding = 10;
-    _getNotifications();
+    //_getNotifications();
     if(listeNotifications.isEmpty){
       notification_recus=false;
     }else{
