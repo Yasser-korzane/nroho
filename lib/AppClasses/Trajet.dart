@@ -1,20 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import 'PlusInformations.dart';
 class Trajet {
   String id ;
-  DateTime dateDepart ; //oui
-  DateTime tempsDePause;//oui
-  double coutTrajet;//oui
-  String villeDepart;//oui
-  String villeArrivee;//oui
-  PlacesAutoCompleteResult? lieuDepart;//oui
-  PlacesAutoCompleteResult? lieuArrivee;//oui
-  List<String> villeIntermediaires; // mazal
-  PlusInformations plusInformations;//mazal mazal mazal mazal
+  DateTime dateDepart ;
+  DateTime tempsDePause;
+  double coutTrajet;
+  String villeDepart;
+  String villeArrivee;
+  PlacesAutoCompleteResult? lieuDepart;
+  PlacesAutoCompleteResult? lieuArrivee;
+  List<String> villeIntermediaires;
+  PlusInformations plusInformations;
   bool trajetEstValide;
   String confort ;
   String avis;
   bool probleme; // si false alors il n'as pas de probleme, si true alors il ya un probleme
+  LatLng latLngDepart ;
+  LatLng latLngArrivee ;
 
   Trajet(
       this.id,
@@ -30,24 +34,28 @@ class Trajet {
       this.trajetEstValide,
       this.confort,
       this.avis,
-      this.probleme);
+      this.probleme,
+      this.latLngDepart,
+      this.latLngArrivee);
   void afficher() {
-    // print('id : $id');
-    // print('dateDepart: $dateDepart');
-    // print('tempsDePause: $tempsDePause');
-    // print('coutTrajet: $coutTrajet');
-    // print('villeDepart: $villeDepart');
-    // print('villeArrivee: $villeArrivee');
-    // print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
-    // print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
+    print('id : $id');
+    print('dateDepart: $dateDepart');
+    print('tempsDePause: $tempsDePause');
+    print('coutTrajet: $coutTrajet');
+    print('villeDepart: $villeDepart');
+    print('villeArrivee: $villeArrivee');
+    print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
+    print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
     print(lieuDepart);
     print(lieuArrivee);
-    // print('villeIntermediaires: $villeIntermediaires');
-    // print('plusInformations: fumeur:${plusInformations.fumeur} , bagage:${plusInformations.bagage} , animeaux:${plusInformations.animaux} , nbPlaces:${plusInformations.nbPlaces}');
-    // print('trajetEstValide: $trajetEstValide');
-    // print('confort: $confort');
-    // print('avis: $avis');
-    // print('probleme: $probleme');
+    print('villeIntermediaires: $villeIntermediaires');
+    print('plusInformations: fumeur:${plusInformations.fumeur} , bagage:${plusInformations.bagage} , animeaux:${plusInformations.animaux} , nbPlaces:${plusInformations.nbPlaces}');
+    print('trajetEstValide: $trajetEstValide');
+    print('confort: $confort');
+    print('avis: $avis');
+    print('probleme: $probleme');
+    print(latLngDepart);
+    print(latLngArrivee);
   }
   Map<String, dynamic> toMap() {
     return {
@@ -70,6 +78,8 @@ class Trajet {
       'confort': confort,
       'avis': avis,
       'probleme': probleme,
+      'latLngDepart': GeoPoint(latLngDepart.latitude, latLngDepart.longitude),
+      'latLngArrivee': GeoPoint(latLngArrivee.latitude, latLngArrivee.longitude),
     };
   }
   Map<String, dynamic> _convertPlaceResultToMap(PlacesAutoCompleteResult place) {

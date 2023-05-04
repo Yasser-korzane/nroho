@@ -4,6 +4,7 @@ import 'package:appcouvoiturage/pages/trajetsReserves.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 
 import '../AppClasses/PlusInformations.dart';
@@ -59,6 +60,13 @@ class _TrajetsState extends State<Trajets> {
         trajetLance.confort = data['confort'];
         trajetLance.avis = data['avis'];
         trajetLance.probleme = data['probleme'];
+        /// ---------------------
+        GeoPoint geoPointDepart = data['latLngDepart'];
+        GeoPoint geoPointArrivee = data['latLngArrivee'];
+        LatLng latLngDepart = LatLng(geoPointDepart.latitude, geoPointDepart.longitude);
+        LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
+        trajetLance.latLngDepart = latLngDepart;
+        trajetLance.latLngArrivee = latLngArrivee;
         setState(() {
           trajetsLances.add(trajetLance);
         });
@@ -103,6 +111,13 @@ class _TrajetsState extends State<Trajets> {
         trajetReserve.confort = data['confort'];
         trajetReserve.avis = data['avis'];
         trajetReserve.probleme = data['probleme'];
+        /// ---------------------
+        GeoPoint geoPointDepart = data['latLngDepart'];
+        GeoPoint geoPointArrivee = data['latLngArrivee'];
+        LatLng latLngDepart = LatLng(geoPointDepart.latitude, geoPointDepart.longitude);
+        LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
+        trajetReserve.latLngDepart = latLngDepart;
+        trajetReserve.latLngArrivee = latLngArrivee;
         setState(() {
           trajetsReserves.add(trajetReserve);
         });

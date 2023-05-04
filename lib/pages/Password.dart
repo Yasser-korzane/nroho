@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../Services/base de donnee.dart';
@@ -122,7 +123,7 @@ class _MotdePasseState extends State<MotdePasse> {
     int hour = dateTime.hour;
     int minute = dateTime.minute;
     DateTime timearrivee = DateTime(year,month,day,hour+1,minute-15) ;
-    Trajet trajetReserve = Trajet('' , dateTime, timearrivee, 300, 'BeauLieu', "Esi",lieuDepart,lieuArrive, ['Itemm'], PlusInformations(false,false,false,1), false, "", "", false);
+    Trajet trajetReserve = Trajet('' , dateTime, timearrivee, 300, 'BeauLieu', "Esi",lieuDepart,lieuArrive, ['Itemm'], PlusInformations(false,false,false,1), false, "", "", false,LatLng(0,0),LatLng(0,0));
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
@@ -154,9 +155,9 @@ class _MotdePasseState extends State<MotdePasse> {
         //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
         //Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv','Grine','Mohammed','Alger','Bouira',false);
         // await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
-        // await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
+         //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
-        // await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
+         //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
          },
       ),

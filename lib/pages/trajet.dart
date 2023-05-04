@@ -1,5 +1,4 @@
 import 'package:appcouvoiturage/Shared/location.dart';
-import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/map.dart';
 import 'package:dio/dio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +12,8 @@ import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 import 'optionsconducteur.dart';
 import 'optionspassager.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 enum Selected { depart, arrivee, none }
 
@@ -57,7 +58,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2023, 4),
+      firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
     if (picked != null && picked != _selectedDate) {
@@ -116,6 +117,29 @@ class _OuAllezVousState extends State<OuAllezVous> {
             ImageConfiguration.empty, "assets/images/marker.png")
         .then((icon) => customMarker = icon);
   }
+
+  Future<LatLng> getPlaceLatLng(String placeId) async {
+    String url =
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k';
+    var response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      var result = jsonDecode(response.body);
+      double lat = result['result']['geometry']['location']['lat'];
+      double lng = result['result']['geometry']['location']['lng'];
+      return LatLng(lat, lng);
+    } else {
+      throw Exception('Failed to load place');
+    }
+  }
+  DateTime calculateArrivalTime(double distance , DateTime dateDepart) {
+    double speed = 40; // average speed in km/h
+    double timeInHours = distance / speed;
+    int timeInMinutes = (timeInHours * 60).ceil(); // convert hours to minutes and round up
+    DateTime now = dateDepart;
+    DateTime arrivalTime = now.add(Duration(minutes: timeInMinutes));
+    return arrivalTime;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -132,24 +156,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    // pour tester
-    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
     _trajet = _baseDeDonnee.creerTrajetVide();
     _trajet.villeArrivee = 'Esi';
     _trajet.villeDepart = 'Bouraoui';
-    // _trajet.lieuDepart = lieuDepart;
-    // _trajet.lieuArrivee = lieuArrive;
     _trajet.villeIntermediaires = ['BeauLieu','Itemm'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
@@ -285,7 +294,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(top: screenHeight*0.00001,left: screenWidth*0.04),
                           hintText: _selectedDate == null
-                              ? 'Select a date'
+                              ? 'choisir la date de départ'
                               : '${_selectedDate!.toString().split(" ")[0]}',
                           border: OutlineInputBorder(),
                           fillColor: Colors.white,
@@ -308,7 +317,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(top: screenHeight*0.0001,left: screenWidth*0.04),
                           hintText: _selectedTime == null
-                              ? 'Select a time'
+                              ? 'choisir le temps de départ'
                               : '${_selectedTime!.format(context)}',
                           border: OutlineInputBorder(),
                           fillColor: Colors.white,
@@ -365,7 +374,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   SizedBox(
                     height: size.height * 0.04,
                     child: ListTile(
-                      onTap: () {
+                      onTap: () async{
+                        Position position = await Geolocator.getCurrentPosition();
                         setState(() {
                           depart = "Current Position";
                           _departController.value = TextEditingValue(
@@ -593,25 +603,48 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
                         )));
               }*/
-              _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
-              _trajet.lieuDepart = PlacesAutoCompleteResult(
-                  placeId: idD,
-                  description: descriptionD,
-                  mainText: mainTextD,
-                  secondaryText: secondaryTextD);
-              _trajet.lieuArrivee = PlacesAutoCompleteResult(
-                  placeId: idA,
-                  description: descriptionA,
-                  mainText: mainTextA,
-                  secondaryText: secondaryTextA);
-              _trajet.afficher();
-              if (statut == false) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));
-              } else {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>  optionconduc(_trajet)));
+              if( (monDateEtTime2.hour < TimeOfDay.now().hour)
+                || (monDateEtTime2.hour == DateTime.now().hour && monDateEtTime2.minute < DateTime.now().minute)
+                 /** && Faire le test du depart et arrivee ( par exemple si id Exist) **/  )
+              {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(seconds: 4),
+                  content: Text('Vous devez choisir un temps supérieur au temps actuel'),
+                  ),
+                  );
+                }else {
+                _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
+                _trajet.lieuDepart = PlacesAutoCompleteResult(
+                    placeId: idD,
+                    description: descriptionD,
+                    mainText: mainTextD,
+                    secondaryText: secondaryTextD);
+                _trajet.lieuArrivee = PlacesAutoCompleteResult(
+                    placeId: idA,
+                    description: descriptionA,
+                    mainText: mainTextA,
+                    secondaryText: secondaryTextA);
+                _trajet.villeDepart = mainTextD!;
+                _trajet.villeArrivee = mainTextA!;
+                print('**********************************************************************');
+                print('**********************************************************************');
+                LatLng latLngD = await getPlaceLatLng(idD!);
+                print(latLngD);
+                LatLng latLngA = await getPlaceLatLng(idA!);
+                print(latLngA);
+                _trajet.latLngDepart = latLngD ;
+                _trajet.latLngArrivee = latLngA ;
+                double distance = (Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngA.longitude)+15)/1000;
+                 _trajet.tempsDePause = calculateArrivalTime(distance , _trajet.dateDepart);
+                if (statut == false) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));
+                } else {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>  optionconduc(_trajet)));
+                }
               }
             },
             style: ButtonStyle(
