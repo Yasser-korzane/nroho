@@ -453,6 +453,7 @@ class BaseDeDonnee{
                  && ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) )
                  && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h) )
                 /// ajouter la fonction isPlace1BetweenPlace2AndPlace3()
+            ///  ajouter si la distance entre departP et depertC est moins ou egal a 2 km
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();

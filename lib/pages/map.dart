@@ -15,6 +15,8 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   Position? current_location = LocationManager().getCurrentPos;
   late CameraPosition pos;
+  double _latitude = 0;
+  double _longitude = 0;
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
@@ -29,11 +31,15 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    _latitude = current_location!.latitude;
+    _longitude = current_location!.longitude;
     return Scaffold(
       body: Stack(children: [
         GoogleMap(
             onCameraMove: (position) {
               pos = position;
+              _latitude = position.target.latitude;
+              _longitude = position.target.longitude;
             },
             initialCameraPosition: CameraPosition(
                 target: LatLng(
@@ -54,7 +60,10 @@ class _MapPageState extends State<MapPage> {
           width: 200,
           child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, "trajet", arguments: pos);
+                if (_latitude != null && _longitude != null) {
+                  final latlng = LatLng(_latitude, _longitude);
+                Navigator.pop(context, latlng);
+                }
               },
               child: const Text("Valider",style: TextStyle(fontFamily: 'Poppins'),)),
         )

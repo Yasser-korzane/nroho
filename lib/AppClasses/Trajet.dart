@@ -44,8 +44,8 @@ class Trajet {
     print('coutTrajet: $coutTrajet');
     print('villeDepart: $villeDepart');
     print('villeArrivee: $villeArrivee');
-    print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
-    print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
+    // print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
+    // print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
     print(lieuDepart);
     print(lieuArrivee);
     print('villeIntermediaires: $villeIntermediaires');
@@ -54,8 +54,8 @@ class Trajet {
     print('confort: $confort');
     print('avis: $avis');
     print('probleme: $probleme');
-    print(latLngDepart);
-    print(latLngArrivee);
+    print('LatLng Depart :  $latLngDepart');
+    print('LatLng Arrivee :  $latLngArrivee');
   }
   Map<String, dynamic> toMap() {
     return {

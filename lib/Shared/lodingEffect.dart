@@ -10,13 +10,6 @@ class Loading extends StatelessWidget {
           child: SpinKitThreeBounce(
             color: Colors.blue,
            size: 50.0,
-           /* itemBuilder: (BuildContext context, int index) {
-            return DecoratedBox(
-                    decoration: BoxDecoration(
-                    color: index.isEven ? Colors.white : Colors.white,
-                    ),
-                    );
-            },*/
           )
     )
   );

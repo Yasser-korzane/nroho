@@ -1,7 +1,7 @@
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
+import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../Services/base de donnee.dart';
 class detailsPassagerConducteurHis extends StatelessWidget {
   Trajet _trajet ;
@@ -20,6 +20,15 @@ class detailsPassagerConducteurHis extends StatelessWidget {
     }
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: ElevatedButton(
+          child: Text('Voir le trajet sur le map'),
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) =>
+              AfficherTrajetSurLeMap(_trajet.latLngDepart, _trajet.latLngArrivee),
+            ));
+          },
+        ),
           body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(

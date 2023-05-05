@@ -38,6 +38,37 @@ class _OuAllezVousState extends State<OuAllezVous> {
   Position? current_location;
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
+  /// ------------------- to test which mode i use : ----------------------------------------
+  // bool selectFromPredections = false ;
+  // bool selectFromPredections2 = false ;
+  // bool selectFromCurrentPosition = false ;
+  // bool selectDepartFromMap = false ;
+  // bool selectArriveFromMap = false ;
+  /// ------------------- to test which mode i use : ----------------------------------------
+  PlacesAutoCompleteResult placeD = PlacesAutoCompleteResult(
+    placeId: '',
+    description: '',
+    mainText: '',
+    secondaryText: ''
+  );
+  PlacesAutoCompleteResult placeA = PlacesAutoCompleteResult(
+    placeId: '',
+    description: '',
+    mainText: '',
+    secondaryText: ''
+  );
+  // PlacesAutoCompleteResult placeDepartFromMap = PlacesAutoCompleteResult(
+  //   placeId: '',
+  //   description: '',
+  //   mainText: '',
+  //   secondaryText: ''
+  // );
+  // PlacesAutoCompleteResult placeArriveFromMap = PlacesAutoCompleteResult(
+  //   placeId: '',
+  //   description: '',
+  //   mainText: '',
+  //   secondaryText: ''
+  // );
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
   String? idD ;
   String? descriptionD ;
@@ -47,6 +78,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
   String? descriptionA ;
   String? mainTextA ;
   String? secondaryTextA ;
+  LatLng latLngD = LatLng(0, 0);
+  LatLng latLngA = LatLng(0, 0);
+  // LatLng latLngD2 = LatLng(0, 0);
+  // LatLng latLngDepartFromMap = LatLng(0, 0);
+  // LatLng latLngArriveeFromMap = LatLng(0, 0);
   //////////////////////////////////////////////////////////////////////////
   bool statut = false;
   DateTime monDateEtTime = DateTime.now();
@@ -54,6 +90,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
   Trajet _trajet = BaseDeDonnee().creerTrajetVide();
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  bool isLoading = false ;
+  /// -------------------------------------------------------------------------------------------------
   Future<void> _selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -71,6 +109,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
       });
     }
   }
+  /// -------------------------------------------------------------------------------------------------
 
   Future<void> _selectTime() async {
     final TimeOfDay? picked = await showTimePicker(
@@ -87,6 +126,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
       });
     }
   }
+  /// -------------------------------------------------------------------------------------------------
   Future getStatut() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -100,11 +140,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
       }
     });
   }
+  /// -------------------------------------------------------------------------------------------------
   Future<dynamic> getPlaceFromId(String placeID) async {
     var response = await Dio().get(
         "https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeID&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k");
     return response.data;
   }
+  /// -------------------------------------------------------------------------------------------------
   Future<dynamic> getPredictions(String querry) async {
     List<PlacesAutoCompleteResult>? response;
     if (querry != "") {
@@ -112,11 +154,29 @@ class _OuAllezVousState extends State<OuAllezVous> {
     }
     return response;
   }
+  /// -------------------------------------------------------------------------------------------------
   void setCustomMarker() {
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration.empty, "assets/images/marker.png")
         .then((icon) => customMarker = icon);
   }
+  /// -------------------------------------------------------------------------------------------------
+
+  Future<PlacesAutoCompleteResult> getPlaceFromLatLng(double lat, double lng) async {
+    final String url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k';
+    final http.Response response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final decodedJson = jsonDecode(response.body);
+      final formattedAddress = decodedJson['results'][0]['formatted_address'];
+      final placeId = decodedJson['results'][0]['place_id'];
+      final mainText = decodedJson['results'][0]['address_components'][0]['long_name'];
+      final secondaryText = decodedJson['results'][0]['address_components'][1]['long_name'];
+      return PlacesAutoCompleteResult(placeId: placeId,description: formattedAddress,mainText: mainText,secondaryText: secondaryText);
+    } else {
+      throw Exception('Failed to load place from API');
+    }
+  }
+  /// -------------------------------------------------------------------------------------------------
 
   Future<LatLng> getPlaceLatLng(String placeId) async {
     String url =
@@ -131,6 +191,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
       throw Exception('Failed to load place');
     }
   }
+  /// -------------------------------------------------------------------------------------------------
   DateTime calculateArrivalTime(double distance , DateTime dateDepart) {
     double speed = 40; // average speed in km/h
     double timeInHours = distance / speed;
@@ -139,6 +200,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
     DateTime arrivalTime = now.add(Duration(minutes: timeInMinutes));
     return arrivalTime;
   }
+  /// -------------------------------------------------------------------------------------------------
 
   @override
   void initState() {
@@ -157,8 +219,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     _trajet = _baseDeDonnee.creerTrajetVide();
-    _trajet.villeArrivee = 'Esi';
-    _trajet.villeDepart = 'Bouraoui';
     _trajet.villeIntermediaires = ['BeauLieu','Itemm'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
@@ -223,6 +283,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               style: const TextStyle(fontFamily: 'Poppins',fontSize: 14),
                               controller: _departController,
                               onChanged: (value) {
+                                  // selectFromCurrentPosition = false ;
+                                  // selectFromPredections = false ;
                                 setState(() {
                                   showSuggestion = true;
                                   querry = value;
@@ -252,6 +314,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               style: const TextStyle(fontFamily: 'Poppins'),
                               controller: _arriveController,
                               onChanged: (value) {
+                                  // selectFromPredections2 = false ;
                                 setState(() {
                                   showSuggestion = true;
                                   querry = value;
@@ -347,13 +410,37 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     height: size.height * 0.04,
                     child: ListTile(
                       onTap: () {
-                        setState(() {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return const MapPage();
-                            },
-                          )
-                          );
+                        setState(() async {
+                          if ((_departController.text.isEmpty) || (_departController.text.isNotEmpty && _arriveController.text.isNotEmpty)) {
+                              // selectDepartFromMap = true ;
+                              // selectFromCurrentPosition = false ;
+                              // selectFromPredections = false ;
+                              // selectFromPredections2 = false ;
+                              latLngD = await Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const MapPage();
+                              },
+                            )
+                            );
+                              print(latLngD);
+                              placeD = await getPlaceFromLatLng(latLngD.latitude,latLngD.longitude);
+                              _departController.text = placeD.description!;
+
+                          }else {
+                            // selectArriveFromMap = true ;
+                            // selectFromCurrentPosition = false ;
+                            // selectFromPredections = false ;
+                            // selectFromPredections2 = false ;
+                            latLngA = await Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const MapPage();
+                              },
+                            )
+                            );
+                            print(latLngA);
+                            placeA = await getPlaceFromLatLng(latLngA.latitude, latLngA.longitude);
+                            _arriveController.text = placeA.description!;
+                          }
                         });
                       },
                       leading: const Icon(
@@ -375,15 +462,18 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     height: size.height * 0.04,
                     child: ListTile(
                       onTap: () async{
-                        Position position = await Geolocator.getCurrentPosition();
+                        //selectFromCurrentPosition = true ;
+                        Position currentPosition = await Geolocator.getCurrentPosition();
+                        latLngD = LatLng(currentPosition.latitude, currentPosition.longitude);
+                        print('****************************************');
+                        print(latLngD);
+                        placeD = await getPlaceFromLatLng(latLngD.latitude,latLngD.longitude);
+                        // selectFromPredections = true ;
+                        // selectFromPredections2 = true ;
                         setState(() {
-                          depart = "Current Position";
+                          depart = placeD.description;
                           _departController.value = TextEditingValue(
-                            text: "Current Position",
-                            selection: TextSelection.fromPosition(
-                              const TextPosition(
-                                  offset: "Current Position".length),
-                            ),
+                            text: depart!,
                           );
                         });
                       },
@@ -403,10 +493,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     thickness: 1,
                   ),
               Visibility(
-                visible: (_arriveController.text.isEmpty ||
-                    _arriveController.text.contains('Current Position')) &&
-                    (_departController.text.isEmpty ||
-                        _departController.text.contains('Current Position')),
+                visible: (_arriveController.text.isEmpty) &&
+                    (_departController.text.isEmpty),
                 replacement: FutureBuilder(
                     future: getPredictions(querry),
                     builder: (context, snapshot) {
@@ -425,15 +513,24 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               var prediction = data.description;
                               return ListTile(
                                 onTap: () {
-                                  setState(() {
+                                  // selectFromPredections = true ;
+                                  setState(() async {
                                     showSuggestion = false;
                                     switch (caseSelected) {
                                       case Selected.depart:
+                                        // selectFromCurrentPosition = false ;
                                         departData = data;
                                         idD = departData!.placeId;
                                         descriptionD = departData!.description;
                                         mainTextD =  departData!.mainText;
                                         secondaryTextD = departData!.secondaryText;
+                                        placeD = PlacesAutoCompleteResult(
+                                          placeId: idD,
+                                          description: descriptionD,
+                                          mainText: mainTextD,
+                                          secondaryText: secondaryTextD
+                                        );
+                                        latLngD = await getPlaceLatLng(idD!);
                                         depart = prediction;
                                         _departController.value = TextEditingValue(
                                           text: depart!,
@@ -448,6 +545,13 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                         descriptionA = ArriveData!.description;
                                         mainTextA = ArriveData!.mainText;
                                         secondaryTextA = ArriveData!.secondaryText;
+                                        placeA = PlacesAutoCompleteResult(
+                                            placeId: idA,
+                                            description: descriptionA,
+                                            mainText: mainTextA,
+                                            secondaryText: secondaryTextA
+                                        );
+                                        latLngA = await getPlaceLatLng(idA!);
                                         arrive = prediction;
                                         _arriveController.value = TextEditingValue(
                                           text: arrive!,
@@ -465,7 +569,11 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             },
                           );
                         } else {
-                          return const Center();
+                          return Center(child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Pas de résultat, tapez clairment votre place',
+                            style: TextStyle(fontFamily: 'poppins'),),
+                          ));
                         }
                       } else {
                         return const Text(
@@ -507,136 +615,31 @@ class _OuAllezVousState extends State<OuAllezVous> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
-              /*if (depart != null && arrive != null) {
-                if (departData != null) {
-                  getPlaceFromId(departData!.placeId!).then((value) {
-                    var lat =
-                    value["result"]["geometry"]["location"]["lat"];
-                    var lng =
-                    value["result"]["geometry"]["location"]["lng"];
-                    departCoord = LatLng(lat, lng);
-                    Marker departMarker = Marker(
-                      markerId: MarkerId(depart.toString()),
-                      position: departCoord!,
-                    );
-                    getPlaceFromId(ArriveData!.placeId!).then((value) {
-                      var lat = value["result"]["geometry"]["location"]
-                      ["lat"];
-                      var lng = value["result"]["geometry"]["location"]
-                      ["lng"];
-                      arriveCoord = LatLng(lat, lng);
-                      Marker arriveMarker = Marker(
-                        markerId: MarkerId(arrive.toString()),
-                        position: arriveCoord!,
-                      );
-
-                      Navigator.pushNamed(context, "home", arguments: [
-                        depart,
-                        arrive,
-                        departMarker,
-                        arriveMarker,
-                        departCoord,
-                        arriveCoord,
-                        false
-                      ]);
-                    });
-                  });
-                } else {
-                  if (!fromMap) {
-                    getPlaceFromId(ArriveData!.placeId!).then((value) {
-                      var lat = value["result"]["geometry"]["location"]
-                      ["lat"];
-                      var lng = value["result"]["geometry"]["location"]
-                      ["lng"];
-                      arriveCoord = LatLng(lat, lng);
-                      Marker arriveMarker = Marker(
-                        markerId: MarkerId(arrive.toString()),
-                        position: arriveCoord!,
-                      );
-                      Marker currentPosMarker = Marker(
-                          markerId: MarkerId(depart.toString()),
-                          position: LatLng(
-                              _location.getCurrentPos.latitude,
-                              _location.getCurrentPos.longitude));
-
-                      Navigator.pushNamed(context, "home", arguments: [
-                        depart,
-                        arrive,
-                        currentPosMarker,
-                        arriveMarker,
-                        LatLng(_location.getCurrentPos.latitude,
-                            _location.getCurrentPos.longitude),
-                        arriveCoord,
-                        true
-                      ]);
-                    });
-                  } else {
-                    Marker arriveMarker = Marker(
-                        position: LatLng(position!.target.latitude,
-                            position.target.longitude),
-                        markerId: MarkerId(depart.toString()));
-                    Marker currentPosMarker = Marker(
-                        markerId: MarkerId(depart.toString()),
-                        position: LatLng(
-                            _location.getCurrentPos.latitude,
-                            _location.getCurrentPos.longitude));
-                    arriveCoord = LatLng(position.target.latitude,
-                        position.target.longitude);
-                    Navigator.pushNamed(context, "home", arguments: [
-                      depart,
-                      arrive,
-                      currentPosMarker,
-                      arriveMarker,
-                      LatLng(_location.getCurrentPos.latitude,
-                          _location.getCurrentPos.longitude),
-                      arriveCoord,
-                      true
-                    ]);
-                  }
-                }
-              }*/
-
-              /*else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content:
-                        Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
-                        )));
-              }*/
-              if( (monDateEtTime2.hour < TimeOfDay.now().hour)
-                || (monDateEtTime2.hour == DateTime.now().hour && monDateEtTime2.minute < DateTime.now().minute)
-                 /** && Faire le test du depart et arrivee ( par exemple si id Exist) **/  )
+              if(  ( (monDateEtTime2.hour < TimeOfDay.now().hour)
+                     || (monDateEtTime2.hour == DateTime.now().hour && monDateEtTime2.minute < DateTime.now().minute) )
+                   || placeD.placeId == null || placeA.placeId! == null || placeD.placeId!.isEmpty || placeA.placeId!.isEmpty
+                  )
               {
                   ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    duration: Duration(seconds: 4),
-                  content: Text('Vous devez choisir un temps supérieur au temps actuel'),
+                    duration: Duration(seconds: 3),
+                  content: Text('Vous devez remplir tout les informations et entrer des informations correctes'),
                   ),
                   );
-                }else {
-                _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
-                _trajet.lieuDepart = PlacesAutoCompleteResult(
-                    placeId: idD,
-                    description: descriptionD,
-                    mainText: mainTextD,
-                    secondaryText: secondaryTextD);
-                _trajet.lieuArrivee = PlacesAutoCompleteResult(
-                    placeId: idA,
-                    description: descriptionA,
-                    mainText: mainTextA,
-                    secondaryText: secondaryTextA);
-                _trajet.villeDepart = mainTextD!;
-                _trajet.villeArrivee = mainTextA!;
-                print('**********************************************************************');
-                print('**********************************************************************');
-                LatLng latLngD = await getPlaceLatLng(idD!);
-                print(latLngD);
-                LatLng latLngA = await getPlaceLatLng(idA!);
-                print(latLngA);
-                _trajet.latLngDepart = latLngD ;
-                _trajet.latLngArrivee = latLngA ;
-                double distance = (Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngA.longitude)+15)/1000;
-                 _trajet.tempsDePause = calculateArrivalTime(distance , _trajet.dateDepart);
+                }else { /// si tout les informations sont valide
+                   setState(() {
+                     isLoading = true ;
+                   });
+                  _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
+                  _trajet.lieuDepart = placeD;
+                  _trajet.lieuArrivee = placeA;
+                  _trajet.latLngDepart = latLngD;
+                  _trajet.latLngArrivee = latLngA;
+                  double distance = 0;
+                  distance = (Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngA.longitude)+15)/1000;
+                  _trajet.tempsDePause = calculateArrivalTime(distance , _trajet.dateDepart);
+                  _trajet.afficher();
+                  isLoading = false ;
                 if (statut == false) {
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));
                 } else {
@@ -650,7 +653,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
             ),
-            child: const Text(
+            child: isLoading? CircularProgressIndicator(color: Colors.white,) : const Text(
               'Valider',
               style: TextStyle(
                   color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
