@@ -11,15 +11,6 @@ class cardLancerList extends StatelessWidget {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return Scaffold(
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => OuAllezVous()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-        shape: CircleBorder(),
-      ),*/
       body: ListView.builder(
         itemCount: trajetsLances.length,
         itemBuilder: (context, index) {

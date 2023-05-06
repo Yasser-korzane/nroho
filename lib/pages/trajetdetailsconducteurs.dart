@@ -3,12 +3,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:appcouvoiturage/Services/base de donnee.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
 import '../Services/localNotification.dart';
+
 import 'package:appcouvoiturage/pages/Demandes.dart';
+import 'AfficherTrajetSurLeMap.dart';
 
 class Details extends StatelessWidget {
   ConducteurTrajet _conducteurTrajet ;
@@ -398,11 +397,14 @@ class Details extends StatelessWidget {
                   flex: 4,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      // handle left button press
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) =>
+                            AfficherTrajetSurLeMap(_conducteurTrajet.trajetLance.latLngDepart, _conducteurTrajet.trajetLance.latLngArrivee),
+                      ));
                     },
                     icon: Icon(Icons.map_outlined, size: 32),
                     label: Text(
-                      'Voir le rajet sur la carte',
+                      'Voir le rajet sur le Map',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 14,

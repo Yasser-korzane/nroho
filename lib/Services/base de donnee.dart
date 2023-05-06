@@ -1,11 +1,13 @@
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Notifications.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ConducteurTrajet {
   Utilisateur utilisateur;
@@ -101,7 +103,7 @@ class BaseDeDonnee{
     );
     PlacesAutoCompleteResult lieuDepart = lieuArrive;
     DateTime date = DateTime.now();DateTime time = DateTime.now();
-    return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false);
+    return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false,LatLng(0.0, 0.0),LatLng(0.0, 0.0));
   }
   //------------------------------------------------------------------------------------------
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
@@ -301,21 +303,6 @@ class BaseDeDonnee{
     }
     return BaseDeDonnee().creerUtilisateurVide();
   } /// end getdata
-  // Future<dynamic> getStatut(String uid) async {
-  //   bool statut = false;
-  //   await FirebaseFirestore.instance
-  //       .collection('Utilisateur')
-  //       .doc(uid)
-  //       .get()
-  //       .then((snapshot) async {
-  //     if (snapshot.exists) {
-  //       statut = snapshot.data()!['statut'];
-  //       return statut;
-  //     }else {
-  //       return null;
-  //     }
-  //   });
-  // }
   Future<bool?> getStatut(String uid) async {
     bool? statut;
     await FirebaseFirestore.instance
@@ -426,12 +413,17 @@ class BaseDeDonnee{
     }
   }
 
+  bool isPlace1BetweenPlace2AndPlace3(LatLng place1, LatLng place2, LatLng place3) {
+    double distance1To2 = Geolocator.distanceBetween(place1.latitude, place1.longitude, place2.latitude, place2.longitude);
+    double distance1To3 = Geolocator.distanceBetween(place1.latitude, place1.longitude, place3.latitude, place3.longitude);
+    double distance2To3 = Geolocator.distanceBetween(place2.latitude, place2.longitude, place3.latitude, place3.longitude);
+    return ( ( (distance1To2 + distance1To3) <= distance2To3 )  );
+  }
+
   Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
-    /// 1) recuperer le trajet reserve par le passager --------------------
+    trajetReserve.afficher();
     DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 15));
     DateTime TempsPplus4h = trajetReserve.dateDepart.add(Duration(hours: 4));
-    trajetReserve.afficher();
-    /// 2) rechercher les utilisateurs (le conducteurs) qui ont un trajetLance similaire au trajetReserve -------
     try {
       List<ConducteurTrajet> listConducteurTrajet = [];
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -460,6 +452,8 @@ class BaseDeDonnee{
                 && data['plusInformations']['nbPlaces'] >= trajetReserve.plusInformations.nbPlaces
                  && ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) )
                  && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h) )
+                /// ajouter la fonction isPlace1BetweenPlace2AndPlace3()
+            ///  ajouter si la distance entre departP et depertC est moins ou egal a 2 km
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
@@ -525,6 +519,12 @@ class BaseDeDonnee{
                 trajetLance.confort = data['confort'];
                 trajetLance.avis = data['avis'];
                 trajetLance.probleme = data['probleme'];
+                GeoPoint geoPointDepart = data['latLngDepart'];
+                GeoPoint geoPointArrivee = data['latLngArrivee'];
+                LatLng latLngDepart = LatLng(geoPointDepart.latitude, geoPointDepart.longitude);
+                LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
+                trajetLance.latLngDepart = latLngDepart;
+                trajetLance.latLngArrivee = latLngArrivee;
                 trajetLance.afficher();
                 ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
                 listConducteurTrajet.add(conducteurTrajet);

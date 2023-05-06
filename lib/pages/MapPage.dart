@@ -17,7 +17,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
-
 import '../Services/base de donnee.dart';
 import '../AppClasses/Notifications.dart';
 
@@ -140,7 +139,7 @@ class _MywidState extends State<Mywid> {
       _polylineSet.add(Polyline(
           polylineId: const PolylineId("Route"),
           points: polylineCoordinates,
-          color: Colors.yellow));
+          color: Colors.blue));
     });
   }
 
@@ -171,7 +170,7 @@ class _MywidState extends State<Mywid> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     const double defaultPadding = 10;
-    _getNotifications();
+    //_getNotifications();
     if(listeNotifications.isEmpty){
       notification_recus=false;
     }else{
