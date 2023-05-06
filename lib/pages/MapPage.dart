@@ -53,7 +53,6 @@ class _MywidState extends State<Mywid> {
               notificationData['accepte_refuse'],
             );
             listeNotifications.add(notification);
-            print(listeNotifications);
           }
         });
       }

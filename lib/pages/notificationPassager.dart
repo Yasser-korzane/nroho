@@ -35,7 +35,6 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
             );
             if(notification.id_conducteur!=FirebaseAuth.instance.currentUser!.uid){
               listeNotifications.add(notification);
-              print(listeNotifications);
             }
           }
         });
@@ -179,3 +178,4 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
     );
   }
 }
+

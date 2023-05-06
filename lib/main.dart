@@ -16,12 +16,14 @@ import 'package:appcouvoiturage/pages/page_recherche.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  NotificationSettings settings = await FirebaseMessaging.instance.requestPermission();
+  print(settings.authorizationStatus);
   final fcm =await FirebaseMessaging.instance.getToken();
   print(fcm);
-  LocalNotification.initialize();
+  /*LocalNotification.initialize();
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     LocalNotification.showNotification(message);
-  });
+  });*/
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {

@@ -10,6 +10,8 @@ import 'package:places_service/places_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
 
@@ -158,6 +160,7 @@ class _MotdePasseState extends State<MotdePasse> {
         // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         // await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
         //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
+          sendNotification("dxCAZJQbQQCfGormksg3Xh:APA91bGhDV5JYw8aU1JptYfvOWzVDwDKVRyczVMBOonQX4g0mE3kG3KO5AAHfGQ9f_xFzo1HsoA7GW73uxMU7qDc9HH7VPUZ70q_eFq6GGktTmU88hDUdPZzefR88OFwx6ge-uRY5C2F","new notification", "hello mohammed");
          },
       ),
       ),
@@ -269,5 +272,31 @@ class _MotdePasseState extends State<MotdePasse> {
     ),
         )
     );
+  }
+}
+Future<void> sendNotification(String fcmToken, String title, String body) async {
+  // Envoyez une demande HTTP POST à Firebase Cloud Messaging pour envoyer la notification push
+  final response = await http.post(
+    Uri.parse('https://fcm.googleapis.com/fcm/send'),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AAAAP4EF2a0:APA91bEexLSapubrW8u_tYhI5ITWpV0OMhc9PWEUZ-D-0GTbb-EszQ12q1QG_qOG8sMsZ6zH6JpalT0Xzjq6fPxCAdQsEDiSTMoqN91rXcU8EHDZpBSb12NHqBDr0-PIagF4hlXgy999',
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        'notification': <String, dynamic>{
+          'title': title,
+          'body': body,
+          'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        },
+        'to': fcmToken,
+      },
+    ),
+  );
+  // Vérifiez la réponse de la demande HTTP POST
+  if (response.statusCode == 200) {
+    print('Notification envoyée avec succès.');
+  } else {
+    print('Échec de l\'envoi de la notification. Code de réponse: ${response.statusCode} ${response.body}');
   }
 }

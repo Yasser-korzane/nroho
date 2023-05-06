@@ -7,8 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/Services/base de donnee.dart';
-
 import '../Services/localNotification.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 /**
     Je doit afficher pour le conducteur :
@@ -48,7 +49,6 @@ class _DemandesPassagerState extends State<DemandesPassager> {
             );
             if(notification.id_conducteur==FirebaseAuth.instance.currentUser!.uid){
               listeNotifications.add(notification);
-              print(listeNotifications);
             }
           }
         });
@@ -65,6 +65,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
   }
   @override
   Widget build(BuildContext context) {
+
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
@@ -210,13 +211,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 ),
                                 SizedBox(height: screenHeight * 0.005),
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: () async{
                                     print("hichem");
                                     baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",true));
-                                    LocalNotification.initialize();
-                                    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-                                      LocalNotification.showNotification(message);
-                                    });
+                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem vous a accepte dans son trajet");
+
+
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -286,10 +286,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 GestureDetector(
                                   onTap: () {
                                     baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",false));
-                                    LocalNotification.initialize();
-                                    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-                                      LocalNotification.showNotification(message);
-                                    });
+                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem vous a refuse dans son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -361,3 +358,32 @@ class _DemandesPassagerState extends State<DemandesPassager> {
           );
   }
 }
+Future<void> sendNotification(String fcmToken, String title, String body) async {
+  // Envoyez une demande HTTP POST à Firebase Cloud Messaging pour envoyer la notification push
+  final response = await http.post(
+    Uri.parse('https://fcm.googleapis.com/fcm/send'),
+    headers: <String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AAAAP4EF2a0:APA91bEexLSapubrW8u_tYhI5ITWpV0OMhc9PWEUZ-D-0GTbb-EszQ12q1QG_qOG8sMsZ6zH6JpalT0Xzjq6fPxCAdQsEDiSTMoqN91rXcU8EHDZpBSb12NHqBDr0-PIagF4hlXgy999',
+    },
+    body: jsonEncode(
+      <String, dynamic>{
+        'notification': <String, dynamic>{
+          'title': title,
+          'body': body,
+          'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        },
+        'to': fcmToken,
+      },
+    ),
+  );
+
+  // Vérifiez la réponse de la demande HTTP POST
+  if (response.statusCode == 200) {
+    print('Notification envoyée avec succès.');
+  } else {
+    print('Échec de l\'envoi de la notification. Code de réponse: ${response.statusCode} ${response.body}');
+  }
+}
+
+

@@ -114,7 +114,7 @@ class Emailgetter extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () async {
                           print(_controllerEmail.text);
-                          var email_correct = await _auth.resetPassword(_controllerEmail.text.trim());
+                          var email_correct = await _auth.resetPassword(_controllerEmail.text);
                           print(email_correct);
                           if(email_correct == true){
                             showDialog(context: context,
