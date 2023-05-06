@@ -3,9 +3,9 @@ import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';
-class detailsPassagerConducteurHis extends StatelessWidget {
+class detailsTrajetLancer extends StatelessWidget {
   Trajet _trajet ;
-  detailsPassagerConducteurHis(this._trajet);
+  detailsTrajetLancer(this._trajet);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -21,13 +21,8 @@ class detailsPassagerConducteurHis extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: ElevatedButton(
-          child: Text('Voir le trajet sur le map'),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) =>
-              AfficherTrajetSurLeMap(_trajet.latLngDepart, _trajet.latLngArrivee),
-            ));
-          },
+          child: Text('Annuler le traajet',style: TextStyle(fontFamily: 'poppins'),),
+          onPressed: (){ },
         ),
           body: SingleChildScrollView(
         child: Padding(
@@ -52,7 +47,7 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                       padding: EdgeInsets.all(defaultPadding),
                       child: Text(
                         'Informations de la course',
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                               color: Colors.black,
                               fontSize: screenWidth * 0.05,
@@ -241,6 +236,7 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                     Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.02),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           prixText,
@@ -250,17 +246,36 @@ class detailsPassagerConducteurHis extends StatelessWidget {
                             fontFamily: 'Poppins',
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: Text(
-                            valeurPrix,
-                            style: TextStyle(
-                              // fontWeight: FontWeight.w400,
-                              fontSize: 16.0,
-                              fontFamily: 'Poppins',
+                      ],
+                    ),
+                    Divider(color: Colors.black, thickness: 1),
+                    SizedBox(height: screenHeight * 0.02),
+                    Row(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment:CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Commantaire : ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.0,
+                                fontFamily: 'Poppins',
+                              ),
                             ),
-                          ),
+                            SizedBox(height: screenHeight * 0.02),
+                            Text(
+                              'ajouter votre commantaire ici',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14.0,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ],
                         ),
+
                       ],
                     ),
                     ],

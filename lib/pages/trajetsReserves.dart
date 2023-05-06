@@ -1,6 +1,8 @@
+import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
+
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
-import 'InfoTrajetLancerReserve.dart';
+import 'Info Trajet Reserve.dart';
 import 'package:flutter/material.dart';
 class cardReserverList extends StatelessWidget{
   List<Trajet> trajetsReserve ;
@@ -13,14 +15,6 @@ class cardReserverList extends StatelessWidget{
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return Scaffold(
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => OuAllezVous()));
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
-        shape: CircleBorder(),
-      ),*/
       body: ListView.builder(
         itemCount: trajetsReserve.length,
         itemBuilder: (context, index) {
@@ -29,7 +23,7 @@ class cardReserverList extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis(lancer)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
                 },
                 child: Card(
                   color: Colors.white,
@@ -122,16 +116,6 @@ class cardReserverList extends StatelessWidget{
                             )
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0, right: 10),
-                          child: Divider(
-                            height: 1,
-                            thickness: 1,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Center(child: Text('Commentaire : '),),
-                        Center(child: Text('``${lancer.avis}``',style: TextStyle(fontWeight: FontWeight.bold),)),
                       ],
                     ),
                   ),

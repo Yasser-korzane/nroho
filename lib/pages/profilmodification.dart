@@ -99,6 +99,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       }
                     },
                     child : Text('changer votre photo',style: TextStyle(
+                      fontFamily: 'poppins',
                       color: Color(0xff271BAB),
                     ),),
                   ),
@@ -115,7 +116,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             child: Text(
                               'Identifiant:',
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color: Colors.grey, fontSize: 12,                      fontFamily: 'poppins',
+                                  ),
                             ),
                           ),
                           Expanded(
@@ -123,7 +125,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             child: Text(
                               widget._utilisateur.identifiant,
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color: Colors.grey, fontSize: 12,                      fontFamily: 'poppins',
+                                  ),
                             ),
                           ),
                         ],
@@ -135,7 +138,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             child: Text(
                               'Email: ',
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color: Colors.grey, fontSize: 12,                      fontFamily: 'poppins',
+                                  ),
                             ),
                           ),
                           Expanded(
@@ -143,7 +147,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             child: Text(
                               widget._utilisateur.email,
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color: Colors.grey, fontSize: 12 ,                     fontFamily: 'poppins',
+                                  ),
                             ),
                           ),
                         ],
@@ -154,7 +159,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: size.height * 0.033),
                 Text(
                   'Nom',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
+                  ),
                 ),
                 SizedBox(
                   width: size.width * 0.7,
@@ -162,15 +168,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   child: TextFormField(
                     //controller: _contrNom,
                     decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius:
+                        BorderRadius.all(Radius.circular(12)),
                       ),
                       fillColor: Colors.white,
                       filled: true,
                       hintText: widget._utilisateur.nom,
+                      hintStyle: TextStyle(fontFamily: 'poppins'),
                     ),
                     onChanged: (value) {
                       _changement = true;
@@ -183,7 +188,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: size.height * 0.02),
                 Text(
                   'Prenom',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
+                  ),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
@@ -191,15 +197,15 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     child: TextField(
                       //controller: _contrPrenom,
                       decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12)),
                         ),
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.prenom,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         _changement = true;
@@ -212,22 +218,23 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: size.height * 0.02),
                 Text(
                   'Numéro de telephone',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
+                  ),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
                     child: TextField(
                       decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12)),
                         ),
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.numeroTelephone,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         _changement = true;
@@ -242,6 +249,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 Text(
                   'Informations du vehicule',
                   style: TextStyle(
+                      fontFamily: 'poppins',
                       color: Color(0xff0085FF),
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
@@ -250,7 +258,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 10),
                 Text(
                   'marque',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
+                  ),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
@@ -258,15 +267,15 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     child: TextField(
                       //controller: _contrMarque,
                       decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12)),
                         ),
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.vehicule.marque,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -279,7 +288,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 15),
                 Text(
                   'Type du vehicule',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(                      fontFamily: 'poppins',
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
@@ -287,15 +297,15 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     child: TextField(
                       //controller: _contrType,
                       decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12)),
                         ),
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.vehicule.typevehicule,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         _changement = true;
@@ -308,7 +318,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 15),
                 Text(
                   'Matricule',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(                      fontFamily: 'poppins',
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
@@ -316,15 +327,15 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     child: TextField(
                       //controller: _contrMatricule,
                       decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12)),
                         ),
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.vehicule.matricule,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         _changement = true;
@@ -337,7 +348,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 15),
                 Text(
                   'modéle',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(                      fontFamily: 'poppins',
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
@@ -345,15 +357,15 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     child: TextField(
                       //controller: _contrModele,
                       decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(12)),
                         ),
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.vehicule.modele,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         _changement = true;
@@ -366,7 +378,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(height: 15),
                 Text(
                   'Police d\'assurance',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(                      fontFamily: 'poppins',
+                      fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                     width: size.width * 0.7,
@@ -383,6 +396,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         fillColor: Colors.white,
                         filled: true,
                         hintText: widget._utilisateur.vehicule.policeAssurance,
+                        hintStyle: TextStyle(fontFamily: 'poppins'),
+
                       ),
                       onChanged: (value) {
                         _changement = true;
@@ -408,7 +423,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   },
                   child: Text(
                     'Valider les modifications',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(                      fontFamily: 'poppins',
+                        color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,

@@ -54,7 +54,7 @@ class Historique extends StatelessWidget {
                       Padding(
                         padding:  EdgeInsets.all(screenWidth*0.015),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget> [
                               Text(
                                  ' 21 janvier 2024 a 18:10',
@@ -107,7 +107,7 @@ class Historique extends StatelessWidget {
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      '${lancer.dateDepart}',
+                                      '${lancer.dateDepart.hour}'+' : ${lancer.dateDepart.minute}',
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -122,7 +122,7 @@ class Historique extends StatelessWidget {
                                 Container(
                                   child: ListTile(
                                     title: Text(
-                                      '${lancer.tempsDePause}',
+                                      '${lancer.tempsDePause.hour}'+' : ${lancer.dateDepart.minute}',
                                       style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,

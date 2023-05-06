@@ -1,5 +1,5 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
-import 'package:appcouvoiturage/pages/InfoTrajetLancerReserve.dart';
+import 'package:appcouvoiturage/pages/Info Trajet Reserve.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 class cardLancerList extends StatelessWidget {
@@ -21,7 +21,7 @@ class cardLancerList extends StatelessWidget {
                   vertical: screenHeight * 0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsPassagerConducteurHis(lancer)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetLancer(lancer)));
                 },
                 child: Card(
                   color: Colors.white,

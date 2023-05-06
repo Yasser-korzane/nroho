@@ -52,7 +52,7 @@ class _optionsState extends State<options> {
               SizedBox(height: screenHeight * 0.1),
               Card(color: Colors.white60,margin: EdgeInsets.all(16),
                 shape:   RoundedRectangleBorder(
-                  side:  BorderSide(color: Colors.grey,width: 2),
+                  side:  BorderSide(color: Color.fromARGB(255, 61, 53, 53),width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(15)
                   ),
                 ),

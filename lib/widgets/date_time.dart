@@ -75,11 +75,14 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
               readOnly: true,
               onTap: _selectDate,
               decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(12)),
+                ),
                 contentPadding: EdgeInsets.only(top: screenHeight*0.00001,left: screenWidth*0.04),
                 hintText: _selectedDate == null
                     ? 'Select a date'
                     : '${_selectedDate!.toString().split(" ")[0]}',
-                border: OutlineInputBorder(),
                 fillColor: Colors.white,
                 filled: true,
               ),
@@ -102,7 +105,10 @@ class _DateTimePickerRowState extends State<DateTimePickerRow> {
                 hintText: _selectedTime == null
                     ? 'Select a time'
                     : '${_selectedTime!.format(context)}',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(12)),
+                ),
                 fillColor: Colors.white,
                 filled: true,
               ),

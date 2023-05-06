@@ -40,7 +40,7 @@ class cardLancerListH extends StatelessWidget{
                         Padding(
                           padding:  EdgeInsets.all(screenWidth*0.015),
                           child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget> [
                                 //Image،
                                 Container(
