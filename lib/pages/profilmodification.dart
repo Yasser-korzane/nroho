@@ -89,7 +89,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       try{
                         await referenceImageToUpload.putFile(File(file.path));
                         imageUrl = await referenceImageToUpload.getDownloadURL();
-                        print('****************************************** imageUrl = $imageUrl');
                         setState(() {
                           widget._utilisateur.imageUrl = imageUrl ;
                         });

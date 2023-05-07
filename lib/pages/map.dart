@@ -62,9 +62,7 @@ class _MapPageState extends State<MapPage> {
               onPressed: () {
                 if (_latitude != null && _longitude != null) {
                   final latlng = LatLng(_latitude, _longitude);
-                Navigator.pop(context, latlng);
-                }
-              },
+                Navigator.pop(context, latlng);}},
               child: const Text("Valider",style: TextStyle(fontFamily: 'Poppins'),)),
         )
       ]),

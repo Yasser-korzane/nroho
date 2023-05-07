@@ -40,55 +40,21 @@ class _OuAllezVousState extends State<OuAllezVous> {
   Position? current_location;
   final LocationManager _location = LocationManager();
   final _placesService = PlacesService();
-
-  /// ------------------- to test which mode i use : ----------------------------------------
-  // bool selectFromPredections = false ;
-  // bool selectFromPredections2 = false ;
-  // bool selectFromCurrentPosition = false ;
-  // bool selectDepartFromMap = false ;
-  // bool selectArriveFromMap = false ;
-  /// ------------------- to test which mode i use : ----------------------------------------
   PlacesAutoCompleteResult placeD = PlacesAutoCompleteResult(
       placeId: '', description: '', mainText: '', secondaryText: '');
   PlacesAutoCompleteResult placeA = PlacesAutoCompleteResult(
       placeId: '', description: '', mainText: '', secondaryText: '');
-
-  // PlacesAutoCompleteResult placeDepartFromMap = PlacesAutoCompleteResult(
-  //   placeId: '',
-  //   description: '',
-  //   mainText: '',
-  //   secondaryText: ''
-  // );
-  // PlacesAutoCompleteResult placeArriveFromMap = PlacesAutoCompleteResult(
-  //   placeId: '',
-  //   description: '',
-  //   mainText: '',
-  //   secondaryText: ''
-  // );
   BitmapDescriptor customMarker = BitmapDescriptor.defaultMarker;
   String? idD;
-
   String? descriptionD;
-
   String? mainTextD;
-
   String? secondaryTextD;
-
   String? idA;
-
   String? descriptionA;
-
   String? mainTextA;
-
   String? secondaryTextA;
-
   LatLng latLngD = LatLng(0, 0);
   LatLng latLngA = LatLng(0, 0);
-
-  // LatLng latLngD2 = LatLng(0, 0);
-  // LatLng latLngDepartFromMap = LatLng(0, 0);
-  // LatLng latLngArriveeFromMap = LatLng(0, 0);
-  //////////////////////////////////////////////////////////////////////////
   bool statut = false;
   DateTime monDateEtTime = DateTime.now();
   DateTime monDateEtTime2 = DateTime.now();
@@ -169,7 +135,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
   }
 
   /// -------------------------------------------------------------------------------------------------
-
   Future<PlacesAutoCompleteResult> getPlaceFromLatLng(
       double lat, double lng) async {
     final String url =
@@ -194,7 +159,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
   }
 
   /// -------------------------------------------------------------------------------------------------
-
   Future<LatLng> getPlaceLatLng(String placeId) async {
     String url =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k';
@@ -276,7 +240,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 children: [
                   SizedBox(height: size.height * 0.1),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 0),
                     child: Card(
                       child: Column(
                         children: [
@@ -286,81 +251,80 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 Column(
                                   children: [
                                     const Icon(Icons.gps_fixed),
-                                    // SizedBox(height: screenHeight * 0.03),
                                     Container(
                                       height: 32,
                                       width: 1,
                                       color: Colors.grey,
                                     ),
-                                    // SizedBox(height: screenHeight * 0.03),
                                     const Icon(
                                       Icons.location_on,
                                     ),
                                   ],
                                 ), //icons
                                 Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                  SizedBox(
-                                    height: size.height * 0.01,
-                                  ),
-                                  Container(
-                                    width: size.width * 0.7,
-                                    height: size.height * 0.05,
-                                    child: TextFormField(
-                                      style: const TextStyle(
-                                          fontFamily: 'Poppins', fontSize: 14),
-                                      controller: _departController,
-                                      onChanged: (value) {
-                                        // selectFromCurrentPosition = false ;
-                                        // selectFromPredections = false ;
-                                        setState(() {
-                                          showSuggestion = true;
-                                          querry = value;
-                                          caseSelected = Selected.depart;
-                                        });
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(12)),
-                                        ),
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        hintText: 'Depart',
+                                      SizedBox(
+                                        height: size.height * 0.01,
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: size.height * 0.01,
-                                  ),
-                                  Container(
-                                    width: size.width * 0.7,
-                                    height: size.height * 0.05,
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.streetAddress,
-                                      style: const TextStyle(fontFamily: 'Poppins'),
-                                      controller: _arriveController,
-                                      onChanged: (value) {
-                                        // selectFromPredections2 = false ;
-                                        setState(() {
-                                          showSuggestion = true;
-                                          querry = value;
-                                          caseSelected = Selected.arrivee;
-                                        });
-                                      },
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(12)),
+                                      Container(
+                                        width: size.width * 0.7,
+                                        height: size.height * 0.05,
+                                        child: TextFormField(
+                                          style: const TextStyle(
+                                              fontFamily: 'Poppins',
+                                              fontSize: 14),
+                                          controller: _departController,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              showSuggestion = true;
+                                              querry = value;
+                                              caseSelected = Selected.depart;
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12)),
+                                            ),
+                                            fillColor: Colors.white,
+                                            filled: true,
+                                            hintText: 'Depart',
+                                          ),
                                         ),
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        hintText: 'Arrivée',
                                       ),
-                                    ),
-                                  ),
-                                ]),
+                                      SizedBox(
+                                        height: size.height * 0.01,
+                                      ),
+                                      Container(
+                                        width: size.width * 0.7,
+                                        height: size.height * 0.05,
+                                        child: TextFormField(
+                                          keyboardType:
+                                              TextInputType.streetAddress,
+                                          style: const TextStyle(
+                                              fontFamily: 'Poppins'),
+                                          controller: _arriveController,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              showSuggestion = true;
+                                              querry = value;
+                                              caseSelected = Selected.arrivee;
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(12)),
+                                            ),
+                                            fillColor: Colors.white,
+                                            filled: true,
+                                            hintText: 'Arrivée',
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
                               ]),
                           SizedBox(height: size.height * 0.01),
                           Padding(
@@ -388,8 +352,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                           ? 'choisir la date de départ'
                                           : '${_selectedDate!.toString().split(" ")[0]}',
                                       border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(12)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
                                       ),
                                       fillColor: Colors.white,
                                       filled: true,
@@ -416,8 +380,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                           ? 'choisir le temps de départ'
                                           : '${_selectedTime!.format(context)}',
                                       border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.all(Radius.circular(12)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
                                       ),
                                       fillColor: Colors.white,
                                       filled: true,
@@ -434,7 +398,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ],
               ),
             ),
-            expandedHeight: size.height * 0.265,
+            expandedHeight: size.height * 0.2,
             // your app bar properties here
           ),
           SliverToBoxAdapter(
@@ -442,7 +406,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
               physics: NeverScrollableScrollPhysics(),
               child: Column(children: [
                 Padding(
-                  padding:  EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                   child: Card(
                     child: Column(children: [
                       Padding(
@@ -453,32 +417,22 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               if ((_departController.text.isEmpty) ||
                                   (_departController.text.isNotEmpty &&
                                       _arriveController.text.isNotEmpty)) {
-                                // selectDepartFromMap = true ;
-                                // selectFromCurrentPosition = false ;
-                                // selectFromPredections = false ;
-                                // selectFromPredections2 = false ;
                                 latLngD = await Navigator.push(context,
                                     MaterialPageRoute(
                                   builder: (context) {
                                     return const MapPage();
                                   },
                                 ));
-                                print(latLngD);
                                 placeD = await getPlaceFromLatLng(
                                     latLngD.latitude, latLngD.longitude);
                                 _departController.text = placeD.description!;
                               } else {
-                                // selectArriveFromMap = true ;
-                                // selectFromCurrentPosition = false ;
-                                // selectFromPredections = false ;
-                                // selectFromPredections2 = false ;
                                 latLngA = await Navigator.push(context,
                                     MaterialPageRoute(
                                   builder: (context) {
                                     return const MapPage();
                                   },
                                 ));
-                                print(latLngA);
                                 placeA = await getPlaceFromLatLng(
                                     latLngA.latitude, latLngA.longitude);
                                 _arriveController.text = placeA.description!;
@@ -505,17 +459,12 @@ class _OuAllezVousState extends State<OuAllezVous> {
                         padding: const EdgeInsets.symmetric(vertical: 0),
                         child: ListTile(
                           onTap: () async {
-                            //selectFromCurrentPosition = true ;
                             Position currentPosition =
                                 await Geolocator.getCurrentPosition();
                             latLngD = LatLng(currentPosition.latitude,
                                 currentPosition.longitude);
-                            print('****************************************');
-                            print(latLngD);
                             placeD = await getPlaceFromLatLng(
                                 latLngD.latitude, latLngD.longitude);
-                            // selectFromPredections = true ;
-                            // selectFromPredections2 = true ;
                             setState(() {
                               depart = placeD.description;
                               _departController.value = TextEditingValue(
@@ -559,7 +508,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                 var prediction = data.description;
                                 return ListTile(
                                   onTap: () {
-                                    // selectFromPredections = true ;
                                     setState(() async {
                                       showSuggestion = false;
                                       switch (caseSelected) {
@@ -673,98 +621,50 @@ class _OuAllezVousState extends State<OuAllezVous> {
           width: size.width * 0.51,
           height: size.height * 0.048,
           child: ElevatedButton(
-            onPressed: () async {
-              if (((monDateEtTime2.hour < TimeOfDay.now().hour) ||
-                      (monDateEtTime2.hour == DateTime.now().hour &&
-                          monDateEtTime2.minute < DateTime.now().minute)) ||
-                  placeD.placeId == null ||
-                  placeA.placeId! == null ||
-                  placeD.placeId!.isEmpty ||
-                  placeA.placeId!.isEmpty) {
+            onPressed: () async{
+              if(  ( (monDateEtTime2.hour < TimeOfDay.now().hour)
+                  || (monDateEtTime2.hour == DateTime.now().hour && monDateEtTime2.minute < DateTime.now().minute) )
+                  || placeD.placeId == null || placeA.placeId! == null || placeD.placeId!.isEmpty || placeA.placeId!.isEmpty
+              )
+              {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     duration: Duration(seconds: 3),
-                    content: Text(
-                        'Vous devez remplir tout les informations et entrer des informations correctes'),
+                    content: Text('Vous devez remplir tout les informations et entrer des informations correctes'),
                   ),
                 );
-              } else {
-                /// si tout les informations sont valide
+              }else { /// si tout les informations sont valide
                 setState(() {
-                  isLoading = true;
+                  isLoading = true ;
                 });
-                _trajet.dateDepart = DateTime(
-                    monDateEtTime.year,
-                    monDateEtTime.month,
-                    monDateEtTime.day,
-                    monDateEtTime2.hour,
-                    monDateEtTime2.minute);
+                _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
                 _trajet.lieuDepart = placeD;
                 _trajet.lieuArrivee = placeA;
                 _trajet.latLngDepart = latLngD;
                 _trajet.latLngArrivee = latLngA;
                 double distance = 0;
-                distance = (Geolocator.distanceBetween(
-                            latLngD.latitude,
-                            latLngD.longitude,
-                            latLngA.latitude,
-                            latLngA.longitude) +
-                        15) /
-                    1000;
-                _trajet.tempsDePause =
-                    calculateArrivalTime(distance, _trajet.dateDepart);
+                distance = (Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngA.longitude)+15)/1000;
+                _trajet.tempsDePause = calculateArrivalTime(distance , _trajet.dateDepart);
                 _trajet.afficher();
-                isLoading = false;
+                isLoading = false ;
                 if (statut == false) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => options(_trajet)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));
                 } else {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => optionconduc(_trajet)));
+                          builder: (context) =>  optionconduc(_trajet)));
                 }
-              }
-              /*else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                        content:
-                        Text("Please fill all the informations",                                style: TextStyle(fontFamily: 'Poppins'),
-                        )));
-              }*/
-              _trajet.dateDepart = DateTime(
-                  monDateEtTime.year,
-                  monDateEtTime.month,
-                  monDateEtTime.day,
-                  monDateEtTime2.hour,
-                  monDateEtTime2.minute);
-              _trajet.afficher();
-              if (statut == false) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => options(_trajet)));
-              } else {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => optionconduc(_trajet)));
               }
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
             ),
-            child: isLoading
-                ? CircularProgressIndicator(
-                    color: Colors.white,
-                  )
-                : const Text(
-                    'Valider',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Poppins'),
-                  ),
+            child: isLoading? CircularProgressIndicator(color: Colors.white,) : const Text(
+              'Valider',
+              style: TextStyle(
+                  color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
+            ),
           ),
         ),
       ),

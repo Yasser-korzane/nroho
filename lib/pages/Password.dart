@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../AppClasses/Notifications.dart';
 import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
 import 'package:http/http.dart' as http;
@@ -32,6 +33,7 @@ class _MotdePasseState extends State<MotdePasse> {
   String oldPassword = '';
   String newPassword = '';
   List<Utilisateur> utilisateurs = [];
+  Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagerss', 'idTrajet','Grine','Mohammed','Alger','Bouira',false);
 
   void changePassword(BuildContext context) async {
     try {
@@ -197,13 +199,12 @@ class _MotdePasseState extends State<MotdePasse> {
                     ),
                     onPressed: () async {
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
-                      //Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagers', 'XFFvL2tupM3GrpRUvqkv','Grine','Mohammed','Alger','Bouira',false);
-                      // await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
+                      await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
                       //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
-                       sendNotification("dxCAZJQbQQCfGormksg3Xh:APA91bGhDV5JYw8aU1JptYfvOWzVDwDKVRyczVMBOonQX4g0mE3kG3KO5AAHfGQ9f_xFzo1HsoA7GW73uxMU7qDc9HH7VPUZ70q_eFq6GGktTmU88hDUdPZzefR88OFwx6ge-uRY5C2F","new notification", "hello mohammed");
+                       //sendNotification("dxCAZJQbQQCfGormksg3Xh:APA91bGhDV5JYw8aU1JptYfvOWzVDwDKVRyczVMBOonQX4g0mE3kG3KO5AAHfGQ9f_xFzo1HsoA7GW73uxMU7qDc9HH7VPUZ70q_eFq6GGktTmU88hDUdPZzefR88OFwx6ge-uRY5C2F","new notification", "hello mohammed");
 
                     },
                   ),

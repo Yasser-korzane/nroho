@@ -64,104 +64,103 @@ class Emailgetter extends StatelessWidget {
               ),
               Form(
                   child: Column(children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                  height: screenHeight * 0.1,
-                  child: TextFormField(
-                    style: TextStyle(fontFamily: "Poppins"),
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _controllerEmail,
-                    validator: (input) {
-                      if (input == null) {
-                        return 'Entrez votre e_mail adress';
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.email_outlined,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                      //border: OutlineInputBorder(),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                      height: screenHeight * 0.1,
+                      child: TextFormField(
+                        style: TextStyle(fontFamily: "Poppins"),
+                        keyboardType: TextInputType.emailAddress,
+                        controller: _controllerEmail,
+                        validator: (input) {
+                          if (input == null) {
+                            return 'Entrez votre e_mail adress';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.email_outlined,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          //border: OutlineInputBorder(),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
 
-                      labelText: 'Email',
-                      labelStyle: TextStyle(
-                          fontFamily:'Poppins'
-                      ),
-                      hintText: 'Entrez votre adresse mail abc@esi.dz',
-                      hintStyle:
+                          labelText: 'Email',
+                          labelStyle: TextStyle(
+                              fontFamily:'Poppins'
+                          ),
+                          hintText: 'Entrez votre adresse mail abc@esi.dz',
+                          hintStyle:
                           TextStyle(color: Colors.grey[800], fontSize: 14,                          fontFamily:'Poppins'
                           ),
-                      fillColor: Colors.grey.shade100,
-                      filled: true,
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
 
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: screenHeight * 0.005,
-                ),
-                SizedBox(
-                    width: screenWidth * 0.89,
-                    height: screenHeight * 0.06,
-                    child: Material(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          print(_controllerEmail.text);
-                          var email_correct = await _auth.resetPassword(_controllerEmail.text);
-                          print(email_correct);
-                          if(email_correct == true){
-                            showDialog(context: context,
-                                builder: (context){
-                                  return AlertDialog(
-                                    content: Text("Mot de passe réinitialisé , vérifier votre email et essayer de vous connecter"),
-                                    actions: <Widget>[
-                                      TextButton(
-                                          onPressed:(){
-                                        Navigator.pop(context);
-                                        Navigator.pop(context);
-                                      },
-                                          child: Text("ok"))
-                                    ],
-                                  );
-                                }
-                            );
-                          }else{
-                            showDialog(context: context,
-                                builder: (context){
-                                  return AlertDialog(
-                                    content: Text("Adresse email invalide, essayer d'entrer une adresse email correcte"),
-                                    actions: <Widget>[
-                                      Center(
-                                        child: TextButton(onPressed:(){
-                                          Navigator.pop(context);
-                                        },
-                                            child: Text("réssayer")),
-                                      )
-                                    ],
-                                  );
-                                }
-                            );
-                          }
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => Verification()));
-                        },
-                        child: Text(
-                          ' suivant',
-                          style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'Poppins'),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
                         ),
                       ),
-                    )),
-              ])),
+                    ),
+                    SizedBox(
+                      height: screenHeight * 0.005,
+                    ),
+                    SizedBox(
+                        width: screenWidth * 0.89,
+                        height: screenHeight * 0.06,
+                        child: Material(
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              print(_controllerEmail.text);
+                              var email_correct = await _auth.resetPassword(_controllerEmail.text);
+                              print(email_correct);
+                              if(email_correct == true){
+                                showDialog(context: context,
+                                    builder: (context){
+                                      return AlertDialog(
+                                        content: Text("Mot de passe réinitialisé , vérifier votre email et essayer de vous connecter"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed:(){
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("ok"))
+                                        ],
+                                      );
+                                    }
+                                );
+                              }else{
+                                showDialog(context: context,
+                                    builder: (context){
+                                      return AlertDialog(
+                                        content: Text("Adresse email invalide, essayer d'entrer une adresse email correcte"),
+                                        actions: <Widget>[
+                                          Center(
+                                            child: TextButton(onPressed:(){
+                                              Navigator.pop(context);
+                                            },
+                                                child: Text("réssayer")),
+                                          )
+                                        ],
+                                      );
+                                    }
+                                );
+                              }
+                              //Navigator.push(context, MaterialPageRoute(builder: (context) => Verification()));
+                            },
+                            child: Text(
+                              ' suivant',
+                              style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'Poppins'),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                            ),
+                          ),
+                        )),
+                  ])),
             ],
           ),
         ),

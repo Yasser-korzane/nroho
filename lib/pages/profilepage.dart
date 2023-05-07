@@ -145,21 +145,9 @@ class _ProfilepageState extends State<Profilepage> {
     super.initState();
     _getDataFromDataBase();
     _getHistorique();
-    getConnectivity();
   }
 
-  getConnectivity() =>
-      subscription = Connectivity().onConnectivityChanged.listen(
-              (ConnectivityResult result) async{
-            isDeviceConnected = await InternetConnectionChecker().hasConnection;
-            if(!isDeviceConnected && isAlertSet == false){
-              showDialogBox();
-              setState(() {
-                isAlertSet = true;
-              });
-            }
-          }
-      );
+
 
   @override
   void dispose() {
@@ -268,31 +256,7 @@ class _ProfilepageState extends State<Profilepage> {
           ),
         ));
   }
-  showDialogBox()=> showCupertinoDialog<String>(
-      context: context,
-      builder:(BuildContext context) =>CupertinoAlertDialog(
-        title: const Text('Erreur de connexion'),
-        content: const Text('Vérifier votre connexion internet'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () async{
-              Navigator.pop(context , 'cancel');
-              setState(() {
-                isAlertSet =false;
-              });
-              isDeviceConnected = await InternetConnectionChecker().hasConnection;
-              if(!isDeviceConnected){
-                showDialogBox();
-                setState(() {
-                  isAlertSet =true;
-                });
-              }
-            },
-            child: const Text('OK'),
-          )
-        ],
-      )
-  );
+
 }
 
 class RatingWidget extends StatelessWidget {
