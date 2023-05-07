@@ -215,8 +215,8 @@ class _optionconducState extends State<optionconduc> {
                 barrierDismissible: false,
                 builder: (context) {
                   return AlertDialog(
-                    title: Text("Trajet lance"),
-                    content: Text("Votre trajet a ete bien lance"),
+                    title: Text("Trajet lancé"),
+                    content: Text("Votre trajet a bien été lancé "),
                     actions: <Widget>[
                       TextButton(
                         child: Text("OK"),

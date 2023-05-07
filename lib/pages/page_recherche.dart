@@ -50,7 +50,7 @@ class _Page_rechercheState extends State<Page_recherche> {
           Container(
             padding: EdgeInsets.fromLTRB(10, 0, 0,20),
             child: Text(
-              "pollution, sauavez la planéte !",
+              "pollution et sauvez la planéte !",
               style: TextStyle(
                 color: Colors.grey[700],
                 fontFamily: "Poppins",

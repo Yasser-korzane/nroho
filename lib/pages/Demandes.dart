@@ -77,7 +77,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
             backgroundColor: Colors.grey.shade300,
             body: Center(
                 child: Text(
-              "Pas de notifications maintenant",
+              "Vous n'avez aucune notification",
               style: TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 18,
@@ -145,12 +145,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Ville départ : ${demande.villeDepart}',
+                                          'Départ : ${demande.villeDepart}',
                                           style:
                                               TextStyle(fontFamily: 'Poppins'),
                                         ),
                                         Text(
-                                          'Ville arrivée : ${demande.villeArrive}',
+                                          'Arrivée : ${demande.villeArrive}',
                                           style:
                                               TextStyle(fontFamily: 'Poppins'),
                                         ),
@@ -214,7 +214,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                   onTap: () async{
                                     print("hichem");
                                     baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",true));
-                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem vous a accepte dans son trajet");
+                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem a accepté votre demande pour rejoindre son trajet");
 
 
                                   },
@@ -286,7 +286,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 GestureDetector(
                                   onTap: () {
                                     baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",false));
-                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem vous a refuse dans son trajet");
+                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem a refusé votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(

@@ -208,7 +208,7 @@ class _ProfilepageState extends State<Profilepage> {
                             backgroundColor: Colors.blue,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child: const Text('Modifier Profile',
+                        child: const Text('Modifier le Profil',
                             style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
                       ),
                     )),
@@ -218,7 +218,7 @@ class _ProfilepageState extends State<Profilepage> {
 
                 //  Menu
                 Profilewidget(
-                  title: 'Mes Courses',
+                  title: 'Mes courses',
                   icon: Icons.navigation_rounded,
                   onPress: () {
                     _utilisateur.afficher();

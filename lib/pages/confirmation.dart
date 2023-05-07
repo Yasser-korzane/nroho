@@ -24,7 +24,7 @@ final widthDevice = ui.window.physicalSize.width;
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            'Verify Phone',
+            'Verifier mon numéro de téléphone',
             style: TextStyle(
                 color: Color.fromARGB(255, 44, 44, 44), fontFamily: 'Poppins'),
           ),
@@ -44,7 +44,7 @@ final widthDevice = ui.window.physicalSize.width;
           ),
           Center(
             child: Text(
-              'Code is sent ' + _phoneNumber,
+              'Le code a été envoyé' + _phoneNumber,
               style: TextStyle(
                   color: Colors.grey, fontFamily: 'Poppins', fontSize: 20),
             ),
@@ -139,14 +139,14 @@ final widthDevice = ui.window.physicalSize.width;
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "didn't receive code?",
+                "Vous n'avez pas reçu le code ?",
                 style: TextStyle(
                     fontFamily: 'Poppins', fontSize: 15, color: Colors.grey),
               ),
               GestureDetector(
                 onTap: () {},
                 child: Text(
-                  'Request again',
+                  'Re-envoyer le code',
                   style: TextStyle(
                     fontFamily: 'Poppins',
                     fontSize: 15,
@@ -160,7 +160,7 @@ final widthDevice = ui.window.physicalSize.width;
           Center(
               child: GestureDetector(
             onTap: () {},
-            child: Text('Get via call',
+            child: Text('Recevoire le code de validation  via un appel',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 15,
@@ -182,7 +182,7 @@ final widthDevice = ui.window.physicalSize.width;
                 padding:
                     const EdgeInsets.symmetric(vertical: 6, horizontal: 40),
                 child: Text(
-                  'Verify and Create Account',
+                  'Verifier et créer mon compte',
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Poppins',

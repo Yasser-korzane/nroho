@@ -73,7 +73,7 @@ class Emailgetter extends StatelessWidget {
                         controller: _controllerEmail,
                         validator: (input) {
                           if (input == null) {
-                            return 'Entrez votre e_mail adress';
+                            return 'Entrez votre adresse mail';
                           } else {
                             return null;
                           }
@@ -120,7 +120,7 @@ class Emailgetter extends StatelessWidget {
                                 showDialog(context: context,
                                     builder: (context){
                                       return AlertDialog(
-                                        content: Text("Mot de passe réinitialisé , vérifier votre email et essayer de vous connecter"),
+                                        content: Text("Mot de passe réinitialisé, vérifier votre adresse mail et essayer de vous connecter"),
                                         actions: <Widget>[
                                           TextButton(
                                               onPressed:(){
@@ -135,7 +135,7 @@ class Emailgetter extends StatelessWidget {
                                 showDialog(context: context,
                                     builder: (context){
                                       return AlertDialog(
-                                        content: Text("Adresse email invalide, essayer d'entrer une adresse email correcte"),
+                                        content: Text("Adresse mail invalide, essayer d'entrer une adresse email correcte"),
                                         actions: <Widget>[
                                           Center(
                                             child: TextButton(onPressed:(){

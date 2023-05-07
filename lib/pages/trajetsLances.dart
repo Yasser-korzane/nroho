@@ -49,7 +49,7 @@ class cardLancerList extends StatelessWidget {
                                 ),
                                 Column(children: [
                                   Text(
-                                    'Le cout',
+                                    'Le coût',
                                     style: TextStyle(fontFamily: 'Poppins'),
                                   ),
                                   Text(

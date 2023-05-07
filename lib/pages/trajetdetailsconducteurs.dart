@@ -189,7 +189,7 @@ class Details extends StatelessWidget {
                                     // If the list is empty, display a message
                                     return Center(
                                         child: Text(
-                                            'Il y a pas de ville intermidiere'));
+                                            'Il n\'y a pas de ville intermédiaire'));
                                   } else {
                                     // If the list is not empty, display the commentaires in a ListView
                                     return ListView.separated(
@@ -220,7 +220,7 @@ class Details extends StatelessWidget {
                               )
                           );
                         },
-                        child: Text('Villes intermedieres',
+                        child: Text('Villes intermédiaires',
                               style: TextStyle(
                                 fontFamily: 'Poppins',
                                 fontSize: 12,
@@ -292,7 +292,7 @@ class Details extends StatelessWidget {
                             )
                         );
                       },
-                      child: Text('avis sur le conducteur',
+                      child: Text('Avis sur le conducteur',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               fontSize: 12,
@@ -399,7 +399,7 @@ class Details extends StatelessWidget {
                     },
                     icon: Icon(Icons.map_outlined, size: 32),
                     label: Text(
-                      'Voir le rajet sur le Map',
+                      'Voir le trajet sur la carte',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 14,
@@ -488,7 +488,7 @@ class Details extends StatelessWidget {
                   ),
                 ),
               ),
-              child: const Text('Annulez',
+              child: const Text('Annuler',
                   style: TextStyle(color: Colors.red, fontFamily: 'Poppins')),
             )
           ],

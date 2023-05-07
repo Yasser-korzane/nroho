@@ -17,7 +17,7 @@ class _RatingState extends State<Rating> {
         child: Scaffold(
           body: Center(
             child: ElevatedButton(
-              child: Text('Rate'),
+              child: Text('Evaluation'),
               onPressed: () {
                 showDialog(
                   context: context,
@@ -74,7 +74,7 @@ class _RatingState extends State<Rating> {
                           ),
                           actions: <Widget>[
                             TextButton(
-                              child: Text('Cancel'),
+                              child: Text('Annuler'),
                               onPressed: () {
                                 
                                 Navigator.of(context).pop();

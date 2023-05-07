@@ -238,7 +238,7 @@ class _optionsState extends State<options> {
                 showDialog(context: context,
                     builder: (context){
                       return AlertDialog(
-                        content: Text("Il y'a pas de chauffeurs disponible pour le moment , essayer ultérieurment"),
+                        content: Text("Il n'y a pas de chauffeurs disponibles pour le moment, essayez ultérieurment"),
                         actions: <Widget>[
                           TextButton(
                               onPressed:(){

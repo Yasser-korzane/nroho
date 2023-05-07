@@ -21,7 +21,7 @@ class detailsTrajetReserver extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           floatingActionButton: ElevatedButton(
-            child: Text('Annuler le traajet',style: TextStyle(fontFamily: 'poppins'),),
+            child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
             onPressed: (){ },
           ),
           body: SingleChildScrollView(
@@ -91,7 +91,7 @@ class detailsTrajetReserver extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Date et Heure de depart',
+                              'Date et heure de depart',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16.0,

@@ -83,7 +83,7 @@ class Detailspassaer extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 6,
-                  child: Text("Numero de Telephone = ",
+                  child: Text("Numéro de téléphone = ",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           fontSize: 15.0,

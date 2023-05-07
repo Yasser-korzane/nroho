@@ -73,7 +73,7 @@ class cardReserverListH extends StatelessWidget{
                               ),
                               Column(
                                   children : [
-                                    Text('Cout',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
+                                    Text('Coût',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
                                     Text('${reserve.coutTrajet} DA',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
                                   ]
                               )

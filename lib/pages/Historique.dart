@@ -62,7 +62,7 @@ class Historique extends StatelessWidget {
                               ),
                               Column(
                                   children : [
-                                    Text('Cout',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
+                                    Text('Coût',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
                                     Text(  '${lancer.coutTrajet} DA',style: TextStyle(fontFamily: 'Poppins',fontWeight: FontWeight.bold),),
                                   ]
                               )

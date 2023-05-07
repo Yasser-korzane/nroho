@@ -50,7 +50,7 @@ class _MotdePasseState extends State<MotdePasse> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Erreur'),
-                content: Text('L\'utilisateur n\'est pas authentifiée!'),
+                content: Text('L\'utilisateur n\'est pas authentifié!'),
                 actions: [
                   ElevatedButton(
                     onPressed: () {
@@ -191,7 +191,7 @@ class _MotdePasseState extends State<MotdePasse> {
                 Center(
                   child: TextButton(
                     child: Text(
-                      'changer le mot de passe ',
+                      'Changer le mot de passe ',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

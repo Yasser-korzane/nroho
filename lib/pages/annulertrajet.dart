@@ -11,10 +11,10 @@ class AnnulerTrajet extends StatefulWidget {
 class _AnnulerTrajetState extends State<AnnulerTrajet> {
   final List<String> _raisons = [
     "J'ai changer ma destination.",
-    " j'ai fait une erreur de choix de place.",
-    "j'ai un probleme avec li kont 7a nro7 m3a",
-    "je ne veut pas aller vers ce trajet.",
-    "aucune raison.",
+    " J'ai fait une erreur lors de la reservation",
+    "J'ai un probleme avec le covoitureur",
+    "Ce trajet ne m'intéresse plus",
+    "Aucune des raisons cités ci-dessus.",
   ];
   List<bool> _checked = [
     false,
@@ -41,7 +41,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                       return !clicked
                           ? AlertDialog(
                               title: Text(
-                                  'Pourquoi voulez-vous annuler le trajet?'),
+                                  'Quelle est la raison qui vous pousse à annuler ce trajet ?'),
                               content: SizedBox(
                                 width: double.maxFinite,
                                 child: ListView(
@@ -111,11 +111,11 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Center(child: Text("Est ce que vous etes sur ",    style: TextStyle(
+                                  Center(child: Text("Êtes vous sur  ",    style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 20
                                 ),)),
-                                  Center(child: Text("d'annuler votre trajet?",    style: TextStyle(
+                                  Center(child: Text("de vouloir annuler ce trajet?",    style: TextStyle(
                                   fontFamily: 'Poppins',
                                   fontSize: 20
                                 ),),),
@@ -130,7 +130,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                                         backgroundColor: Colors.green
                                         
                                       ),
-                                      onPressed: (){}, child: Text('OUI',    style: TextStyle(
+                                      onPressed: (){}, child: Text('Oui',    style: TextStyle(
                                   fontFamily: 'Poppins',
                                   color: Colors.white
                                 ),) ),
@@ -139,7 +139,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                                         backgroundColor: Colors.red
                               
                                       ),
-                                      onPressed: (){}, child: Text('NON',    style: TextStyle(
+                                      onPressed: (){}, child: Text('Non',    style: TextStyle(
                                   fontFamily: 'Poppins',
                                   color: Colors.white
                                  

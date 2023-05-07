@@ -106,7 +106,7 @@ class DriverListPage extends StatelessWidget {
                               ),
                               Align(
                                 alignment: Alignment.bottomRight,
-                                child: Text('Cout du Trajet : ${conducteurTrajet.trajetLance.coutTrajet} DA',
+                                child: Text('Coût du trajet : ${conducteurTrajet.trajetLance.coutTrajet} DA',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                   ),

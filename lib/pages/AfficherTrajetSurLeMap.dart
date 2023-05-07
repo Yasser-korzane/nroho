@@ -69,7 +69,7 @@ class _AfficherTrajetSurLeMapState extends State<AfficherTrajetSurLeMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Le trajet sur le Map'),
+        title: Text('Le trajet sur la carte'),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: ()=> Navigator.pop(context),

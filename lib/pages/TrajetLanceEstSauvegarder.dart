@@ -8,7 +8,7 @@ class TrajetLanceEstSauvegarder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Votre trajet a etait sauvegarder',
+              'Votre trajet a bien été sauvegardé',
               style: TextStyle(fontFamily: 'Poppins',fontSize: 18,fontWeight: FontWeight.bold , color: Colors.black54),
             ),
             SizedBox(height: 10,),

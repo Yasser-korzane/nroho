@@ -203,7 +203,7 @@ class _SinupState extends State<Sinup> {
                                         Radius.circular(12)),
                                   ),
 
-                                  labelText: 'Numéro de Téléphone',
+                                  labelText: 'Numéro de téléphone',
                                   labelStyle: TextStyle(
                                       fontFamily:'Poppins'
                                   ),
@@ -229,7 +229,7 @@ class _SinupState extends State<Sinup> {
                                 keyboardType: TextInputType.emailAddress,
                                 validator: (input) {
                                   if (input == null) {
-                                    return 'Entrez votre adresse email ';
+                                    return 'Entrez votre adresse mail ';
                                   } else {
                                     return null;
                                   }
@@ -361,7 +361,7 @@ class _SinupState extends State<Sinup> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            content: Text("Succes",
+                                            content: Text("Succés",
                                               style: TextStyle(
                                                   fontFamily: 'Poppins'),
                                             ),
@@ -386,7 +386,7 @@ class _SinupState extends State<Sinup> {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                              "Vous devez verifier les donnees",
+                                              "Veuillez verifier vos donnees",
                                               style: TextStyle(fontFamily: 'Poppins'),
                                             ),
                                             duration: Duration(seconds: 2),
@@ -420,7 +420,7 @@ class _SinupState extends State<Sinup> {
                         },
                         child: Text.rich(
                           TextSpan(
-                            text: 'Vous avez deja un compte? ',
+                            text: 'Vous avez déjà un compte? ',
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 14.0,
@@ -429,7 +429,7 @@ class _SinupState extends State<Sinup> {
                             ),
                             children: [
                               TextSpan(
-                                text: ' Connectez-Vous',
+                                text: ' Connectez-vous',
                                 style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 12.0,

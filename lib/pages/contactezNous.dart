@@ -112,7 +112,7 @@ class ContactUs extends StatelessWidget {
                     style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                   Text(
-                    'Chef d’équipe de l\'application Nro7o',
+                    'Chef d’équipe de l\'application Nroho',
                     style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                 ],

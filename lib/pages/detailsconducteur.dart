@@ -125,7 +125,7 @@ class detailsConducteur extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Date et Heure d rivee',
+                          'Date et Heure d\'arrivée',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,

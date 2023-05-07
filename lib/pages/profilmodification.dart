@@ -186,7 +186,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 ),
                 SizedBox(height: size.height * 0.02),
                 Text(
-                  'Prenom',
+                  'Prénom',
                   style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
                   ),
                 ),
@@ -216,7 +216,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     )),
                 SizedBox(height: size.height * 0.02),
                 Text(
-                  'Numéro de telephone',
+                  'Numéro de télephone',
                   style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
                   ),
                 ),
@@ -256,7 +256,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'marque',
+                  'Marque',
                   style: TextStyle(fontWeight: FontWeight.bold,                      fontFamily: 'poppins',
                   ),
                 ),
@@ -346,7 +346,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     )),
                 SizedBox(height: 15),
                 Text(
-                  'modéle',
+                  'Modéle',
                   style: TextStyle(                      fontFamily: 'poppins',
                       fontWeight: FontWeight.bold),
                 ),
@@ -413,7 +413,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, widget._utilisateur);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Modifications avec succes'),
+                          content: Text('Modification effectué avec avec succès'),
                           duration: Duration(seconds: 3),
                         ),
                       );

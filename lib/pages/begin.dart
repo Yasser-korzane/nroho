@@ -46,7 +46,7 @@ class _CommancerState extends State<Commancer> {
                         ),
                         SizedBox(height: screenHeight*0.001),
                         Text(
-                          'La premiére application de covoiturage en Algérie',
+                          'Partager la route vers un trajet plus vert',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 13.0,
@@ -80,7 +80,7 @@ class _CommancerState extends State<Commancer> {
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Connexin(),));
                             },
-                            child: Center(child: Text('Se Connecter', style: TextStyle(color: Colors.white))),
+                            child: Center(child: Text('Se connecter', style: TextStyle(color: Colors.white))),
                           ),
                         ),
                         Container(
@@ -98,7 +98,7 @@ class _CommancerState extends State<Commancer> {
                             onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Sinup()));
                             },
-                            child: Center(child: Text('créer un compte', style: TextStyle(color: Color(0xff202e59)))),
+                            child: Center(child: Text('Créer un compte', style: TextStyle(color: Color(0xff202e59)))),
                           ),
                         ),
                       ],
