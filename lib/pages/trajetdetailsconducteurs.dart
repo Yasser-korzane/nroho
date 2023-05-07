@@ -92,8 +92,8 @@ class Details extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  flex: 6,
-                  child: Text("Marque de voiture = ",
+                  flex: 4,
+                  child: Text("Marque de voiture :",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           fontSize: 15.0,
@@ -102,14 +102,14 @@ class Details extends StatelessWidget {
                         ),
                       )),
                 ),
-                Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.marque), flex: 5),
+                Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.marque), flex: 6),
               ],
             ),
             Row(
               children: [
                 Expanded(
                   flex: 2,
-                  child: Text("Matricule = ",
+                  child: Text("Matricule :",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           fontSize: 15.0,
@@ -118,7 +118,7 @@ class Details extends StatelessWidget {
                         ),
                       )),
                 ),
-                Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.matricule), flex: 3),
+                Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.matricule), flex: 5),
                 Expanded(
                   child: IconButton(
                     icon: Icon(Icons.add_circle_outline),
@@ -305,7 +305,7 @@ class Details extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: screenHeight * 0.04),
+            SizedBox(height: screenHeight * 0.03),
             Row(
               children: [
                 Expanded(
@@ -315,7 +315,7 @@ class Details extends StatelessWidget {
                       Icon(Icons.circle, color: Colors.purple),
                       // SizedBox(height: 20),
                       Container(
-                        height: screenHeight * 0.09,
+                        height: screenHeight * 0.07,
                         width: 1,
                         color: Colors.grey,
                       ),
@@ -333,31 +333,26 @@ class Details extends StatelessWidget {
                     children: [
                       Container(
                         child: ListTile(
-                          title: Text(
-                            '${_conducteurTrajet.trajetLance.dateDepart.hour}:${_conducteurTrajet.trajetLance.dateDepart.minute}',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(_conducteurTrajet.trajetLance.villeDepart),
-                          onTap: () {
-                            // handle onTap event
-                          },
+                          title: Text('Oued Smar_Alger'),
+                          subtitle: Text(
+                  '${_conducteurTrajet.trajetLance.dateDepart.hour}:${_conducteurTrajet.trajetLance.dateDepart.minute}',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold),
+                  ),
                         ),
                       ),
-                      SizedBox(height: screenHeight * 0.03),
+                      SizedBox(height: screenHeight * 0.01),
                       Container(
                         child: ListTile(
-                          title: Text(
-                            '${_conducteurTrajet.trajetLance.tempsDePause.hour}:${_conducteurTrajet.trajetLance.tempsDePause.minute}',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(_conducteurTrajet.trajetLance.villeArrivee),
-                          onTap: () {
-                            // handle onTap event
-                          },
+                          title: Text('Maouklane_setif'),
+                          subtitle: Text(
+                        '${_conducteurTrajet.trajetLance.tempsDePause.hour}:${_conducteurTrajet.trajetLance.tempsDePause.minute}',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold),
+                        ),
+
                         ),
                       ),
                     ],
@@ -451,7 +446,7 @@ class Details extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: screenHeight * 0.06,
+              height: screenHeight * 0.08,
             ),
             ElevatedButton(
               onPressed: () {
