@@ -60,7 +60,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
         backgroundColor: Colors.grey.shade300,
         body: Center(
             child: Text(
-              "Pas de notifications maintenant",
+              "Aucune notification pour l'instant",
               style: TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 18,
@@ -76,7 +76,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
           } ,
         ),
         title:  Text(
-          'Les resultats de demandes',
+          'Resultats des demandes',
           style: GoogleFonts.poppins(
             textStyle: TextStyle(
               fontFamily: 'Poppins' ,
@@ -162,7 +162,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                                 fontFamily: 'Poppins',
                               ),),
                               Text(
-                                demande.accepte_refuse ? 'Acceptee' : 'Refuse', // Ternary operator to conditionally display text
+                                demande.accepte_refuse ? 'Acceptée' : 'Refusée', // Ternary operator to conditionally display text
                                 style: TextStyle(
                                   color: demande.accepte_refuse ? Colors.green : Colors.red, // Ternary operator to conditionally set text color
                                   fontSize: 16.0, // Replace with your own font size

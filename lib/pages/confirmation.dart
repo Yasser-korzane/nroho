@@ -160,7 +160,7 @@ final widthDevice = ui.window.physicalSize.width;
           Center(
               child: GestureDetector(
             onTap: () {},
-            child: Text('Recevoire le code de validation  via un appel',
+            child: Text('Recevoire le code de validation via un appel',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontSize: 15,
