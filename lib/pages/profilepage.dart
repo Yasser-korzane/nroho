@@ -208,7 +208,7 @@ class _ProfilepageState extends State<Profilepage> {
                             backgroundColor: Colors.blue,
                             side: BorderSide.none,
                             shape: const StadiumBorder()),
-                        child: const Text('Modifier le Profil',
+                        child: const Text('Modifier mon profil',
                             style: TextStyle(color: Colors.white,fontFamily: 'Poppins')),
                       ),
                     )),
