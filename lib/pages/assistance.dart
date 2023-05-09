@@ -77,7 +77,7 @@ class Assistance extends StatelessWidget {
                     ),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        launch('https://karimiarkane.github.io/');
+                        launch('https://karimiarkane.github.io/QuestionNroho.github.io/');
                       },
                   )
                 ],

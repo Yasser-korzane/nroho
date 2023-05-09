@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../AppClasses/Trajet.dart';
@@ -428,7 +429,7 @@ class detailsConducteur extends StatelessWidget {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    launchUrlString('https://tresor.cse.club/');
+                                    launch('https://karimiarkane.github.io/NrohoSignaler.github.io/');
                                   },
                               )
                             ],
