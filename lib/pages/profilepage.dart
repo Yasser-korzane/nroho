@@ -151,6 +151,7 @@ class _ProfilepageState extends State<Profilepage> {
 
   @override
   void dispose() {
+    subscription = StreamSubscription as StreamSubscription;
     subscription.cancel();
     super.dispose();
   }

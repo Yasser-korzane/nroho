@@ -211,27 +211,13 @@ class _optionsState extends State<options> {
           child: ElevatedButton(
             onPressed: () async{
               widget.trajetReserve.afficher();
-              //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               Navigator.push(context,
                   MaterialPageRoute(builder:(context)=> Page_recherche()));
               List<ConducteurTrajet> monListe = [];
               final stopwatch = Stopwatch()..start();
-              widget.trajetReserve.villeDepart = 'Bouira';
-              widget.trajetReserve.villeArrivee = 'Alger';
-              widget.trajetReserve.dateDepart = DateTime(2023,4,10,8,0,0,0); // Répéter jusqu'à 15 secondes écoulées
-              widget.trajetReserve.coutTrajet = 200;
-              widget.trajetReserve.tempsDePause = DateTime(2023,4,10,10,0,0,0);
-              Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
-              utilisateur.nom = 'Grine';
-              utilisateur.prenom = 'Mohammed';
-              utilisateur.email = 'lm_grine@esi.dz';
-              utilisateur.vehicule.marque = 'Kia';
-              utilisateur.vehicule.matricule = '01263202500';
-              utilisateur.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/app-covoiturage-16bce.appspot.com/o/images%2F2IzM1VbA3FdAXT5ZsVWEl2T3pmk1?alt=media&token=c3cdf15b-74c1-42e0-a963-b0d9ea4004aa';
-              ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur,widget.trajetReserve);
-              monListe.add(conducteurTrajet);
-              while (stopwatch.elapsed < Duration(seconds: 10) ) {
-                //monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+              Duration duration = Duration(seconds: 2);
+              while (stopwatch.elapsed < duration ) {
+                monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               }
               stopwatch.stop();
               if(monListe.isEmpty){
@@ -249,9 +235,10 @@ class _optionsState extends State<options> {
                       );
                     }
                 );
-                Navigator.pop(context);
+                //Navigator.pop(context);
                 Navigator.pop(context);
               }else{
+                await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => DriverListPage(monListe)));
               }

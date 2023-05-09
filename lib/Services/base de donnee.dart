@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart' ;
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
@@ -412,17 +413,9 @@ class BaseDeDonnee{
       throw Exception("Failed to get utilisateurs by name: $e");
     }
   }
-
-  bool isPlace1BetweenPlace2AndPlace3(LatLng place1, LatLng place2, LatLng place3) {
-    double distance1To2 = Geolocator.distanceBetween(place1.latitude, place1.longitude, place2.latitude, place2.longitude);
-    double distance1To3 = Geolocator.distanceBetween(place1.latitude, place1.longitude, place3.latitude, place3.longitude);
-    double distance2To3 = Geolocator.distanceBetween(place2.latitude, place2.longitude, place3.latitude, place3.longitude);
-    return ( ( (distance1To2 + distance1To3) <= distance2To3 )  );
-  }
-
   Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
     trajetReserve.afficher();
-    DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 15));
+    DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 30));
     DateTime TempsPplus4h = trajetReserve.dateDepart.add(Duration(hours: 4));
     try {
       List<ConducteurTrajet> listConducteurTrajet = [];
@@ -439,21 +432,60 @@ class BaseDeDonnee{
             .collection('trajetsLances')
             .get();
         if (trajetsSnapshot.docs.isNotEmpty) {
-          print("Le trajet Existe");
+          //print("Le trajet Existe");
           for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
             Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
             DateTime t1 = data['dateDepart'].toDate();
-            t1 = t1.add(Duration(hours: 1));
+            GeoPoint geoPointDepart = data['latLngDepart'];
+            GeoPoint geoPointArrivee = data['latLngArrivee'];
+            LatLng latLngDepartLance = LatLng(geoPointDepart.latitude, geoPointDepart.longitude);
+            LatLng latLngArriveLance = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
+            double distanceD = Geolocator.distanceBetween(latLngDepartLance.latitude, latLngDepartLance.longitude, trajetReserve.latLngDepart.latitude, trajetReserve.latLngDepart.longitude)/1000 ;
+            double distanceA = Geolocator.distanceBetween(latLngArriveLance.latitude, latLngArriveLance.longitude, trajetReserve.latLngArrivee.latitude, trajetReserve.latLngArrivee.longitude)/1000 ;
+            //t1 = t1.add(Duration(hours: 1));
+            bool pD = await isPlaceOnRoute(trajetReserve.lieuDepart!, trajetReserve.latLngDepart, latLngDepartLance, latLngArriveLance);
+            bool pA = await isPlaceOnRoute(trajetReserve.lieuArrivee!, trajetReserve.latLngDepart, latLngDepartLance, latLngArriveLance);
+            print('**************************************************************************************');
+            print('**************************************************************************************');
+            print('t1 = $t1');
+            print('TempsPmoins15 = $TempsPmoins15');
+            print('TempsPplus4h = $TempsPplus4h');
+            print( ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) ) && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h)));
+            print('**************************************************************************************');
+            print('**************************************************************************************');
             if (
-            (trajetReserve.villeDepart == data['villeDepart']
-                || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeDepart))
-                && (trajetReserve.villeArrivee == data['villeArrivee']
-                    || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeArrivee))
-                && data['plusInformations']['nbPlaces'] >= trajetReserve.plusInformations.nbPlaces
-                 && ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) )
-                 && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h) )
-                /// ajouter la fonction isPlace1BetweenPlace2AndPlace3()
-            ///  ajouter si la distance entre departP et depertC est moins ou egal a 2 km
+            /* 1) nbPlaces */
+            data['plusInformations']['nbPlaces'] >= trajetReserve.plusInformations.nbPlaces
+            /* 2) temps de depart */
+            && ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) )
+            && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h) )
+            /* 3) les villes **/
+            &&
+                (   (   /*a) si les villes ont le meme nom ou appartient au villes intermedieres (autoComplete) */
+                     ( (trajetReserve.villeDepart == data['villeDepart'])
+                      && (trajetReserve.villeArrivee == data['villeArrivee']) )
+
+                     || /*b)  */
+                      ( (trajetReserve.villeDepart == data['villeDepart'])
+                        && (  distanceA <=2.1 )
+                      )
+                     || /*c)*/
+                      distanceA <=2.1 && distanceD <=2.1
+                     || /*d) */
+                      distanceD <=2.1 && (trajetReserve.villeArrivee == data['villeArrivee'])
+                     /* e) inclus dans d */
+
+                  )
+                    ||
+                    List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeArrivee)
+                    || List<String>.from(data['villeIntermediaires']).contains(trajetReserve.villeDepart)
+                    || pD && distanceA <=2.1 /// ---1)
+                    || pA && distanceD <=2.1 /// ---2)
+                    || pD && pA /// ----------------3)
+                    /** 1)  si place depart de passager appartient au rue du conductuer et ils ont le meme arrive
+                        2)  si place arrivee de passager appartient au rue du conductuer et ils ont le meme depart
+                        3)  si place depart et place arrivee appartient du passager au rue du conductuer **/
+                )
             ) {
                 print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
@@ -492,8 +524,8 @@ class BaseDeDonnee{
                 }
                 utilisateur.imageUrl = dataUtilisateur['imageUrl'];
                 utilisateur.afficher();
-                trajetLance.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
-                trajetLance.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));
+                trajetLance.dateDepart = data['dateDepart'].toDate(); //.add(Duration(hours: 1))
+                trajetLance.tempsDePause = data['tempsDePause'].toDate();
                 trajetLance.coutTrajet = data['coutTrajet'] as double;
                 trajetLance.villeDepart = data['villeDepart'];
                 trajetLance.villeArrivee = data['villeArrivee'];
@@ -541,6 +573,35 @@ class BaseDeDonnee{
     }
   }
   /// *********************************************** Autres **************************************************
+
+  Future<bool> isPlaceOnRoute(PlacesAutoCompleteResult place,LatLng latLngPlace, LatLng depart, LatLng arrive) async {
+    // Get the route polyline between the two points
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k",
+        PointLatLng(depart.latitude, depart.longitude),
+        PointLatLng(arrive.latitude, arrive.longitude));
+    // Convert the polyline points to LatLng coordinates
+    List<LatLng> polylineCoordinates = [];
+    for (var element in result.points) {
+      polylineCoordinates.add(LatLng(element.latitude, element.longitude));
+    }
+    // Check if the place is within a certain distance of any point on the polyline
+    for (var coordinate in polylineCoordinates) {
+      double distance = await Geolocator.distanceBetween(
+        latLngPlace.latitude,
+        latLngPlace.longitude,
+        coordinate.latitude,
+        coordinate.longitude,
+      );
+      if (distance <= 2000) { // adjust the distance threshold as needed
+        return true;
+      }
+    }
+    return false;
+  }
+  /// --------------------------------------------------------------------------------------------------
+
   String alternerChaines(String chaine1, String chaine2) {
     StringBuffer resultat = StringBuffer();
     int longueurMin = chaine1.length < chaine2.length ? chaine1.length : chaine2.length;
