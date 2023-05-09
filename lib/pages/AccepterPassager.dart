@@ -26,7 +26,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
               } ,
             ),
             title:  Text(
-              'Les passages',
+              'Les passagers',
               style: GoogleFonts.poppins(
                 textStyle: TextStyle(
                   fontFamily: 'Poppins' ,
