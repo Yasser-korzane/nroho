@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -177,13 +178,37 @@ class _OuAllezVousState extends State<OuAllezVous> {
   DateTime calculateArrivalTime(double distance, DateTime dateDepart) {
     double speed = 40; // average speed in km/h
     double timeInHours = distance / speed;
-    int timeInMinutes =
-        (timeInHours * 60).ceil(); // convert hours to minutes and round up
+    int timeInMinutes = (timeInHours * 60).ceil(); // convert hours to minutes and round up
     DateTime now = dateDepart;
     DateTime arrivalTime = now.add(Duration(minutes: timeInMinutes));
     return arrivalTime;
   }
-
+  Future<bool> isPlaceOnRoute(PlacesAutoCompleteResult place,LatLng latLngPlace, LatLng depart, LatLng arrive) async {
+    // Get the route polyline between the two points
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k",
+        PointLatLng(depart.latitude, depart.longitude),
+        PointLatLng(arrive.latitude, arrive.longitude));
+    // Convert the polyline points to LatLng coordinates
+    List<LatLng> polylineCoordinates = [];
+    for (var element in result.points) {
+      polylineCoordinates.add(LatLng(element.latitude, element.longitude));
+    }
+    // Check if the place is within a certain distance of any point on the polyline
+    for (var coordinate in polylineCoordinates) {
+      double distance = await Geolocator.distanceBetween(
+        latLngPlace.latitude,
+        latLngPlace.longitude,
+        coordinate.latitude,
+        coordinate.longitude,
+      );
+      if (distance <= 2000) { // adjust the distance threshold as needed
+        return true;
+      }
+    }
+    return false;
+  }
   /// -------------------------------------------------------------------------------------------------
 
   @override
@@ -204,7 +229,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     _trajet = _baseDeDonnee.creerTrajetVide();
-    _trajet.villeIntermediaires = ['BeauLieu', 'Itemm'];
     final position =
         ModalRoute.of(context)!.settings.arguments as CameraPosition?;
     if (position != null) {
@@ -225,7 +249,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
             floating: false,
             pinned: true,
             title: const Text(
-              'Où allez-vous ?',
+              //'Où allez-vous ?',
+              '',
               style: TextStyle(fontFamily: 'Poppins'),
             ),
             leading: IconButton(
@@ -238,7 +263,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 children: [
-                  SizedBox(height: size.height * 0.1),
+                  Expanded(
+                      flex: 1,child: SizedBox(height: size.height * 0.1)),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 0),
@@ -304,6 +330,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                           keyboardType:
                                               TextInputType.streetAddress,
                                           style: const TextStyle(
+                                            fontSize: 14,
                                               fontFamily: 'Poppins'),
                                           controller: _arriveController,
                                           onChanged: (value) {
@@ -642,10 +669,19 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 _trajet.lieuArrivee = placeA;
                 _trajet.latLngDepart = latLngD;
                 _trajet.latLngArrivee = latLngA;
+                _trajet.villeDepart = placeD.description!;
+                _trajet.villeArrivee = placeA.description!;
                 double distance = 0;
                 distance = (Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngA.longitude)+15)/1000;
                 _trajet.tempsDePause = calculateArrivalTime(distance , _trajet.dateDepart);
                 _trajet.afficher();
+                // print("**************************************************************");
+                // LatLng lng = LatLng(35.9996053, 3.755274899999999);
+                //print('${Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngD.longitude)/1000} km');
+                // bool a = await isPlaceOnRoute(_trajet.lieuDepart!, _trajet.latLngDepart, lng, latLngA);
+                // print(a);
+                // depart = dira, arrive ain boussaada, inter = sidiAisa
+                // print("**************************************************************");
                 isLoading = false ;
                 if (statut == false) {
                   Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));

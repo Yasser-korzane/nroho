@@ -411,12 +411,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   onPressed: () async {
                     if (_changement) {
                       await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, widget._utilisateur);
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      /*ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Modification effectué avec avec succès'),
                           duration: Duration(seconds: 3),
                         ),
-                      );
+                      );*/
                     }
                     Navigator.pop(context,);
                   },
