@@ -178,12 +178,15 @@ class _OuAllezVousState extends State<OuAllezVous> {
   DateTime calculateArrivalTime(double distance, DateTime dateDepart) {
     double speed = 40; // average speed in km/h
     double timeInHours = distance / speed;
-    int timeInMinutes = (timeInHours * 60).ceil(); // convert hours to minutes and round up
+    int timeInMinutes =
+        (timeInHours * 60).ceil(); // convert hours to minutes and round up
     DateTime now = dateDepart;
     DateTime arrivalTime = now.add(Duration(minutes: timeInMinutes));
     return arrivalTime;
   }
-  Future<bool> isPlaceOnRoute(PlacesAutoCompleteResult place,LatLng latLngPlace, LatLng depart, LatLng arrive) async {
+
+  Future<bool> isPlaceOnRoute(PlacesAutoCompleteResult place,
+      LatLng latLngPlace, LatLng depart, LatLng arrive) async {
     // Get the route polyline between the two points
     PolylinePoints polylinePoints = PolylinePoints();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
@@ -203,12 +206,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
         coordinate.latitude,
         coordinate.longitude,
       );
-      if (distance <= 2000) { // adjust the distance threshold as needed
+      if (distance <= 2000) {
+        // adjust the distance threshold as needed
         return true;
       }
     }
     return false;
   }
+
   /// -------------------------------------------------------------------------------------------------
 
   @override
@@ -243,387 +248,366 @@ class _OuAllezVousState extends State<OuAllezVous> {
     }
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            floating: false,
-            pinned: true,
-            title: const Text(
-              //'Où allez-vous ?',
-              '',
-              style: TextStyle(fontFamily: 'Poppins'),
-            ),
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back),
-            ),
-            centerTitle: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: [
-                  Expanded(
-                      flex: 1,child: SizedBox(height: size.height * 0.1)),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 0),
-                    child: Card(
-                      child: Column(
+      appBar: AppBar(
+        title: const Text(
+          'Où allez-vous ?',
+          style: TextStyle(fontFamily: 'Poppins'),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 8.0),
+              child: Card(
+                child: Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  children: [
-                                    const Icon(Icons.gps_fixed),
-                                    Container(
-                                      height: 32,
-                                      width: 1,
-                                      color: Colors.grey,
-                                    ),
-                                    const Icon(
-                                      Icons.location_on,
-                                    ),
-                                  ],
-                                ), //icons
-                                Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Container(
-                                        width: size.width * 0.7,
-                                        height: size.height * 0.05,
-                                        child: TextFormField(
-                                          style: const TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 14),
-                                          controller: _departController,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              showSuggestion = true;
-                                              querry = value;
-                                              caseSelected = Selected.depart;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            filled: true,
-                                            hintText: 'Depart',
-                                          ),
+                          Column(
+                            children: [
+                              const Icon(Icons.gps_fixed),
+                              Container(
+                                height: size.height*0.05,
+                                width: 1,
+                                color: Colors.grey,
+                              ),
+                              const Icon(
+                                Icons.location_on,
+                              ),
+                            ],
+                          ), //icons
+                          Form(
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  Container(
+                                    width: size.width * 0.7,
+                                    // height: size.height * 0.05,
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          fontFamily: 'Poppins', fontSize: 14),
+                                      controller: _departController,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          showSuggestion = true;
+                                          querry = value;
+                                          caseSelected = Selected.depart;
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.all(Radius.circular(12)),
                                         ),
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        hintText: 'Depart',
                                       ),
-                                      SizedBox(
-                                        height: size.height * 0.01,
-                                      ),
-                                      Container(
-                                        width: size.width * 0.7,
-                                        height: size.height * 0.05,
-                                        child: TextFormField(
-                                          keyboardType:
-                                              TextInputType.streetAddress,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                              fontFamily: 'Poppins'),
-                                          controller: _arriveController,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              showSuggestion = true;
-                                              querry = value;
-                                              caseSelected = Selected.arrivee;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12)),
-                                            ),
-                                            fillColor: Colors.white,
-                                            filled: true,
-                                            hintText: 'Arrivée',
-                                          ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  Container(
+                                    width: size.width * 0.7,
+                                    // height: size.height * 0.05,
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.streetAddress,
+                                      style: const TextStyle(
+                                          fontSize: 14, fontFamily: 'Poppins'),
+                                      controller: _arriveController,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          showSuggestion = true;
+                                          querry = value;
+                                          caseSelected = Selected.arrivee;
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.all(Radius.circular(12)),
                                         ),
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        hintText: 'Arrivée',
                                       ),
-                                    ]),
-                              ]),
-                          SizedBox(height: size.height * 0.01),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                screenWidth * 0.07, 0, screenWidth * 0.075, 0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: IconButton(
-                                    onPressed: _selectDate,
-                                    icon: Icon(Icons.calendar_today),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: TextField(
-                                    readOnly: true,
-                                    onTap: _selectDate,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(
-                                          top: screenHeight * 0.00001,
-                                          left: screenWidth * 0.04),
-                                      hintText: _selectedDate == null
-                                          ? 'choisir la date de départ'
-                                          : '${_selectedDate!.toString().split(" ")[0]}',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                      ),
-                                      fillColor: Colors.white,
-                                      filled: true,
                                     ),
                                   ),
+                                ]),
+                          ),
+                        ]),
+                    SizedBox(height: size.height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          screenWidth * 0.07, 0, screenWidth * 0.075, 0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: _selectDate,
+                              icon: Icon(Icons.calendar_today),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: TextField(
+                              readOnly: true,
+                              onTap: _selectDate,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    top: screenHeight * 0.00001,
+                                    left: screenWidth * 0.04),
+                                hintText: _selectedDate == null
+                                    ? 'choisir la date de départ'
+                                    : '${_selectedDate!.toString().split(" ")[0]}',
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: IconButton(
-                                    onPressed: _selectTime,
-                                    icon: Icon(Icons.access_time),
-                                  ),
+                                fillColor: Colors.white,
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: IconButton(
+                              onPressed: _selectTime,
+                              icon: Icon(Icons.access_time),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: TextFormField(
+                              readOnly: true,
+                              onTap: _selectTime,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    top: screenHeight * 0.0001,
+                                    left: screenWidth * 0.04),
+                                hintText: _selectedTime == null
+                                    ? 'choisir le temps de départ'
+                                    : '${_selectedTime!.format(context)}',
+                                border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
                                 ),
-                                Expanded(
-                                  flex: 3,
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    onTap: _selectTime,
-                                    decoration: InputDecoration(
-                                      contentPadding: EdgeInsets.only(
-                                          top: screenHeight * 0.0001,
-                                          left: screenWidth * 0.04),
-                                      hintText: _selectedTime == null
-                                          ? 'choisir le temps de départ'
-                                          : '${_selectedTime!.format(context)}',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                      ),
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                fillColor: Colors.white,
+                                filled: true,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: size.height * 0.01),
+                  ],
+                ),
               ),
             ),
-            expandedHeight: size.height * 0.2,
-            // your app bar properties here
-          ),
-          SliverToBoxAdapter(
-            child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
-              child: Column(children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: Card(
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 0),
-                        child: ListTile(
-                          onTap: () {
-                            setState(() async {
-                              if ((_departController.text.isEmpty) ||
-                                  (_departController.text.isNotEmpty &&
-                                      _arriveController.text.isNotEmpty)) {
-                                latLngD = await Navigator.push(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return const MapPage();
-                                  },
-                                ));
-                                placeD = await getPlaceFromLatLng(
-                                    latLngD.latitude, latLngD.longitude);
-                                _departController.text = placeD.description!;
-                              } else {
-                                latLngA = await Navigator.push(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return const MapPage();
-                                  },
-                                ));
-                                placeA = await getPlaceFromLatLng(
-                                    latLngA.latitude, latLngA.longitude);
-                                _arriveController.text = placeA.description!;
-                              }
-                            });
-                          },
-                          leading: const Icon(
-                            Icons.location_on,
-                            color: Colors.black,
-                          ),
-                          title: Text(
-                            'choisir sur la map',
-                            style: TextStyle(
-                                fontSize: size.width * 0.04,
-                                fontFamily: 'Poppins'),
-                          ),
+            Column(
+                children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                child: Card(
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: ListTile(
+                        onTap: () {
+                          setState(() async {
+                            if ((_departController.text.isEmpty) ||
+                                (_departController.text.isNotEmpty &&
+                                    _arriveController.text.isNotEmpty)) {
+                              latLngD = await Navigator.push(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return const MapPage();
+                                },
+                              ));
+                              placeD = await getPlaceFromLatLng(
+                                  latLngD.latitude, latLngD.longitude);
+                              _departController.text = placeD.description!;
+                            } else {
+                              latLngA = await Navigator.push(context,
+                                  MaterialPageRoute(
+                                builder: (context) {
+                                  return const MapPage();
+                                },
+                              ));
+                              placeA = await getPlaceFromLatLng(
+                                  latLngA.latitude, latLngA.longitude);
+                              _arriveController.text = placeA.description!;
+                            }
+                          });
+                        },
+                        leading: const Icon(
+                          Icons.location_on,
+                          color: Colors.black,
+                        ),
+                        title: Text(
+                          'choisir sur la map',
+                          style: TextStyle(
+                              fontSize: size.width * 0.04,
+                              fontFamily: 'Poppins'),
                         ),
                       ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 0),
-                        child: ListTile(
-                          onTap: () async {
-                            Position currentPosition =
-                                await Geolocator.getCurrentPosition();
-                            latLngD = LatLng(currentPosition.latitude,
-                                currentPosition.longitude);
-                            placeD = await getPlaceFromLatLng(
-                                latLngD.latitude, latLngD.longitude);
-                            setState(() {
-                              depart = placeD.description;
-                              _departController.value = TextEditingValue(
-                                text: depart!,
-                              );
-                            });
-                          },
-                          leading: const Icon(
-                            Icons.gps_fixed,
-                            color: Colors.black,
-                          ),
-                          title: Text(
-                            'Utiliser ma position',
-                            style: TextStyle(
-                                fontSize: size.width * 0.04,
-                                fontFamily: 'Poppins'),
-                          ),
-                        ),
-                      ),
-                    ]),
-                  ),
-                ),
-                Visibility(
-                  visible: (_arriveController.text.isEmpty) &&
-                      (_departController.text.isEmpty),
-                  replacement: FutureBuilder(
-                      future: getPredictions(querry),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          if (snapshot.hasData && showSuggestion) {
-                            return ListView.separated(
-                              separatorBuilder: (context, index) {
-                                return const Divider(
-                                  thickness: 1,
-                                );
-                              },
-                              shrinkWrap: true,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                var data = snapshot.data[index];
-                                var prediction = data.description;
-                                return ListTile(
-                                  onTap: () {
-                                    setState(() async {
-                                      showSuggestion = false;
-                                      switch (caseSelected) {
-                                        case Selected.depart:
-                                          // selectFromCurrentPosition = false ;
-                                          departData = data;
-                                          idD = departData!.placeId;
-                                          descriptionD =
-                                              departData!.description;
-                                          mainTextD = departData!.mainText;
-                                          secondaryTextD =
-                                              departData!.secondaryText;
-                                          placeD = PlacesAutoCompleteResult(
-                                              placeId: idD,
-                                              description: descriptionD,
-                                              mainText: mainTextD,
-                                              secondaryText: secondaryTextD);
-                                          latLngD = await getPlaceLatLng(idD!);
-                                          depart = prediction;
-                                          _departController.value =
-                                              TextEditingValue(
-                                            text: depart!,
-                                            selection:
-                                                TextSelection.fromPosition(
-                                              TextPosition(
-                                                  offset: depart!.length),
-                                            ),
-                                          );
-                                          break;
-                                        case Selected.arrivee:
-                                          ArriveData = data;
-                                          idA = ArriveData!.placeId;
-                                          descriptionA =
-                                              ArriveData!.description;
-                                          mainTextA = ArriveData!.mainText;
-                                          secondaryTextA =
-                                              ArriveData!.secondaryText;
-                                          placeA = PlacesAutoCompleteResult(
-                                              placeId: idA,
-                                              description: descriptionA,
-                                              mainText: mainTextA,
-                                              secondaryText: secondaryTextA);
-                                          latLngA = await getPlaceLatLng(idA!);
-                                          arrive = prediction;
-                                          _arriveController.value =
-                                              TextEditingValue(
-                                            text: arrive!,
-                                            selection:
-                                                TextSelection.fromPosition(
-                                              TextPosition(
-                                                  offset: arrive!.length),
-                                            ),
-                                          );
-                                          break;
-                                        default:
-                                      }
-                                    });
-                                  },
-                                  title: Text(prediction),
-                                );
-                              },
+                    ),
+                    const Divider(
+                      color: Colors.black,
+                      thickness: 0.5,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0),
+                      child: ListTile(
+                        onTap: () async {
+                          Position currentPosition =
+                              await Geolocator.getCurrentPosition();
+                          latLngD = LatLng(currentPosition.latitude,
+                              currentPosition.longitude);
+                          placeD = await getPlaceFromLatLng(
+                              latLngD.latitude, latLngD.longitude);
+                          setState(() {
+                            depart = placeD.description;
+                            _departController.value = TextEditingValue(
+                              text: depart!,
                             );
-                          } else {
-                            return Center(
-                                child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  'Pas de résultat, tapez clairment votre place',
-                                  style: TextStyle(fontFamily: 'poppins'),
-                                ),
-                              ),
-                            ));
-                          }
-                        } else {
-                          return const Text(
-                            "Recherche...",
-                            style: TextStyle(fontFamily: 'Poppins'),
-                          );
-                        }
-                      }),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  ),
+                          });
+                        },
+                        leading: const Icon(
+                          Icons.gps_fixed,
+                          color: Colors.black,
+                        ),
+                        title: Text(
+                          'Utiliser ma position',
+                          style: TextStyle(
+                              fontSize: size.width * 0.04,
+                              fontFamily: 'Poppins'),
+                        ),
+                      ),
+                    ),
+                  ]),
                 ),
-              ]),
-            ),
-          ),
-        ],
+              ),
+              Visibility(
+                visible: (_arriveController.text.isEmpty) &&
+                    (_departController.text.isEmpty),
+                replacement: FutureBuilder(
+                    future: getPredictions(querry),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData && showSuggestion) {
+                          return ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const Divider(
+                                thickness: 1,
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) {
+                              var data = snapshot.data[index];
+                              var prediction = data.description;
+                              return ListTile(
+                                onTap: () {
+                                  setState(() async {
+                                    showSuggestion = false;
+                                    switch (caseSelected) {
+                                      case Selected.depart:
+                                        // selectFromCurrentPosition = false ;
+                                        departData = data;
+                                        idD = departData!.placeId;
+                                        descriptionD = departData!.description;
+                                        mainTextD = departData!.mainText;
+                                        secondaryTextD =
+                                            departData!.secondaryText;
+                                        placeD = PlacesAutoCompleteResult(
+                                            placeId: idD,
+                                            description: descriptionD,
+                                            mainText: mainTextD,
+                                            secondaryText: secondaryTextD);
+                                        latLngD = await getPlaceLatLng(idD!);
+                                        depart = prediction;
+                                        _departController.value =
+                                            TextEditingValue(
+                                          text: depart!,
+                                          selection: TextSelection.fromPosition(
+                                            TextPosition(
+                                                offset: depart!.length),
+                                          ),
+                                        );
+                                        break;
+                                      case Selected.arrivee:
+                                        ArriveData = data;
+                                        idA = ArriveData!.placeId;
+                                        descriptionA = ArriveData!.description;
+                                        mainTextA = ArriveData!.mainText;
+                                        secondaryTextA =
+                                            ArriveData!.secondaryText;
+                                        placeA = PlacesAutoCompleteResult(
+                                            placeId: idA,
+                                            description: descriptionA,
+                                            mainText: mainTextA,
+                                            secondaryText: secondaryTextA);
+                                        latLngA = await getPlaceLatLng(idA!);
+                                        arrive = prediction;
+                                        _arriveController.value =
+                                            TextEditingValue(
+                                          text: arrive!,
+                                          selection: TextSelection.fromPosition(
+                                            TextPosition(
+                                                offset: arrive!.length),
+                                          ),
+                                        );
+                                        break;
+                                      default:
+                                    }
+                                  });
+                                },
+                                title: Text(prediction),
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                'Pas de résultat, tapez clairment votre place',
+                                style: TextStyle(fontFamily: 'poppins'),
+                              ),
+                            ),
+                          ));
+                        }
+                      } else {
+                        return const Text(
+                          "Recherche...",
+                          style: TextStyle(fontFamily: 'Poppins'),
+                        );
+                      }
+                    }),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                ),
+              ),
+            ]),
+          ],
+        ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -631,23 +615,32 @@ class _OuAllezVousState extends State<OuAllezVous> {
           width: size.width * 0.51,
           height: size.height * 0.048,
           child: ElevatedButton(
-            onPressed: () async{
-              if(  ( (monDateEtTime2.hour < TimeOfDay.now().hour)
-                  || (monDateEtTime2.hour == DateTime.now().hour && monDateEtTime2.minute < DateTime.now().minute) )
-                  || placeD.placeId == null || placeA.placeId! == null || placeD.placeId!.isEmpty || placeA.placeId!.isEmpty
-              )
-              {
+            onPressed: () async {
+              if (((monDateEtTime2.hour < TimeOfDay.now().hour) ||
+                      (monDateEtTime2.hour == DateTime.now().hour &&
+                          monDateEtTime2.minute < DateTime.now().minute)) ||
+                  placeD.placeId == null ||
+                  placeA.placeId! == null ||
+                  placeD.placeId!.isEmpty ||
+                  placeA.placeId!.isEmpty) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     duration: Duration(seconds: 3),
-                    content: Text('Vous devez remplir tout les informations et entrer des informations correctes'),
+                    content: Text(
+                        'Vous devez remplir tout les informations et entrer des informations correctes'),
                   ),
                 );
-              }else { /// si tout les informations sont valide
+              } else {
+                /// si tout les informations sont valide
                 setState(() {
-                  isLoading = true ;
+                  isLoading = true;
                 });
-                _trajet.dateDepart = DateTime(monDateEtTime.year,monDateEtTime.month,monDateEtTime.day,monDateEtTime2.hour,monDateEtTime2.minute);
+                _trajet.dateDepart = DateTime(
+                    monDateEtTime.year,
+                    monDateEtTime.month,
+                    monDateEtTime.day,
+                    monDateEtTime2.hour,
+                    monDateEtTime2.minute);
                 _trajet.lieuDepart = placeD;
                 _trajet.lieuArrivee = placeA;
                 _trajet.latLngDepart = latLngD;
@@ -655,8 +648,15 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 _trajet.villeDepart = placeD.description!;
                 _trajet.villeArrivee = placeA.description!;
                 double distance = 0;
-                distance = (Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngA.longitude)+15)/1000;
-                _trajet.tempsDePause = calculateArrivalTime(distance , _trajet.dateDepart);
+                distance = (Geolocator.distanceBetween(
+                            latLngD.latitude,
+                            latLngD.longitude,
+                            latLngA.latitude,
+                            latLngA.longitude) +
+                        15) /
+                    1000;
+                _trajet.tempsDePause =
+                    calculateArrivalTime(distance, _trajet.dateDepart);
                 _trajet.afficher();
                 // print("**************************************************************");
                 // LatLng lng = LatLng(35.9996053, 3.755274899999999);
@@ -665,25 +665,35 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 // print(a);
                 // depart = dira, arrive ain boussaada, inter = sidiAisa
                 // print("**************************************************************");
-                isLoading = false ;
+                isLoading = false;
                 if (statut == false) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) =>  options(_trajet)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => options(_trajet)));
                 } else {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AjouterVillesIntermedieres(_trajet)  ));
+                          builder: (context) =>
+                              AjouterVillesIntermedieres(_trajet)));
                 }
               }
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
             ),
-            child: isLoading? CircularProgressIndicator(color: Colors.white,) : const Text(
-              'Valider',
-              style: TextStyle(
-                  color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
-            ),
+            child: isLoading
+                ? CircularProgressIndicator(
+                    color: Colors.white,
+                  )
+                : const Text(
+                    'Valider',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Poppins'),
+                  ),
           ),
         ),
       ),
