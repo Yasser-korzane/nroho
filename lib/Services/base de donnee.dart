@@ -53,6 +53,7 @@ class BaseDeDonnee{
         'accepte_refuse': notif.accepte_refuse,
       }).toList(),
       'imageUrl': utilisateur.imageUrl,
+      'fcmTocken': utilisateur.fcmTocken,
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
@@ -87,12 +88,13 @@ class BaseDeDonnee{
         'accepte_refuse': notif.accepte_refuse,
       }).toList(),
       'imageUrl': utilisateur.imageUrl,
+      'fcmTocken': utilisateur.fcmTocken,
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
     return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[],[],'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png'
+        Vehicule("", "", "", "", ""), false, [],[],[],[],'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png',''
     );
   }
   Trajet creerTrajetVide(){
@@ -104,7 +106,7 @@ class BaseDeDonnee{
     );
     PlacesAutoCompleteResult lieuDepart = lieuArrive;
     DateTime date = DateTime.now();DateTime time = DateTime.now();
-    return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false,LatLng(0.0, 0.0),LatLng(0.0, 0.0));
+    return Trajet('' , date, time, 0, '', '', lieuDepart, lieuArrive, [], PlusInformations(false, false,false,1), false, '', '', false,LatLng(0.0, 0.0),LatLng(0.0, 0.0),'',[]);
   }
   //------------------------------------------------------------------------------------------
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
@@ -292,6 +294,7 @@ class BaseDeDonnee{
               }
             }
             utilisateur.imageUrl = snapshot.data()!['imageUrl'];
+            utilisateur.fcmTocken = snapshot.data()!['fcmTockenl'];
             utilisateur.afficher();
             return utilisateur;
             //tests by printing
@@ -432,7 +435,6 @@ class BaseDeDonnee{
             .collection('trajetsLances')
             .get();
         if (trajetsSnapshot.docs.isNotEmpty) {
-          //print("Le trajet Existe");
           for (QueryDocumentSnapshot trajetLanceDoc in trajetsSnapshot.docs) {
             Map<String, dynamic> data = trajetLanceDoc.data() as Map<String, dynamic>;
             DateTime t1 = data['dateDepart'].toDate();
@@ -523,6 +525,7 @@ class BaseDeDonnee{
                   utilisateur.notifications.add(notification);
                 }
                 utilisateur.imageUrl = dataUtilisateur['imageUrl'];
+                utilisateur.fcmTocken = dataUtilisateur['fcmTocken'];
                 utilisateur.afficher();
                 trajetLance.dateDepart = data['dateDepart'].toDate(); //.add(Duration(hours: 1))
                 trajetLance.tempsDePause = data['tempsDePause'].toDate();
@@ -557,10 +560,12 @@ class BaseDeDonnee{
                 LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
                 trajetLance.latLngDepart = latLngDepart;
                 trajetLance.latLngArrivee = latLngArrivee;
+                trajetLance.idConductuer = data['idConductuer'];
+                trajetLance.idPassagers = List<String>.from(data['idPassagers']);
                 trajetLance.afficher();
                 ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
                 listConducteurTrajet.add(conducteurTrajet);
-              }else { print('Les conditions ne sont pas verifier pour ${dataUtilisateur['nom']} ');
+              }else { print('Les conditions ne sont pas verifier pour ${dataUtilisateur['nom']}');
             }// end if conditions de recherche
           } // end for trajetLanceDoc
         }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur

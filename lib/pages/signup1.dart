@@ -46,7 +46,7 @@ class _SinupState extends State<Sinup> {
   /*********************************************** Les Fonctions **********************************************/
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom, String prenom, String email, String motDePasse,String numero) {
     return Utilisateur(identifiant, nom, prenom, email, motDePasse, numero, Evaluation([], 5, 0),
-        Vehicule("", "", "", "", ""), false, [],[],[],[],''
+        Vehicule("", "", "", "", ""), false, [],[],[],[],'',''
     );
   }
   /** ************************************************************************************************** **/

@@ -12,8 +12,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:appcouvoiturage/AppClasses/Notifications.dart';
-
 class Connexin extends StatefulWidget {
   @override
   State<Connexin> createState() => _MyConnexinState();
@@ -63,7 +61,7 @@ class _MyConnexinState extends State<Connexin> {
         "",
         Evaluation([], 0, 0),
         Vehicule("", "", "", "", ""),
-        false, [], [], [],[],'');
+        false, [], [], [],[],'','');
   }
 
   /** ************************************************************************************************** **/
@@ -76,14 +74,10 @@ class _MyConnexinState extends State<Connexin> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
-    bool visible = false;
     bool loading = false;
-    IconData _currentIcon = Icons.visibility;
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
-    final GlobalKey<FormState> _formkey1 = GlobalKey<FormState>();
 
     return loading
         ? Loading()

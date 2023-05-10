@@ -13,7 +13,19 @@ class Historique extends StatelessWidget {
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    return  Scaffold(
+    return _utilisateur.Historique.isEmpty ?
+    Scaffold(
+        backgroundColor: Colors.grey.shade300,
+        body: Center(
+            child: Text(
+              "Aucune trajet parcours pour l'instant",
+              style: TextStyle(
+                  fontFamily: 'poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black45),
+            )))
+      : Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(

@@ -77,6 +77,7 @@ class _ProfilepageState extends State<Profilepage> {
               _utilisateur.notifications.add(notification);
             }
             _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
+            _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
             if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
             //tests by printing
           }); // end setState
@@ -96,12 +97,11 @@ class _ProfilepageState extends State<Profilepage> {
         .collection('Historique')
         .get();
     if (trajetsSnapshot.docs.isNotEmpty) {
-      print("Le trajet Existe");
       for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
         Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
         Trajet historique = BaseDeDonnee().creerTrajetVide();
-        historique.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
-        historique.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));
+        historique.dateDepart = data['dateDepart'].toDate();
+        historique.tempsDePause = data['tempsDePause'].toDate();
         historique.coutTrajet = data['coutTrajet'] as double;
         historique.villeDepart = data['villeDepart'];
         historique.villeArrivee = data['villeArrivee'];
@@ -134,6 +134,8 @@ class _ProfilepageState extends State<Profilepage> {
         LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
         historique.latLngDepart = latLngDepart;
         historique.latLngArrivee = latLngArrivee;
+        historique.idConductuer = data['idConductuer'];
+        historique.idPassagers = List<String>.from(data['idPassagers']);
         setState(() {
         _utilisateur.Historique.add(historique);
         });
@@ -147,11 +149,8 @@ class _ProfilepageState extends State<Profilepage> {
     _getHistorique();
   }
 
-
-
   @override
   void dispose() {
-    //subscription = StreamSubscription as StreamSubscription;
     subscription.cancel();
     super.dispose();
   }

@@ -10,7 +10,19 @@ class cardLancerList extends StatelessWidget {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    return Scaffold(
+    return trajetsLances.isEmpty ?
+      Scaffold(
+        backgroundColor: Colors.grey.shade300,
+        body: Center(
+            child: Text(
+              "Aucune trajet lancé pour l'instant",
+              style: TextStyle(
+                  fontFamily: 'poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black45),
+            )))
+      : Scaffold(
       body: ListView.builder(
         itemCount: trajetsLances.length,
         itemBuilder: (context, index) {

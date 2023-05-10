@@ -52,12 +52,33 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
-   /* Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
-    listeNotifications.add(notifications);*/
+    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+    listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(
         backgroundColor: Colors.grey.shade300,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.cancel_outlined) ,
+            onPressed:(){
+              Navigator.pop(context);
+            } ,
+          ),
+          title:  Text(
+            'Resultats des demandes',
+            style: GoogleFonts.poppins(
+              textStyle: TextStyle(
+                fontFamily: 'Poppins' ,
+                color: Colors.black,
+                fontSize: screenWidth * 0.05,
+                // responsive font size
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.grey.shade300,
+        ),
         body: Center(
             child: Text(
               "Aucune notification pour l'instant",
@@ -121,7 +142,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                               '${demande.nom} ${demande.prenom}',
                               style: TextStyle(fontFamily: 'Poppins'),
                             ),
-                            leading: Container(
+                            /*leading: Container(
                               height: screenHeight * 0.06,
                               width: screenHeight * 0.06,
                               child: CircleAvatar(
@@ -131,7 +152,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                                 ),
                                 radius: 50,
                               ),
-                            ),
+                            ),*/
                             subtitle: Column(
                               crossAxisAlignment:
                               CrossAxisAlignment.start,

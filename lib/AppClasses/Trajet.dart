@@ -19,7 +19,8 @@ class Trajet {
   bool probleme; // si false alors il n'as pas de probleme, si true alors il ya un probleme
   LatLng latLngDepart ;
   LatLng latLngArrivee ;
-
+  String idConductuer ;
+  List<String> idPassagers ;
   Trajet(
       this.id,
       this.dateDepart,
@@ -36,7 +37,9 @@ class Trajet {
       this.avis,
       this.probleme,
       this.latLngDepart,
-      this.latLngArrivee);
+      this.latLngArrivee,
+      this.idConductuer,
+      this.idPassagers);
   void afficher() {
     print('id : $id');
     print('dateDepart: $dateDepart');
@@ -44,8 +47,6 @@ class Trajet {
     print('coutTrajet: $coutTrajet');
     print('villeDepart: $villeDepart');
     print('villeArrivee: $villeArrivee');
-    // print('${lieuDepart?.placeId} , ${lieuDepart?.description} , ${lieuDepart?.secondaryText} , ${lieuDepart?.mainText}');
-    // print('${lieuArrivee?.placeId} , ${lieuArrivee?.description} , ${lieuArrivee?.secondaryText} , ${lieuArrivee?.mainText}');
     print(lieuDepart);
     print(lieuArrivee);
     print('villeIntermediaires: $villeIntermediaires');
@@ -56,6 +57,8 @@ class Trajet {
     print('probleme: $probleme');
     print('LatLng Depart :  $latLngDepart');
     print('LatLng Arrivee :  $latLngArrivee');
+    print('idConducteur : $idConductuer');
+    print('idPassagers : $idPassagers');
   }
   Map<String, dynamic> toMap() {
     return {
@@ -80,6 +83,8 @@ class Trajet {
       'probleme': probleme,
       'latLngDepart': GeoPoint(latLngDepart.latitude, latLngDepart.longitude),
       'latLngArrivee': GeoPoint(latLngArrivee.latitude, latLngArrivee.longitude),
+      'idConductuer': idConductuer,
+      'idPassagers': idPassagers,
     };
   }
   Map<String, dynamic> _convertPlaceResultToMap(PlacesAutoCompleteResult place) {

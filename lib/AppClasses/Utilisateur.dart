@@ -13,9 +13,10 @@ class Utilisateur extends Personne{
   static int nbUtilisateurs = 0;
   List<Notifications> notifications;
   String imageUrl ;
+  String fcmTocken;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
       super.numeroTelephone,this.evaluation, this.vehicule, this.statut,
-      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications,this.imageUrl);
+      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications,this.imageUrl,this.fcmTocken);
 
   void lancerTrajet() {
     // Code pour lancer un trajet

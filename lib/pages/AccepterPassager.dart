@@ -14,8 +14,6 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
-    final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(

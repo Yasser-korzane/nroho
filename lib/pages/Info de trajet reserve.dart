@@ -1,5 +1,4 @@
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
-import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';

@@ -33,8 +33,8 @@ class _TrajetsState extends State<Trajets> {
       for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
         Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
         Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
-        trajetLance.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
-        trajetLance.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));
+        trajetLance.dateDepart = data['dateDepart'].toDate();
+        trajetLance.tempsDePause = data['tempsDePause'].toDate();//.add(Duration(hours: 1))
         trajetLance.coutTrajet = data['coutTrajet'] as double;
         trajetLance.villeDepart = data['villeDepart'];
         trajetLance.villeArrivee = data['villeArrivee'];
@@ -67,6 +67,8 @@ class _TrajetsState extends State<Trajets> {
         LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
         trajetLance.latLngDepart = latLngDepart;
         trajetLance.latLngArrivee = latLngArrivee;
+        trajetLance.idConductuer = data['idConductuer'];
+        trajetLance.idPassagers = List<String>.from(data['idPassagers']);
         setState(() {
           trajetsLances.add(trajetLance);
         });
@@ -84,8 +86,8 @@ class _TrajetsState extends State<Trajets> {
       for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
         Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
         Trajet trajetReserve = BaseDeDonnee().creerTrajetVide();
-        trajetReserve.dateDepart = data['dateDepart'].toDate().add(Duration(hours: 1));
-        trajetReserve.tempsDePause = data['tempsDePause'].toDate().add(Duration(hours: 1));
+        trajetReserve.dateDepart = data['dateDepart'].toDate();
+        trajetReserve.tempsDePause = data['tempsDePause'].toDate() ;
         trajetReserve.coutTrajet = data['coutTrajet'] as double;
         trajetReserve.villeDepart = data['villeDepart'];
         trajetReserve.villeArrivee = data['villeArrivee'];
@@ -118,6 +120,8 @@ class _TrajetsState extends State<Trajets> {
         LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
         trajetReserve.latLngDepart = latLngDepart;
         trajetReserve.latLngArrivee = latLngArrivee;
+        trajetReserve.idConductuer = data['idConductuer'];
+        trajetReserve.idPassagers = List<String>.from(data['idPassagers']);
         setState(() {
           trajetsReserves.add(trajetReserve);
         });

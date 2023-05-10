@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:appcouvoiturage/Shared/location.dart';
+import 'package:appcouvoiturage/pages/AjouterVillesIntermedieres.dart';
 import 'package:appcouvoiturage/pages/map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +16,6 @@ import 'package:places_service/places_service.dart';
 
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
-import 'optionsconducteur.dart';
 import 'optionspassager.dart';
 
 enum Selected { depart, arrivee, none }
@@ -618,23 +618,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       }),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Card(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 0),
-                            child: ListTile(
-                              title: Text(
-                                'Historique des recherches',
-                                style: TextStyle(
-                                    fontSize: size.width * 0.04,
-                                    fontFamily: 'Poppins'),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
               ]),
@@ -689,7 +672,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  optionconduc(_trajet)));
+                          builder: (context) => AjouterVillesIntermedieres(_trajet)  ));
                 }
               }
             },

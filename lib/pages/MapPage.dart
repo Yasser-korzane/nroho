@@ -2,9 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/AccepterPassager.dart';
-import 'package:appcouvoiturage/pages/Demandes.dart';
-import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
-import 'package:appcouvoiturage/pages/detailsconducteur.dart';
 import 'package:appcouvoiturage/pages/notificationPassager.dart';
 import 'package:appcouvoiturage/pages/trajet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -59,7 +56,6 @@ class _MywidState extends State<Mywid> {
   }
 
   late HashSet<Marker> markers;
-  int _selectedIndex = 0;
   Position? current_location;
   BitmapDescriptor locationMarker = BitmapDescriptor.defaultMarker;
   bool loading = true;
@@ -169,8 +165,6 @@ class _MywidState extends State<Mywid> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    const double defaultPadding = 10;
-    //_getNotifications();
     if(listeNotifications.isEmpty){
       notification_recus=false;
     }else{

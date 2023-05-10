@@ -36,6 +36,10 @@ class _MotdePasseState extends State<MotdePasse> {
   List<Utilisateur> utilisateurs = [];
   Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagerss', 'idTrajet','Grine','Mohammed','Alger','Bouira',false);
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
   void changePassword(BuildContext context) async {
     try {
       Navigator.push(
@@ -161,7 +165,7 @@ class _MotdePasseState extends State<MotdePasse> {
         "",
         false,
         LatLng(0, 0),
-        LatLng(0, 0));
+        LatLng(0, 0),'',[]);
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(

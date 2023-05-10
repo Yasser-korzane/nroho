@@ -14,7 +14,19 @@ class cardReserverList extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    return Scaffold(
+    return trajetsReserve.isEmpty ?
+    Scaffold(
+        backgroundColor: Colors.grey.shade300,
+        body: Center(
+            child: Text(
+              "Aucune trajet reservé pour l'instant",
+              style: TextStyle(
+                  fontFamily: 'poppins',
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black45),
+            )))
+      : Scaffold(
       body: ListView.builder(
         itemCount: trajetsReserve.length,
         itemBuilder: (context, index) {
