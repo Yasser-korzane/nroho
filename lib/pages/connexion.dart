@@ -42,7 +42,6 @@ class _MyConnexinState extends State<Connexin> {
             }
           }
       );
-
   @override
   void dispose() {
     subscription.cancel();
@@ -63,14 +62,12 @@ class _MyConnexinState extends State<Connexin> {
         Vehicule("", "", "", "", ""),
         false, [], [], [],[],'','');
   }
-
   /** ************************************************************************************************** **/
   /** *********************************** Les controlleurs ********************************************** **/
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerMotDePasse = TextEditingController();
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   /** ************************************************************************************************** **/
-
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
@@ -111,42 +108,39 @@ class _MyConnexinState extends State<Connexin> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  height: screenHeight * 0.1,
-                                  child: TextFormField(
-                                    style: TextStyle(fontFamily: 'Poppins'),
-                                    controller: _controllerEmail,
-                                    keyboardType: TextInputType.emailAddress,
-                                    validator: (input) {
-                                      if (input == null) {
-                                        return 'Entrez votre Email ';
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.person_outline_outlined,
-                                        color: Colors.black,
-                                        size: 20,
-                                      ),
-                                      //border: OutlineInputBorder(),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                      ),
-
-                                      labelText: 'Email',
-                                      hintText:
-                                          'Entrez votre adresse mail de l\'esi',
-                                      hintStyle: TextStyle(
-                                          color: Colors.grey[700],
-                                          fontSize: 14),
-                                         /* color: Colors.grey[800],
-                                          fontSize: 14,fontFamily: 'Poppins'),*/
-                                      fillColor: Colors.grey.shade100,
-                                      filled: true,
+                                TextFormField(
+                                  style: TextStyle(fontFamily: 'Poppins'),
+                                  controller: _controllerEmail,
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (input) {
+                                    if (input == null) {
+                                      return 'Entrez votre Email ';
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.person_outline_outlined,
+                                      color: Colors.black,
+                                      size: 20,
                                     ),
+                                    //border: OutlineInputBorder(),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12)),
+                                    ),
+
+                                    labelText: 'Email',
+                                    hintText:
+                                        'Entrez votre adresse mail de l\'esi',
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey[700],
+                                        fontSize: 14),
+                                       /* color: Colors.grey[800],
+                                        fontSize: 14,fontFamily: 'Poppins'),*/
+                                    fillColor: Colors.grey.shade100,
+                                    filled: true,
                                   ),
                                 ),
                                 SizedBox(
@@ -225,7 +219,7 @@ class _MyConnexinState extends State<Connexin> {
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                  "Veuillez verifier vos données ",       
+                                                  "Veuillez verifier vos données ",
                                                 style: TextStyle(fontFamily: 'Poppins'),
                                               ),
                                               duration: Duration(seconds: 2),

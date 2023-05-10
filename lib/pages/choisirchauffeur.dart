@@ -99,9 +99,7 @@ class DriverListPage extends StatelessWidget {
                                     style: TextStyle(
                                         color: Color(0xff7A90A4), fontSize: 15,fontFamily: 'Poppins'),
                                   ),
-                                  onTap: () {
-                                    // handle onTap event
-                                  },
+
                                 ),
                               ),
                               Align(

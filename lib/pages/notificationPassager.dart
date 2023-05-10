@@ -111,7 +111,6 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
         centerTitle: true,
         backgroundColor: Colors.grey.shade300,
       ),
-
       backgroundColor: Colors.grey.shade300,
       body: ListView.builder(
         itemCount: listeNotifications.length,

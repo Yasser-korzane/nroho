@@ -175,7 +175,8 @@ class cardLancerList extends StatelessWidget {
                     ),
                   ),
                 ),
-              ));
+              )
+          );
         },
       ),
     );
