@@ -9,14 +9,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
 import '../Services/base de donnee.dart';
 import '../AppClasses/Notifications.dart';
-import 'package:animations/animations.dart';
 
 
 class Mywid extends StatefulWidget {
@@ -214,57 +212,45 @@ class _MywidState extends State<Mywid> {
                               screenWidth *
                                   0.05), // use 5% of screen width as border radius
                         ),
-                        child: GestureDetector(
+                        child: TextField(
+                          controller: TextEditingController(
+                              text: depart ?? ""),
                           onTap: () {
-                            Get.to(() => const OuAllezVous(),
-                                transition: Transition.fade);
-                          },
-                          child: TextField(
-                            controller: TextEditingController(
-                                text: depart ?? ""),
-                            onTap: () {
-                              /*Navigator.push(
+                                Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        OuAllezVous(),
-                                  ));*/
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = Offset(1.0, 0.0);
-                                        var end = Offset.zero;
-                                         var curve = Curves.ease;
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      var begin = Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                       var curve = Curves.ease;
 
-                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                   },
-                                 ),
-                              );
-                            },
-                            readOnly: true,
-                            decoration: InputDecoration(
-                              hintText: 'Choisir un point de depart',
-                              hintStyle: TextStyle(fontFamily: 'Poppins'),
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.auto,
-                              border: InputBorder.none,
-                              // fillColor: Colors.white,
-                              // filled: true,
-                              // remove the border of the TextField
-                              prefixIcon: Icon(
-                                  // isUsingCurrentLocation
-                                  //     ? Icons.gps_fixed
-                                  //     : Icons.gps_not_fixed,
-                                Icons.gps_fixed_outlined,
-                                  color: Colors.blue),
-                            ),
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                 },
+                               ),
+                            );
+                          },
+                          readOnly: true,
+                          decoration: InputDecoration(
+                            hintText: 'Choisir un point de depart',
+                            hintStyle: TextStyle(fontFamily: 'Poppins'),
+                            floatingLabelBehavior:
+                            FloatingLabelBehavior.auto,
+                            border: InputBorder.none,
+                            // fillColor: Colors.white,
+                            // filled: true,
+                            // remove the border of the TextField
+                            prefixIcon: Icon(
+                                // isUsingCurrentLocation
+                                //     ? Icons.gps_fixed
+                                //     : Icons.gps_not_fixed,
+                              Icons.gps_fixed_outlined,
+                                color: Colors.blue),
                           ),
                         ),
                       ),
@@ -277,72 +263,42 @@ class _MywidState extends State<Mywid> {
                               screenWidth *
                                   0.05), // use 5% of screen width as border radius
                         ),
-                        child: GestureDetector(
+                        child: TextField(
+                          controller: TextEditingController(
+                              text: arrive ?? ""),
                           onTap: () {
-                           /* Get.to(() => const OuAllezVous(),
-                                transition: Transition.fade);*/
                                 Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = Offset(1.0, 0.0);
-                                        var end = Offset.zero;
-                                         var curve = Curves.ease;
-
-                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                   },
-                                 ),
-                              );
-                          },
-                          child: TextField(
-                            controller: TextEditingController(
-                                text: arrive ?? ""),
-                            onTap: () {
-                             /* Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                    const OuAllezVous(),
-                                  ));*/
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = Offset(1.0, 0.0);
-                                        var end = Offset.zero;
-                                         var curve = Curves.ease;
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      var begin = Offset(1.0, 0.0);
+                                      var end = Offset.zero;
+                                       var curve = Curves.ease;
 
-                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                   },
-                                 ),
-                              );
-                            },
-                            readOnly: true,
-                            decoration: const InputDecoration(
-                              hintText: 'Choisir une destination',
-                              hintStyle: TextStyle(fontFamily: 'Poppins'),
-                              floatingLabelBehavior:
-                              FloatingLabelBehavior.auto,
-                              // remove the border of the TextField
-                              prefixIcon: Icon(
-                                  Icons.location_on_outlined,
-                                  color: Colors.blue),
-                              border: InputBorder.none,
-                              // fillColor: Colors.white,
-                              // filled: true,
-                            ),
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                 },
+                               ),
+                            );
+                          },
+                          readOnly: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Choisir une destination',
+                            hintStyle: TextStyle(fontFamily: 'Poppins'),
+                            floatingLabelBehavior:
+                            FloatingLabelBehavior.auto,
+                            // remove the border of the TextField
+                            prefixIcon: Icon(
+                                Icons.location_on_outlined,
+                                color: Colors.blue),
+                            border: InputBorder.none,
+                            // fillColor: Colors.white,
+                            // filled: true,
                           ),
                         ),
                       ),

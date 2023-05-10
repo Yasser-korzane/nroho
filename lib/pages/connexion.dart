@@ -159,7 +159,7 @@ class _MyConnexinState extends State<Connexin> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: screenHeight * 0.001,
+                                  height: screenHeight * 0.015,
                                 ),
                                 TextFormField(
                                     obscureText: !_isObscured,
