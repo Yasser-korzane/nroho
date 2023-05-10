@@ -3,7 +3,7 @@ import 'package:appcouvoiturage/widgets/profilwidget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:animations/animations.dart';
 class Assistance extends StatelessWidget {
   const Assistance({Key? key}) : super(key: key);
 
@@ -43,11 +43,30 @@ class Assistance extends StatelessWidget {
               title: 'Contactez nous',
               icon: Icons.call,
               onPress: () {
-                Navigator.push(
+                /*Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ContactUs(),
-                    ));
+                    ));*/
+                    	Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => ContactUs(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
+
               },
             ),
             SizedBox(height: screenHeight * 0.02),

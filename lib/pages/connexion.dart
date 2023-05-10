@@ -12,6 +12,8 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart'; 
+
 class Connexin extends StatefulWidget {
   @override
   State<Connexin> createState() => _MyConnexinState();
@@ -112,13 +114,26 @@ class _MyConnexinState extends State<Connexin> {
                                   style: TextStyle(fontFamily: 'Poppins'),
                                   controller: _controllerEmail,
                                   keyboardType: TextInputType.emailAddress,
-                                  validator: (input) {
+                                 /* validator: (input) {
                                     if (input == null) {
                                       return 'Entrez votre Email ';
                                     } else {
                                       return null;
                                     }
-                                  },
+                                  },*/
+                                   validator: (input) {
+                      if (input == null) {
+                        return 'Entrez votre adresse email ';
+                      } else if (!RegExp(
+                              r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
+                          .hasMatch(input)) {
+                        return 'Not valid email';
+                      } else if (!input.endsWith('@esi.dz')) {
+                        return 'only Email esi allowd';
+                      }
+                      return null;
+                    },
+
                                   decoration: InputDecoration(
                                     prefixIcon: Icon(
                                       Icons.person_outline_outlined,
@@ -152,12 +167,20 @@ class _MyConnexinState extends State<Connexin> {
                                     //keyboardType: TextInputType.visiblePassword,
                                     controller: _controllerMotDePasse,
                                     keyboardType: TextInputType.visiblePassword,
-                                    validator: (input) {
+                                    /*validator: (input) {
                                       if (input == null) {
                                         return 'Entrez votre mot de passe ';
                                       }
                                       return null;
-                                    },
+                                    },*/
+                                     validator: (input) {
+                        if (input == null) {
+                          return 'Entrez votre mot de passe ';
+                        }else if (input.toString().length < 8  ){
+                          return 'nombre de chifre doit etre superieur a 8 ';
+                        }
+                        return null;
+                      },
                                     decoration: InputDecoration(
                                         prefixIcon: Icon(
                                           Icons.fingerprint,
@@ -238,10 +261,24 @@ class _MyConnexinState extends State<Connexin> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            content: Text(
+                                            /*content: Text(
                                                 "Veuillez verifier vos données",                                  style: TextStyle(fontFamily: 'Poppins'),
                                             ),
-                                            duration: Duration(seconds: 2),
+                                            duration: Duration(seconds: 2),*/
+                                             duration: const Duration(seconds: 4),
+                    content: AwesomeSnackbarContent(
+                    title: 'Oh Erreur!!',
+                    message:
+                        'Veuillez verifier vos données',
+
+                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                    contentType: ContentType.failure,
+                    // to configure for material banner
+                    inMaterialBanner: true,
+                  ),
+ behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
                                           ),
                                         );
                                       }

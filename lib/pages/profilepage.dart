@@ -21,6 +21,7 @@ import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Vehicule.dart';
 import '../Services/base de donnee.dart';
+import 'package:animations/animations.dart';
 
 class Profilepage extends StatefulWidget {
   const Profilepage({Key? key}) : super(key: key);
@@ -198,11 +199,30 @@ class _ProfilepageState extends State<Profilepage> {
                     child: GestureDetector(
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
+                         /* Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ModifierProfilePage(_utilisateur),
                               ));
+                              */
+                              Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => ModifierProfilePage(_utilisateur),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
@@ -222,7 +242,25 @@ class _ProfilepageState extends State<Profilepage> {
                   icon: Icons.navigation_rounded,
                   onPress: () {
                     _utilisateur.afficher();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(_utilisateur,),));
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => Historique(_utilisateur,),));
+                    Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => Historique(_utilisateur),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
                   },
                 ),
                 SizedBox(height: screenHeight * 0.008),
@@ -230,11 +268,30 @@ class _ProfilepageState extends State<Profilepage> {
                   title: 'Mot de passe',
                   icon: Icons.key_outlined,
                   onPress: () {
-                    Navigator.push(
+                   /* Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => MotdePasse(),
-                        ));
+                        ));*/
+                        Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => MotdePasse(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
+                    
                   },
                 ),
                 SizedBox(height: screenHeight * 0.008),

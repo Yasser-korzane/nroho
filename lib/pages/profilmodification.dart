@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../Services/base de donnee.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart'; 
 class ModifierProfilePage extends StatefulWidget {
   Utilisateur _utilisateur;
   ModifierProfilePage(this._utilisateur);
@@ -182,6 +183,20 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         widget._utilisateur.nom = value;
                       });
                     },
+                     validator: (input) {
+                    
+                     List<int> numbers = List.generate(10, (index) => index);
+                      if (input == null) {
+                        return 'Entrez votre nom';
+                      } else if (input.contains(' ')) {
+                        return 'Espace';
+                      } else if (numbers
+                          .any((number) => input.contains(number.toString()))) {
+                        return 'Numbers';
+                      }
+
+                      return null;
+                    },
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
@@ -193,7 +208,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       //controller: _contrPrenom,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -213,7 +228,23 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           widget._utilisateur.prenom = value;
                         });
                       },
-                    )),
+                      validator: (input) {
+                    
+                     List<int> numbers = List.generate(10, (index) => index);
+                      if (input == null) {
+                        return 'Entrez votre prenom';
+                      } else if (input.contains(' ')) {
+                        return 'Espace';
+                      } else if (numbers
+                          .any((number) => input.contains(number.toString()))) {
+                        return 'Numbers';
+                      }
+
+                      return null;
+                    },
+                      
+                    ),
+                    ),
                 SizedBox(height: size.height * 0.02),
                 Text(
                   'Numéro de télephone',
@@ -223,7 +254,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius:
@@ -242,6 +273,30 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           widget._utilisateur.numeroTelephone = value;
                         });
                       },
+                       validator: (input) {
+                      if (input == null) {
+                        return 'Entrez votre numero de téléphone ';
+                      } else if (int.tryParse(input) == null) {
+                        return 'numero non valid ';
+                      }
+                      else if (input.length != 10 &&  input.length != 14 && input.length != 13) {
+                        return 'nombre de chiffre inferieur a 10 !';
+                      } else {
+                        if (input.length == 10 && !input.startsWith('05') &&  !input.startsWith('06') && !input.startsWith('07')) {
+                          return 'le numero ne commance pas avec 05 ou 06 ou 07';
+                        }
+                        if (input.length == 13 && !input.startsWith('*2135') &&  !input.startsWith('*2136') && !input.startsWith('*2137')) {
+                          return 'error';
+                        }
+                        if (input.length == 14 && !input.startsWith('002135') &&  !input.startsWith('002136') && !input.startsWith('002137')) {
+                          return 'error';
+                        }
+                      }
+
+                      return null;
+                    },
+
+                      
                     )),
                 SizedBox(height: 25),
                 SizedBox(height: 40),
@@ -411,12 +466,28 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   onPressed: () async {
                     if (_changement) {
                       await _baseDeDonnee.modifierUtilisateur(FirebaseAuth.instance.currentUser!.uid, widget._utilisateur);
-                      /*ScaffoldMessenger.of(context).showSnackBar(
+                      ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Modification effectué avec avec succès'),
-                          duration: Duration(seconds: 3),
+                          //content: Text('Modification effectué avec avec succès'),
+                          //duration: Duration(seconds: 3),
+                           duration: const Duration(seconds: 4),
+                    content: AwesomeSnackbarContent(
+                    title: 'bravo!!',
+                    message:
+                        'Modification effectué avec avec succès',
+
+                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                    contentType: ContentType.failure,
+                    // to configure for material banner
+                    inMaterialBanner: true,
+                  ),
+ behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+
+
                         ),
-                      );*/
+                      );
                     }
                     Navigator.pop(context,);
                   },

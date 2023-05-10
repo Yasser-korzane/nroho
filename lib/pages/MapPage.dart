@@ -16,6 +16,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
 import '../Services/base de donnee.dart';
 import '../AppClasses/Notifications.dart';
+import 'package:animations/animations.dart';
 
 
 class Mywid extends StatefulWidget {
@@ -222,12 +223,30 @@ class _MywidState extends State<Mywid> {
                             controller: TextEditingController(
                                 text: depart ?? ""),
                             onTap: () {
-                              Navigator.push(
+                              /*Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         OuAllezVous(),
-                                  ));
+                                  ));*/
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
                             },
                             readOnly: true,
                             decoration: InputDecoration(
@@ -260,19 +279,55 @@ class _MywidState extends State<Mywid> {
                         ),
                         child: GestureDetector(
                           onTap: () {
-                            Get.to(() => const OuAllezVous(),
-                                transition: Transition.fade);
+                           /* Get.to(() => const OuAllezVous(),
+                                transition: Transition.fade);*/
+                                Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
                           },
                           child: TextField(
                             controller: TextEditingController(
                                 text: arrive ?? ""),
                             onTap: () {
-                              Navigator.push(
+                             /* Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
                                     const OuAllezVous(),
-                                  ));
+                                  ));*/
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
                             },
                             readOnly: true,
                             decoration: const InputDecoration(
@@ -314,15 +369,51 @@ class _MywidState extends State<Mywid> {
             onTap: ()async {
               await getStatut();
               if (!statut){
-                Navigator.push(
+               /* Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DemandesPassagerResultat()));
+                        builder: (context) => DemandesPassagerResultat()));*/
+                        Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => DemandesPassagerResultat(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
               }else {
-                Navigator.push(
+                /*Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ListDemandePassager()));
+                        builder: (context) => ListDemandePassager()));*/
+                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) => ListDemandePassager(),
+                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                        var begin = Offset(1.0, 0.0);
+                                        var end = Offset.zero;
+                                         var curve = Curves.ease;
+
+                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+                                    return SlideTransition(
+                                      position: animation.drive(tween),
+                                      child: child,
+                                    );
+                                   },
+                                 ),
+                              );
               }
             },
             child: notification_recus ? const Icon(
