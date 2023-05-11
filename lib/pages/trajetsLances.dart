@@ -12,7 +12,7 @@ class cardLancerList extends StatelessWidget {
     final double screenHeight = screenSize.height;
     return trajetsLances.isEmpty ?
       Scaffold(
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.white,
         body: Center(
             child: Text(
               "Aucune trajet lancé pour l'instant",

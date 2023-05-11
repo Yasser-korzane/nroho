@@ -16,7 +16,7 @@ class cardReserverList extends StatelessWidget{
     final double screenHeight = screenSize.height;
     return trajetsReserve.isEmpty ?
     Scaffold(
-        backgroundColor: Colors.grey.shade300,
+        backgroundColor: Colors.white,
         body: Center(
             child: Text(
               "Aucune trajet reservé pour l'instant",
