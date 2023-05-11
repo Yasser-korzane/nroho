@@ -26,7 +26,7 @@ class Mywid extends StatefulWidget {
 
 class _MywidState extends State<Mywid> {
   List<Notifications> listeNotifications = [];
-  BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+  BaseDeDonnee baseDeDonnee=BaseDeDonnee();
   Future _getNotifications() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -219,9 +219,9 @@ class _MywidState extends State<Mywid> {
                                 Navigator.push(
                                   context,
                                   PageRouteBuilder(
-                                    pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                    pageBuilder: (context, animation, secondaryAnimation) => const OuAllezVous(),
                                     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                      var begin = Offset(1.0, 0.0);
+                                      var begin = const Offset(1.0, 0.0);
                                       var end = Offset.zero;
                                        var curve = Curves.ease;
 
@@ -236,7 +236,7 @@ class _MywidState extends State<Mywid> {
                             );
                           },
                           readOnly: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Choisir un point de depart',
                             hintStyle: TextStyle(fontFamily: 'Poppins'),
                             floatingLabelBehavior:
@@ -270,9 +270,9 @@ class _MywidState extends State<Mywid> {
                                 Navigator.push(
                                   context,
                                   PageRouteBuilder(
-                                    pageBuilder: (context, animation, secondaryAnimation) => OuAllezVous(),
+                                    pageBuilder: (context, animation, secondaryAnimation) => const OuAllezVous(),
                                     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                      var begin = Offset(1.0, 0.0);
+                                      var begin = const Offset(1.0, 0.0);
                                       var end = Offset.zero;
                                        var curve = Curves.ease;
 
@@ -304,10 +304,10 @@ class _MywidState extends State<Mywid> {
                       ),
                       SizedBox(height: screenHeight * 0.025),
                       // use 4% of screen height as space between text fields and row
-                      Row(
+                      const Row(
                         mainAxisAlignment:
                         MainAxisAlignment.spaceEvenly,
-                        children: const [
+                        children: [
                           RideTypeSelector(),
                         ],
                       ),
@@ -334,7 +334,7 @@ class _MywidState extends State<Mywid> {
                                     PageRouteBuilder(
                                       pageBuilder: (context, animation, secondaryAnimation) => DemandesPassagerResultat(),
                                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = Offset(1.0, 0.0);
+                                        var begin = const Offset(0.0, -1.0);
                                         var end = Offset.zero;
                                          var curve = Curves.ease;
 
@@ -355,9 +355,9 @@ class _MywidState extends State<Mywid> {
                   Navigator.push(
                                     context,
                                     PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => ListDemandePassager(),
+                                      pageBuilder: (context, animation, secondaryAnimation) => const ListDemandePassager(),
                                       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = Offset(1.0, 0.0);
+                                        var begin = const Offset(0.0, 1.0);
                                         var end = Offset.zero;
                                          var curve = Curves.ease;
 
@@ -412,10 +412,15 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         isSelected: _isSelected,
         onPressed: (int index) async{
           bool statut = false; // passager
-          if (index == 0 && _isSelected[index] == false) statut = false ;
-          else if (index == 1 && _isSelected[index] == false) statut = true ;
-          else if (index == 1 && _isSelected[index] == true) statut = false ;
-          else if (index == 0 && _isSelected[index] == true) statut = true ;
+          if (index == 0 && _isSelected[index] == false) {
+            statut = false ;
+          } else if (index == 1 && _isSelected[index] == false) {
+            statut = true ;
+          } else if (index == 1 && _isSelected[index] == true) {
+            statut = false ;
+          } else if (index == 0 && _isSelected[index] == true) {
+            statut = true ;
+          }
           setState(() {
             _isSelected[index] = !_isSelected[index];
             _isSelected[1 - index] = !_isSelected[1 - index];
@@ -427,7 +432,7 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         fillColor: Colors.blue,
         borderRadius: BorderRadius.circular(20.0),
         disabledColor: Colors.white,
-        children:  [
+        children:  const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
             child: Text('Passager',style: TextStyle(fontFamily: 'Poppins'),),

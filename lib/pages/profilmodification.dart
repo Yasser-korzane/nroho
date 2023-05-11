@@ -405,6 +405,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   style: TextStyle(                      fontFamily: 'poppins',
                       fontWeight: FontWeight.bold),
                 ),
+                
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
