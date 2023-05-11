@@ -27,7 +27,7 @@ class Historique extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Center(
             child: Text(
-              "Aucune trajet parcours pour l'instant",
+              "Aucun trajet parcourus pour l'instant",
               style: TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 18,
