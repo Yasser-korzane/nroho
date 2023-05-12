@@ -21,7 +21,7 @@ class detailsTrajetLancer extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: ElevatedButton(
-          child: Text('Annuler le traajet',style: TextStyle(fontFamily: 'poppins'),),
+          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
           onPressed: (){ },
         ),
           body: SingleChildScrollView(
@@ -91,7 +91,7 @@ class detailsTrajetLancer extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Date et Heure de depart',
+                          'Date et heure de départ',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -134,7 +134,7 @@ class detailsTrajetLancer extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Date et Heure d arrivee',
+                          'Date et heure d\'arrivée',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
@@ -245,6 +245,13 @@ class detailsTrajetLancer extends StatelessWidget {
                             fontSize: 16.0,
                             fontFamily: 'Poppins',
                           ),
+                        ),Text(
+                         _trajet.coutTrajet.toString()+' DA',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ],
                     ),
@@ -257,7 +264,7 @@ class detailsTrajetLancer extends StatelessWidget {
                           crossAxisAlignment:CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Commantaire : ',
+                              'Commentaire : ',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16.0,
@@ -266,7 +273,7 @@ class detailsTrajetLancer extends StatelessWidget {
                             ),
                             SizedBox(height: screenHeight * 0.02),
                             Text(
-                              'ajouter votre commantaire ici',
+                              'ajouter votre commentaire ici',
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 14.0,
