@@ -26,49 +26,57 @@ class Detailspassaer extends StatelessWidget {
       'Le nombre de passager que le conducteur accepte : ${_conducteurTrajet.trajetLance.plusInformations.nbPlaces.toString()}'];
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(screenWidth * 0.03),
-          child: Column(
-            children: [
-              SizedBox(
-                height: screenHeight * 0.04,
-              ),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 38.0,
-                    backgroundImage: NetworkImage(_conducteurTrajet.utilisateur.imageUrl),
-                  ),
-                  SizedBox(width: 16.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(_conducteurTrajet.utilisateur.nom +' '+ _conducteurTrajet.utilisateur.prenom,
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
-                      SizedBox(height: 4.0),
-                      Row(
-                        children: List.generate(
-                          5,
-                              (index) => Icon(
-                            Icons.star,
-                            size: 20.0,
-                            color: index < _conducteurTrajet.utilisateur.evaluation.etoiles.round()
-                                ? Colors.yellow
-                                : Colors.grey,
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.chevron_left, color: Colors.black)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: Container(
+        margin: EdgeInsets.fromLTRB(screenWidth * 0.025, 0, screenWidth * 0.025, 0),
+        padding:  EdgeInsets.all(screenWidth * 0.05),
+        child: Column(
+          children: [
+            SizedBox(
+              height: screenHeight * 0.04,
+            ),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 38.0,
+                  backgroundImage: NetworkImage(_conducteurTrajet.utilisateur.imageUrl),
+                ),
+                SizedBox(width: 16.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_conducteurTrajet.utilisateur.nom +' '+ _conducteurTrajet.utilisateur.prenom,
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
+                        )),
+                    SizedBox(height: 4.0),
+                    Row(
+                      children: List.generate(
+                        5,
+                            (index) => Icon(
+                          Icons.star,
+                          size: 20.0,
+                          color: index < _conducteurTrajet.utilisateur.evaluation.etoiles.round()
+                              ? Colors.yellow
+                              : Colors.grey,
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: screenHeight * 0.025),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: screenHeight * 0.025),
               // SizedBox(height: screenHeight * 0.014),
               Row(
                 children: [
@@ -402,7 +410,6 @@ class Detailspassaer extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }

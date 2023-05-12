@@ -11,14 +11,6 @@ import '../Services/localNotification.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-/**
-    Je doit afficher pour le conducteur :
-      -Le nom et prenom du passager
-      - ville depart et ville arrivee
-      - Le commentaire
- **/
-
-
 class DemandesPassager extends StatefulWidget {
   @override
   State<DemandesPassager> createState() => _DemandesPassagerState();
@@ -125,13 +117,13 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     leading: Container(
                                       height: screenHeight * 0.06,
                                       width: screenHeight * 0.06,
-                                      child: CircleAvatar(
+                                      /*child: CircleAvatar(
                                         //backGrounndImage: AssetImage('your image path'),
                                         backgroundImage: AssetImage(
                                           'asset/images/profile.png',
                                         ),
                                         radius: 50,
-                                      ),
+                                      ),*/
                                     ),
                                     subtitle: Column(
                                       crossAxisAlignment:
