@@ -31,8 +31,8 @@ class Historique extends StatelessWidget {
             labelColor: Colors.blue.shade700,
             unselectedLabelColor: Colors.blueGrey[900],
             tabs: [
-              Tab(text: 'Trajet lancer',),
-              Tab(text: 'Trajet reserver'),
+              Tab(text: 'Trajet lancé',),
+              Tab(text: 'Trajet reservé'),
             ],
           ),
         ),
