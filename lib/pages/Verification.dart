@@ -127,7 +127,7 @@ class _VerificationState extends State<Verification> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vous n'avez pas reçu le mail de validation ?", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
+                        Text("Vous n'avez pas reçu le mail de validation ?\n", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
                         TextButton(
                             onPressed: () {
                               if (_isResendAgain) return;
