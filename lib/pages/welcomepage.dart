@@ -46,20 +46,20 @@ class _WelcomePageState extends State<WelcomePage>
         child: Scaffold(
           body: Stack(
             children: [
-              ClipPath(
+             /* ClipPath(
                 clipper: CustomClipper1(),
                 child: Container(
                   height: 200,
                   color: Color.fromARGB(255, 1, 31, 56),
                 ),
-              ),
+              ),*/
               Center(
                 child: FadeTransition(
                   opacity: _animation,
                   child: Image(
                     image: AssetImage('assets/images/logo.png'),
-                    height: heightDevice / 5,
-                    width: widthDevice * 0.75,
+                    height: heightDevice * 0.12,
+                    width: widthDevice * 0.12,
                   ),
                 ),
               ),

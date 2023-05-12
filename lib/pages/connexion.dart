@@ -24,7 +24,7 @@ class _MyConnexinState extends State<Connexin> {
   late StreamSubscription subscription;
   var isDeviceConnected = false;
   bool isAlertSet=false;
-
+final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -102,6 +102,7 @@ class _MyConnexinState extends State<Connexin> {
                         ),
                         Form(
                           // key:_formkey1,
+                          key: _formKey,
                           child: Container(
                             margin: EdgeInsets.only(
                                 left: screenWidth * 0.04,
@@ -122,7 +123,7 @@ class _MyConnexinState extends State<Connexin> {
                                     }
                                   },*/
                                    validator: (input) {
-                      if (input == null) {
+                      if (input == null  || input == '') {
                         return 'Entrez votre adresse email ';
                       } else if (!RegExp(
                               r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
@@ -135,11 +136,16 @@ class _MyConnexinState extends State<Connexin> {
                     },
 
                                   decoration: InputDecoration(
-                                    prefixIcon: Icon(
+                                   /* prefixIcon: Icon(
                                       Icons.person_outline_outlined,
                                       color: Colors.black,
                                       size: 20,
-                                    ),
+                                    ),*/
+                                      prefixIcon: const Icon(
+                        Icons.email_outlined,
+                        color: Colors.black,
+                        size: 20,
+                      ),
                                     //border: OutlineInputBorder(),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
@@ -174,7 +180,7 @@ class _MyConnexinState extends State<Connexin> {
                                       return null;
                                     },*/
                                      validator: (input) {
-                        if (input == null) {
+                        if (input == null || input == '') {
                           return 'Entrez votre mot de passe ';
                         }else if (input.toString().length < 8  ){
                           return 'nombre de chifre doit etre superieur a 8 ';
@@ -182,11 +188,16 @@ class _MyConnexinState extends State<Connexin> {
                         return null;
                       },
                                     decoration: InputDecoration(
-                                        prefixIcon: Icon(
+                                       /* prefixIcon: Icon(
                                           Icons.fingerprint,
                                           color: Colors.black,
                                           size: 20,
-                                        ),
+                                        ),*/
+                                        prefixIcon: const Icon(
+                            Icons.key,
+                            color: Colors.black,
+                            size: 20,
+                          ),
                                         //border: OutlineInputBorder(),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
@@ -223,8 +234,8 @@ class _MyConnexinState extends State<Connexin> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: () async {
-                                      // MaterialPageRoute(builder: (context) => const home());
-                                      if (_baseDeDonnee.validerEmail(_controllerEmail.text) &&
+                                      if (_formKey.currentState!.validate()) {
+                                            if (_baseDeDonnee.validerEmail(_controllerEmail.text) &&
                                           _baseDeDonnee.validerMotDePasse(
                                               _controllerMotDePasse.text)) {
                                         Navigator.push(
@@ -248,7 +259,13 @@ class _MyConnexinState extends State<Connexin> {
                                               duration: Duration(seconds: 2),
                                             ),
                                           );
-                                        } else {
+                                        }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Processing Data')),
+      );
+    }
+                                      // MaterialPageRoute(builder: (context) => const home());
+                                     else {
                                           //MaterialPageRoute(builder: (context) => const home());
                                           Navigator.pushAndRemoveUntil(
                                             context,
