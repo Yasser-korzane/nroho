@@ -313,7 +313,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                         ),
                                         fillColor: Colors.white,
                                         filled: true,
-                                        hintText: 'Depart',
+                                        hintText: 'Départ',
                                       ),
                                     ),
                                   ),
@@ -658,13 +658,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 _trajet.tempsDePause =
                     calculateArrivalTime(distance, _trajet.dateDepart);
                 _trajet.afficher();
-                // print("**************************************************************");
-                // LatLng lng = LatLng(35.9996053, 3.755274899999999);
-                //print('${Geolocator.distanceBetween(latLngD.latitude, latLngD.longitude, latLngA.latitude, latLngD.longitude)/1000} km');
-                // bool a = await isPlaceOnRoute(_trajet.lieuDepart!, _trajet.latLngDepart, lng, latLngA);
-                // print(a);
-                // depart = dira, arrive ain boussaada, inter = sidiAisa
-                // print("**************************************************************");
                 isLoading = false;
                 if (statut == false) {
                   Navigator.push(

@@ -46,10 +46,10 @@ class Detailspassaer extends StatelessWidget {
             ),
             Row(
               children: [
-                CircleAvatar(
+                /*CircleAvatar(
                   radius: 38.0,
                   backgroundImage: NetworkImage(photoUrl),
-                ),
+                ),*/
                 SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,9 +13,6 @@ import '../AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 import 'package:appcouvoiturage/pages/connexion.dart';
 
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart'; 
-
-
 class Sinup extends StatefulWidget {
   @override
   State<Sinup> createState() => _SinupState();
@@ -105,27 +102,13 @@ class _SinupState extends State<Sinup> {
                                 style: TextStyle(fontFamily: 'Poppins'),
                                 controller: _controllerNom,
                                 keyboardType: TextInputType.name,
-                                /*validator: (input) {
+                                validator: (input) {
                                   if (input == null) {
                                     return 'Entrez votre nom ';
                                   } else {
                                     return null;
                                   }
-                                },*/
-                                 validator: (input) {
-                    
-                     List<int> numbers = List.generate(10, (index) => index);
-                      if (input == null) {
-                        return 'Entrez votre nom';
-                      } else if (input.contains(' ')) {
-                        return 'Espace';
-                      } else if (numbers
-                          .any((number) => input.contains(number.toString()))) {
-                        return 'Numbers';
-                      }
-
-                      return null;
-                    },
+                                },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.person_outline_outlined,
@@ -163,28 +146,13 @@ class _SinupState extends State<Sinup> {
                                 style: TextStyle(fontFamily: 'Poppins'),
                                 controller: _controllerPrenom,
                                 keyboardType: TextInputType.name,
-                               /* validator: (input) {
+                                validator: (input) {
                                   if (input == null) {
                                     return 'Entrez votre prenom';
                                   } else {
                                     return null;
                                   }
-                                },*/
-                                 validator: (input) {
-                    
-                      List<int> numbers = List.generate(10, (index) => index);
-                      if (input == null) {
-                        return 'Entrez votre prenom';
-                      } else if (input.contains(' ')) {
-                        return 'Espace';
-                      } else if (numbers
-                          .any((number) => input.contains(number.toString()))) {
-                        return 'Numbers';
-                      }
-
-                      return null;
-                    },
-
+                                },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.person_outline_outlined,
@@ -216,35 +184,13 @@ class _SinupState extends State<Sinup> {
                               TextFormField(
                                 controller: _controllerPhone,
                                 keyboardType: TextInputType.phone,
-                                /*validator: (input) {
+                                validator: (input) {
                                   if (input == null) {
                                     return 'Entrez votre numero de téléphone ';
                                   } else {
                                     return null;
                                   }
-                                },*/
-                                 validator: (input) {
-                      if (input == null) {
-                        return 'Entrez votre numero de téléphone ';
-                      } else if (int.tryParse(input) == null) {
-                        return 'numero non valid ';
-                      }
-                      else if (input.length != 10 &&  input.length != 14 && input.length != 13) {
-                        return 'nombre de chiffre inferieur a 10 !';
-                      } else {
-                        if (input.length == 10 && !input.startsWith('05') &&  !input.startsWith('06') && !input.startsWith('07')) {
-                          return 'le numero ne commance pas avec 05 ou 06 ou 07';
-                        }
-                        if (input.length == 13 && !input.startsWith('*2135') &&  !input.startsWith('*2136') && !input.startsWith('*2137')) {
-                          return 'error';
-                        }
-                        if (input.length == 14 && !input.startsWith('002135') &&  !input.startsWith('002136') && !input.startsWith('002137')) {
-                          return 'error';
-                        }
-                      }
-
-                      return null;
-                    },
+                                },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.phone,
@@ -281,26 +227,13 @@ class _SinupState extends State<Sinup> {
                                 style: TextStyle(fontFamily: 'Poppins'),
                                 controller: _controllerEmail,
                                 keyboardType: TextInputType.emailAddress,
-                               /* validator: (input) {
+                                validator: (input) {
                                   if (input == null) {
                                     return 'Entrez votre adresse mail ';
                                   } else {
                                     return null;
                                   }
-                                },*/
-                                 validator: (input) {
-                      if (input == null) {
-                        return 'Entrez votre adresse email ';
-                      } else if (!RegExp(
-                              r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
-                          .hasMatch(input)) {
-                        return 'Not valid email';
-                      } else if (!input.endsWith('@esi.dz')) {
-                        return 'only Email esi allowd';
-                      }
-                      return null;
-                    },
-
+                                },
                                 decoration: InputDecoration(
                                   prefixIcon: Icon(
                                     Icons.email_outlined,
@@ -338,20 +271,12 @@ class _SinupState extends State<Sinup> {
                                   //keyboardType: TextInputType.visiblePassword,
                                   controller: _controllerMotDePasse,
                                   keyboardType: TextInputType.visiblePassword,
-                                 /* validator: (input) {
+                                  validator: (input) {
                                     if (input == null) {
                                       return 'Entrez votre mot de passe ';
                                     }
                                     return null;
-                                  },*/
-                                   validator: (input) {
-                        if (input == null) {
-                          return 'Entrez votre mot de passe ';
-                        }else if (input.toString().length < 8  ){
-                          return 'nombre de chifre doit etre superieur a 8 ';
-                        }
-                        return null;
-                      },
+                                  },
                                   decoration: InputDecoration(
                                       prefixIcon: Icon(
                                         Icons.key,
@@ -402,6 +327,9 @@ class _SinupState extends State<Sinup> {
                                         && _baseDeDonnee.validerEmail(_controllerEmail.text)
                                         && _baseDeDonnee.validerMotDePasse(_controllerMotDePasse.text)
                                         && _baseDeDonnee.validatePhoneNumber(_controllerPhone.text)) {
+                                      print('********************************************');
+                                      print('True');
+                                      print('********************************************');
                                       Utilisateur utilisateur = creerUtilisateurApresSignUp(
                                           '', _controllerNom.text,
                                           _controllerPrenom.text,
@@ -417,63 +345,50 @@ class _SinupState extends State<Sinup> {
                                           _controllerEmail.text,
                                           _controllerMotDePasse.text,
                                           utilisateur);
+                                      print('********************************************');
+                                      print("apres signUp");
+                                      print('********************************************');
                                       await result.sendEmailVerification;
+                                      print('********************************************');
+                                      print("apres Email verification");
+                                      print('********************************************');
                                       if (result == null) {
+                                        print('********************************************');
+                                        print('result = null');
+                                        print('********************************************');
                                         Navigator.pop(context);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            /*content: Text(
+                                            content: Text(
                                               "Vous devez verifier les donneees",
                                               style: TextStyle(
                                                   fontFamily: 'Poppins'),
                                             ),
-                                            duration: Duration(seconds: 2),*/
-                                            duration: const Duration(seconds: 4),
-                    content: AwesomeSnackbarContent(
-                    title: 'Oh Erreur!!',
-                    message:
-                        'Vous devez verifier vos donnees',
-
-                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                    contentType: ContentType.failure,
-                    // to configure for material banner
-                    inMaterialBanner: true,
-                  ),
- behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                                            duration: Duration(seconds: 2),
                                           ),
                                         );
                                       }
                                       else {
-                                        ScaffoldMessenger.of(context)
+                                        print('********************************************');
+                                        print('result non null');
+                                        print('********************************************');
+                                        /*ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                           /* content: Text("Succés",
+                                            content: Text("Succés",
                                               style: TextStyle(
                                                   fontFamily: 'Poppins'),
                                             ),
-                                            duration: Duration(seconds: 2),*/
-                                            duration: const Duration(seconds: 4),
-                    content: AwesomeSnackbarContent(
-                    title: 'Bravo!!',
-                    message:
-                        'inscreption avec succes',
-
-                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                    contentType: ContentType.success,
-                    // to configure for material banner
-                    inMaterialBanner: true,
-                  ),
- behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                                            duration: Duration(seconds: 2),
                                           ),
-                                        );
+                                        );*/
                                         utilisateur.identifiant = result!.uid;
                                         BaseDeDonnee().creerUtilisateur(
                                             utilisateur);
+                                        print('********************************************');
+                                        print("avant push");
+                                        print('********************************************');
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
@@ -488,26 +403,11 @@ class _SinupState extends State<Sinup> {
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(
-                                            /*content: Text(
+                                            content: Text(
                                               "Veuillez verifier vos donnees",
                                               style: TextStyle(fontFamily: 'Poppins'),
                                             ),
-                                            duration: Duration(seconds: 2),*/
-                                            duration: const Duration(seconds: 4),
-                    content: AwesomeSnackbarContent(
-                    title: 'Oh Erreur!!',
-                    message:
-                        'Vous devez verifier vos donnees',
-
-                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                    contentType: ContentType.failure,
-                    // to configure for material banner
-                    inMaterialBanner: true,
-                  ),
- behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                                            
+                                            duration: Duration(seconds: 2),
                                           )
                                       );
                                     }
