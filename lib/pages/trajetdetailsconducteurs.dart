@@ -1,10 +1,8 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
-import '../Services/localNotification.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'AfficherTrajetSurLeMap.dart';
 

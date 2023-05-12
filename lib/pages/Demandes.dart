@@ -88,17 +88,10 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                         vertical: screenHeight * 0.015),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Detailspassaer(
-                                  photoUrl: 'assets/images/user-profile.png',
-                                  fullName: ' weal bougessa',
-                                  rating: 2,
-                                  phoneNumber: '0665996688',
-                                  email: 'bougessa.hrach@esi.dz',
-                                  carName: 'car_pooling'),
-                            ));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => Detailspassaer()));
                       },
                       child: Card(
                           color: Colors.white,
@@ -240,7 +233,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                     horizontal:
                                                         screenWidth * 0.01,
                                                     vertical:
-                                                        screenHeight * 0.005),
+                                                        screenHeight * 0.007),
                                                 child: InkWell(
                                                   onTap: () {
                                                     print("khaled");
@@ -257,7 +250,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: screenWidth * 0.05,
-                                              vertical: screenHeight * 0.005),
+                                              vertical: screenHeight * 0.008),
                                           child: Text(
                                             'Accepter le passager',
                                             style: GoogleFonts.lato(
@@ -309,7 +302,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                     horizontal:
                                                         screenWidth * 0.01,
                                                     vertical:
-                                                        screenHeight * 0.005),
+                                                        screenHeight * 0.007),
                                                 child: InkWell(
                                                   onTap: () {
                                                   },
@@ -325,7 +318,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: screenWidth * 0.05,
-                                              vertical: screenHeight * 0.005),
+                                              vertical: screenHeight * 0.008),
                                           child: Text(
                                             'Refuser le passager',
                                             style: GoogleFonts.lato(

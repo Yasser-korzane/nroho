@@ -21,7 +21,7 @@ class _WelcomePageState extends State<WelcomePage>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 500),
     );
     _animation = CurvedAnimation(
       parent: _animationController,

@@ -17,7 +17,7 @@ class cardLancerListH extends StatelessWidget{
         backgroundColor: Colors.white,
         body: Center(
             child: Text(
-              "Aucune trajet lancé pour l'instant",
+              "Aucun trajet parcourus pour l'instant",
               style: TextStyle(
                   fontFamily: 'poppins',
                   fontSize: 18,
@@ -54,40 +54,9 @@ class cardLancerListH extends StatelessWidget{
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget> [
-                                //Image،
-                                Container(
-                                  height: screenHeight*0.06,
-                                  width: screenHeight*0.06,
-                                  child: CircleAvatar(
-                                    //backGrounndImage: AssetImage('your image path'),
-                                    backgroundImage: NetworkImage('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
-                                    radius: 50,
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text('nom',style: TextStyle(fontFamily: 'Poppins'),),
-                                        Text('prenom',style: TextStyle(fontFamily: 'Poppins'),),
-                                        SizedBox(
-                                          height: 1,
-                                          width: 50,
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                      //crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Icon(Icons.star , color: Colors.amber[600] ,),
-                                        Text('4',style: TextStyle(fontFamily: 'Poppins'),),
-                                        SizedBox(
-                                          height: 1,
-                                          width: 160,
-                                        )
-                                      ],
-                                    )
-                                  ],
+                                Text(
+                                  ' 21 janvier 2024 a 18:10',
+                                  style: TextStyle(fontFamily: 'poppins'),
                                 ),
                                 Column(
                                     children : [
