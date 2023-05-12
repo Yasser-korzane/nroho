@@ -36,7 +36,7 @@ class _CommancerState extends State<Commancer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Nro7o',
+                          'nroho',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 32.0,
