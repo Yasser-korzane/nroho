@@ -12,7 +12,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart'; 
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class Connexin extends StatefulWidget {
   @override
@@ -23,8 +23,9 @@ class _MyConnexinState extends State<Connexin> {
   var _isObscured;
   late StreamSubscription subscription;
   var isDeviceConnected = false;
-  bool isAlertSet=false;
-final _formKey = GlobalKey<FormState>();
+  bool isAlertSet = false;
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,18 +33,19 @@ final _formKey = GlobalKey<FormState>();
     _isObscured = false;
     getConnectivity();
   }
-  getConnectivity() =>
-      subscription = Connectivity().onConnectivityChanged.listen(
-              (ConnectivityResult result) async{
-            isDeviceConnected = await InternetConnectionChecker().hasConnection;
-            if(!isDeviceConnected && isAlertSet == false){
-              showDialogBox();
-              setState(() {
-                isAlertSet = true;
-              });
-            }
-          }
-      );
+
+  getConnectivity() => subscription = Connectivity()
+          .onConnectivityChanged
+          .listen((ConnectivityResult result) async {
+        isDeviceConnected = await InternetConnectionChecker().hasConnection;
+        if (!isDeviceConnected && isAlertSet == false) {
+          showDialogBox();
+          setState(() {
+            isAlertSet = true;
+          });
+        }
+      });
+
   @override
   void dispose() {
     subscription.cancel();
@@ -62,13 +64,21 @@ final _formKey = GlobalKey<FormState>();
         "",
         Evaluation([], 0, 0),
         Vehicule("", "", "", "", ""),
-        false, [], [], [],[],'','');
+        false,
+        [],
+        [],
+        [],
+        [],
+        '',
+        '');
   }
+
   /** ************************************************************************************************** **/
   /** *********************************** Les controlleurs ********************************************** **/
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerMotDePasse = TextEditingController();
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+
   /** ************************************************************************************************** **/
   @override
   Widget build(BuildContext context) {
@@ -115,50 +125,48 @@ final _formKey = GlobalKey<FormState>();
                                   style: TextStyle(fontFamily: 'Poppins'),
                                   controller: _controllerEmail,
                                   keyboardType: TextInputType.emailAddress,
-                                 /* validator: (input) {
+                                  /* validator: (input) {
                                     if (input == null) {
                                       return 'Entrez votre Email ';
                                     } else {
                                       return null;
                                     }
                                   },*/
-                                   validator: (input) {
-                      if (input == null  || input == '') {
-                        return 'Entrez votre adresse email ';
-                      } else if (!RegExp(
-                              r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
-                          .hasMatch(input)) {
-                        return 'Not valid email';
-                      } else if (!input.endsWith('@esi.dz')) {
-                        return 'only Email esi allowd';
-                      }
-                      return null;
-                    },
-
+                                  validator: (input) {
+                                    if (input == null || input == '') {
+                                      return 'Entrez votre adresse email ';
+                                    } else if (!RegExp(
+                                            r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
+                                        .hasMatch(input)) {
+                                      return 'Not valid email';
+                                    } else if (!input.endsWith('@esi.dz')) {
+                                      return 'only Email esi allowd';
+                                    }
+                                    return null;
+                                  },
                                   decoration: InputDecoration(
-                                   /* prefixIcon: Icon(
+                                    /* prefixIcon: Icon(
                                       Icons.person_outline_outlined,
                                       color: Colors.black,
                                       size: 20,
                                     ),*/
-                                      prefixIcon: const Icon(
-                        Icons.email_outlined,
-                        color: Colors.black,
-                        size: 20,
-                      ),
+                                    prefixIcon: const Icon(
+                                      Icons.email_outlined,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
                                     //border: OutlineInputBorder(),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(12)),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
                                     ),
 
                                     labelText: 'Email',
                                     hintText:
                                         'Entrez votre adresse mail de l\'esi',
                                     hintStyle: TextStyle(
-                                        color: Colors.grey[700],
-                                        fontSize: 14),
-                                       /* color: Colors.grey[800],
+                                        color: Colors.grey[700], fontSize: 14),
+                                    /* color: Colors.grey[800],
                                         fontSize: 14,fontFamily: 'Poppins'),*/
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
@@ -169,7 +177,7 @@ final _formKey = GlobalKey<FormState>();
                                 ),
                                 TextFormField(
                                     obscureText: !_isObscured,
-                                  style: TextStyle(fontFamily: 'Poppins'),
+                                    style: TextStyle(fontFamily: 'Poppins'),
                                     //keyboardType: TextInputType.visiblePassword,
                                     controller: _controllerMotDePasse,
                                     keyboardType: TextInputType.visiblePassword,
@@ -179,40 +187,33 @@ final _formKey = GlobalKey<FormState>();
                                       }
                                       return null;
                                     },*/
-                                     validator: (input) {
-                        if (input == null || input == '') {
-                          return 'Entrez votre mot de passe ';
-                        }else if (input.toString().length < 8  ){
-                          return 'nombre de chifre doit etre superieur a 8 ';
-                        }
-                        return null;
-                      },
+                                    validator: (input) {
+                                      if (input == null || input == '') {
+                                        return 'Entrez votre mot de passe ';
+                                      } else if (input.toString().length < 8) {
+                                        return 'nombre de chifre doit etre superieur a 8 ';
+                                      }
+                                      return null;
+                                    },
                                     decoration: InputDecoration(
-                                       /* prefixIcon: Icon(
-                                          Icons.fingerprint,
+                                        prefixIcon: const Icon(
+                                          Icons.key,
                                           color: Colors.black,
                                           size: 20,
-                                        ),*/
-                                        prefixIcon: const Icon(
-                            Icons.key,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                                        //border: OutlineInputBorder(),
+                                        ),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(12)),
                                         ),
                                         labelText: 'Mot de passe',
-                                        labelStyle: TextStyle(
-                                          fontFamily:'Poppins'
-                                        ),
+                                        labelStyle:
+                                            TextStyle(fontFamily: 'Poppins'),
                                         hintText: 'Entrez votre mot de passe ',
                                         hintStyle: TextStyle(
                                             color: Colors.grey[700],
-                                            fontSize: 14
-                                        ,fontFamily: 'Poppins'),
-                                            /*color: Colors.grey[800],
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins'),
+                                        /*color: Colors.grey[800],
                                             fontSize: 14,fontFamily: 'Poppins'),*/
                                         fillColor: Colors.grey.shade100,
                                         filled: true,
@@ -235,67 +236,88 @@ final _formKey = GlobalKey<FormState>();
                                   child: ElevatedButton(
                                     onPressed: () async {
                                       if (_formKey.currentState!.validate()) {
-                                            if (_baseDeDonnee.validerEmail(_controllerEmail.text) &&
-                                          _baseDeDonnee.validerMotDePasse(
-                                              _controllerMotDePasse.text)) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => Loading()),
-                                        );
-                                        dynamic result = await _auth.signIn(
-                                            _controllerEmail.text,
-                                            _controllerMotDePasse.text);
-                                        if (result == null) {
-                                          Navigator.pop(context);
-
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  "Veuillez verifier vos données ",
-                                                style: TextStyle(fontFamily: 'Poppins'),
-                                              ),
-                                              duration: Duration(seconds: 2),
-                                            ),
-                                          );
-                                        }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
-      );
-    }
-                                      // MaterialPageRoute(builder: (context) => const home());
-                                     else {
-                                          //MaterialPageRoute(builder: (context) => const home());
-                                          Navigator.pushAndRemoveUntil(
+                                        if (_baseDeDonnee.validerEmail(
+                                                _controllerEmail.text) &&
+                                            _baseDeDonnee.validerMotDePasse(
+                                                _controllerMotDePasse.text)) {
+                                          Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => home()),
-                                            (Route<dynamic> route) => false,
+                                                builder: (context) =>
+                                                    Loading()),
                                           );
-                                        }
+                                          dynamic result = await _auth.signIn(
+                                              _controllerEmail.text,
+                                              _controllerMotDePasse.text);
+                                          if (result == null) {
+                                            Navigator.pop(context);
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                duration:
+                                                const Duration(seconds: 4),
+                                                content: AwesomeSnackbarContent(
+                                                  title: 'Oh Erreur!!',
+                                                  message:
+                                                  'Veuillez vérifier vos données',
+
+                                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                                  contentType: ContentType.failure,
+                                                  // to configure for material banner
+                                                  inMaterialBanner: true,
+                                                ),
+                                                behavior: SnackBarBehavior.floating,
+                                                backgroundColor: Colors.transparent,
+                                                elevation: 0,
+                                              ),
+                                            );
+                                          } // end if result is null
+                                          else {// if result is not null
+                                            Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => home()),
+                                                  (Route<dynamic> route) => false,
+                                            );
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(
+                                                duration: const Duration(seconds: 3),
+                                                content: AwesomeSnackbarContent(
+                                                  title: 'Succés!!',
+                                                  message: 'Connexion avec succés',
+
+                                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                                  contentType: ContentType.success,
+                                                  // to configure for material banner
+                                                  inMaterialBanner: true,
+                                                ),
+                                                behavior: SnackBarBehavior.floating,
+                                                backgroundColor: Colors.transparent,
+                                                elevation: 0,
+                                              ),
+                                            );
+
+                                          }// end if result is not null
+                                        } // end if email and mot de passe are correct
                                       } else {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            /*content: Text(
-                                                "Veuillez verifier vos données",                                  style: TextStyle(fontFamily: 'Poppins'),
-                                            ),
-                                            duration: Duration(seconds: 2),*/
-                                             duration: const Duration(seconds: 4),
-                    content: AwesomeSnackbarContent(
-                    title: 'Oh Erreur!!',
-                    message:
-                        'Veuillez verifier vos données',
+                                            duration:
+                                                const Duration(seconds: 2),
+                                            content: AwesomeSnackbarContent(
+                                              title: 'Oh Erreur!!',
+                                              message:
+                                                  'Veuillez vérifier vos données',
 
-                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                    contentType: ContentType.failure,
-                    // to configure for material banner
-                    inMaterialBanner: true,
-                  ),
- behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
+                                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                              contentType: ContentType.failure,
+                                              // to configure for material banner
+                                              inMaterialBanner: true,
+                                            ),
+                                            behavior: SnackBarBehavior.floating,
+                                            backgroundColor: Colors.transparent,
+                                            elevation: 0,
                                           ),
                                         );
                                       }
@@ -303,7 +325,9 @@ final _formKey = GlobalKey<FormState>();
                                     child: Text(
                                       'Connexion',
                                       style: TextStyle(
-                                          fontSize: 18, color: Colors.white,fontFamily: 'Poppins'),
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins'),
                                     ),
                                     style: ButtonStyle(
                                       backgroundColor:
@@ -319,9 +343,16 @@ final _formKey = GlobalKey<FormState>();
                                   alignment: Alignment.center,
                                   child: TextButton(
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => Emailgetter()));
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Emailgetter()));
                                     },
-                                    child: Text('Mot de passe oublié ?',style: TextStyle(fontFamily: 'Poppins'),),
+                                    child: Text(
+                                      'Mot de passe oublié ?',
+                                      style: TextStyle(fontFamily: 'Poppins'),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -336,7 +367,11 @@ final _formKey = GlobalKey<FormState>();
                           children: [
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sinup(),));
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Sinup(),
+                                    ));
                               },
                               child: Text.rich(
                                 TextSpan(
@@ -376,29 +411,30 @@ final _formKey = GlobalKey<FormState>();
             ),
           );
   }
-  showDialogBox()=> showCupertinoDialog<String>(
+
+  showDialogBox() => showCupertinoDialog<String>(
       context: context,
-      builder:(BuildContext context) =>CupertinoAlertDialog(
-        title: const Text('Erreur de connexion'),
-        content: const Text('Vérifier votre connexion internet'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () async{
-              Navigator.pop(context , 'cancel');
-              setState(() {
-                isAlertSet =false;
-              });
-              isDeviceConnected = await InternetConnectionChecker().hasConnection;
-              if(!isDeviceConnected){
-                showDialogBox();
-                setState(() {
-                  isAlertSet =true;
-                });
-              }
-            },
-            child: const Text('Réessayez'),
-          )
-        ],
-      )
-  );
+      builder: (BuildContext context) => CupertinoAlertDialog(
+            title: const Text('Erreur de connexion'),
+            content: const Text('Vérifier votre connexion internet'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () async {
+                  Navigator.pop(context, 'cancel');
+                  setState(() {
+                    isAlertSet = false;
+                  });
+                  isDeviceConnected =
+                      await InternetConnectionChecker().hasConnection;
+                  if (!isDeviceConnected) {
+                    showDialogBox();
+                    setState(() {
+                      isAlertSet = true;
+                    });
+                  }
+                },
+                child: const Text('Réessayez'),
+              )
+            ],
+          ));
 }

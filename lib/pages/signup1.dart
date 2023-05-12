@@ -443,13 +443,7 @@ class _SinupState extends State<Sinup> {
                                       Navigator.pop(context);
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
-                                          /*content: Text(
-                                              "Vous devez verifier les donneees",
-                                              style: TextStyle(
-                                                  fontFamily: 'Poppins'),
-                                            ),
-                                            duration: Duration(seconds: 2),*/
-                                          duration: const Duration(seconds: 4),
+                                          duration: const Duration(seconds: 2),
                                           content: AwesomeSnackbarContent(
                                             title: 'Oh Erreur!!',
                                             message: 'Vous devez verifier vos donnees',
@@ -467,15 +461,10 @@ class _SinupState extends State<Sinup> {
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
-                                          /* content: Text("Succés",
-                                              style: TextStyle(
-                                                  fontFamily: 'Poppins'),
-                                            ),
-                                            duration: Duration(seconds: 2),*/
-                                          duration: const Duration(seconds: 4),
+                                          duration: const Duration(seconds: 2),
                                           content: AwesomeSnackbarContent(
                                             title: 'Bravo!!',
-                                            message: 'inscreption avec succes',
+                                            message: 'Inscreption avec succés',
 
                                             /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                             contentType: ContentType.success,
@@ -500,12 +489,7 @@ class _SinupState extends State<Sinup> {
                                   }
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    /*content: Text(
-                                              "Veuillez verifier vos donnees",
-                                              style: TextStyle(fontFamily: 'Poppins'),
-                                            ),
-                                            duration: Duration(seconds: 2),*/
-                                    duration: const Duration(seconds: 4),
+                                    duration: const Duration(seconds: 2),
                                     content: AwesomeSnackbarContent(
                                       title: 'Oh Erreur!!',
                                       message: 'Vous devez verifier vos donnees',
