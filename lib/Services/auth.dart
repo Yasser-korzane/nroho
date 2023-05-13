@@ -30,9 +30,13 @@ class AuthService{
   // methode to sign up
     Future signUp(String email,String password,Utilisateur utilisateur) async{
     try{
+      if(FirebaseAuth.instance.currentUser!=null){
+        FirebaseAuth.instance.currentUser!.delete();
+      }
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user =result.user;
       utilisateur.identifiant = user!.uid;
+
       await sendEmailVerification(user);
      /* BaseDeDonnee().creerUtilisateur(utilisateur);*/
      // return _userfromfirebase(user);

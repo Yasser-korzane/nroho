@@ -1,12 +1,18 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
-class Emailgetter extends StatelessWidget {
+class Emailgetter extends StatefulWidget {
   const Emailgetter({super.key});
 
   @override
+  State<Emailgetter> createState() => _EmailgetterState();
+}
+
+class _EmailgetterState extends State<Emailgetter> {
+  TextEditingController _controllerEmail = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerEmail = TextEditingController();
     final AuthService _auth = AuthService();
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;

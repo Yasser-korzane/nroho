@@ -6,10 +6,14 @@ import 'package:appcouvoiturage/pages/home.dart';
 
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 
+import '../Services/base de donnee.dart';
+import '../AppClasses/Utilisateur.dart';
+
 class Verification extends StatefulWidget {
   final String email;
+  final Utilisateur utilisateur;
 
-  const Verification({ Key? key,required  this.email }) : super(key: key);
+  const Verification({ Key? key,required this.email,required this.utilisateur }) : super(key: key);
 
   @override
   _VerificationState createState() => _VerificationState();
@@ -112,7 +116,7 @@ class _VerificationState extends State<Verification> {
                       duration: Duration(milliseconds: 500),
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: screenWidth*0.05),
-                        child: Text("Entrer le code à 4 chiffres envoyé à \n votre email",
+                        child: Text("Vérifier votre compte en cliquant sur le lien enovoyé dans votre email \n ${widget.email}",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 16, color: Colors.grey.shade500, height: 1.5,fontFamily: 'Poppins'),
                         ),
@@ -127,13 +131,14 @@ class _VerificationState extends State<Verification> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vous n'avez pas reçu le mail de validation ?\n", style: TextStyle(fontSize: 12, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
+                        Text("Vous n'avez pas reçu le mail ?", style: TextStyle(fontSize: 11, color: Colors.grey.shade500,fontFamily: 'Poppins'),),
                         TextButton(
                             onPressed: () {
                               if (_isResendAgain) return;
+                              FirebaseAuth.instance.currentUser!.sendEmailVerification();
                               resend();
                             },
-                            child: Text(_isResendAgain ? "Réessayez dans  " + _start.toString() : "Renvoyer", style: TextStyle(fontSize:10 ,color: Colors.blueAccent,fontFamily: 'Poppins'),)
+                            child: Text(_isResendAgain ? "Réessayez dans  " + _start.toString() : "Renvoyer", style: TextStyle(fontSize:11 ,color: Colors.blueAccent,fontFamily: 'Poppins'),)
                         )
                       ],
                     ),
@@ -148,6 +153,7 @@ class _VerificationState extends State<Verification> {
                       onPressed: (){
                         FirebaseAuth.instance.currentUser!.reload();
                         if(FirebaseAuth.instance.currentUser!.emailVerified){
+                          BaseDeDonnee().creerUtilisateur(widget.utilisateur);
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -155,6 +161,7 @@ class _VerificationState extends State<Verification> {
                                     home()),
                                 (Route<dynamic> route) => false,
                           );
+
                         };
                         print(FirebaseAuth.instance.currentUser!.emailVerified);
                       },
@@ -183,7 +190,7 @@ class _VerificationState extends State<Verification> {
                           strokeWidth: 3,
                           color: Colors.black,
                         ),
-                      ) : _isVerified ? Icon(Icons.check_circle, color: Colors.white, size: 30,) : Text("Verifier", style: TextStyle(color: Colors.white,fontFamily: 'Poppins'),),
+                      ) : _isVerified ? Icon(Icons.check_circle, color: Colors.white, size: 30,) : Text("J'ai Vérifié", style: TextStyle(color: Colors.white,fontFamily: 'Poppins'),),
                     ),
                   )
                 ],)

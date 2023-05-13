@@ -42,6 +42,7 @@ class _WelcomePageState extends State<WelcomePage>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: Scaffold(
           body: Stack(

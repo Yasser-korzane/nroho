@@ -15,14 +15,20 @@ class Page_recherche extends StatefulWidget {
 class _Page_rechercheState extends State<Page_recherche> {
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
 
+
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery
+        .of(context)
+        .size;
+    final double screenWidth = screenSize.width;
+    final double screenHeight = screenSize.height;
     return Scaffold(
       body:
       Column(
         children:<Widget> [
           Container(
-            padding: EdgeInsets.fromLTRB(0, 110, 0, 0),
+            padding: EdgeInsets.fromLTRB(0, screenHeight*0.07, 0, 0),
             child: Image.asset("assets/images/photo_recherche.png"),
           ),
           Container(
@@ -48,7 +54,7 @@ class _Page_rechercheState extends State<Page_recherche> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(10, 0, 0,20),
+            padding: EdgeInsets.fromLTRB(screenWidth*0.010, 0, 0,screenHeight*0.020),
             child: Text(
               "pollution et sauvez la planéte !",
               style: TextStyle(
@@ -59,12 +65,12 @@ class _Page_rechercheState extends State<Page_recherche> {
             ),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+            padding: EdgeInsets.fromLTRB(screenWidth*0.080, 0,screenWidth*0.080, 0),
             color: Colors.white30,
             child: LinearProgressIndicatorDemo(),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: EdgeInsets.fromLTRB(0,screenHeight*0.010, 0, 0),
             child: Text(
               "Nous recherchons vos covoitureurs",
               style: TextStyle(

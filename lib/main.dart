@@ -1,8 +1,10 @@
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Services/localNotification.dart';
+import 'package:appcouvoiturage/pages/Verification.dart';
 import 'package:appcouvoiturage/pages/begin.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/Services/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +38,7 @@ Future<void> main() async {
           "WelcomPage": (context) {
             return const WelcomePage();
           },
-          "home": (context) {
+          "/home": (context) {
             return const home();
           }
         },
@@ -54,6 +56,7 @@ class MyApp extends StatelessWidget {
       catchError: (User, Users) => null,
       initialData: null,
       value: AuthService().user,
+
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
@@ -67,8 +70,24 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
-        home: WelcomePage(),
-      ),
-    );
+        home: Builder(
+            builder: (BuildContext context) {
+              return WillPopScope(
+              onWillPop: () async {
+                // Action lorsque l'utilisateur quitte l'application
+                if(FirebaseAuth.instance.currentUser!=null){
+                      if(!FirebaseAuth.instance.currentUser!.emailVerified){
+                        FirebaseAuth.instance.currentUser!.delete();
+                      }
+                 }
+                print('L\'utilisateur a quitté l\'application');
+                return true;
+              },
+                child: WelcomePage(),
+      );
   }
+    )
+    )
+    );
+}
 }

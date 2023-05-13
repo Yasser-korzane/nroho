@@ -10,6 +10,7 @@ import 'package:appcouvoiturage/Services/base de donnee.dart';
 import '../Services/localNotification.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:appcouvoiturage/main.dart';
 
 class DemandesPassager extends StatefulWidget {
   @override
@@ -198,9 +199,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 SizedBox(height: screenHeight * 0.005),
                                 GestureDetector(
                                   onTap: () async{
-                                    print("hichem");
-                                    baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",true));
-                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem a accepté votre demande pour rejoindre son trajet");
+                                    baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}","Boulacheb","Hichem","Alger","el Aziziya",true));
+                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Un conducteur a accepté votre demande pour rejoindre son trajet");
 
 
                                   },
@@ -236,7 +236,6 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                         screenHeight * 0.007),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    print("khaled");
                                                   },
                                                   child: Icon(
                                                     Icons.check_outlined,
@@ -271,8 +270,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 SizedBox(height: screenHeight * 0.01),
                                 GestureDetector(
                                   onTap: () {
-                                    baseDeDonnee.ajouterNotification("pKxumk4XaoUi9ou1WuesRd6Bzs33",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Boulacheb","Hichem","Alger","el Aziziya",false));
-                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Hichem a refusé votre demande pour rejoindre son trajet");
+                                    baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}","Boulacheb","Hichem","Alger","el Aziziya",true));
+                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -357,7 +356,11 @@ Future<void> sendNotification(String fcmToken, String title, String body) async 
         'notification': <String, dynamic>{
           'title': title,
           'body': body,
+          'image': 'asset://assets/images/logo.png',
           'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+        },
+        'data':{
+          'route': '/home',
         },
         'to': fcmToken,
       },

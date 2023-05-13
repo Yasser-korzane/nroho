@@ -2,6 +2,7 @@ import 'package:appcouvoiturage/Services/auth.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/Verification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import '../AppClasses/Evaluation.dart';
@@ -51,7 +52,7 @@ class _SinupState extends State<Sinup> {
 
   /// ********************************************* Les Fonctions *********************************************
   Utilisateur creerUtilisateurApresSignUp(String identifiant, String nom,
-      String prenom, String email, String motDePasse, String numero) {
+      String prenom, String email, String motDePasse, String numero,String fcmtoken) {
     return Utilisateur(
         identifiant,
         nom,
@@ -67,7 +68,7 @@ class _SinupState extends State<Sinup> {
         [],
         [],
         '',
-        '');
+        fcmtoken);
   }
 
   /** ************************************************************************************************** **/
@@ -421,14 +422,15 @@ class _SinupState extends State<Sinup> {
                                           _controllerMotDePasse.text) &&
                                       _baseDeDonnee
                                           .validatePhoneNumber(_controllerPhone.text)) {
-                                    Utilisateur utilisateur =
+                                    final fcm =await FirebaseMessaging.instance.getToken();
+                                    Utilisateur utilisateur1 =
                                     creerUtilisateurApresSignUp(
                                         '',
                                         _controllerNom.text,
                                         _controllerPrenom.text,
                                         _controllerEmail.text,
                                         _controllerMotDePasse.text,
-                                        _controllerPhone.text);
+                                        _controllerPhone.text,fcm!);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -437,8 +439,7 @@ class _SinupState extends State<Sinup> {
                                     dynamic result = await auth.signUp(
                                         _controllerEmail.text,
                                         _controllerMotDePasse.text,
-                                        utilisateur);
-                                    await result.sendEmailVerification;
+                                        utilisateur1);
                                     if (result == null) {
                                       Navigator.pop(context);
                                       ScaffoldMessenger.of(context).showSnackBar(
@@ -459,12 +460,20 @@ class _SinupState extends State<Sinup> {
                                         ),
                                       );
                                     } else {
+                                      utilisateur1.identifiant = result!.uid;
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Verification(
+                                                email: _controllerEmail.text,utilisateur: utilisateur1)),
+                                        // (Route<dynamic> route) => false,
+                                      );
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           duration: const Duration(seconds: 2),
                                           content: AwesomeSnackbarContent(
                                             title: 'Bravo!!',
-                                            message: 'Inscreption avec succés',
+                                            message: 'Inscription avec succés',
 
                                             /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                             contentType: ContentType.success,
@@ -475,15 +484,6 @@ class _SinupState extends State<Sinup> {
                                           backgroundColor: Colors.transparent,
                                           elevation: 0,
                                         ),
-                                      );
-                                      utilisateur.identifiant = result!.uid;
-                                      BaseDeDonnee().creerUtilisateur(utilisateur);
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Verification(
-                                                email: _controllerEmail.text)),
-                                        // (Route<dynamic> route) => false,
                                       );
                                     }
                                   }

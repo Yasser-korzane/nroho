@@ -1,14 +1,93 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'AfficherTrajetSurLeMap.dart';
+import 'package:appcouvoiturage/pages/profilepage.dart';
+import 'package:appcouvoiturage/Services/base de donnee.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Notifications.dart';
+import '../AppClasses/PlusInformations.dart';
+import '../AppClasses/Trajet.dart';
+import '../AppClasses/Vehicule.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   ConducteurTrajet _conducteurTrajet ;
   Details(this._conducteurTrajet);
+
+  @override
+  State<Details> createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  late Utilisateur _utilisateur;
+  Future _getDataFromDataBase() async {
+    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
+    try {
+      await FirebaseFirestore.instance
+          .collection('Utilisateur')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          setState(() {
+            _utilisateur.identifiant = snapshot.data()!['identifiant'];
+            _utilisateur.nom = snapshot.data()!['nom'];
+            _utilisateur.prenom = snapshot.data()!['prenom'];
+            _utilisateur.email = snapshot.data()!['email'];
+            _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
+            _utilisateur.evaluation = Evaluation(
+              List<String>.from(snapshot.data()!['evaluation']['feedback']),
+              snapshot.data()!['evaluation']['etoiles'],
+              snapshot.data()!['evaluation']['nbSignalement'],
+            );
+            _utilisateur.vehicule = Vehicule(
+              snapshot.data()!['vehicule']['marque'],
+              snapshot.data()!['vehicule']['typevehicule'],
+              snapshot.data()!['vehicule']['matricule'],
+              snapshot.data()!['vehicule']['modele'],
+              snapshot.data()!['vehicule']['policeAssurance'],
+            );
+            _utilisateur.statut = snapshot.data()!['statut'];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajet'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
+              );
+              _utilisateur.notifications.add(notification);
+            }
+            _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
+            _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
+            if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
+            //tests by printing
+          }); // end setState
+        } else {
+          // end snapshot exist
+          throw Exception("Utilisateur does not exist.");
+        }
+      });
+    } catch (e) {
+      throw Exception("Failed to get utilisateur.");
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getDataFromDataBase();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -20,10 +99,10 @@ class Details extends StatelessWidget {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     List plusInformations =
-      ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.fumeur)}',
-      'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.bagage)}',
-      'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.animaux)}',
-      'Le nombre de passager que le conducteur accepte : ${_conducteurTrajet.trajetLance.plusInformations.nbPlaces.toString()}'];
+      ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.fumeur)}',
+      'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.bagage)}',
+      'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.animaux)}',
+      'Le nombre de passager que le conducteur accepte : ${widget._conducteurTrajet.trajetLance.plusInformations.nbPlaces.toString()}'];
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -38,13 +117,13 @@ class Details extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 38.0,
-                    backgroundImage: NetworkImage(_conducteurTrajet.utilisateur.imageUrl),
+                    backgroundImage: NetworkImage(widget._conducteurTrajet.utilisateur.imageUrl),
                   ),
                   SizedBox(width: 16.0),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(_conducteurTrajet.utilisateur.nom +' '+ _conducteurTrajet.utilisateur.prenom,
+                      Text(widget._conducteurTrajet.utilisateur.nom +' '+ widget._conducteurTrajet.utilisateur.prenom,
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               fontSize: 20.0,
@@ -58,7 +137,7 @@ class Details extends StatelessWidget {
                           (index) => Icon(
                             Icons.star,
                             size: 20.0,
-                            color: index < _conducteurTrajet.utilisateur.evaluation.etoiles.round()
+                            color: index < widget._conducteurTrajet.utilisateur.evaluation.etoiles.round()
                                 ? Colors.yellow
                                 : Colors.grey,
                           ),
@@ -74,7 +153,7 @@ class Details extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text("Email = ",
+                    child: Text("Email : ",
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                             fontSize: 15.0,
@@ -83,7 +162,7 @@ class Details extends StatelessWidget {
                           ),
                         )),
                   ),
-                  Expanded(child: Text(_conducteurTrajet.utilisateur.email), flex: 8),
+                  Expanded(child: Text(widget._conducteurTrajet.utilisateur.email), flex: 8),
                 ],
               ),
               SizedBox(height: screenHeight * 0.01),
@@ -97,7 +176,7 @@ class Details extends StatelessWidget {
                             color: Color(0xff137c8b),
                           ),
                         )),
-                  Text(' '+_conducteurTrajet.utilisateur.vehicule.marque),
+                  Text(' '+widget._conducteurTrajet.utilisateur.vehicule.marque),
                 ],
               ),
               Row(
@@ -113,7 +192,7 @@ class Details extends StatelessWidget {
                           ),
                         )),
                   ),
-                  Expanded(child: Text(_conducteurTrajet.utilisateur.vehicule.matricule), flex: 5),
+                  Expanded(child: Text(widget._conducteurTrajet.utilisateur.vehicule.matricule), flex: 5),
                   Expanded(
                     child: IconButton(
                       icon: Icon(Icons.add_circle_outline),
@@ -180,7 +259,7 @@ class Details extends StatelessWidget {
                                 context: context,
                                 builder: (context) => Builder(
                                   builder: (context) {
-                                    if (_conducteurTrajet.trajetLance.villeIntermediaires.isEmpty) {
+                                    if (widget._conducteurTrajet.trajetLance.villeIntermediaires.isEmpty) {
                                       // If the list is empty, display a message
                                       return Center(
                                           child: Text(
@@ -192,14 +271,14 @@ class Details extends StatelessWidget {
                                           thickness: 1.0,
                                           color: Colors.grey[300],
                                         ),
-                                        itemCount: _conducteurTrajet.trajetLance.villeIntermediaires.length,
+                                        itemCount: widget._conducteurTrajet.trajetLance.villeIntermediaires.length,
                                         itemBuilder: (context, index) {
                                           return Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: ListTile(
                                               leading: Icon(Icons.location_on_outlined),
                                               title: Text(
-                                                _conducteurTrajet.trajetLance.villeIntermediaires[index],
+                                                widget._conducteurTrajet.trajetLance.villeIntermediaires[index],
                                                 style: TextStyle(
                                                   fontFamily: 'poppins',
                                                   fontWeight: FontWeight.w700,
@@ -251,7 +330,7 @@ class Details extends StatelessWidget {
                               context: context,
                               builder: (context) => Builder(
                                 builder: (context) {
-                                  if (_conducteurTrajet.utilisateur.evaluation.feedback.isEmpty) {
+                                  if (widget._conducteurTrajet.utilisateur.evaluation.feedback.isEmpty) {
                                     // If the list is empty, display a message
                                     return Center(
                                         child: Text(
@@ -264,14 +343,14 @@ class Details extends StatelessWidget {
                                         thickness: 1.0,
                                         color: Colors.grey[300],
                                       ),
-                                      itemCount: _conducteurTrajet.utilisateur.evaluation.feedback.length,
+                                      itemCount: widget._conducteurTrajet.utilisateur.evaluation.feedback.length,
                                       itemBuilder: (context, index) {
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: ListTile(
                                             leading: Icon(Icons.location_on_outlined),
                                             title: Text(
-                                              _conducteurTrajet.utilisateur.evaluation.feedback[index],
+                                              widget._conducteurTrajet.utilisateur.evaluation.feedback[index],
                                               style: TextStyle(
                                                 fontFamily: 'poppins',
                                                 fontWeight: FontWeight.w700,
@@ -330,7 +409,7 @@ class Details extends StatelessWidget {
                           child: ListTile(
                             title: Text('Oued Smar_Alger'),
                             subtitle: Text(
-                    '${_conducteurTrajet.trajetLance.dateDepart.hour}:${_conducteurTrajet.trajetLance.dateDepart.minute}',
+                    '${widget._conducteurTrajet.trajetLance.dateDepart.hour}:${widget._conducteurTrajet.trajetLance.dateDepart.minute}',
                       style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold),
@@ -342,7 +421,7 @@ class Details extends StatelessWidget {
                           child: ListTile(
                             title: Text('Maouklane_setif'),
                             subtitle: Text(
-                          '${_conducteurTrajet.trajetLance.tempsDePause.hour}:${_conducteurTrajet.trajetLance.tempsDePause.minute}',
+                          '${widget._conducteurTrajet.trajetLance.tempsDePause.hour}:${widget._conducteurTrajet.trajetLance.tempsDePause.minute}',
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold),
@@ -370,11 +449,11 @@ class Details extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${_conducteurTrajet.trajetLance.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_conducteurTrajet.trajetLance.dateDepart.month)} ${_conducteurTrajet.trajetLance.dateDepart.year}',
+                    Text('${widget._conducteurTrajet.trajetLance.dateDepart.day} ${BaseDeDonnee().moisAuChaine(widget._conducteurTrajet.trajetLance.dateDepart.month)} ${widget._conducteurTrajet.trajetLance.dateDepart.year}',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      _conducteurTrajet.trajetLance.coutTrajet.toString()+' DA',
+                      widget._conducteurTrajet.trajetLance.coutTrajet.toString()+' DA',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -389,7 +468,7 @@ class Details extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) =>
-                              AfficherTrajetSurLeMap(_conducteurTrajet.trajetLance.latLngDepart, _conducteurTrajet.trajetLance.latLngArrivee),
+                              AfficherTrajetSurLeMap(widget._conducteurTrajet.trajetLance.latLngDepart, widget._conducteurTrajet.trajetLance.latLngArrivee),
                         ));
                       },
                       icon: Icon(Icons.map_outlined, size: 32),
@@ -418,9 +497,9 @@ class Details extends StatelessWidget {
                       onPressed: () {
 
                         // handle right button press
-                        if (BaseDeDonnee().validatePhoneNumber(_conducteurTrajet.utilisateur.numeroTelephone)){
+                        if (BaseDeDonnee().validatePhoneNumber(widget._conducteurTrajet.utilisateur.numeroTelephone)){
                           launchUrlString(
-                              "tel:${_conducteurTrajet.utilisateur.numeroTelephone}");
+                              "tel:${widget._conducteurTrajet.utilisateur.numeroTelephone}");
                         }
                       },
                       icon: Icon(Icons.phone_in_talk_outlined, size: 32),
@@ -445,8 +524,8 @@ class Details extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  baseDeDonnee.ajouterNotification("N4sMJH5Un6aqWNuwGaTnQ34cPqt1",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Grine","Mohammed","Alger","el Aziziya",true));
-                  sendNotification("fcm_token_recepteur", "nouvelle notification", "un passager vous a envoyé une demande ");
+                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}","${widget._conducteurTrajet.trajetLance.id}","${_utilisateur.nom}","${_utilisateur.nom}","${widget._conducteurTrajet.trajetLance.villeDepart}","${widget._conducteurTrajet.trajetLance.villeArrivee}",true));
+                  sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "nouvelle notification", "un passager vous a envoyé une demande ");
                 },
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),
@@ -468,7 +547,9 @@ class Details extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(0.0),
                   padding: MaterialStateProperty.all<EdgeInsets>(
