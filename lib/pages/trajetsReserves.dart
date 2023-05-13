@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
@@ -39,7 +40,29 @@ class cardReserverList extends StatelessWidget{
               child: GestureDetector(
                 onTap: () async{
                   final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
-                  if (result) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                  if (!result){
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                      SnackBar(
+                        duration:
+                        const Duration(seconds: 2),
+                        content: AwesomeSnackbarContent(
+                          title: 'Succés!',
+                          message:
+                          'Le trajet a été annulée avec succès',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                          contentType: ContentType.success,
+                          // to configure for material banner
+                          inMaterialBanner: true,
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                    );
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                  }
                 },
                 child: Card(
                   color: Colors.white,

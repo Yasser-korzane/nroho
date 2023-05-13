@@ -1,6 +1,7 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/detailsTrajetLancer.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 class cardLancerList extends StatelessWidget {
@@ -35,7 +36,29 @@ class cardLancerList extends StatelessWidget {
               child: GestureDetector(
                 onTap: () async{
                   final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetLancer(lancer)));
-                  if (result) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                  if (result){
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                      SnackBar(
+                        duration:
+                        const Duration(seconds: 3),
+                        content: AwesomeSnackbarContent(
+                          title: 'Succés!',
+                          message:
+                          'Le trajet a été annulée avec succès',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                          contentType: ContentType.success,
+                          // to configure for material banner
+                          inMaterialBanner: true,
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                    );
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                  }
                 },
                 child: Card(
                   color: Colors.white,
