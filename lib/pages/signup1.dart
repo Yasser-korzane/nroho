@@ -240,17 +240,17 @@ class _SinupState extends State<Sinup> {
                               if (input == null || input == '') {
                                 return 'Entrez votre numero de téléphone ';
                               } else if (int.tryParse(input) == null) {
-                                return 'numero non valid ';
+                                return 'numéro non valid ';
                               } else if (input.length != 10 &&
                                   input.length != 14 &&
                                   input.length != 13) {
-                                return 'nombre de chiffre inferieur a 10 !';
+                                return 'nombre de chiffre inférieur a 10 !';
                               } else {
                                 if (input.length == 10 &&
                                     !input.startsWith('05') &&
                                     !input.startsWith('06') &&
                                     !input.startsWith('07')) {
-                                  return 'le numero ne commance pas avec 05 ou 06 ou 07';
+                                  return 'le numéro ne commance que avec 05 ou 06 ou 07';
                                 }
                                 if (input.length == 13 &&
                                     !input.startsWith('*2135') &&
@@ -262,7 +262,7 @@ class _SinupState extends State<Sinup> {
                                     !input.startsWith('002135') &&
                                     !input.startsWith('002136') &&
                                     !input.startsWith('002137')) {
-                                  return 'error';
+                                  return 'erreur';
                                 }
                               }
 
