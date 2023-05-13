@@ -22,7 +22,7 @@ class detailsTrajetLancer extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: ElevatedButton(
-          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
+          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.red),),
           onPressed: ()async{
             final bool result = await showDialog(
               context: context,
@@ -36,6 +36,7 @@ class detailsTrajetLancer extends StatelessWidget {
             }
           },
         ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(

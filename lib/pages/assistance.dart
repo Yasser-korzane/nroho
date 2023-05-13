@@ -76,7 +76,7 @@ class Assistance extends StatelessWidget {
                 icon: Icons.comment,
                 onPress: () {},
               ),
-              SizedBox(height: screenHeight * 0.25),
+              SizedBox(height: screenHeight * 0.22),
               Text.rich(
                 TextSpan(
                   text: 'besoin d’aide? ',

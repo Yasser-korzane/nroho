@@ -403,6 +403,7 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
@@ -432,13 +433,13 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
         fillColor: Colors.blue,
         borderRadius: BorderRadius.circular(20.0),
         disabledColor: Colors.white,
-        children:  const [
+        children:   [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+            padding: EdgeInsets.symmetric(horizontal: screenSize.width *0.06, vertical: screenSize.height * 0.015),
             child: Text('Passager',style: TextStyle(fontFamily: 'Poppins'),),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
+            padding: EdgeInsets.symmetric(horizontal: screenSize.width *0.06, vertical: screenSize.height * 0.015),
             child: Text('Conducteur',style: TextStyle(fontFamily: 'Poppins'),),
           ),
         ],

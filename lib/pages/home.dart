@@ -85,7 +85,7 @@ class _homeState extends State<home> {
                   gap: 8,
                   activeColor: Colors.blueGrey,
                   iconSize: 24,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: EdgeInsets.symmetric(horizontal: screenSize.width * 0.05, vertical: 12),
                   duration: Duration(milliseconds: 200),
                   tabBackgroundColor: Colors.grey[300]!,
                   color: Colors.black,

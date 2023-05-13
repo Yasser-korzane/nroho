@@ -27,6 +27,7 @@ class Historique extends StatelessWidget {
           elevation: 0,
           centerTitle: true,
           bottom: TabBar(
+            labelStyle: TextStyle(fontFamily: 'Poppins'),
             indicatorColor: Colors.blue,
             labelColor: Colors.blue.shade700,
             unselectedLabelColor: Colors.blueGrey[900],
