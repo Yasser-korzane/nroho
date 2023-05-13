@@ -34,14 +34,14 @@ Future<void> main() async {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: 'Poppins'),
         home: MyApp(),
-        routes: {
+        /*routes: {
           "WelcomPage": (context) {
             return const WelcomePage();
           },
           "/home": (context) {
             return const home();
           }
-        },
+        },*/
       ),
     );
   });

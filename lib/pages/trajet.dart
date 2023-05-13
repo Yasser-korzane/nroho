@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:appcouvoiturage/Shared/location.dart';
 import 'package:appcouvoiturage/pages/AjouterVillesIntermedieres.dart';
 import 'package:appcouvoiturage/pages/map.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -528,7 +529,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                     showSuggestion = false;
                                     switch (caseSelected) {
                                       case Selected.depart:
-                                        // selectFromCurrentPosition = false ;
                                         departData = data;
                                         idD = departData!.placeId;
                                         descriptionD = departData!.description;
@@ -616,18 +616,36 @@ class _OuAllezVousState extends State<OuAllezVous> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async {
-              if (((monDateEtTime2.hour < TimeOfDay.now().hour) ||
-                      (monDateEtTime2.hour == DateTime.now().hour &&
-                          monDateEtTime2.minute < DateTime.now().minute)) ||
+              if (
+              (monDateEtTime2.year< DateTime.now().year ||
+                  (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month < DateTime.now().month)
+                  || (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month == DateTime.now().month && monDateEtTime2.day< DateTime.now().day)
+                  || (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month == DateTime.now().month && monDateEtTime2.day==DateTime.now().day && monDateEtTime2.hour< DateTime.now().hour)
+                  || (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month == DateTime.now().month && monDateEtTime2.day==DateTime.now().day && monDateEtTime2.hour==DateTime.now().hour && monDateEtTime2.minute<DateTime.now().minute))
+                  ||
                   placeD.placeId == null ||
                   placeA.placeId! == null ||
                   placeD.placeId!.isEmpty ||
-                  placeA.placeId!.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                  placeA.placeId!.isEmpty
+              ) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(
                   SnackBar(
-                    duration: Duration(seconds: 3),
-                    content: Text(
-                        'Vous devez remplir tout les informations et entrer des informations correctes'),
+                    duration:
+                    const Duration(seconds: 3),
+                    content: AwesomeSnackbarContent(
+                      title: 'Attention!',
+                      message:
+                      'Vous devez remplir tout les informations et entrer des informations correctes',
+
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.warning,
+                      // to configure for material banner
+                      inMaterialBanner: true,
+                    ),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
                   ),
                 );
               } else {

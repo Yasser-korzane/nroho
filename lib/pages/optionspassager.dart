@@ -213,7 +213,7 @@ class _optionsState extends State<options> {
                   MaterialPageRoute(builder:(context)=> Page_recherche()));
               List<ConducteurTrajet> monListe = [];
               final stopwatch = Stopwatch()..start();
-              Duration duration = Duration(seconds: 2);
+              Duration duration = Duration(seconds: 10);
               while (stopwatch.elapsed < duration ) {
                 monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
               }

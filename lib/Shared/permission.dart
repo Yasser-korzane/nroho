@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,14 +10,27 @@ Future<bool> handleLocationPermission(BuildContext context) async {
 
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-            'Location services are disabled. Please enable the services')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 3),
+        content: AwesomeSnackbarContent(
+          title: 'Attention!',
+          message: 'Les services de localisation sont désactivés. Veuillez activer les services',
+          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+          contentType: ContentType.help,
+          // to configure for material banner
+          inMaterialBanner: true,
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
     await Future.delayed(const Duration(seconds: 5));
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return const home();
+        return home();
       },
     ));
     return false;
@@ -26,14 +40,42 @@ Future<bool> handleLocationPermission(BuildContext context) async {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Location permissions are denied')));
+        SnackBar(
+          duration: const Duration(seconds: 3),
+          content: AwesomeSnackbarContent(
+            title: 'Attention!',
+            message: 'Les services de localisation sont désactivés. Veuillez activer les services',
+            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+            contentType: ContentType.help,
+            // to configure for material banner
+            inMaterialBanner: true,
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      );
       return false;
     }
   }
   if (permission == LocationPermission.deniedForever) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-            'Location permissions are permanently denied, we cannot request permissions.')));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 3),
+        content: AwesomeSnackbarContent(
+          title: 'Attention!!',
+          message: 'Les autorisations de localisation sont définitivement refusées, nous ne pouvons pas demander d\'autorisations',
+
+          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+          contentType: ContentType.success,
+          // to configure for material banner
+          inMaterialBanner: true,
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+    );
     return false;
   }
   return true;

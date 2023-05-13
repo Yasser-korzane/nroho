@@ -74,6 +74,7 @@ class _Page_rechercheState extends State<Page_recherche> {
             child: Text(
               "Nous recherchons vos covoitureurs",
               style: TextStyle(
+                fontFamily: 'poppins',
                 color: Colors.grey[700],
                 fontSize: 16,
               ),
@@ -83,6 +84,7 @@ class _Page_rechercheState extends State<Page_recherche> {
             child: Text(
                 "Merci de patienter",
               style: TextStyle(
+                fontFamily: 'poppins',
                   color: Colors.grey[700],
                   fontSize: 16,
               ),

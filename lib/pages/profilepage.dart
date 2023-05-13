@@ -101,6 +101,7 @@ class _ProfilepageState extends State<Profilepage> {
       for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
         Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
         Trajet historique = BaseDeDonnee().creerTrajetVide();
+        historique.id = data['id'] ;
         historique.dateDepart = data['dateDepart'].toDate();
         historique.tempsDePause = data['tempsDePause'].toDate();
         historique.coutTrajet = data['coutTrajet'] as double;
@@ -152,6 +153,11 @@ class _ProfilepageState extends State<Profilepage> {
 
   @override
   void dispose() {
+    StreamController<int> myStreamController = StreamController<int>();
+    Stream<int> myStream = myStreamController.stream;
+    subscription = myStream.listen((data) {
+      // Do something with the data
+    });
     subscription.cancel();
     super.dispose();
   }

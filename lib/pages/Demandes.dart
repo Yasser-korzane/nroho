@@ -88,12 +88,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                         horizontal: screenWidth * 0.035,
                         vertical: screenHeight * 0.015),
                     child: GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => Detailspassaer()));
-                      },
+                      /*onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Detailspassaer()));
+                      },*/
                       child: Card(
                           color: Colors.white,
                           elevation: 8,

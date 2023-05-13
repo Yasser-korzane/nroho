@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
+import 'package:appcouvoiturage/pages/annulertrajet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';
@@ -21,9 +22,21 @@ class detailsTrajetLancer extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: ElevatedButton(
-          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
-          onPressed: (){ },
+          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.red),),
+          onPressed: ()async{
+            final bool result = await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AnnulerTrajet(_trajet.id,true);
+              },
+            );
+            if (result) {
+              Navigator.pop(context,true);
+            }
+          },
         ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
@@ -164,7 +177,7 @@ class detailsTrajetLancer extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                            '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute} (estimation)',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -253,36 +266,6 @@ class detailsTrajetLancer extends StatelessWidget {
                             fontFamily: 'Poppins',
                           ),
                         ),
-                      ],
-                    ),
-                    Divider(color: Colors.black, thickness: 1),
-                    SizedBox(height: screenHeight * 0.02),
-                    Row(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment:CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Commentaire : ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                            SizedBox(height: screenHeight * 0.02),
-                            Text(
-                              'ajouter votre commentaire ici',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          ],
-                        ),
-
                       ],
                     ),
                     ],

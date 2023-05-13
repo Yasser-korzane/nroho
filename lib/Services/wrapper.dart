@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/pages/begin.dart';
 import 'package:appcouvoiturage/pages/home.dart';
@@ -8,12 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:appcouvoiturage/main.dart';
-import 'package:appcouvoiturage/pages/connexion.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);

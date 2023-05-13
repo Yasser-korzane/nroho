@@ -2,6 +2,7 @@ import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';
+import 'annulertrajet.dart';
 class detailsTrajetReserver extends StatelessWidget {
   Trajet _trajet ;
   detailsTrajetReserver(this._trajet);
@@ -20,9 +21,21 @@ class detailsTrajetReserver extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           floatingActionButton: ElevatedButton(
-            child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
-            onPressed: (){ },
+            child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.red),),
+            onPressed: () async {
+              final bool result = await showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return AnnulerTrajet(_trajet.id,false);
+                },
+              );
+              if (result) {
+                Navigator.pop(context,true);
+              }
+            },
           ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.fromLTRB(
@@ -163,7 +176,7 @@ class detailsTrajetReserver extends StatelessWidget {
                             Expanded(flex: 1, child: Icon(Icons.access_time)),
                             Expanded(
                               child: Text(
-                                '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                                '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute} (estimation)',
                                 style: TextStyle(fontFamily: 'Poppins'),
                               ),
                               flex: 5,

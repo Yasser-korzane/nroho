@@ -6,15 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
-
 import '../AppClasses/PlusInformations.dart';
 import '../Services/base de donnee.dart';
-
-
-
 class Trajets extends StatefulWidget {
   const Trajets({Key? key}) : super(key: key);
-
   @override
   State<Trajets> createState() => _TrajetsState();
 }
@@ -33,6 +28,7 @@ class _TrajetsState extends State<Trajets> {
       for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
         Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
         Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
+        trajetLance.id = data['id'] ;
         trajetLance.dateDepart = data['dateDepart'].toDate();
         trajetLance.tempsDePause = data['tempsDePause'].toDate();//.add(Duration(hours: 1))
         trajetLance.coutTrajet = data['coutTrajet'] as double;
@@ -86,6 +82,7 @@ class _TrajetsState extends State<Trajets> {
       for (QueryDocumentSnapshot trajetDoc in trajetsSnapshot.docs) {
         Map<String, dynamic> data = trajetDoc.data() as Map<String, dynamic>;
         Trajet trajetReserve = BaseDeDonnee().creerTrajetVide();
+        trajetReserve.id = data['id'] ;
         trajetReserve.dateDepart = data['dateDepart'].toDate();
         trajetReserve.tempsDePause = data['tempsDePause'].toDate() ;
         trajetReserve.coutTrajet = data['coutTrajet'] as double;

@@ -1,9 +1,11 @@
 import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
-import 'Info Trajet Reserve.dart';
 import 'package:flutter/material.dart';
+
+import 'home.dart';
 class cardReserverList extends StatelessWidget{
   List<Trajet> trajetsReserve ;
   cardReserverList(this.trajetsReserve);
@@ -14,6 +16,8 @@ class cardReserverList extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    Trajet trajet = BaseDeDonnee().creerTrajetVide();
+    trajetsReserve.add(trajet);
     return trajetsReserve.isEmpty ?
     Scaffold(
         backgroundColor: Colors.white,
@@ -34,8 +38,31 @@ class cardReserverList extends StatelessWidget{
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
+                onTap: () async{
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
+                  if (!result){
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(
+                      SnackBar(
+                        duration:
+                        const Duration(seconds: 2),
+                        content: AwesomeSnackbarContent(
+                          title: 'Succés!',
+                          message:
+                          'Le trajet a été annulée avec succès',
+
+                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                          contentType: ContentType.success,
+                          // to configure for material banner
+                          inMaterialBanner: true,
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                    );
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                  }
                 },
                 child: Card(
                   color: Colors.white,
@@ -111,7 +138,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute}',
+                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute} (estimation)',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
