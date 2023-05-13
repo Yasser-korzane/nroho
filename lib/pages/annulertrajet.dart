@@ -14,7 +14,8 @@ import '../AppClasses/Notifications.dart';
 
 class AnnulerTrajet extends StatefulWidget {
   String uidTrajet ;
-  AnnulerTrajet(this.uidTrajet);
+  bool lance_reserve ; // if true alors lance else reserve
+  AnnulerTrajet(this.uidTrajet,this.lance_reserve);
   @override
   State<AnnulerTrajet> createState() => _AnnulerTrajetState();
 }
@@ -149,7 +150,8 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                       print("idTrajet : ${widget.uidTrajet}");
                       /// if (search in notification if this trajet id exist in notifications with accepter = false)
                       /// delete normally
-                      await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
+                      if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
+                      else await _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
                       String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} a annuller un trajet pour les raisons suivantes :\n';
                       _listNot = await _baseDeDonnee.getNotifications(FirebaseAuth.instance.currentUser!.uid);
                       for (Notifications n in _listNot){

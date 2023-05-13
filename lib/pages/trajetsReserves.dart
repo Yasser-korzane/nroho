@@ -2,8 +2,9 @@ import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
 
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
-import 'detailsTrajetLancer.dart';
 import 'package:flutter/material.dart';
+
+import 'home.dart';
 class cardReserverList extends StatelessWidget{
   List<Trajet> trajetsReserve ;
   cardReserverList(this.trajetsReserve);
@@ -36,8 +37,9 @@ class cardReserverList extends StatelessWidget{
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
+                onTap: () async{
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
+                  if (result) Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
                 },
                 child: Card(
                   color: Colors.white,

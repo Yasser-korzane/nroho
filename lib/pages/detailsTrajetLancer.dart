@@ -28,7 +28,7 @@ class detailsTrajetLancer extends StatelessWidget {
               context: context,
               barrierDismissible: false,
               builder: (context) {
-                return AnnulerTrajet(_trajet.id);
+                return AnnulerTrajet(_trajet.id,true);
               },
             );
             if (result) {

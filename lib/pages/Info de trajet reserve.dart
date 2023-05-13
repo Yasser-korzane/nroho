@@ -22,14 +22,17 @@ class detailsTrajetReserver extends StatelessWidget {
       child: Scaffold(
           floatingActionButton: ElevatedButton(
             child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
-            onPressed: (){
-              showDialog(
+            onPressed: () async {
+              final bool result = await showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (context) {
-                  return AnnulerTrajet(_trajet.id);
+                  return AnnulerTrajet(_trajet.id,false);
                 },
               );
+              if (result) {
+                Navigator.pop(context,true);
+              }
             },
           ),
           body: SingleChildScrollView(
