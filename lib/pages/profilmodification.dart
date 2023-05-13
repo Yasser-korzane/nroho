@@ -31,7 +31,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   TextEditingController _contrNbPlaces = TextEditingController();*/
   // Methode pour changer la photo de profil
   ImagePicker _imagePicker = ImagePicker();
-
+final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -182,6 +182,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                   ),
                 ),
                 SizedBox(height: size.height * 0.033),
+                Form(
+                  key: _formKey,
+                child: Column( 
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                //crossAxisAlignment: CrossAxisAlignment.start,
                 Text(
                   'Nom',
                   style: TextStyle(
@@ -211,7 +217,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     },
                     validator: (input) {
                       List<int> numbers = List.generate(10, (index) => index);
-                      if (input == null) {
+                      if (input == null || input == '') {
                         return 'Entrez votre nom';
                       } else if (input.contains(' ')) {
                         return 'Espace';
@@ -255,7 +261,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     },
                     validator: (input) {
                       List<int> numbers = List.generate(10, (index) => index);
-                      if (input == null) {
+                      if (input == null || input == '') {
                         return 'Entrez votre prenom';
                       } else if (input.contains(' ')) {
                         return 'Espace';
@@ -297,7 +303,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         });
                       },
                       validator: (input) {
-                        if (input == null) {
+                        if (input == null || input == '') {
                           return 'Entrez votre numero de téléphone ';
                         } else if (int.tryParse(input) == null) {
                           return 'numero non valid ';
@@ -351,7 +357,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       //controller: _contrMarque,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -362,6 +368,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         hintText: widget._utilisateur.vehicule.marque,
                         hintStyle: TextStyle(fontFamily: 'poppins'),
                       ),
+                       validator:(input){
+                         if (input == null || input == '') {
+                          return 'Entrez la marque';
+                        } 
+                        return null;
+
+                      },
                       onChanged: (value) {
                         setState(() {
                           _changement = true;
@@ -379,7 +392,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       //controller: _contrType,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -390,6 +403,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         hintText: widget._utilisateur.vehicule.typevehicule,
                         hintStyle: TextStyle(fontFamily: 'poppins'),
                       ),
+                      validator: (input){
+                         if (input == null || input == '') {
+                        return 'Entrez le type de vehicule';
+                      } else if (input.contains(' ')) {
+                        return 'Espace';
+                      } 
+                      return null;
+                      },
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
@@ -407,7 +428,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       //controller: _contrMatricule,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -418,6 +439,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         hintText: widget._utilisateur.vehicule.matricule,
                         hintStyle: TextStyle(fontFamily: 'poppins'),
                       ),
+                      validator: (input){
+                        if (input == null || input == '') {
+                          return 'Entrez le matricule ';
+                        } 
+                        return null;
+                      },
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
@@ -435,7 +462,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       //controller: _contrModele,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -446,6 +473,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         hintText: widget._utilisateur.vehicule.modele,
                         hintStyle: TextStyle(fontFamily: 'poppins'),
                       ),
+                      validator:(input){
+                         if (input == null || input == '') {
+                          return 'Entrez le modele ';
+                        } 
+                        return null;
+
+                      },
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
@@ -463,7 +497,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 SizedBox(
                     width: size.width * 0.7,
                     height: size.height * 0.06,
-                    child: TextField(
+                    child: TextFormField(
                       //controller: _contrPolice,
                       decoration: InputDecoration(
                         enabledBorder: const OutlineInputBorder(
@@ -477,6 +511,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         hintText: widget._utilisateur.vehicule.policeAssurance,
                         hintStyle: TextStyle(fontFamily: 'poppins'),
                       ),
+                       validator:(input){
+                         if (input == null || input == '') {
+                          return 'Entrez le modele ';
+                        } 
+                        return null;
+
+                      },
                       onChanged: (value) {
                         _changement = true;
                         setState(() {
@@ -485,10 +526,19 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         });
                       },
                     )),
+                ],
+                ),
+                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    if (_changement) {
+                    if (_formKey.currentState!.validate()) {
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+     /* ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Processing Data')),
+      );*/
+          if (_changement) {
                       await _baseDeDonnee.modifierUtilisateur(
                           FirebaseAuth.instance.currentUser!.uid,
                           widget._utilisateur);
@@ -512,6 +562,28 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                     Navigator.pop(
                       context,
                     );
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(seconds: 3),
+                          content: AwesomeSnackbarContent(
+                            title: 'oh Erreurs!!',
+                            message: 'verifier vos donnees',
+
+                            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                            contentType: ContentType.failure,
+                            // to configure for material banner
+                            inMaterialBanner: true,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                        ),
+                      );
+                      
+
+    }
+                    
                   },
                   child: Text(
                     'Valider les modifications',
