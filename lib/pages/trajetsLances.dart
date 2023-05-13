@@ -149,7 +149,7 @@ class cardLancerList extends StatelessWidget {
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute}',
+                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute} (estimation)',
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontWeight: FontWeight.bold,

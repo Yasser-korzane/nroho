@@ -498,9 +498,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           content: AwesomeSnackbarContent(
                             title: 'Succés!!',
                             message: 'Modification effectué avec avec succès',
-
                             /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                            contentType: ContentType.success,
+                            contentType: ContentType.success ,
                             // to configure for material banner
                             inMaterialBanner: true,
                           ),

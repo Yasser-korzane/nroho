@@ -175,7 +175,7 @@ class detailsTrajetReserver extends StatelessWidget {
                             Expanded(flex: 1, child: Icon(Icons.access_time)),
                             Expanded(
                               child: Text(
-                                '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                                '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute} (estimation)',
                                 style: TextStyle(fontFamily: 'Poppins'),
                               ),
                               flex: 5,

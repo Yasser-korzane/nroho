@@ -8,7 +8,7 @@ import 'AfficherTrajetSurLeMap.dart';
 
 class Detailspassaer extends StatelessWidget {
   ConducteurTrajet _conducteurTrajet ;
-  Detailspassaer(this._conducteurTrajet);
+  Detailspassaer(this._conducteurTrajet) ;
   @override
   Widget build(BuildContext context) {
 

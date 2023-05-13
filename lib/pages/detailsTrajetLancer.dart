@@ -176,7 +176,7 @@ class detailsTrajetLancer extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                            '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute} (estimation)',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -265,36 +265,6 @@ class detailsTrajetLancer extends StatelessWidget {
                             fontFamily: 'Poppins',
                           ),
                         ),
-                      ],
-                    ),
-                    Divider(color: Colors.black, thickness: 1),
-                    SizedBox(height: screenHeight * 0.02),
-                    Row(
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment:CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Commentaire : ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                            SizedBox(height: screenHeight * 0.02),
-                            Text(
-                              'ajouter votre commentaire ici',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 14.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          ],
-                        ),
-
                       ],
                     ),
                     ],

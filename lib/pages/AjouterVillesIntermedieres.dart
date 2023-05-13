@@ -1,11 +1,10 @@
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
+import 'package:appcouvoiturage/pages/ChoixVillesIntermedieres.dart';
 import 'package:flutter/material.dart';
-
 import 'optionsconducteur.dart';
 
 class AjouterVillesIntermedieres extends StatefulWidget {
   Trajet _trajetLance;
-
   AjouterVillesIntermedieres(this._trajetLance);
 
   @override
@@ -37,6 +36,12 @@ class _AjouterVillesIntermedieresState
       _checkboxSelected[index] = value;
     });
   }
+  List<String> listVillesIntermediers = [];
+  String ville1 = '' ;
+  String ville2 = '' ;
+  String ville3 = '' ;
+  String ville4 = '' ;
+  String ville5 = '' ;
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +76,9 @@ class _AjouterVillesIntermedieresState
                   builder: (context) {
                     return AlertDialog(
                         content: Text(
-                          'En incluant des villes intermédiaires dans votre trajet, vous avez la possibilité de partager votre voyage avec d\'autres passagers dont le trajet se situe sur une portion de votre itinéraire.',
-                          style: TextStyle(fontFamily: 'poppins'),
-                        ));
+                      'En incluant des villes intermédiaires dans votre trajet, vous avez la possibilité de partager votre voyage avec d\'autres passagers dont le trajet se situe sur une portion de votre itinéraire.',
+                      style: TextStyle(fontFamily: 'poppins'),
+                    ));
                   },
                 );
               },
@@ -89,6 +94,13 @@ class _AjouterVillesIntermedieresState
                       color: Colors.white, fontSize: 16, fontFamily: 'Poppins'),
                 ),
                 onPressed: () {
+                  if (ville1.isNotEmpty) listVillesIntermediers.add(ville1);
+                  if (ville2.isNotEmpty) listVillesIntermediers.add(ville2);
+                  if (ville3.isNotEmpty) listVillesIntermediers.add(ville3);
+                  if (ville4.isNotEmpty) listVillesIntermediers.add(ville4);
+                  if (ville5.isNotEmpty) listVillesIntermediers.add(ville5);
+                  widget._trajetLance.villeIntermediaires = listVillesIntermediers;
+                  widget._trajetLance.afficher();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -108,46 +120,221 @@ class _AjouterVillesIntermedieresState
               SizedBox(
                 height: size.height * 0.12,
               ),
-              for (var i = 0; i < 5; i++)
-                Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                              enabled: _checkboxSelected[i],
-                              controller: _textControllers[i],
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
-                                ),
-                                hintText:
-                                    'Entrer la Ville intermidiaire ${i + 1}',
-                                hintStyle: TextStyle(
-                                    fontSize: 14, fontFamily: 'Poppins'),
-                                /*color: Colors.grey[800],
-                                                    fontSize: 14,fontFamily: 'Poppins'),*/
-                                fillColor: Colors.grey.shade100,
-                                filled: true,
-                              )),
-                        ),
-                        Checkbox(
-                          value: _checkboxSelected[i],
-                          onChanged: (value) {
-                            _handleCheckboxChanged(i, value!);
-                          },
-                        ),
-                      ],
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      keyboardType: TextInputType.none,
+                        enabled: _checkboxSelected[0],
+                        controller: _textControllers[0],
+                        onTap: () async{
+                            ville1 = await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return ChoixVillesIntermedieres();
+                            },
+                          );
+                          if (ville1.isNotEmpty) _textControllers[0].text = ville1;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(12)),
+                          ),
+                          hintText:
+                          'Entrer la Ville intermidiaire 1',
+                          hintStyle: TextStyle(
+                              fontSize: 14, fontFamily: 'Poppins'),
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                        )
                     ),
-                    SizedBox(
-                      height: size.height * 0.02,
-                    )
-                  ],
-                ),
-              SizedBox(
-                height: size.height * 0.07,
+                  ),
+                  Hero(tag: '0',
+                    child: Checkbox(
+                      value: _checkboxSelected[0],
+                      onChanged: (value) {
+                        _handleCheckboxChanged(0, value!);
+                      },
+                    ),
+                  ),
+                ],
               ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                        enabled: _checkboxSelected[1],
+                        controller: _textControllers[1],
+                        onTap: () async{
+                            ville2 = await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return ChoixVillesIntermedieres();
+                            },
+                          );
+                          if (ville1.isNotEmpty) _textControllers[1].text = ville2;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(12)),
+                          ),
+                          hintText:
+                          'Entrer la Ville intermidiaire 2',
+                          hintStyle: TextStyle(
+                              fontSize: 14, fontFamily: 'Poppins'),
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                        )),
+                  ),
+                  Hero(tag: '1',
+                    child: Checkbox(
+                      value: _checkboxSelected[1],
+                      onChanged: (value) {
+                        _handleCheckboxChanged(1, value!);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                        enabled: _checkboxSelected[2],
+                        controller: _textControllers[2],
+                        onTap: () async{
+                          ville3 = await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return ChoixVillesIntermedieres();
+                            },
+                          );
+                          if (ville1.isNotEmpty) _textControllers[2].text = ville3;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(12)),
+                          ),
+                          hintText:
+                          'Entrer la Ville intermidiaire 3',
+                          hintStyle: TextStyle(
+                              fontSize: 14, fontFamily: 'Poppins'),
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                        )),
+                  ),
+                  Hero(tag: '2',
+                    child: Checkbox(
+                      value: _checkboxSelected[2],
+                      onChanged: (value) {
+                        _handleCheckboxChanged(2, value!);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                        enabled: _checkboxSelected[3],
+                        controller: _textControllers[3],
+                        onTap: () async{
+                          ville4 = await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return ChoixVillesIntermedieres();
+                            },
+                          );
+                          if (ville1.isNotEmpty) _textControllers[3].text = ville4;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(12)),
+                          ),
+                          hintText:
+                          'Entrer la Ville intermidiaire 4',
+                          hintStyle: TextStyle(
+                              fontSize: 14, fontFamily: 'Poppins'),
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                        )),
+                  ),
+                  Hero(tag: '3',
+                    child: Checkbox(
+                      value: _checkboxSelected[3],
+                      onChanged: (value) {
+                        _handleCheckboxChanged(3, value!);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                        enabled: _checkboxSelected[4],
+                        controller: _textControllers[4],
+                        onTap: () async{
+                          ville5 = await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return ChoixVillesIntermedieres();
+                            },
+                          );
+                          if (ville1.isNotEmpty) _textControllers[4].text = ville5;
+                        },
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(12)),
+                          ),
+                          hintText:
+                          'Entrer la Ville intermidiaire 5',
+                          hintStyle: TextStyle(
+                              fontSize: 14, fontFamily: 'Poppins'),
+                          /*color: Colors.grey[800],
+                                                    fontSize: 14,fontFamily: 'Poppins'),*/
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                        )),
+                  ),
+                  Hero(tag: '4',
+                    child: Checkbox(
+                      value: _checkboxSelected[4],
+                      onChanged: (value) {
+                        _handleCheckboxChanged(4, value!);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+
               RichText(
                 text: TextSpan(
                   text:

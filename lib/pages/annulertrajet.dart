@@ -146,9 +146,6 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                   TextButton(
                     child: Text('OK'),
                     onPressed: () async{
-                      bool accepte = false ;
-                      print("id user : ${FirebaseAuth.instance.currentUser!.uid}");
-                      print("idTrajet : ${widget.uidTrajet}");
                       /// if (search in notification if this trajet id exist in notifications with accepter = false)
                       /// delete normally
                       if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
