@@ -16,7 +16,7 @@ Future<bool> handleLocationPermission(BuildContext context) async {
     Navigator.pop(context);
     Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return const home();
+        return home();
       },
     ));
     return false;
@@ -33,7 +33,7 @@ Future<bool> handleLocationPermission(BuildContext context) async {
   if (permission == LocationPermission.deniedForever) {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-            'Location permissions are permanently denied, we cannot request permissions.')));
+            'Les autorisations de localisation sont définitivement refusées, nous ne pouvons pas demander d\'autorisations')));
     return false;
   }
   return true;

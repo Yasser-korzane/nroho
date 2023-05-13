@@ -2,7 +2,7 @@ import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
 
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
-import 'Info Trajet Reserve.dart';
+import 'detailsTrajetLancer.dart';
 import 'package:flutter/material.dart';
 class cardReserverList extends StatelessWidget{
   List<Trajet> trajetsReserve ;
@@ -14,6 +14,8 @@ class cardReserverList extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    Trajet trajet = BaseDeDonnee().creerTrajetVide();
+    trajetsReserve.add(trajet);
     return trajetsReserve.isEmpty ?
     Scaffold(
         backgroundColor: Colors.white,

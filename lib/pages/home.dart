@@ -8,16 +8,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(fontFamily: 'Poppins'),
-    home: const home(),
-  ));
-}
-
 class home extends StatefulWidget {
-  const home({Key? key}) : super(key: key);
 
   @override
   State<home> createState() => _homeState();
@@ -69,7 +60,6 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-
     final Size screenSize = MediaQuery.of(context).size;
     final double screenHeight = screenSize.height;
     return SafeArea(
@@ -102,9 +92,6 @@ class _homeState extends State<home> {
                   tabs: [
                     GButton(
                       icon: Icons.home,
-                      onPressed: (){
-
-                      },
                       text: 'Actuel',
                     ),
                     GButton(

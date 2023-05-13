@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
+import 'package:appcouvoiturage/pages/annulertrajet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';
@@ -22,7 +23,18 @@ class detailsTrajetLancer extends StatelessWidget {
       child: Scaffold(
         floatingActionButton: ElevatedButton(
           child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
-          onPressed: (){ },
+          onPressed: ()async{
+            final bool result = await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AnnulerTrajet(_trajet.id);
+              },
+            );
+            if (result) {
+              Navigator.pop(context,true);
+            }
+          },
         ),
           body: SingleChildScrollView(
         child: Padding(

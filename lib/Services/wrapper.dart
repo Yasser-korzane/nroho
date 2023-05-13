@@ -1,18 +1,12 @@
 import 'dart:async';
-
 import 'package:appcouvoiturage/Models/Users.dart';
 import 'package:appcouvoiturage/pages/begin.dart';
 import 'package:appcouvoiturage/pages/home.dart';
-import 'package:appcouvoiturage/pages/welcomepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:appcouvoiturage/main.dart';
-import 'package:appcouvoiturage/pages/connexion.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:provider/provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -61,8 +55,6 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users?>(context);
-    print('*************************************');
-    print(user);
      if (user == null) {
       return Commancer();
     } else {

@@ -2,6 +2,7 @@ import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';
+import 'annulertrajet.dart';
 class detailsTrajetReserver extends StatelessWidget {
   Trajet _trajet ;
   detailsTrajetReserver(this._trajet);
@@ -21,7 +22,15 @@ class detailsTrajetReserver extends StatelessWidget {
       child: Scaffold(
           floatingActionButton: ElevatedButton(
             child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins'),),
-            onPressed: (){ },
+            onPressed: (){
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return AnnulerTrajet(_trajet.id);
+                },
+              );
+            },
           ),
           body: SingleChildScrollView(
             child: Padding(

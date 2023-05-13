@@ -307,6 +307,37 @@ class BaseDeDonnee{
     }
     return BaseDeDonnee().creerUtilisateurVide();
   } /// end getdata
+
+  Future<List<Notifications>> getNotifications(String uid) async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        List<Notifications> listeNotifications = [];
+          List<dynamic> notificationsData = snapshot.data()!['notifications'];
+          for (var notificationData in notificationsData) {
+            Notifications notification = Notifications(
+              notificationData['id_conducteur'],
+              notificationData['id_pasagers'],
+              notificationData['id_trajet'],
+              notificationData['nom'],
+              notificationData['prenom'],
+              notificationData['villeDepart'],
+              notificationData['villeArrive'],
+              notificationData['accepte_refuse'],
+            );
+            if(notification.id_conducteur!=uid){
+              listeNotifications.add(notification);
+            }
+          }
+          return listeNotifications;
+      }
+    });
+    return [];
+  }
+
   Future<bool?> getStatut(String uid) async {
     bool? statut;
     await FirebaseFirestore.instance
