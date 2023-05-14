@@ -31,7 +31,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   TextEditingController _contrNbPlaces = TextEditingController();*/
   // Methode pour changer la photo de profil
   ImagePicker _imagePicker = ImagePicker();
-final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -122,448 +123,454 @@ final _formKey = GlobalKey<FormState>();
                   ),
                 ),
                 Card(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'Identifiant:',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontFamily: 'poppins',
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                'Identifiant:',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontFamily: 'poppins',
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              widget._utilisateur.identifiant,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontFamily: 'poppins',
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                widget._utilisateur.identifiant,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontFamily: 'poppins',
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              'Email: ',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontFamily: 'poppins',
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                'Email: ',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontFamily: 'poppins',
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              widget._utilisateur.email,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 12,
-                                fontFamily: 'poppins',
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                widget._utilisateur.email,
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontFamily: 'poppins',
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(height: size.height * 0.033),
                 Form(
                   key: _formKey,
-                child: Column( 
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                Text(
-                  'Nom',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'poppins',
-                  ),
-                ),
-                SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextFormField(
-                    //controller: _contrNom,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //crossAxisAlignment: CrossAxisAlignment.start,
+                      Text(
+                        'Nom',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'poppins',
+                        ),
                       ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: widget._utilisateur.nom,
-                      hintStyle: TextStyle(fontFamily: 'poppins'),
-                    ),
-                    onChanged: (value) {
-                      _changement = true;
-                      setState(() {
-                        widget._utilisateur.nom = value;
-                      });
-                    },
-                    validator: (input) {
-                      List<int> numbers = List.generate(10, (index) => index);
-                      if (input == null || input == '') {
-                        return 'Entrez votre nom';
-                      } else if (input.contains(' ')) {
-                        return 'Espace';
-                      } else if (numbers
-                          .any((number) => input.contains(number.toString()))) {
-                        return 'Numbers';
-                      }
+                      SizedBox(
+                        height: size.height * 0.06,
+                        child: TextFormField(
+                          //controller: _contrNom,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: widget._utilisateur.nom,
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              widget._utilisateur.nom = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers =
+                                List.generate(10, (index) => index);
+                            if (input == null || input == '') {
+                              return 'Entrez votre nom';
+                            } else if (input.contains(' ')) {
+                              return 'Espace';
+                            } else if (numbers.any((number) =>
+                                input.contains(number.toString()))) {
+                              return 'Numbers';
+                            }
 
-                      return null;
-                    },
-                  ),
-                ),
-                SizedBox(height: size.height * 0.02),
-                Text(
-                  'Prénom',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'poppins',
-                  ),
-                ),
-                SizedBox(
-                  width: size.width * 0.7,
-                  height: size.height * 0.06,
-                  child: TextFormField(
-                    //controller: _contrPrenom,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                            return null;
+                          },
+                        ),
                       ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: widget._utilisateur.prenom,
-                      hintStyle: TextStyle(fontFamily: 'poppins'),
-                    ),
-                    onChanged: (value) {
-                      _changement = true;
-                      setState(() {
-                        //_contrPrenom.text = value;
-                        widget._utilisateur.prenom = value;
-                      });
-                    },
-                    validator: (input) {
-                      List<int> numbers = List.generate(10, (index) => index);
-                      if (input == null || input == '') {
-                        return 'Entrez votre prenom';
-                      } else if (input.contains(' ')) {
-                        return 'Espace';
-                      } else if (numbers
-                          .any((number) => input.contains(number.toString()))) {
-                        return 'Numbers';
-                      }
+                      SizedBox(height: size.height * 0.02),
+                      Text(
+                        'Prénom',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'poppins',
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.06,
+                        child: TextFormField(
+                          //controller: _contrPrenom,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: widget._utilisateur.prenom,
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              //_contrPrenom.text = value;
+                              widget._utilisateur.prenom = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers =
+                                List.generate(10, (index) => index);
+                            if (input == null || input == '') {
+                              return 'Entrez votre prenom';
+                            } else if (input.contains(' ')) {
+                              return 'Espace';
+                            } else if (numbers.any((number) =>
+                                input.contains(number.toString()))) {
+                              return 'Numbers';
+                            }
 
-                      return null;
-                    },
+                            return null;
+                          },
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      Text(
+                        'Numéro de télephone',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'poppins',
+                        ),
+                      ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: widget._utilisateur.numeroTelephone,
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                            ),
+                            onChanged: (value) {
+                              _changement = true;
+                              setState(() {
+                                //_contrPrenom.text = value;
+                                widget._utilisateur.numeroTelephone = value;
+                              });
+                            },
+                            validator: (input) {
+                              if (input == null || input == '') {
+                                return 'Entrez votre numero de téléphone ';
+                              } else if (int.tryParse(input) == null) {
+                                return 'numero non valid ';
+                              } else if (input.length != 10 &&
+                                  input.length != 14 &&
+                                  input.length != 13) {
+                                return 'nombre de chiffre inferieur a 10 !';
+                              } else {
+                                if (input.length == 10 &&
+                                    !input.startsWith('05') &&
+                                    !input.startsWith('06') &&
+                                    !input.startsWith('07')) {
+                                  return 'le numero ne commance pas avec 05 ou 06 ou 07';
+                                }
+                                if (input.length == 13 &&
+                                    !input.startsWith('*2135') &&
+                                    !input.startsWith('*2136') &&
+                                    !input.startsWith('*2137')) {
+                                  return 'error';
+                                }
+                                if (input.length == 14 &&
+                                    !input.startsWith('002135') &&
+                                    !input.startsWith('002136') &&
+                                    !input.startsWith('002137')) {
+                                  return 'error';
+                                }
+                              }
+
+                              return null;
+                            },
+                          )),
+                      SizedBox(height: 25),
+                      SizedBox(height: 40),
+                      Text(
+                        'Informations du vehicule',
+                        style: TextStyle(
+                            fontFamily: 'poppins',
+                            color: Color(0xff0085FF),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Marque',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'poppins',
+                        ),
+                      ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          child: TextFormField(
+                            //controller: _contrMarque,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: widget._utilisateur.vehicule.marque,
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                            ),
+                            validator: (input) {
+                              if (input == null || input == '') {
+                                return 'Entrez la marque';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                _changement = true;
+                                //_contrMarque.text = value;
+                                widget._utilisateur.vehicule.marque = value;
+                              });
+                            },
+                          )),
+                      SizedBox(height: 15),
+                      Text(
+                        'Type du vehicule',
+                        style: TextStyle(
+                            fontFamily: 'poppins', fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          child: TextFormField(
+                            //controller: _contrType,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText:
+                                  widget._utilisateur.vehicule.typevehicule,
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                            ),
+                            validator: (input) {
+                              if (input == null || input == '') {
+                                return 'Entrez le type de vehicule';
+                              } else if (input.contains(' ')) {
+                                return 'Espace';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _changement = true;
+                              setState(() {
+                                //_contrType.text = value;
+                                widget._utilisateur.vehicule.typevehicule =
+                                    value;
+                              });
+                            },
+                          )),
+                      SizedBox(height: 15),
+                      Text(
+                        'Matricule',
+                        style: TextStyle(
+                            fontFamily: 'poppins', fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          child: TextFormField(
+                            //controller: _contrMatricule,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: widget._utilisateur.vehicule.matricule,
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                            ),
+                            validator: (input) {
+                              if (input == null || input == '') {
+                                return 'Entrez le matricule ';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _changement = true;
+                              setState(() {
+                                //_contrMatricule.text = value;
+                                widget._utilisateur.vehicule.matricule = value;
+                              });
+                            },
+                          )),
+                      SizedBox(height: 15),
+                      Text(
+                        'Modéle',
+                        style: TextStyle(
+                            fontFamily: 'poppins', fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          child: TextFormField(
+                            //controller: _contrModele,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText: widget._utilisateur.vehicule.modele,
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                            ),
+                            validator: (input) {
+                              if (input == null || input == '') {
+                                return 'Entrez le modele ';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _changement = true;
+                              setState(() {
+                                //_contrModele.text = value;
+                                widget._utilisateur.vehicule.modele = value;
+                              });
+                            },
+                          )),
+                      SizedBox(height: 15),
+                      Text(
+                        'Police d\'assurance',
+                        style: TextStyle(
+                            fontFamily: 'poppins', fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                          height: size.height * 0.06,
+                          child: TextFormField(
+                            //controller: _contrPolice,
+                            decoration: InputDecoration(
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              hintText:
+                                  widget._utilisateur.vehicule.policeAssurance,
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                            ),
+                            validator: (input) {
+                              if (input == null || input == '') {
+                                return 'Entrez le modele ';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              _changement = true;
+                              setState(() {
+                                //_contrPolice.text = value;
+                                widget._utilisateur.vehicule.policeAssurance =
+                                    value;
+                              });
+                            },
+                          )),
+                    ],
                   ),
-                ),
-                SizedBox(height: size.height * 0.02),
-                Text(
-                  'Numéro de télephone',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'poppins',
-                  ),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: widget._utilisateur.numeroTelephone,
-                        hintStyle: TextStyle(fontFamily: 'poppins'),
-                      ),
-                      onChanged: (value) {
-                        _changement = true;
-                        setState(() {
-                          //_contrPrenom.text = value;
-                          widget._utilisateur.numeroTelephone = value;
-                        });
-                      },
-                      validator: (input) {
-                        if (input == null || input == '') {
-                          return 'Entrez votre numero de téléphone ';
-                        } else if (int.tryParse(input) == null) {
-                          return 'numero non valid ';
-                        } else if (input.length != 10 &&
-                            input.length != 14 &&
-                            input.length != 13) {
-                          return 'nombre de chiffre inferieur a 10 !';
-                        } else {
-                          if (input.length == 10 &&
-                              !input.startsWith('05') &&
-                              !input.startsWith('06') &&
-                              !input.startsWith('07')) {
-                            return 'le numero ne commance pas avec 05 ou 06 ou 07';
-                          }
-                          if (input.length == 13 &&
-                              !input.startsWith('*2135') &&
-                              !input.startsWith('*2136') &&
-                              !input.startsWith('*2137')) {
-                            return 'error';
-                          }
-                          if (input.length == 14 &&
-                              !input.startsWith('002135') &&
-                              !input.startsWith('002136') &&
-                              !input.startsWith('002137')) {
-                            return 'error';
-                          }
-                        }
-
-                        return null;
-                      },
-                    )),
-                SizedBox(height: 25),
-                SizedBox(height: 40),
-                Text(
-                  'Informations du vehicule',
-                  style: TextStyle(
-                      fontFamily: 'poppins',
-                      color: Color(0xff0085FF),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Marque',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'poppins',
-                  ),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextFormField(
-                      //controller: _contrMarque,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: widget._utilisateur.vehicule.marque,
-                        hintStyle: TextStyle(fontFamily: 'poppins'),
-                      ),
-                       validator:(input){
-                         if (input == null || input == '') {
-                          return 'Entrez la marque';
-                        } 
-                        return null;
-
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _changement = true;
-                          //_contrMarque.text = value;
-                          widget._utilisateur.vehicule.marque = value;
-                        });
-                      },
-                    )),
-                SizedBox(height: 15),
-                Text(
-                  'Type du vehicule',
-                  style: TextStyle(
-                      fontFamily: 'poppins', fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextFormField(
-                      //controller: _contrType,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: widget._utilisateur.vehicule.typevehicule,
-                        hintStyle: TextStyle(fontFamily: 'poppins'),
-                      ),
-                      validator: (input){
-                         if (input == null || input == '') {
-                        return 'Entrez le type de vehicule';
-                      } else if (input.contains(' ')) {
-                        return 'Espace';
-                      } 
-                      return null;
-                      },
-                      onChanged: (value) {
-                        _changement = true;
-                        setState(() {
-                          //_contrType.text = value;
-                          widget._utilisateur.vehicule.typevehicule = value;
-                        });
-                      },
-                    )),
-                SizedBox(height: 15),
-                Text(
-                  'Matricule',
-                  style: TextStyle(
-                      fontFamily: 'poppins', fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextFormField(
-                      //controller: _contrMatricule,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: widget._utilisateur.vehicule.matricule,
-                        hintStyle: TextStyle(fontFamily: 'poppins'),
-                      ),
-                      validator: (input){
-                        if (input == null || input == '') {
-                          return 'Entrez le matricule ';
-                        } 
-                        return null;
-                      },
-                      onChanged: (value) {
-                        _changement = true;
-                        setState(() {
-                          //_contrMatricule.text = value;
-                          widget._utilisateur.vehicule.matricule = value;
-                        });
-                      },
-                    )),
-                SizedBox(height: 15),
-                Text(
-                  'Modéle',
-                  style: TextStyle(
-                      fontFamily: 'poppins', fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextFormField(
-                      //controller: _contrModele,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: widget._utilisateur.vehicule.modele,
-                        hintStyle: TextStyle(fontFamily: 'poppins'),
-                      ),
-                      validator:(input){
-                         if (input == null || input == '') {
-                          return 'Entrez le modele ';
-                        } 
-                        return null;
-
-                      },
-                      onChanged: (value) {
-                        _changement = true;
-                        setState(() {
-                          //_contrModele.text = value;
-                          widget._utilisateur.vehicule.modele = value;
-                        });
-                      },
-                    )),
-                SizedBox(height: 15),
-                Text(
-                  'Police d\'assurance',
-                  style: TextStyle(
-                      fontFamily: 'poppins', fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                    width: size.width * 0.7,
-                    height: size.height * 0.06,
-                    child: TextFormField(
-                      //controller: _contrPolice,
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: widget._utilisateur.vehicule.policeAssurance,
-                        hintStyle: TextStyle(fontFamily: 'poppins'),
-                      ),
-                       validator:(input){
-                         if (input == null || input == '') {
-                          return 'Entrez le modele ';
-                        } 
-                        return null;
-
-                      },
-                      onChanged: (value) {
-                        _changement = true;
-                        setState(() {
-                          //_contrPolice.text = value;
-                          widget._utilisateur.vehicule.policeAssurance = value;
-                        });
-                      },
-                    )),
-                ],
-                ),
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-      // If the form is valid, display a snackbar. In the real world,
-      // you'd often call a server or save the information in a database.
-     /* ScaffoldMessenger.of(context).showSnackBar(
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      /* ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Processing Data')),
       );*/
-          if (_changement) {
-                      await _baseDeDonnee.modifierUtilisateur(
-                          FirebaseAuth.instance.currentUser!.uid,
-                          widget._utilisateur);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 3),
-                          content: AwesomeSnackbarContent(
-                            title: 'Succés!!',
-                            message: 'Modification effectué avec avec succès',
-                            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                            contentType: ContentType.success ,
-                            // to configure for material banner
-                            inMaterialBanner: true,
+                      if (_changement) {
+                        await _baseDeDonnee.modifierUtilisateur(
+                            FirebaseAuth.instance.currentUser!.uid,
+                            widget._utilisateur);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: const Duration(seconds: 3),
+                            content: AwesomeSnackbarContent(
+                              title: 'Succés!!',
+                              message: 'Modification effectué avec avec succès',
+
+                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                              contentType: ContentType.success,
+                              // to configure for material banner
+                              inMaterialBanner: true,
+                            ),
+                            behavior: SnackBarBehavior.floating,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
                           ),
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                        ),
+                        );
+                      }
+                      Navigator.pop(
+                        context,
                       );
-                    }
-                    Navigator.pop(
-                      context,
-                    );
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           duration: const Duration(seconds: 3),
                           content: AwesomeSnackbarContent(
@@ -580,10 +587,7 @@ final _formKey = GlobalKey<FormState>();
                           elevation: 0,
                         ),
                       );
-                      
-
-    }
-                    
+                    }
                   },
                   child: Text(
                     'Valider les modifications',

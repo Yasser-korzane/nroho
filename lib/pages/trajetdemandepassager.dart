@@ -1,35 +1,116 @@
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
-import 'AfficherTrajetSurLeMap.dart';
+import '../AppClasses/Evaluation.dart';
+import '../AppClasses/PlusInformations.dart';
+import '../AppClasses/Trajet.dart';
 
-class Detailspassaer extends StatelessWidget {
-  ConducteurTrajet _conducteurTrajet ;
-  Detailspassaer(this._conducteurTrajet) ;
+class Detailspassaer extends StatefulWidget {
+  String idPassager ;
+  String idTrajet ;
+  List<String> nomPrenom ;
+  List<String> villeDepartArrive ;
+  Detailspassaer(this.idPassager,this.idTrajet,this.nomPrenom,this.villeDepartArrive);
+  @override
+  State<Detailspassaer> createState() => _DetailspassaerState();
+}
+
+class _DetailspassaerState extends State<Detailspassaer> {
+  late Utilisateur _utilisateur ;
+  Future _getDataFromDataBase() async {
+    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
+    try {
+      await FirebaseFirestore.instance
+          .collection('Utilisateur')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          setState(() {
+            setState(() {
+              _utilisateur.identifiant = snapshot.data()!['identifiant'];
+              _utilisateur.nom = snapshot.data()!['nom'];
+              _utilisateur.prenom = snapshot.data()!['prenom'];
+              _utilisateur.email = snapshot.data()!['email'];
+              _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
+              _utilisateur.evaluation = Evaluation(
+                List<String>.from(snapshot.data()!['evaluation']['feedback']),
+                snapshot.data()!['evaluation']['etoiles'],
+                snapshot.data()!['evaluation']['nbSignalement'],
+              );
+              _utilisateur.statut = snapshot.data()!['statut'];
+              _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
+              _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
+              if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
+            });
+            //tests by printing
+          }); // end setState
+        } else {
+          // end snapshot exist
+          throw Exception("Utilisateur does not exist.");
+        }
+      });
+    } catch (e) {
+      throw Exception("Failed to get utilisateur.");
+    }
+  }
+  late Trajet _trajet ;
+  Future _getTrajet()async {
+    _trajet = BaseDeDonnee().creerTrajetVide();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(widget.idPassager)
+        .collection('trajetsReserves')
+        .doc(widget.idTrajet)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        setState(() {
+          _trajet.dateDepart = snapshot.data()!['dateDepart'].toDate(); //.add(Duration(hours: 1))
+          _trajet.tempsDePause = snapshot.data()!['tempsDePause'].toDate();
+          _trajet.coutTrajet = snapshot.data()!['coutTrajet'] as double;
+          _trajet.villeDepart = snapshot.data()!['villeDepart'];
+          _trajet.villeArrivee = snapshot.data()!['villeArrivee'];
+          _trajet.plusInformations = PlusInformations(
+              snapshot.data()!['plusInformations']['fumeur'],
+              snapshot.data()!['plusInformations']['bagage'],
+              snapshot.data()!['plusInformations']['animaux'],
+              snapshot.data()!['plusInformations']['nbPlaces']);
+        });
+      }else print('ce trajet n\'exist pas');
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getDataFromDataBase();
+    _getTrajet();
+  }
+  
   @override
   Widget build(BuildContext context) {
-
     final Size screenSize = MediaQuery.of(context).size;
-
     BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
-
-
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     List plusInformations =
-    ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.fumeur)}',
-      'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.bagage)}',
-      'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(_conducteurTrajet.trajetLance.plusInformations.animaux)}',
-      'Le nombre de passager que le conducteur accepte : ${_conducteurTrajet.trajetLance.plusInformations.nbPlaces.toString()}'];
+    ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.fumeur)}',
+      'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.bagage)}',
+      'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.animaux)}',
+      'Le nombre de passager que le conducteur accepte : ${_trajet.plusInformations.nbPlaces.toString()}'];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.chevron_left, color: Colors.black)),
+            onPressed: () {Navigator.pop(context);},
+            icon: const Icon(Icons.arrow_back, color: Colors.black)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -46,13 +127,13 @@ class Detailspassaer extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 38.0,
-                  backgroundImage: NetworkImage(_conducteurTrajet.utilisateur.imageUrl),
+                  backgroundImage: NetworkImage(_utilisateur.imageUrl),
                 ),
                 SizedBox(width: 16.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(_conducteurTrajet.utilisateur.nom +' '+ _conducteurTrajet.utilisateur.prenom,
+                    Text(_utilisateur.nom +' '+ _utilisateur.prenom,
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                             fontSize: 20.0,
@@ -66,7 +147,7 @@ class Detailspassaer extends StatelessWidget {
                             (index) => Icon(
                           Icons.star,
                           size: 20.0,
-                          color: index < _conducteurTrajet.utilisateur.evaluation.etoiles.round()
+                          color: index < _utilisateur.evaluation.etoiles.round()
                               ? Colors.yellow
                               : Colors.grey,
                         ),
@@ -91,7 +172,7 @@ class Detailspassaer extends StatelessWidget {
                           ),
                         )),
                   ),
-                  Expanded(child: Text(_conducteurTrajet.utilisateur.email), flex: 8),
+                  Expanded(child: Text(_utilisateur.email), flex: 8),
                 ],
               ),
               SizedBox(height: screenHeight * 0.01),
@@ -183,7 +264,7 @@ class Detailspassaer extends StatelessWidget {
                               context: context,
                               builder: (context) => Builder(
                                 builder: (context) {
-                                  if (_conducteurTrajet.utilisateur.evaluation.feedback.isEmpty) {
+                                  if (_utilisateur.evaluation.feedback.isEmpty) {
                                     // If the list is empty, display a message
                                     return Center(
                                         child: Text(
@@ -196,14 +277,14 @@ class Detailspassaer extends StatelessWidget {
                                         thickness: 1.0,
                                         color: Colors.grey[300],
                                       ),
-                                      itemCount: _conducteurTrajet.utilisateur.evaluation.feedback.length,
+                                      itemCount: _utilisateur.evaluation.feedback.length,
                                       itemBuilder: (context, index) {
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: ListTile(
                                             leading: Icon(Icons.location_on_outlined),
                                             title: Text(
-                                              _conducteurTrajet.utilisateur.evaluation.feedback[index],
+                                              _utilisateur.evaluation.feedback[index],
                                               style: TextStyle(
                                                 fontFamily: 'poppins',
                                                 fontWeight: FontWeight.w700,
@@ -262,7 +343,7 @@ class Detailspassaer extends StatelessWidget {
                           child: ListTile(
                             title: Text('Oued Smar_Alger'),
                             subtitle: Text(
-                              '${_conducteurTrajet.trajetLance.dateDepart.hour}:${_conducteurTrajet.trajetLance.dateDepart.minute}',
+                              '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
@@ -274,7 +355,7 @@ class Detailspassaer extends StatelessWidget {
                           child: ListTile(
                             title: Text('Maouklane_setif'),
                             subtitle: Text(
-                              '${_conducteurTrajet.trajetLance.tempsDePause.hour}:${_conducteurTrajet.trajetLance.tempsDePause.minute}',
+                              '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute}',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
@@ -302,11 +383,11 @@ class Detailspassaer extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${_conducteurTrajet.trajetLance.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_conducteurTrajet.trajetLance.dateDepart.month)} ${_conducteurTrajet.trajetLance.dateDepart.year}',
+                    Text('${_trajet.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      _conducteurTrajet.trajetLance.coutTrajet.toString()+' DA',
+                      _trajet.coutTrajet.toString()+' DA',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -317,9 +398,9 @@ class Detailspassaer extends StatelessWidget {
                 onPressed: () {
 
                   // handle right button press
-                  if (BaseDeDonnee().validatePhoneNumber(_conducteurTrajet.utilisateur.numeroTelephone)){
+                  if (BaseDeDonnee().validatePhoneNumber(_utilisateur.numeroTelephone)){
                     launchUrlString(
-                        "tel:${_conducteurTrajet.utilisateur.numeroTelephone}");
+                        "tel:${_utilisateur.numeroTelephone}");
                   }
                 },
                 style: ButtonStyle(
@@ -352,7 +433,7 @@ class Detailspassaer extends StatelessWidget {
                       ),
                       SizedBox(width: 5),
                       Text(
-                        "${_conducteurTrajet.utilisateur.numeroTelephone}",
+                        "${_utilisateur.numeroTelephone}",
                         style: TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.bold,
@@ -366,8 +447,8 @@ class Detailspassaer extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  baseDeDonnee.ajouterNotification("N4sMJH5Un6aqWNuwGaTnQ34cPqt1",Notifications("N4sMJH5Un6aqWNuwGaTnQ34cPqt1","id_passager","id_trajet","Grine","Mohammed","Alger","el Aziziya",true));
-                  sendNotification("fcm_token_recepteur", "nouvelle notification", "un passager vous a envoyé une demande ");
+                  baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajet,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],true));
+                  sendNotification("fcm_token_recepteur", "Nouvelle notification", "Un conducteur a accepté votre demande");
                 },
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),

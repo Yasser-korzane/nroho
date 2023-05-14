@@ -113,6 +113,10 @@ class BaseDeDonnee{
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'statut': newStatut});
   }
+  Future<void> updateUtilisateurfcmTocken(String uid, String fcmTocken) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    await utilisateurDocRef.update({'fcmTocken': fcmTocken});
+  }
   Future<void> updateUtilisateurImage(String uid, String imageUrl) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'imageUrl': imageUrl});
@@ -249,6 +253,51 @@ class BaseDeDonnee{
   }
   //------------------------------------------------------------------------------------------
   /** ************************************** Geters ****************************************** **////
+  Future<List<String>> getNomPrenom(String uid)async {
+    String nom = '' ;
+    String prenom = '' ;
+    List<String> listNomPrenom = [];
+    try {
+      await FirebaseFirestore.instance.collection('Utilisateur')
+          .doc(uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          nom = snapshot.data()!['nom'];
+          prenom = snapshot.data()!['prenom'];
+          listNomPrenom.add(nom);
+          listNomPrenom.add(prenom);
+        } else { // end snapshot exist
+          throw Exception("Utilisateur does not exist.");
+        }
+      });
+    } catch (e) {
+      throw Exception("Failed to get utilisateur.");
+    }
+    return listNomPrenom;
+  }
+  /// *******************************************************************************************************
+  Future <List<String>> getVilleDepartVilleArrive(String uid, String idTrajet)async {
+    List<String> villeDepartArrive = [];
+    String villeDepart = '';
+    String villeArrive = '';
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .collection('trajetsLances')
+        .doc(idTrajet)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        villeDepart = snapshot.data()!['villeDepart'];
+        villeArrive = snapshot.data()!['villeArrivee'];
+        villeDepartArrive.add(villeDepart);
+        villeDepartArrive.add(villeArrive);
+      }else print('ce trajet n\'exist pas');
+    });
+    return villeDepartArrive;
+  }
+
   Future<Utilisateur> getDataFromDataBase(String uid)async {
     Utilisateur? utilisateur = creerUtilisateurVide();
     try {
@@ -671,6 +720,11 @@ class BaseDeDonnee{
       case 12 : return 'Décembre';
     }
     return 'Mois inconnu';
+  }
+  String reglerTemps(int temps){
+    if (temps<=9 && temps >=0){
+      return (temps.toString()+'0');
+    }else return temps.toString();
   }
   /// *******************************************************************************************************
 /// querySnapshot contient tout les references de toute les Utilisateurs

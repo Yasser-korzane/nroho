@@ -33,7 +33,7 @@ class cardLancerListH extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsConducteur(lancer),));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsConducteur(lancer,true),));
                 },
                 child: Card(
                   color: Colors.white,

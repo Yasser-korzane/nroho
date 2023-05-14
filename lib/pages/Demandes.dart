@@ -1,16 +1,12 @@
 import 'package:appcouvoiturage/pages/trajetdemandepassager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/Services/base de donnee.dart';
-import '../Services/localNotification.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:appcouvoiturage/main.dart';
 
 class DemandesPassager extends StatefulWidget {
   @override
@@ -62,9 +58,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
-    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
-    //listeNotifications.add(notifications);
+    // Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+    // listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(
             backgroundColor: Colors.grey.shade300,
@@ -88,12 +83,16 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                         horizontal: screenWidth * 0.035,
                         vertical: screenHeight * 0.015),
                     child: GestureDetector(
-                      /*onTap: () {
+                      onTap: () async{
+                        List<String> nomPrenom = [];
+                        nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
+                        List<String> villesDepartArrive = [] ;
+                        villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajet);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Detailspassaer()));
-                      },*/
+                              builder: (context) => Detailspassaer(demande.id_pasagers,demande.id_trajet,nomPrenom,villesDepartArrive)));
+                      },
                       child: Card(
                           color: Colors.white,
                           elevation: 8,
@@ -113,7 +112,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                   child: ListTile(
                                     title: Text(
                                       '${demande.nom} ${demande.prenom}',
-                                      style: TextStyle(fontFamily: 'Poppins'),
+                                      style: TextStyle(fontFamily: 'Poppins',fontSize: 14),
                                     ),
                                     leading: Container(
                                       height: screenHeight * 0.06,
@@ -134,12 +133,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                           'Départ : ${demande.villeDepart}',
 
                                           style:
-                                              TextStyle(fontFamily: 'Poppins'),
+                                              TextStyle(fontFamily: 'Poppins',fontSize: 14),
                                         ),
                                         Text(
                                           'Arrivée : ${demande.villeArrive}',
                                           style:
-                                              TextStyle(fontFamily: 'Poppins'),
+                                              TextStyle(fontFamily: 'Poppins',fontSize: 14),
                                         ),
                                       ],
                                     ),
@@ -147,7 +146,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     dense: true,
                                   ),
                                 ),
-                                Padding(
+                                /*Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10.0, right: 10),
                                   child: OutlinedButton(
@@ -195,14 +194,16 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                       ),
                                     ),
                                   ),
-                                ),
+                                ),*/
                                 SizedBox(height: screenHeight * 0.005),
                                 GestureDetector(
                                   onTap: () async{
-                                    baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}","Boulacheb","Hichem","Alger","el Aziziya",true));
-                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Un conducteur a accepté votre demande pour rejoindre son trajet");
-
-
+                                    List<String> nomPrenom = [];
+                                    nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
+                                    List<String> villesDepartArrive = [] ;
+                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajet);
+                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],true));
+                                    sendNotification("fcm_token_recepteur", "Nouvelle notification", "Un conducteur a accepté votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -247,9 +248,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                               ),
                                             )),
                                         Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: screenWidth * 0.05,
-                                              vertical: screenHeight * 0.008),
+                                          padding: EdgeInsets.all(10),
                                           child: Text(
                                             'Accepter le passager',
                                             style: GoogleFonts.lato(
@@ -269,9 +268,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 ),
                                 SizedBox(height: screenHeight * 0.01),
                                 GestureDetector(
-                                  onTap: () {
-                                    baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}","Boulacheb","Hichem","Alger","el Aziziya",true));
-                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
+                                  onTap: () async{
+                                    List<String> nomPrenom = [];
+                                    nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
+                                    List<String> villesDepartArrive = [] ;
+                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajet);
+                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],false));                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -315,9 +317,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                               ),
                                             )),
                                         Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: screenWidth * 0.05,
-                                              vertical: screenHeight * 0.008),
+                                          padding: EdgeInsets.all(10),
                                           child: Text(
                                             'Refuser le passager',
                                             style: GoogleFonts.lato(

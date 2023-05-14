@@ -8,14 +8,17 @@ import '../AppClasses/Trajet.dart';
 
 class detailsConducteur extends StatelessWidget {
   Trajet _trajet;
-  detailsConducteur(this._trajet);
+  bool cond_pas ; // si false alors passager else est conducteur
+  detailsConducteur(this._trajet,this.cond_pas);
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-
+    String qualite = '\n';
+    if (_trajet.probleme) qualite += '"Il y avait un problème avec ce trajet!';
+    else qualite+= '"Le trajet Le s\'est bien passé sans problèmes';
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -143,7 +146,7 @@ class detailsConducteur extends StatelessWidget {
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
                           child: Text(
-                            '${_trajet.dateDepart.year}-${_trajet.dateDepart.month}-${_trajet.dateDepart.day}',
+                            '${_trajet.tempsDePause.year}-${_trajet.tempsDePause.month}-${_trajet.tempsDePause.day}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -156,7 +159,7 @@ class detailsConducteur extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                            '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -325,7 +328,6 @@ class detailsConducteur extends StatelessWidget {
                           child: Text(
                             '${_trajet.coutTrajet} DA',
                             style: TextStyle(
-                              // fontWeight: FontWeight.w400,
                               fontSize: 16.0,
                               fontFamily: 'Poppins',
                             ),
@@ -349,9 +351,8 @@ class detailsConducteur extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.015),
                     Padding(
                       padding: const EdgeInsets.only(left: 30.0),
-                      child: Row(
-                        children: List.generate(
-                          5,
+                      /*child: Row(
+                        children: List.generate(5,
                           (index) => Icon(
                             Icons.star,
                             size: 20.0,
@@ -361,7 +362,7 @@ class detailsConducteur extends StatelessWidget {
                                 : Colors.grey,
                           ),
                         ),
-                      ),
+                      ),*/
                     ),
                     Row(
                       children: [
@@ -381,17 +382,19 @@ class detailsConducteur extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.015),
                     Row(
                       children: [
-                        Text(
-                          'Qualité du trajet: ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.0,
-                            fontFamily: 'Poppins',
+                        Expanded(
+                          child: Text(
+                            'Qualité du trajet:\n$qualite"',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.0,
+                              fontFamily: 'Poppins',
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: screenHeight * 0.1),
+                    SizedBox(height: screenHeight * 0.02),
                     Divider(color: Colors.black, thickness: 1),
                     Row(
                       children: [
@@ -407,7 +410,6 @@ class detailsConducteur extends StatelessWidget {
                     ),
                     SizedBox(height: screenHeight * 0.015),
                     Center(
-                      child: Flexible(
                         child: Text.rich(
                           TextSpan(
                             text:
@@ -438,7 +440,6 @@ class detailsConducteur extends StatelessWidget {
                           overflow: TextOverflow.visible,
                           maxLines: null,
                         ),
-                      ),
                     ),
                   ],
                 ),

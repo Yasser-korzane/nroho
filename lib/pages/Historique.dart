@@ -1,4 +1,6 @@
+import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/HistoriqueLancer.dart';
 import 'package:appcouvoiturage/pages/HistoriqueReserver.dart';
@@ -8,9 +10,13 @@ class Historique extends StatelessWidget {
   Historique(this._utilisateur);
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery
-        .of(context)
-        .size;
+    List<Trajet> listTrajetReserve = [];
+    List<Trajet> listTrajetLance = [];
+    final String uid = FirebaseAuth.instance.currentUser!.uid;
+    for (Trajet trajet in _utilisateur.Historique){
+      if (trajet.idConductuer == uid) listTrajetLance.add(trajet);
+      else listTrajetReserve.add(trajet);
+    }
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -22,7 +28,7 @@ class Historique extends StatelessWidget {
               },
               icon: const Icon(Icons.chevron_left, color: Colors.black)),
           title: Text('Historique',
-              style: Theme.of(context).textTheme.titleLarge),
+              style: TextStyle(fontFamily: 'Poppins')),
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
@@ -39,8 +45,8 @@ class Historique extends StatelessWidget {
         ),
         body:TabBarView(
           children: [
-            cardLancerListH(_utilisateur.Historique),
-            cardReserverListH(_utilisateur.Historique),
+            cardLancerListH(listTrajetLance),
+            cardReserverListH(listTrajetReserve),
           ],
         ),
       ),

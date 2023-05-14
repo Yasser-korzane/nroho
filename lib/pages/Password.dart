@@ -1,6 +1,7 @@
 import 'package:appcouvoiturage/AppClasses/PlusInformations.dart';
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:appcouvoiturage/pages/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -203,8 +204,11 @@ class _MotdePasseState extends State<MotdePasse> {
                           fontFamily: 'Poppins'),
                     ),
                     onPressed: () async {
+                      String uid = FirebaseAuth.instance.currentUser!.uid;
+                      showDialog(context: context, builder: (context) => Rating(),);
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
-                      await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
+                      //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
+                      //await _baseDeDonnee.saveHistoriqueAsSubcollection(uid, trajetReserve);
                       //await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);

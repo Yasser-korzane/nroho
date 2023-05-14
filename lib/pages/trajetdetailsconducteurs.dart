@@ -6,14 +6,9 @@ import 'package:url_launcher/url_launcher_string.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'AfficherTrajetSurLeMap.dart';
-import 'package:appcouvoiturage/pages/profilepage.dart';
-import 'package:appcouvoiturage/Services/base de donnee.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
 import '../AppClasses/Evaluation.dart';
-import '../AppClasses/Notifications.dart';
-import '../AppClasses/PlusInformations.dart';
-import '../AppClasses/Trajet.dart';
 import '../AppClasses/Vehicule.dart';
 
 class Details extends StatefulWidget {
