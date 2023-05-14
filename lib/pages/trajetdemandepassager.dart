@@ -93,7 +93,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
     _getDataFromDataBase();
     _getTrajet();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -115,55 +115,56 @@ class _DetailspassaerState extends State<Detailspassaer> {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Container(
-        margin: EdgeInsets.fromLTRB(screenWidth * 0.025, 0, screenWidth * 0.025, 0),
-        padding:  EdgeInsets.all(screenWidth * 0.05),
-        child: Column(
-          children: [
-            SizedBox(
-              height: screenHeight * 0.04,
-            ),
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 38.0,
-                  backgroundImage: NetworkImage(_utilisateur.imageUrl),
-                ),
-                SizedBox(width: 16.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_utilisateur.nom +' '+ _utilisateur.prenom,
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.fromLTRB(screenWidth * 0.025, 0, screenWidth * 0.025, 0),
+          padding:  EdgeInsets.all(screenWidth * 0.05),
+          child: Column(
+            children: [
+              SizedBox(
+                height: screenHeight * 0.04,
+              ),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 38.0,
+                    backgroundImage: NetworkImage(_utilisateur.imageUrl),
+                  ),
+                  SizedBox(width: 16.0),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_utilisateur.nom +' '+ _utilisateur.prenom,
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )),
+                      SizedBox(height: 4.0),
+                      Row(
+                        children: List.generate(
+                          5,
+                              (index) => Icon(
+                            Icons.star,
+                            size: 20.0,
+                            color: index < _utilisateur.evaluation.etoiles.round()
+                                ? Colors.yellow
+                                : Colors.grey,
                           ),
-                        )),
-                    SizedBox(height: 4.0),
-                    Row(
-                      children: List.generate(
-                        5,
-                            (index) => Icon(
-                          Icons.star,
-                          size: 20.0,
-                          color: index < _utilisateur.evaluation.etoiles.round()
-                              ? Colors.yellow
-                              : Colors.grey,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: screenHeight * 0.025),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: screenHeight * 0.025),
               // SizedBox(height: screenHeight * 0.014),
               Row(
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text("Email: ",
+                    child: Text("Email = ",
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                             fontSize: 15.0,
@@ -491,6 +492,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
             ],
           ),
         ),
+      ),
     );
   }
 }

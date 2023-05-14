@@ -113,6 +113,31 @@ class BaseDeDonnee{
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'statut': newStatut});
   }
+  Future<void> saveInfoUserAfterTrajet(String uid,int nbEtoiles,String avis,bool signale)async {
+    /// si signal est true alors on va incrementer nbSignalement a l'utilisateur
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    Evaluation evaluation = Evaluation([], 0, 0);
+    String email = '';
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        email = snapshot.data()!['email'];
+        evaluation = Evaluation(
+          List<String>.from(snapshot.data()!['evaluation']['feedback']),
+          snapshot.data()!['evaluation']['etoiles'],
+          snapshot.data()!['evaluation']['nbSignalement']);
+        evaluation.etoiles = nbEtoiles ;
+        evaluation.feedback.add(avis);
+        if (signale) evaluation.nbSignalement++;
+        if (evaluation.nbSignalement >=3) await ajouterMauvaisUtilisateur(uid,email);
+        await utilisateurDocRef.update({'evaluation': evaluation});
+      }else print('Ce utilisateur n\'exist pas');
+    });
+  }
+
   Future<void> updateUtilisateurfcmTocken(String uid, String fcmTocken) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'fcmTocken': fcmTocken});
@@ -146,7 +171,7 @@ class BaseDeDonnee{
         .set(trajetLanceData);
   }
   //------------------------------------------------------------------------------------------
-  Future<void> saveTrajetReserveAsSubcollection(String uid, Trajet trajetReserve) async {
+  Future<String> saveTrajetReserveAsSubcollection(String uid, Trajet trajetReserve) async {
     Map<String, dynamic> trajetReserveData = trajetReserve.toMap();
     DocumentReference docRef = await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -161,6 +186,7 @@ class BaseDeDonnee{
         .collection('trajetsReserves')
         .doc(docRef.id)
         .set(trajetReserveData);
+    return docRef.id;
   }
   //------------------------------------------------------------------------------------------
   Future<void> saveHistoriqueAsSubcollection(String uid, Trajet historique)async{
@@ -723,7 +749,7 @@ class BaseDeDonnee{
   }
   String reglerTemps(int temps){
     if (temps<=9 && temps >=0){
-      return (temps.toString()+'0');
+      return ('0'+temps.toString());
     }else return temps.toString();
   }
   /// *******************************************************************************************************

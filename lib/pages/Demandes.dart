@@ -114,17 +114,17 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                       '${demande.nom} ${demande.prenom}',
                                       style: TextStyle(fontFamily: 'Poppins',fontSize: 14),
                                     ),
-                                    leading: Container(
+                                    /*leading: Container(
                                       height: screenHeight * 0.06,
                                       width: screenHeight * 0.06,
-                                      /*child: CircleAvatar(
+                                      child: CircleAvatar(
                                         //backGrounndImage: AssetImage('your image path'),
                                         backgroundImage: AssetImage(
                                           'asset/images/profile.png',
                                         ),
                                         radius: 50,
-                                      ),*/
-                                    ),
+                                      ),
+                                    ),*/
                                     subtitle: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
