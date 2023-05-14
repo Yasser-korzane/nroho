@@ -206,6 +206,7 @@ class _MotdePasseState extends State<MotdePasse> {
                     onPressed: () async {
                       String uid = FirebaseAuth.instance.currentUser!.uid;
                       showDialog(context: context, builder: (context) => Rating(),);
+
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
                       //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(uid, trajetReserve);
@@ -213,7 +214,7 @@ class _MotdePasseState extends State<MotdePasse> {
                       // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
-                       //sendNotification("dxCAZJQbQQCfGormksg3Xh:APA91bGhDV5JYw8aU1JptYfvOWzVDwDKVRyczVMBOonQX4g0mE3kG3KO5AAHfGQ9f_xFzo1HsoA7GW73uxMU7qDc9HH7VPUZ70q_eFq6GGktTmU88hDUdPZzefR88OFwx6ge-uRY5C2F","new notification", "hello mohammed");
+                       sendNotification("c_xjr0ZhQRCsaCTcI6Yf-S:APA91bGznD7_-eSwaD3McjUUHaByuQ_Kz8C9Zr5EyZpdlrtTD5g5c_USyVcSQaEJ0kvrntKFF8FfWQbSF8nNO0HCHrkHne0vRCpzvYd1z01s2X_EQ6SslIU5bpUVHWe8FAvEyHkK7D2j","new notification", "hello mohammed");
 
                     },
                   ),

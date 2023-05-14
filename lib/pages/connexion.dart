@@ -6,6 +6,7 @@ import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/Shared/lodingEffect.dart';
 import 'package:appcouvoiturage/pages/email.dart';
 import 'package:appcouvoiturage/pages/home.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/pages/signup1.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -273,6 +274,8 @@ class _MyConnexinState extends State<Connexin> {
                                             );
                                           } // end if result is null
                                           else {// if result is not null
+                                            final fcm =await FirebaseMessaging.instance.getToken();
+                                            _baseDeDonnee.updateUtilisateurfcmTocken(result.uid,fcm!);
                                             Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(

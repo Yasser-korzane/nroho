@@ -360,7 +360,7 @@ Future<void> sendNotification(String fcmToken, String title, String body) async 
           'click_action': 'FLUTTER_NOTIFICATION_CLICK',
         },
         'data':{
-          'route': '/home',
+          'routes': '/home',
         },
         'to': fcmToken,
       },

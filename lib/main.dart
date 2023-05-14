@@ -7,6 +7,7 @@ import 'package:appcouvoiturage/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/Services/wrapper.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ import 'package:appcouvoiturage/pages/welcomepage.dart';
 import 'package:appcouvoiturage/pages/trajetdetailsconducteurs.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:appcouvoiturage/pages/page_recherche.dart';
+import 'package:appcouvoiturage/Services/notification.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,12 +62,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        /*initialRoute: '/commencer',
+        //initialRoute: '/commencer',
         routes: {
-          '/signin':(context) => const Connexin(title: 'connextion '),
+         /* '/signin':(context) => const Connexin(title: 'connextion '),
           '/signup':(context) => const MyHomePage(title: 'SingnUp'),
-          '/commencer':(context) => const MyBeginPage(title: 'begin') ,
-        },*/
+          '/commencer':(context) => const MyBeginPage(title: 'begin') ,*/
+          '/home':(context)=> home(),
+        },
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
