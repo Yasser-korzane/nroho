@@ -16,8 +16,6 @@ class cardReserverList extends StatelessWidget{
         .size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    Trajet trajet = BaseDeDonnee().creerTrajetVide();
-    trajetsReserve.add(trajet);
     return trajetsReserve.isEmpty ?
     Scaffold(
         backgroundColor: Colors.white,
