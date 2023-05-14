@@ -129,7 +129,7 @@ class BaseDeDonnee{
           List<String>.from(snapshot.data()!['evaluation']['feedback']),
           snapshot.data()!['evaluation']['etoiles'],
           snapshot.data()!['evaluation']['nbSignalement']);
-        evaluation.etoiles = nbEtoiles ;
+        evaluation.etoiles = ((evaluation.etoiles+nbEtoiles) / 2).ceil() ;
         evaluation.feedback.add(avis);
         if (signale) evaluation.nbSignalement++;
         if (evaluation.nbSignalement >=3) await ajouterMauvaisUtilisateur(uid,email);

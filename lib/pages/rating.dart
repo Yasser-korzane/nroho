@@ -18,6 +18,7 @@ class _RatingState extends State<Rating> {
   final TextEditingController _userFeedbackController = TextEditingController();
   final TextEditingController _routeFeedbackController = TextEditingController();
   BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+  bool est_signale=false;
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +97,7 @@ class _RatingState extends State<Rating> {
                             color: Colors.red[200],
                             onPressed: (){
                               /// incrementer nbSignalement
+                              est_signale=true;
                               launch('https://karimiarkane.github.io/NrohoSignaler.github.io/');
                             },
                             child: Text('Signaler',style: TextStyle(fontFamily: 'Poppins',color: Colors.red[400]),),
@@ -109,6 +111,17 @@ class _RatingState extends State<Rating> {
                   onPressed: () {
                     widget._trajet.avis=_routeFeedbackController.text;
                     baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget._trajet);
+                    if(widget._trajet.idConductuer==FirebaseAuth.instance.currentUser!.uid) {
+                      for(int i=0;i<widget._trajet.idPassagers!.length;i++) {
+                        baseDeDonnee.saveInfoUserAfterTrajet(
+                            widget._trajet.idPassagers[i], currentRating,
+                            _userFeedbackController.text, est_signale);
+                      }
+                    }else{
+                      baseDeDonnee.saveInfoUserAfterTrajet(
+                          widget._trajet.idConductuer, currentRating,
+                          _userFeedbackController.text, est_signale);
+                    }
                     Navigator.pop(context);
                     // Do something with the rating
                   },
