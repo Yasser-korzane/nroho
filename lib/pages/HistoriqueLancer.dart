@@ -1,6 +1,6 @@
 import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
-
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'detailsconducteur.dart';
 class cardLancerListH extends StatelessWidget{
   List<Trajet> _trajetLances;
@@ -55,7 +55,7 @@ class cardLancerListH extends StatelessWidget{
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget> [
                                 Text(
-                                  ' 21 janvier 2024 a 18:10',
+                                  '${lancer.dateDepart.day} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
                                   style: TextStyle(fontFamily: 'poppins'),
                                 ),
                                 Column(
@@ -105,7 +105,7 @@ class cardLancerListH extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.dateDepart}',
+                                        '${lancer.dateDepart.hour}:${lancer.dateDepart.minute}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class cardLancerListH extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.tempsDePause}',
+                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute} (estimation)',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,

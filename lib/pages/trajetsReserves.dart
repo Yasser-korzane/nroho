@@ -34,12 +34,12 @@ class cardReserverList extends StatelessWidget{
       body: ListView.builder(
         itemCount: trajetsReserve.length,
         itemBuilder: (context, index) {
-          final lancer = trajetsReserve[index];
+          final reserve = trajetsReserve[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () async{
-                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)));
                   if (!result){
                     ScaffoldMessenger.of(context)
                         .showSnackBar(
@@ -81,7 +81,7 @@ class cardReserverList extends StatelessWidget{
                         Padding(
                           padding:  EdgeInsets.all(screenWidth*0.04),
                           child: Text(
-                            '${lancer.dateDepart.day} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
+                            '${reserve.dateDepart.day} ${BaseDeDonnee().moisAuChaine(reserve.dateDepart.month)} ${reserve.dateDepart.year}',
                             style: TextStyle(fontFamily: 'poppins'),
                           ),
                         ),
@@ -122,7 +122,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.dateDepart.hour}:${lancer.dateDepart.minute}',
+                                        '${reserve.dateDepart.hour}:${reserve.dateDepart.minute}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class cardReserverList extends StatelessWidget{
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(lancer.villeDepart,style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(reserve.villeDepart,style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),
@@ -138,7 +138,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute} (estimation)',
+                                        '${reserve.tempsDePause.hour}:${reserve.tempsDePause.minute} (estimation)',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class cardReserverList extends StatelessWidget{
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(lancer.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(reserve.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),

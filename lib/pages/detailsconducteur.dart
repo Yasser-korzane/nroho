@@ -31,6 +31,11 @@ class detailsConducteur extends StatelessWidget {
       qualite += '"Le trajet Le s\'est bien passé sans problèmes';
     return SafeArea(
       child: Scaffold(
+          floatingActionButton: ElevatedButton(
+            child: Text('Voir sur le map',style: TextStyle(fontFamily: 'poppins',color: Colors.blue),),
+            onPressed: (){
+            },
+          ),
           body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.fromLTRB(
