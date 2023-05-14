@@ -205,7 +205,6 @@ class _MotdePasseState extends State<MotdePasse> {
                     ),
                     onPressed: () async {
                       String uid = FirebaseAuth.instance.currentUser!.uid;
-                      showDialog(context: context, builder: (context) => Rating(),);
 
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
                       //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);

@@ -163,7 +163,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text("Email = ",
+                    child: Text("Email: ",
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                             fontSize: 15.0,
@@ -485,7 +485,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                     ),
                   ),
                 ),
-                child: const Text('Befuser la demande',
+                child: const Text('Refuser la demande',
                     style: TextStyle(color: Colors.red, fontFamily: 'Poppins')),
               )
             ],
