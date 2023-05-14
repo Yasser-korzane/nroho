@@ -369,7 +369,7 @@ class _DetailsState extends State<Details> {
                       children: [
                         Container(
                           child: ListTile(
-                            title: Text('Oued Smar_Alger'),
+                            title: Text(widget._conducteurTrajet.trajetLance.villeDepart),
                             subtitle: Text(
                     '${widget._conducteurTrajet.trajetLance.dateDepart.hour}:${widget._conducteurTrajet.trajetLance.dateDepart.minute}',
                       style: TextStyle(
@@ -381,7 +381,7 @@ class _DetailsState extends State<Details> {
                         SizedBox(height: screenHeight * 0.01),
                         Container(
                           child: ListTile(
-                            title: Text('Maouklane_setif'),
+                            title: Text(widget._conducteurTrajet.trajetLance.villeArrivee),
                             subtitle: Text(
                           '${widget._conducteurTrajet.trajetLance.tempsDePause.hour}:${widget._conducteurTrajet.trajetLance.tempsDePause.minute}',
                             style: TextStyle(
