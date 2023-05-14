@@ -34,12 +34,12 @@ class cardReserverList extends StatelessWidget{
       body: ListView.builder(
         itemCount: trajetsReserve.length,
         itemBuilder: (context, index) {
-          final lancer = trajetsReserve[index];
+          final reserve = trajetsReserve[index];
           return  Padding(
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () async{
-                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(lancer)));
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)));
                   if (!result){
                     ScaffoldMessenger.of(context)
                         .showSnackBar(
@@ -80,7 +80,7 @@ class cardReserverList extends StatelessWidget{
                         Padding(
                           padding:  EdgeInsets.all(screenWidth*0.04),
                           child: Text(
-                            '${BaseDeDonnee().reglerTemps(lancer.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
+                            '${BaseDeDonnee().reglerTemps(reserve.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(reserve.dateDepart.month)} ${reserve.dateDepart.year}',
                             style: TextStyle(fontFamily: 'poppins'),
                           ),
                         ),
@@ -121,7 +121,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${BaseDeDonnee().reglerTemps(lancer.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(lancer.dateDepart.minute)}',
+                                        '${BaseDeDonnee().reglerTemps(reserve.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(reserve.dateDepart.minute)}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class cardReserverList extends StatelessWidget{
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(lancer.villeDepart,style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(reserve.villeDepart,style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),
@@ -137,7 +137,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${BaseDeDonnee().reglerTemps(lancer.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(lancer.tempsDePause.minute)} (estimation)',
+                                        '${BaseDeDonnee().reglerTemps(reserve.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(reserve.tempsDePause.minute)} (estimation)',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -145,7 +145,7 @@ class cardReserverList extends StatelessWidget{
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(lancer.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(reserve.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),

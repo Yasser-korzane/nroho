@@ -1,6 +1,6 @@
 import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
-
+import '../Services/base de donnee.dart';
 import 'detailsconducteur.dart';
 class cardReserverListH extends StatelessWidget{
   List<Trajet> _trajetReserves;
@@ -55,7 +55,7 @@ class cardReserverListH extends StatelessWidget{
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget> [
                                 Text(
-                                  ' 21 janvier 2024 a 18:10',
+                                  '${reserve.dateDepart.day} ${BaseDeDonnee().moisAuChaine(reserve.dateDepart.month)} ${reserve.dateDepart.year}',
                                   style: TextStyle(fontFamily: 'poppins'),
                                 ),
                                 Column(
@@ -105,7 +105,7 @@ class cardReserverListH extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${reserve.dateDepart}',
+                                        '${reserve.dateDepart.day} ${BaseDeDonnee().moisAuChaine(reserve.dateDepart.month)} ${reserve.dateDepart.year}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class cardReserverListH extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${reserve.tempsDePause}',
+                                        '${reserve.tempsDePause.hour}:${reserve.tempsDePause.minute} (estimation)',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
