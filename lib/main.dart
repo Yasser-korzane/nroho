@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
               return WillPopScope(
               onWillPop: () async {
                 // Action lorsque l'utilisateur quitte l'application
-                if(FirebaseAuth.instance.currentUser!=null){
+                if(FirebaseAuth.instance.currentUser !=null){
                       if(!FirebaseAuth.instance.currentUser!.emailVerified){
                         FirebaseAuth.instance.currentUser!.delete();
                       }

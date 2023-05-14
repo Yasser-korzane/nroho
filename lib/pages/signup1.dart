@@ -447,7 +447,7 @@ class _SinupState extends State<Sinup> {
                                           duration: const Duration(seconds: 2),
                                           content: AwesomeSnackbarContent(
                                             title: 'Oh Erreur!!',
-                                            message: 'Vous devez verifier vos donnees',
+                                            message: 'Cette adresse email est déja utilisé',
 
                                             /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                             contentType: ContentType.failure,
