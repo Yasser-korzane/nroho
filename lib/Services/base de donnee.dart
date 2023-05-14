@@ -45,7 +45,8 @@ class BaseDeDonnee{
       'notifications': utilisateur.notifications.map((notif) => {
         'id_conducteur': notif.id_conducteur,
         'id_pasagers': notif.id_pasagers,
-        'id_trajet': notif.id_trajet,
+        'id_trajetLance': notif.id_trajetLance,
+        'id_trajetReserve': notif.id_trajetReserve,
         'nom': notif.nom ,
         'prenom': notif.prenom,
         'villeDepart': notif.villeDepart,
@@ -80,7 +81,8 @@ class BaseDeDonnee{
       'notifications': utilisateur.notifications.map((notif) => {
         'id_conducteur': notif.id_conducteur,
         'id_pasagers': notif.id_pasagers,
-        'id_trajet': notif.id_trajet,
+        'id_trajetLance': notif.id_trajetLance,
+        'id_trajetReserve': notif.id_trajetReserve,
         'nom': notif.nom ,
         'prenom': notif.prenom,
         'villeDepart': notif.villeDepart,
@@ -133,7 +135,7 @@ class BaseDeDonnee{
         evaluation.feedback.add(avis);
         if (signale) evaluation.nbSignalement++;
         if (evaluation.nbSignalement >=3) await ajouterMauvaisUtilisateur(uid,email);
-        await utilisateurDocRef.update({'evaluation': evaluation});
+        await utilisateurDocRef.update({'evaluation': evaluation.toMap()});
       }else print('Ce utilisateur n\'exist pas');
     });
   }
@@ -170,6 +172,12 @@ class BaseDeDonnee{
         .doc(docRef.id)
         .set(trajetLanceData);
   }
+  Future<void> modifierTrajetLance(String uidTrajetLance,String idConducteur,String idPassager)async{
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(idConducteur).collection('trajetsLances').doc(uidTrajetLance);
+    await utilisateurDocRef.update({'trajetEstValide': true});
+    await utilisateurDocRef.update({'idConductuer':idConducteur});
+    await utilisateurDocRef.update({'idPassagers': FieldValue.arrayUnion([idPassager]),});
+  }
   //------------------------------------------------------------------------------------------
   Future<String> saveTrajetReserveAsSubcollection(String uid, Trajet trajetReserve) async {
     Map<String, dynamic> trajetReserveData = trajetReserve.toMap();
@@ -187,6 +195,12 @@ class BaseDeDonnee{
         .doc(docRef.id)
         .set(trajetReserveData);
     return docRef.id;
+  }
+  Future<void> modifierTrajetReserve(String uidTrajetReserve,String idConducteur,String idPassager)async{
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(idPassager).collection('trajetsReserves').doc(uidTrajetReserve);
+    await utilisateurDocRef.update({'trajetEstValide': true});
+    await utilisateurDocRef.update({'idConductuer':idConducteur});
+    await utilisateurDocRef.update({'idPassagers': FieldValue.arrayUnion([idPassager]),});
   }
   //------------------------------------------------------------------------------------------
   Future<void> saveHistoriqueAsSubcollection(String uid, Trajet historique)async{
@@ -358,7 +372,8 @@ class BaseDeDonnee{
                 Notifications notification = Notifications(
                   notificationData['id_conducteur'],
                   notificationData['id_pasagers'],
-                  notificationData['id_trajet'],
+                  notificationData['id_trajetLance'],
+                  notificationData['id_trajetReserve'],
                   notificationData['nom'],
                   notificationData['prenom'],
                   notificationData['villeDepart'],
@@ -396,7 +411,8 @@ class BaseDeDonnee{
             Notifications notification = Notifications(
               notificationData['id_conducteur'],
               notificationData['id_pasagers'],
-              notificationData['id_trajet'],
+              notificationData['id_trajetLance'],
+              notificationData['id_trajetReserve'],
               notificationData['nom'],
               notificationData['prenom'],
               notificationData['villeDepart'],
@@ -427,6 +443,21 @@ class BaseDeDonnee{
       }
     });
     return statut;
+  }
+
+  Future<String> getFcmTocken(String uid) async{
+    String fcmTocken = '' ;
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .get()
+        .then((snapshot) {
+      if (snapshot.exists) {
+        fcmTocken = snapshot.data()!['fcmTocken'];
+        return fcmTocken ;
+      }
+    });
+    return fcmTocken ;
   }
 
   /// ************************************ Fonctions de validation **************************************
@@ -505,7 +536,8 @@ class BaseDeDonnee{
           Notifications notification = Notifications(
             notificationData['id_conducteur'],
             notificationData['id_pasagers'],
-            notificationData['id_trajet'],
+            notificationData['id_trajetLance'],
+            notificationData['id_trajetReserve'],
             notificationData['nom'],
             notificationData['prenom'],
             notificationData['villeDepart'],
@@ -621,7 +653,8 @@ class BaseDeDonnee{
                   Notifications notification = Notifications(
                     notificationData['id_conducteur'],
                     notificationData['id_pasagers'],
-                    notificationData['id_trajet'],
+                    notificationData['id_trajetLance'],
+                    notificationData['id_trajetReserve'],
                     notificationData['nom'],
                     notificationData['prenom'],
                     notificationData['villeDepart'],

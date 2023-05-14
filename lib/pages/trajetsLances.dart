@@ -81,7 +81,7 @@ class cardLancerList extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
                                 Text(
-                                  '${lancer.dateDepart.day} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
+                                  '${BaseDeDonnee().reglerTemps(lancer.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
                                   style: TextStyle(fontFamily: 'poppins'),
                                 ),
                                 Column(children: [
@@ -132,7 +132,7 @@ class cardLancerList extends StatelessWidget {
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.dateDepart.hour}:${lancer.dateDepart.minute}',
+                                        '${BaseDeDonnee().reglerTemps(lancer.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(lancer.dateDepart.minute)}',
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontWeight: FontWeight.bold,
@@ -149,7 +149,7 @@ class cardLancerList extends StatelessWidget {
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute} (estimation)',
+                                        '${BaseDeDonnee().reglerTemps(lancer.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(lancer.tempsDePause.minute)} (estimation)',
                                         style: TextStyle(
                                             color: Colors.blue,
                                             fontWeight: FontWeight.bold,

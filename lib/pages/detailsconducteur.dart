@@ -245,7 +245,7 @@ class detailsConducteur extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    ListView.separated(
+                    /*ListView.separated(
                         itemBuilder: (context, index) {},
                         separatorBuilder: (context, index) {
                           return ListTile(
@@ -254,7 +254,7 @@ class detailsConducteur extends StatelessWidget {
                             // e.g. change the color, size, etc.
                           );
                         },
-                        itemCount: utilisateur.length),
+                        itemCount: utilisateur.length),*/
                     Divider(color: Colors.black, thickness: 1),
                     Row(
                       children: [

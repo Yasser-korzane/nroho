@@ -29,7 +29,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
             Notifications notification = Notifications(
               notificationData['id_conducteur'],
               notificationData['id_pasagers'],
-              notificationData['id_trajet'],
+              notificationData['id_trajetLance'],
+              notificationData['id_trajetReserve'],
               notificationData['nom'],
               notificationData['prenom'],
               notificationData['villeDepart'],
@@ -58,8 +59,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    // Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
-    // listeNotifications.add(notifications);
+     Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajetLance','id_trajetReserve', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+     listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(
             backgroundColor: Colors.grey.shade300,
@@ -87,11 +88,11 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                         List<String> nomPrenom = [];
                         nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
                         List<String> villesDepartArrive = [] ;
-                        villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajet);
+                        villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Detailspassaer(demande.id_pasagers,demande.id_trajet,nomPrenom,villesDepartArrive)));
+                              builder: (context) => Detailspassaer(demande.id_pasagers,demande.id_trajetLance,demande.id_trajetReserve,nomPrenom,villesDepartArrive)));
                       },
                       child: Card(
                           color: Colors.white,
@@ -201,9 +202,20 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     List<String> nomPrenom = [];
                                     nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
                                     List<String> villesDepartArrive = [] ;
-                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajet);
-                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],true));
-                                    sendNotification("fcm_token_recepteur", "Nouvelle notification", "Un conducteur a accepté votre demande pour rejoindre son trajet");
+                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
+                                    String fcmTockenPassager = await baseDeDonnee.getFcmTocken(demande.id_pasagers);
+                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajetLance}","${demande.id_trajetReserve}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],true));
+                                    /// 1) mettre trajetEstValide pour le conducteur (current user)
+                                    /// 2) mettre trajetEstValide pour les deux le passager
+                                    /// 3) decrementer nbPassager du trajetLance du conducteur
+                                    /// 4) ajouter id du passager dans la liste des idPassagers du trajetLance du conducteur
+                                    /// 5) ajouter id du conducteur dans idConducteur du trajetLance du conducteur
+                                    /// 6) ajouter id du passager dans la liste des idPassagers du trajetReserve du passager
+                                    /// 7) ajouter id du conducteur dans idConducteur du trajetReserve du passager
+                                    /* 1) et 4) et 5) */ await baseDeDonnee.modifierTrajetLance(demande.id_trajetLance, demande.id_conducteur, demande.id_pasagers);
+                                    /* 2) et 6) et 7) */ await baseDeDonnee.modifierTrajetReserve(demande.id_trajetReserve, demande.id_conducteur, demande.id_pasagers);
+                                    /* 3) */ await baseDeDonnee.incrementerNbPlacesConducteur(demande.id_conducteur, demande.id_trajetLance);
+                                    await sendNotification(fcmTockenPassager, "Nouvelle notification", "Un conducteur a accepté votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -266,14 +278,16 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: screenHeight * 0.01),
+                                SizedBox(height: screenHeight * 0.015),
                                 GestureDetector(
                                   onTap: () async{
                                     List<String> nomPrenom = [];
                                     nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
                                     List<String> villesDepartArrive = [] ;
-                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajet);
-                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajet}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],false));                                    sendNotification("fcm_token_recepteur", "nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
+                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
+                                    String fcmTockenPassager = await baseDeDonnee.getFcmTocken(demande.id_pasagers);
+                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajetLance}","${demande.id_trajetReserve}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],false));
+                                    await sendNotification(fcmTockenPassager, "Nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(

@@ -67,13 +67,9 @@ class _TrajetsState extends State<Trajets> {
         trajetLance.latLngArrivee = latLngArrivee;
         trajetLance.idConductuer = data['idConductuer'];
         trajetLance.idPassagers = List<String>.from(data['idPassagers']);
-        if(DateTime.now().isAfter(trajetLance.tempsDePause)){
-          if(trajetLance.trajetEstValide==false){
-            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,trajetLance.id);
-          }else{
-            showDialog(context: context, builder: (context) => Rating(trajetLance),);
-            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid, trajetLance.id);
-          }
+        if(DateTime.now().isAfter( (trajetLance.tempsDePause).add(Duration(minutes: 50)) )){ // si le trajet est finie
+          if(trajetLance.trajetEstValide) showDialog(context: context, builder: (context) => Rating(trajetLance),);
+          _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid, trajetLance.id);
         }else {
           setState(() {
             trajetsLances.add(trajetLance);
@@ -131,12 +127,8 @@ class _TrajetsState extends State<Trajets> {
         trajetReserve.idConductuer = data['idConductuer'];
         trajetReserve.idPassagers = List<String>.from(data['idPassagers']);
         if(DateTime.now().isAfter(trajetReserve.tempsDePause)){
-          if(trajetReserve.trajetEstValide==false){
-            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,trajetReserve.id);
-          }else{
-            showDialog(context: context, builder: (context) => Rating(trajetReserve),);
-            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid, trajetReserve.id);
-          }
+          if(trajetReserve.trajetEstValide) showDialog(context: context, builder: (context) => Rating(trajetReserve),);
+          _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid, trajetReserve.id);
         }else {
           setState(() {
             trajetsReserves.add(trajetReserve);

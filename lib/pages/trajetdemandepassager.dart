@@ -13,10 +13,11 @@ import '../AppClasses/Trajet.dart';
 
 class Detailspassaer extends StatefulWidget {
   String idPassager ;
-  String idTrajet ;
+  String idTrajetLance ;
+  String idTrajetReserve ;
   List<String> nomPrenom ;
   List<String> villeDepartArrive ;
-  Detailspassaer(this.idPassager,this.idTrajet,this.nomPrenom,this.villeDepartArrive);
+  Detailspassaer(this.idPassager,this.idTrajetLance,this.idTrajetReserve,this.nomPrenom,this.villeDepartArrive);
   @override
   State<Detailspassaer> createState() => _DetailspassaerState();
 }
@@ -28,7 +29,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
     try {
       await FirebaseFirestore.instance
           .collection('Utilisateur')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .doc(widget.idPassager)
           .get()
           .then((snapshot) async {
         if (snapshot.exists) {
@@ -44,7 +45,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
                 snapshot.data()!['evaluation']['etoiles'],
                 snapshot.data()!['evaluation']['nbSignalement'],
               );
-              _utilisateur.statut = snapshot.data()!['statut'];
               _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
               _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
               if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
@@ -67,7 +67,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
         .collection('Utilisateur')
         .doc(widget.idPassager)
         .collection('trajetsReserves')
-        .doc(widget.idTrajet)
+        .doc(widget.idTrajetReserve)
         .get()
         .then((snapshot) async {
       if (snapshot.exists) {
@@ -101,10 +101,10 @@ class _DetailspassaerState extends State<Detailspassaer> {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     List plusInformations =
-    ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.fumeur)}',
-      'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.bagage)}',
-      'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.animaux)}',
-      'Le nombre de passager que le conducteur accepte : ${_trajet.plusInformations.nbPlaces.toString()}'];
+    ['Le passager fume : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.fumeur)}',
+      'Le passager un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.bagage)}',
+      'Le passager a des animaux : ${BaseDeDonnee().tranlsateToFrensh(_trajet.plusInformations.animaux)}',
+      'Le nombre Le nombre de compagnons pour ce passager est de : ${_trajet.plusInformations.nbPlaces.toString()}'];
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -447,9 +447,12 @@ class _DetailspassaerState extends State<Detailspassaer> {
                 height: screenHeight * 0.08,
               ),
               ElevatedButton(
-                onPressed: () {
-                  baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajet,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],true));
-                  sendNotification("fcm_token_recepteur", "Nouvelle notification", "Un conducteur a accepté votre demande");
+                onPressed: () async{
+                  await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],true));
+                  /* 1) et 4) et 5) */ await baseDeDonnee.modifierTrajetLance(widget.idTrajetLance, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
+                  /* 2) et 6) et 7) */ await baseDeDonnee.modifierTrajetReserve(widget.idTrajetReserve, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
+                  /* 3) */ await baseDeDonnee.incrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, widget.idTrajetLance);
+                  await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a accepté votre demande");
                 },
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),
@@ -471,7 +474,10 @@ class _DetailspassaerState extends State<Detailspassaer> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async{
+                  baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],false));
+                  await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
+                },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(0.0),
                   padding: MaterialStateProperty.all<EdgeInsets>(

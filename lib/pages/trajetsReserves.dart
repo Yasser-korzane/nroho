@@ -50,7 +50,6 @@ class cardReserverList extends StatelessWidget{
                           title: 'Succés!',
                           message:
                           'Le trajet a été annulée avec succès',
-
                           /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                           contentType: ContentType.success,
                           // to configure for material banner
@@ -81,7 +80,7 @@ class cardReserverList extends StatelessWidget{
                         Padding(
                           padding:  EdgeInsets.all(screenWidth*0.04),
                           child: Text(
-                            '${lancer.dateDepart.day} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
+                            '${BaseDeDonnee().reglerTemps(lancer.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(lancer.dateDepart.month)} ${lancer.dateDepart.year}',
                             style: TextStyle(fontFamily: 'poppins'),
                           ),
                         ),
@@ -122,7 +121,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.dateDepart.hour}:${lancer.dateDepart.minute}',
+                                        '${BaseDeDonnee().reglerTemps(lancer.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(lancer.dateDepart.minute)}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
@@ -138,7 +137,7 @@ class cardReserverList extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${lancer.tempsDePause.hour}:${lancer.tempsDePause.minute} (estimation)',
+                                        '${BaseDeDonnee().reglerTemps(lancer.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(lancer.tempsDePause.minute)} (estimation)',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,

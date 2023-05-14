@@ -120,7 +120,7 @@ class detailsTrajetLancer extends StatelessWidget {
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
                           child: Text(
-                            '${_trajet.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
+                            '${BaseDeDonnee().reglerTemps(_trajet.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -133,7 +133,7 @@ class detailsTrajetLancer extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                            '${BaseDeDonnee().reglerTemps(_trajet.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(_trajet.dateDepart.minute)}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -163,7 +163,7 @@ class detailsTrajetLancer extends StatelessWidget {
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
                           child: Text(
-                            '${_trajet.tempsDePause.day} ${BaseDeDonnee().moisAuChaine(_trajet.tempsDePause.month)} ${_trajet.tempsDePause.year}',
+                            '${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.day)} ${BaseDeDonnee().moisAuChaine(_trajet.tempsDePause.month)} ${_trajet.tempsDePause.year}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,
@@ -176,7 +176,7 @@ class detailsTrajetLancer extends StatelessWidget {
                         Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
                           child: Text(
-                            '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute} (estimation)',
+                            '${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.minute)} (estimation)',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
                           flex: 5,

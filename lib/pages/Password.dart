@@ -1,4 +1,6 @@
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:appcouvoiturage/pages/annulertrajet.dart';
+import 'package:appcouvoiturage/pages/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -9,9 +11,6 @@ import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-
-
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
 
@@ -26,7 +25,7 @@ class _MotdePasseState extends State<MotdePasse> {
   String oldPassword = '';
   String newPassword = '';
   List<Utilisateur> utilisateurs = [];
-  Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagerss', 'idTrajet','Grine','Mohammed','Alger','Bouira',false);
+  Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagerss', 'idTrajetLance','idTrajetReserve','Grine','Mohammed','Alger','Bouira',false);
 
   @override
   void dispose() {
@@ -158,7 +157,8 @@ class _MotdePasseState extends State<MotdePasse> {
                           fontFamily: 'Poppins'),
                     ),
                     onPressed: () async {
-
+                      String uid = FirebaseAuth.instance.currentUser!.uid;
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Rating(BaseDeDonnee().creerTrajetVide())));
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
                       //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(uid, trajetReserve);
@@ -166,7 +166,7 @@ class _MotdePasseState extends State<MotdePasse> {
                       // await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
-                       sendNotification("c_xjr0ZhQRCsaCTcI6Yf-S:APA91bGznD7_-eSwaD3McjUUHaByuQ_Kz8C9Zr5EyZpdlrtTD5g5c_USyVcSQaEJ0kvrntKFF8FfWQbSF8nNO0HCHrkHne0vRCpzvYd1z01s2X_EQ6SslIU5bpUVHWe8FAvEyHkK7D2j","new notification", "hello mohammed");
+                       //sendNotification("c_xjr0ZhQRCsaCTcI6Yf-S:APA91bGznD7_-eSwaD3McjUUHaByuQ_Kz8C9Zr5EyZpdlrtTD5g5c_USyVcSQaEJ0kvrntKFF8FfWQbSF8nNO0HCHrkHne0vRCpzvYd1z01s2X_EQ6SslIU5bpUVHWe8FAvEyHkK7D2j","new notification", "hello mohammed");
 
                     },
                   ),

@@ -1,8 +1,8 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Notifications.dart';
-
 class AnnulerTrajet extends StatefulWidget {
   String uidTrajet ;
   bool lance_reserve ; // if true alors lance else reserve
@@ -140,10 +140,10 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                       /// delete normally
                       if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
                       else await _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
-                      String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} a annuller un trajet pour les raisons suivantes :\n';
+                      String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annuller un trajet pour les raisons suivantes :\n';
                       _listNot = await _baseDeDonnee.getNotifications(FirebaseAuth.instance.currentUser!.uid);
                       for (Notifications n in _listNot){
-                        if (n.id_trajet == widget.uidTrajet){
+                        if (n.id_trajetLance == widget.uidTrajet || n.id_trajetReserve == widget.uidTrajet){
                           if (n.accepte_refuse) {
                             int i = 0 ;
                             for (bool b in _checked){
@@ -153,7 +153,12 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                             text += 'Raison supplémentaire : ${_textFieldController.text}';
                             /// send email to admin and send notification to the next user
                             /// 1) send notification :
-                            /// 2) send email
+                            String fcmToken = '' ;
+                            if (n.id_trajetReserve == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_conducteur);
+                            else if (n.id_trajetLance == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_pasagers);
+                            await sendNotification(fcmToken, "Trajet annulé!", 'Votre partenaire avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé le trajet');
+                            /// 2) send email :
+                            ///
                             break;
                           }
                         }
@@ -161,8 +166,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                       print('*******************************************************************');
                       print("message = $text");
                       print('*******************************************************************');
-                      /// else : soit envoier un email de nous et nous va supprimer ce trajet et on contact les autres
-                      /// ou on le laise le supprimer et on envoi une notification de l'autre coté beli rah ne7a trajet
+                      /// on envoi une notification de l'autre coté beli rah ne7a trajet
                       Navigator.pop(context,true);
                     },
                   ),

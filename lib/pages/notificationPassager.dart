@@ -24,7 +24,8 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
             Notifications notification = Notifications(
               notificationData['id_conducteur'],
               notificationData['id_pasagers'],
-              notificationData['id_trajet'],
+              notificationData['id_trajetLance'],
+              notificationData['id_trajetReserve'],
               notificationData['nom'],
               notificationData['prenom'],
               notificationData['villeDepart'],
@@ -50,7 +51,7 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajet', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajetLance','id_trajetReserve', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
     listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(

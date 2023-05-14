@@ -486,7 +486,7 @@ class _DetailsState extends State<Details> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}","${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
+                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}",widget._conducteurTrajet.trajetLance.id,"${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
                   sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "Nouvelle notification", "Un passager vous a envoyé une demande ");
                 },
                 style:  ButtonStyle(

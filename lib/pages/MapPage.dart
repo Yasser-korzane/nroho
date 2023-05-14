@@ -16,7 +16,6 @@ import 'dart:ui' as ui;
 import '../Services/base de donnee.dart';
 import '../AppClasses/Notifications.dart';
 
-
 class Mywid extends StatefulWidget {
   const Mywid({Key? key}) : super(key: key);
 
@@ -26,34 +25,7 @@ class Mywid extends StatefulWidget {
 
 class _MywidState extends State<Mywid> {
   List<Notifications> listeNotifications = [];
-  BaseDeDonnee baseDeDonnee=BaseDeDonnee();
-  Future _getNotifications() async {
-    await FirebaseFirestore.instance
-        .collection('Utilisateur')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((snapshot) async {
-      if (snapshot.exists) {
-        setState(() {
-          List<dynamic> notificationsData = snapshot.data()!['notifications'];
-          for (var notificationData in notificationsData) {
-            Notifications notification = Notifications(
-              notificationData['id_conducteur'],
-              notificationData['id_pasagers'],
-              notificationData['id_trajet'],
-              notificationData['nom'],
-              notificationData['prenom'],
-              notificationData['villeDepart'],
-              notificationData['villeArrive'],
-              notificationData['accepte_refuse'],
-            );
-            listeNotifications.add(notification);
-          }
-        });
-      }
-    });
-  }
-
+  BaseDeDonnee baseDeDonnee = BaseDeDonnee();
   late HashSet<Marker> markers;
   Position? current_location;
   BitmapDescriptor locationMarker = BitmapDescriptor.defaultMarker;
@@ -61,8 +33,10 @@ class _MywidState extends State<Mywid> {
   final Set<Polyline> _polylineSet = <Polyline>{};
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
-  bool statut = false ;
-  bool notification_recus=false;
+  bool statut = false;
+
+  bool notification_recus = false;
+
   @override
   void initState() {
     super.initState();
@@ -71,7 +45,7 @@ class _MywidState extends State<Mywid> {
     setCustomMarker();
     LocationManager locationManager = LocationManager();
     locationManager.initialize(context).then(
-          (value) {
+      (value) {
         current_location = locationManager.getCurrentPos;
         addMarker();
       },
@@ -104,7 +78,7 @@ class _MywidState extends State<Mywid> {
 
   Future<void> setCustomMarker() async {
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration.empty, "assets/images/current_location.png")
+            ImageConfiguration.empty, "assets/images/current_location.png")
         .then((icon) => locationMarker = icon);
   }
 
@@ -115,7 +89,7 @@ class _MywidState extends State<Mywid> {
         markers.add(Marker(
           markerId: const MarkerId("cuurent_pos"),
           position:
-          LatLng(current_location!.latitude, current_location!.longitude),
+              LatLng(current_location!.latitude, current_location!.longitude),
           icon: BitmapDescriptor.fromBytes(value),
         ));
       });
@@ -139,7 +113,7 @@ class _MywidState extends State<Mywid> {
   }
 
   final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -164,232 +138,235 @@ class _MywidState extends State<Mywid> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    if(listeNotifications.isEmpty){
-      notification_recus=false;
-    }else{
-      notification_recus=true;
+    if (listeNotifications.isEmpty) {
+      notification_recus = false;
+    } else {
+      notification_recus = true;
     }
-    return  current_location == null
+    return current_location == null
         ? const Center(
-          child: CircularProgressIndicator(
-        color: Colors.blue,
-      ),
-
-    )
+            child: CircularProgressIndicator(
+              color: Colors.blue,
+            ),
+          )
         : Stack(
-      children: [
-        GoogleMap(
-          polylines: _polylineSet,
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-              target: LatLng(current_location!.latitude,
-                  current_location!.longitude),
-              zoom: 13.5),
-          onMapCreated: (controller) {
-            _controller.complete(controller);
-            if (!noMarkersAdded) {
-              setPolylines(departCoord!, arriveCoord!);
-            }
-          },
-          markers: markers,
-        ),
-        // Your main page content goes here
-        Container(
-          child: Column(
             children: [
-              Expanded(flex: 60, child: Container()),
-              Expanded(
-                flex: 40,
-                child: Container(
-                  padding: EdgeInsets.all(screenWidth * 0.1),
-                  // use 10% of screen width as padding
-                  child: Column(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(
-                              screenWidth *
-                                  0.05), // use 5% of screen width as border radius
-                        ),
-                        child: TextField(
-                          controller: TextEditingController(
-                              text: depart ?? ""),
-                          onTap: () {
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation, secondaryAnimation) => const OuAllezVous(),
-                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                      var begin = const Offset(0.0, 1.0);
-                                      var end = Offset.zero;
-                                      var curve = Curves.ease;
-
-                                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                  return SlideTransition(
-                                    position: animation.drive(tween),
-                                    child: child,
-                                  );
-                                 },
-                               ),
-                            );
-                          },
-                          readOnly: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Choisir un point de depart',
-                            hintStyle: TextStyle(fontFamily: 'Poppins'),
-                            floatingLabelBehavior:
-                            FloatingLabelBehavior.auto,
-                            border: InputBorder.none,
-                            // fillColor: Colors.white,
-                            // filled: true,
-                            // remove the border of the TextField
-                            prefixIcon: Icon(
-                                // isUsingCurrentLocation
-                                //     ? Icons.gps_fixed
-                                //     : Icons.gps_not_fixed,
-                              Icons.gps_fixed_outlined,
-                                color: Colors.blue),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.015),
-                      // use 3% of screen height as space between text fields
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(
-                              screenWidth *
-                                  0.05), // use 5% of screen width as border radius
-                        ),
-                        child: TextField(
-                          controller: TextEditingController(
-                              text: arrive ?? ""),
-                          onTap: () {
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation, secondaryAnimation) => const OuAllezVous(),
-                                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                      var begin = const Offset(0.0, 1.0);
-                                      var end = Offset.zero;
-                                       var curve = Curves.ease;
-
-                                       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                  return SlideTransition(
-                                    position: animation.drive(tween),
-                                    child: child,
-                                  );
-                                 },
-                               ),
-                            );
-                          },
-                          readOnly: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Choisir une destination',
-                            hintStyle: TextStyle(fontFamily: 'Poppins'),
-                            floatingLabelBehavior:
-                            FloatingLabelBehavior.auto,
-                            // remove the border of the TextField
-                            prefixIcon: Icon(
-                                Icons.location_on_outlined,
-                                color: Colors.blue),
-                            border: InputBorder.none,
-                            // fillColor: Colors.white,
-                            // filled: true,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                      // use 4% of screen height as space between text fields and row
-                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly,
-                        children: [
-                          RideTypeSelector(),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        Positioned(
-          top: screenHeight * 0.03,
-          right: screenWidth * 0.04,
-          child: InkWell(
-            onTap: ()async {
-              await getStatut();
-              if (!statut){
-               /* Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DemandesPassagerResultat()));*/
-                        Navigator.push(
+              GoogleMap(
+                polylines: _polylineSet,
+                mapType: MapType.normal,
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(current_location!.latitude,
+                        current_location!.longitude),
+                    zoom: 13.5),
+                onMapCreated: (controller) {
+                  _controller.complete(controller);
+                  if (!noMarkersAdded) {
+                    setPolylines(departCoord!, arriveCoord!);
+                  }
+                },
+                markers: markers,
+              ),
+              // Your main page content goes here
+              Container(
+                child: Column(
+                  children: [
+                    Expanded(flex: 60, child: Container()),
+                    Expanded(
+                      flex: 40,
+                      child: Container(
+                        padding: EdgeInsets.all(screenWidth * 0.1),
+                        // use 10% of screen width as padding
+                        child: Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(screenWidth *
+                                    0.05), // use 5% of screen width as border radius
+                              ),
+                              child: TextField(
+                                controller:
+                                    TextEditingController(text: depart ?? ""),
+                                onTap: () {
+                                  Navigator.push(
                                     context,
                                     PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => DemandesPassagerResultat(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                        var begin = const Offset(0.0, -1.0);
-                                        var end = Offset.zero;
-                                         var curve = Curves.ease;
-
-                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                   },
-                                 ),
-                              );
-              }else {
-                /*Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ListDemandePassager()));*/
-                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation, secondaryAnimation) => const ListDemandePassager(),
-                                      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                      pageBuilder: (context, animation,
+                                              secondaryAnimation) =>
+                                          const OuAllezVous(),
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
                                         var begin = const Offset(0.0, 1.0);
                                         var end = Offset.zero;
-                                         var curve = Curves.ease;
+                                        var curve = Curves.ease;
 
-                                         var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                                        var tween = Tween(
+                                                begin: begin, end: end)
+                                            .chain(CurveTween(curve: curve));
 
-                                    return SlideTransition(
-                                      position: animation.drive(tween),
-                                      child: child,
-                                    );
-                                   },
-                                 ),
+                                        return SlideTransition(
+                                          position: animation.drive(tween),
+                                          child: child,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                readOnly: true,
+                                decoration: const InputDecoration(
+                                  hintText: 'Choisir un point de depart',
+                                  hintStyle: TextStyle(fontFamily: 'Poppins'),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                  border: InputBorder.none,
+                                  // fillColor: Colors.white,
+                                  // filled: true,
+                                  // remove the border of the TextField
+                                  prefixIcon: Icon(
+                                      // isUsingCurrentLocation
+                                      //     ? Icons.gps_fixed
+                                      //     : Icons.gps_not_fixed,
+                                      Icons.gps_fixed_outlined,
+                                      color: Colors.blue),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: screenHeight * 0.015),
+                            // use 3% of screen height as space between text fields
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(screenWidth *
+                                    0.05), // use 5% of screen width as border radius
+                              ),
+                              child: TextField(
+                                controller:
+                                    TextEditingController(text: arrive ?? ""),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation,
+                                              secondaryAnimation) =>
+                                          const OuAllezVous(),
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
+                                        var begin = const Offset(0.0, 1.0);
+                                        var end = Offset.zero;
+                                        var curve = Curves.ease;
+
+                                        var tween = Tween(
+                                                begin: begin, end: end)
+                                            .chain(CurveTween(curve: curve));
+
+                                        return SlideTransition(
+                                          position: animation.drive(tween),
+                                          child: child,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                readOnly: true,
+                                decoration: const InputDecoration(
+                                  hintText: 'Choisir une destination',
+                                  hintStyle: TextStyle(fontFamily: 'Poppins'),
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.auto,
+                                  // remove the border of the TextField
+                                  prefixIcon: Icon(Icons.location_on_outlined,
+                                      color: Colors.blue),
+                                  border: InputBorder.none,
+                                  // fillColor: Colors.white,
+                                  // filled: true,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: screenHeight * 0.025),
+                            // use 4% of screen height as space between text fields and row
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                RideTypeSelector(),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Positioned(
+                top: screenHeight * 0.03,
+                right: screenWidth * 0.04,
+                child: InkWell(
+                    onTap: () async {
+                      await getStatut();
+                      if (!statut) {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    DemandesPassagerResultat(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              var begin = const Offset(0.0, -1.0);
+                              var end = Offset.zero;
+                              var curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
                               );
-              }
-            },
-            child: notification_recus ? const Icon(
-               Icons.notifications_active,
-              color: Colors.blue,
-              size: 50,
-            ) : const Icon(
-              Icons.notifications_none_outlined,
-              color: Colors.blue,
-              size: 50,
-            )
-          ),
-        ),
-      ],
-    );
+                            },
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const ListDemandePassager(),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              var begin = const Offset(0.0, 1.0);
+                              var end = Offset.zero;
+                              var curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+
+                              return SlideTransition(
+                                position: animation.drive(tween),
+                                child: child,
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                    child: notification_recus
+                        ? const Icon(
+                            Icons.notifications_active,
+                            color: Colors.blue,
+                            size: 50,
+                          )
+                        : const Icon(
+                            Icons.notifications_none_outlined,
+                            color: Colors.blue,
+                            size: 50,
+                          )),
+              ),
+            ],
+          );
   }
 }
-
-
-
 
 class RideTypeSelector extends StatefulWidget {
   const RideTypeSelector({super.key});
@@ -411,36 +388,47 @@ class _RideTypeSelectorState extends State<RideTypeSelector> {
       ),
       child: ToggleButtons(
         isSelected: _isSelected,
-        onPressed: (int index) async{
+        onPressed: (int index) async {
           bool statut = false; // passager
           if (index == 0 && _isSelected[index] == false) {
-            statut = false ;
+            statut = false;
           } else if (index == 1 && _isSelected[index] == false) {
-            statut = true ;
+            statut = true;
           } else if (index == 1 && _isSelected[index] == true) {
-            statut = false ;
+            statut = false;
           } else if (index == 0 && _isSelected[index] == true) {
-            statut = true ;
+            statut = true;
           }
           setState(() {
             _isSelected[index] = !_isSelected[index];
             _isSelected[1 - index] = !_isSelected[1 - index];
           });
-          await BaseDeDonnee().updateUtilisateurStatut(FirebaseAuth.instance.currentUser!.uid, statut);
+          await BaseDeDonnee().updateUtilisateurStatut(
+              FirebaseAuth.instance.currentUser!.uid, statut);
         },
         selectedColor: Colors.white,
         disabledBorderColor: Colors.blue,
         fillColor: Colors.blue,
         borderRadius: BorderRadius.circular(20.0),
         disabledColor: Colors.white,
-        children:   [
+        children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenSize.width *0.06, vertical: screenSize.height * 0.015),
-            child: Text('Passager',style: TextStyle(fontFamily: 'Poppins'),),
+            padding: EdgeInsets.symmetric(
+                horizontal: screenSize.width * 0.06,
+                vertical: screenSize.height * 0.015),
+            child: Text(
+              'Passager',
+              style: TextStyle(fontFamily: 'Poppins'),
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenSize.width *0.06, vertical: screenSize.height * 0.015),
-            child: Text('Conducteur',style: TextStyle(fontFamily: 'Poppins'),),
+            padding: EdgeInsets.symmetric(
+                horizontal: screenSize.width * 0.06,
+                vertical: screenSize.height * 0.015),
+            child: Text(
+              'Conducteur',
+              style: TextStyle(fontFamily: 'Poppins'),
+            ),
           ),
         ],
       ),
