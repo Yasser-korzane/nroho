@@ -1,7 +1,14 @@
+import 'package:appcouvoiturage/AppClasses/Trajet.dart';
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Rating extends StatefulWidget {
+  Trajet _trajet;
+
+  Rating(this._trajet);
+
   @override
   State<Rating> createState() => _RatingState();
 }
@@ -10,6 +17,8 @@ class _RatingState extends State<Rating> {
   int currentRating = 0;
   final TextEditingController _userFeedbackController = TextEditingController();
   final TextEditingController _routeFeedbackController = TextEditingController();
+  BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+
   @override
   Widget build(BuildContext context) {
     return  SafeArea(
@@ -64,7 +73,7 @@ class _RatingState extends State<Rating> {
                         ),
                         SizedBox(height: 30.0),
                         Text(
-                          'Donnez votre avis sur le trajet',
+                          'Donnez votre avis sur le trajet parcouru',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 16.0,
@@ -82,12 +91,14 @@ class _RatingState extends State<Rating> {
                         Text('En cas de litige ou de problème vous pouvez aller vers le site et signaler votre partenaire du trajet',style: TextStyle(fontFamily: 'Poppins'),),
                         SizedBox(height: 6.0),
                         Center(
-                          child: ElevatedButton(
+                          child: MaterialButton(
+                            elevation: 10,
+                            color: Colors.red[200],
                             onPressed: (){
                               /// incrementer nbSignalement
                               launch('https://karimiarkane.github.io/NrohoSignaler.github.io/');
                             },
-                            child: Text('Signaler',style: TextStyle(fontFamily: 'Poppins',),),
+                            child: Text('Signaler',style: TextStyle(fontFamily: 'Poppins',color: Colors.red[400]),),
                           ),
                         ),
                   ],
@@ -96,6 +107,8 @@ class _RatingState extends State<Rating> {
                 TextButton(
                   child: Text('Terminer'),
                   onPressed: () {
+                    widget._trajet.avis=_routeFeedbackController.text;
+                    baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget._trajet);
                     Navigator.pop(context);
                     // Do something with the rating
                   },
@@ -104,4 +117,6 @@ class _RatingState extends State<Rating> {
             ),
     );
   }
+
+
 }

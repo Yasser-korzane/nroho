@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
+import 'package:appcouvoiturage/pages/rating.dart';
 import 'package:appcouvoiturage/pages/trajetsLances.dart';
 import 'package:appcouvoiturage/pages/trajetsReserves.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +18,7 @@ class Trajets extends StatefulWidget {
 class _TrajetsState extends State<Trajets> {
   List<Trajet> trajetsLances = [];
   List<Trajet> trajetsReserves = [];
+  BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   Future _getTrajetsLances() async {
     QuerySnapshot trajetsSnapshot = await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -65,9 +67,18 @@ class _TrajetsState extends State<Trajets> {
         trajetLance.latLngArrivee = latLngArrivee;
         trajetLance.idConductuer = data['idConductuer'];
         trajetLance.idPassagers = List<String>.from(data['idPassagers']);
-        setState(() {
-          trajetsLances.add(trajetLance);
-        });
+        if(DateTime.now().isAfter(trajetLance.tempsDePause)){
+          if(trajetLance.trajetEstValide==false){
+            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,trajetLance.id);
+          }else{
+            showDialog(context: context, builder: (context) => Rating(trajetLance),);
+            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid, trajetLance.id);
+          }
+        }else {
+          setState(() {
+            trajetsLances.add(trajetLance);
+          });
+        }
       }
     }
   }
@@ -119,9 +130,18 @@ class _TrajetsState extends State<Trajets> {
         trajetReserve.latLngArrivee = latLngArrivee;
         trajetReserve.idConductuer = data['idConductuer'];
         trajetReserve.idPassagers = List<String>.from(data['idPassagers']);
-        setState(() {
-          trajetsReserves.add(trajetReserve);
-        });
+        if(DateTime.now().isAfter(trajetReserve.tempsDePause)){
+          if(trajetReserve.trajetEstValide==false){
+            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,trajetReserve.id);
+          }else{
+            showDialog(context: context, builder: (context) => Rating(trajetReserve),);
+            _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid, trajetReserve.id);
+          }
+        }else {
+          setState(() {
+            trajetsReserves.add(trajetReserve);
+          });
+        }
       }
     }
   }
