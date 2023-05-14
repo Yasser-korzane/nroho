@@ -77,15 +77,6 @@ class ContactUs extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: screenHeight * 0.168,
-              left: screenWidth * 0.146,
-              child: CircleAvatar(
-                radius: screenWidth * 0.06,
-                backgroundImage:
-                NetworkImage('https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
-              ),
-            ),
-            Positioned(
               top: screenHeight * 0.179,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
@@ -94,7 +85,7 @@ class ContactUs extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '        Grine Mohammed',
+                    'Grine Mohammed',
                     style: TextStyle(
                         fontSize: screenWidth * 0.0583,
                         fontWeight: FontWeight.bold,
@@ -129,10 +120,20 @@ class ContactUs extends StatelessWidget {
                   SizedBox(width: screenWidth * 0.0244),
                   TextButton(
                     onPressed: () {_launchEmail(_emailLaunchUri);},
-                    child: Text(
-                      'lm_grine@esi.dz',
-                      style: TextStyle(
-                          color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'lm_grine@esi.dz',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
+                      ),
                     ),
                   ),
                 ],
@@ -148,11 +149,23 @@ class ContactUs extends StatelessWidget {
                   new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),),
                   SizedBox( width:screenWidth * 0.0244),
                   TextButton(
-                    onPressed:(){_launchLinkedIn(linkedInProfileUrl);},
-                    child:Text(
-                    'LinkedIn',
-                    style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
+                    onPressed:(){
+                      launch('https://www.linkedin.com/in/grine-mohammed-205b01238/');
+                    },
+                    child:Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                      'LinkedIn',
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
                   ),
+                    ),
                   ),
                 ],
               ),

@@ -12,16 +12,13 @@ class detailsTrajetReserver extends StatelessWidget {
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
-    String prixText = '';
-    String valeurPrix = '';
-    if (_trajet.coutTrajet != 0.0) {
-      prixText = 'Prix : ';
-      valeurPrix = '${_trajet.coutTrajet} DA';
-    }
     return SafeArea(
       child: Scaffold(
           floatingActionButton: ElevatedButton(
-            child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.red),),
+            child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.white),),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
             onPressed: () async {
               final bool result = await showDialog(
                 context: context,

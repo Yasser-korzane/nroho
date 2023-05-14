@@ -105,7 +105,7 @@ class cardReserverListH extends StatelessWidget{
                                   Container(
                                     child: ListTile(
                                       title: Text(
-                                        '${reserve.dateDepart.day} ${BaseDeDonnee().moisAuChaine(reserve.dateDepart.month)} ${reserve.dateDepart.year}',
+                                        '${BaseDeDonnee().reglerTemps(reserve.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(reserve.dateDepart.minute)}',
                                         style: TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,

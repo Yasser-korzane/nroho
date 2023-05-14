@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,8 +33,12 @@ class detailsConducteur extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           floatingActionButton: ElevatedButton(
-            child: Text('Voir sur le map',style: TextStyle(fontFamily: 'poppins',color: Colors.blue),),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+            ),
+            child: Text('Voir le trajet sur la carte',style: TextStyle(fontFamily: 'poppins',color: Colors.blue,fontWeight: FontWeight.bold),),
             onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AfficherTrajetSurLeMap(_trajet.latLngDepart, _trajet.latLngArrivee),));
             },
           ),
           body: SingleChildScrollView(

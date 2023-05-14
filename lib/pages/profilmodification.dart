@@ -21,8 +21,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   bool _changement = false;
   String imageUrl = '';
 
-  late TextEditingController _contrNom ,
-      _contrPrenom;
+  late TextEditingController _contrNom , _contrPrenom;
   TextEditingController _contrMarque = TextEditingController();
   TextEditingController _contrType = TextEditingController();
   TextEditingController _contrMatricule = TextEditingController();
@@ -37,13 +36,11 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
     _contrNom = TextEditingController(text:  widget._utilisateur.nom);
     _contrPrenom= TextEditingController(text:  widget._utilisateur.prenom);
     _contrNum= TextEditingController(text:  widget._utilisateur.numeroTelephone);
-
     _contrMarque = TextEditingController(text:  widget._utilisateur.vehicule.marque);
     _contrType = TextEditingController(text:  widget._utilisateur.vehicule.typevehicule);
     _contrMatricule = TextEditingController(text:  widget._utilisateur.vehicule.matricule);
     _contrModele = TextEditingController(text:  widget._utilisateur.vehicule.modele);
     _contrPolice = TextEditingController(text:  widget._utilisateur.vehicule.policeAssurance);
-    //_contrNbPlaces = TextEditingController(text:  widget._utilisateur.vehicule.);
   }
 
   // Methode pour changer la photo de profil
@@ -53,40 +50,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenHeight = screenSize.height;
-    /*_contrNom.text = widget._utilisateur.nom;
-    _contrPrenom.text = widget._utilisateur.prenom;
-    _contrMarque.text = widget._utilisateur.vehicule.marque;
-    _contrType.text = widget._utilisateur.vehicule.typevehicule;
-    _contrMatricule.text = widget._utilisateur.vehicule.matricule;
-    _contrModele.text = widget._utilisateur.vehicule.modele;
-    _contrPolice.text = widget._utilisateur.vehicule.policeAssurance;
-    _contrNbPlaces.text = widget._utilisateur.vehicule.nbPlaces.toString();*/
-    if (widget._utilisateur.nom.isEmpty) {
-      widget._utilisateur.nom = 'Entrer votre nom';
-    }
-    if (widget._utilisateur.prenom.isEmpty) {
-      widget._utilisateur.prenom = 'Entrer votre prenom';
-    }
-    if (widget._utilisateur.vehicule.marque.isEmpty) {
-      widget._utilisateur.vehicule.marque =
-      'Entrez la marque de votre vehicule';
-    }
-    if (widget._utilisateur.vehicule.typevehicule.isEmpty) {
-      widget._utilisateur.vehicule.typevehicule =
-      'Entrez le type de votre vehicule';
-    }
-    if (widget._utilisateur.vehicule.matricule.isEmpty) {
-      widget._utilisateur.vehicule.matricule =
-      'Entrez la matircule de votre vehicule';
-    }
-    if (widget._utilisateur.vehicule.modele.isEmpty) {
-      widget._utilisateur.vehicule.modele =
-      'Entrez le modele de votre vehicule';
-    }
-    if (widget._utilisateur.vehicule.policeAssurance.isEmpty) {
-      widget._utilisateur.vehicule.policeAssurance =
-      'Entrez la police d\'assurance de votre vehicule';
-    }
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -208,12 +171,9 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
               Expanded(
                 child: Form(
                   key: _formKey,
-
                   child:
                   ListView(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //crossAxisAlignment: CrossAxisAlignment.start,
                       const Text(
                         'Nom',
                         style: TextStyle(
@@ -223,7 +183,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       ),
                       SizedBox(
                         width: size.width * 0.7,
-                        // height: size.height * 0.06,
                         child: TextFormField(
                           controller: _contrNom,
                           decoration: InputDecoration(
@@ -275,7 +234,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                             fillColor: Colors.white,
                             filled: true,
-                            hintText: 'prenom',
+                            hintText: 'prénom',
                             hintStyle: const TextStyle(fontFamily: 'poppins'),
                           ),
                           onChanged: (value) {
@@ -288,6 +247,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           validator: (input) {
                             List<int> numbers = List.generate(10, (index) => index);
                             if (input == null ) {
+                              return 'Entrez votre prenom';
+                            } else if (input == ''){
                               return 'Entrez votre prenom';
                             } else if (input.contains(' ')) {
                               return 'Espace';
@@ -536,19 +497,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       ),
                       SizedBox(
                           width: size.width * 0.7,
-                          // height: size.height * 0.06,
                           child: TextFormField(
-                            //controller: _contrPolice,
                             decoration: InputDecoration(
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: widget._utilisateur.vehicule.policeAssurance,
+                              hintText: 'Police d\'assurance',
                               hintStyle: const TextStyle(fontFamily: 'poppins'),
                             ),
                             validator:(input){
@@ -561,7 +517,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             onChanged: (value) {
                               _changement = true;
                               setState(() {
-                                //_contrPolice.text = value;
                                 widget._utilisateur.vehicule.policeAssurance = value;
                               });
                             },
@@ -576,12 +531,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    /* ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Processing Data')),
-      );*/
                     if (_changement) {
                       await _baseDeDonnee.modifierUtilisateur(
                           FirebaseAuth.instance.currentUser!.uid,
@@ -592,7 +541,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           content: AwesomeSnackbarContent(
                             title: 'Succés!!',
                             message: 'Modification effectué avec avec succès',
-
                             /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                             contentType: ContentType.success,
                             // to configure for material banner
@@ -613,8 +561,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         duration: const Duration(seconds: 3),
                         content: AwesomeSnackbarContent(
                           title: 'oh Erreurs!!',
-                          message: 'verifier vos donnees',
-
+                          message: 'Vérifier votre données',
                           /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                           contentType: ContentType.failure,
                           // to configure for material banner
