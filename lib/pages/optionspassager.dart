@@ -1,11 +1,7 @@
-import 'package:appcouvoiturage/AppClasses/Evaluation.dart';
 import 'package:appcouvoiturage/AppClasses/Trajet.dart';
-import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
-import 'package:appcouvoiturage/AppClasses/Vehicule.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/choisirchauffeur.dart';
 import 'package:appcouvoiturage/pages/page_recherche.dart';
-import 'package:appcouvoiturage/widgets/selectabletext.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class options extends StatefulWidget {

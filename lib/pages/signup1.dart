@@ -88,7 +88,6 @@ class _SinupState extends State<Sinup> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    const double defaultPadding = 10;
 
     final AuthService auth = AuthService();
     return Scaffold(

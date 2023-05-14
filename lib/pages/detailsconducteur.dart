@@ -2,14 +2,22 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../AppClasses/Trajet.dart';
 
 class detailsConducteur extends StatelessWidget {
   Trajet _trajet;
-  bool cond_pas ; // si false alors passager else est conducteur
-  detailsConducteur(this._trajet,this.cond_pas);
+  bool cond_pas;
+
+  List<String> utilisateur = [
+    'yasser',
+    'mohammed',
+    'hicham',
+    'karim',
+    'riyad'
+  ]; // si false alors passager else est conducteur
+  detailsConducteur(this._trajet, this.cond_pas);
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -17,8 +25,10 @@ class detailsConducteur extends StatelessWidget {
     final double screenHeight = screenSize.height;
     final double defaultPadding = 10;
     String qualite = '\n';
-    if (_trajet.probleme) qualite += '"Il y avait un problème avec ce trajet!';
-    else qualite+= '"Le trajet Le s\'est bien passé sans problèmes';
+    if (_trajet.probleme)
+      qualite += '"Il y avait un problème avec ce trajet!';
+    else
+      qualite += '"Le trajet Le s\'est bien passé sans problèmes';
     return SafeArea(
       child: Scaffold(
           body: SingleChildScrollView(
@@ -235,78 +245,16 @@ class detailsConducteur extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20.0),
-                    Row(
-                      /// Faire une List view
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: CircleAvatar(
-                            radius: 30.0,
-                            backgroundImage: NetworkImage(
-                                'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80'),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          flex: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("HICHEM Boulacheb",
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Poppins'),
-                                  )),
-                              SizedBox(height: 4.0),
-                              OutlinedButton(
-                                onPressed: () {
-                                  launchUrlString(
-                                      "tel:+213 65498325"); // Handle button press
-                                },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      side: BorderSide(color: Colors.blue),
-                                    ),
-                                  ),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.white),
-                                  foregroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.blue),
-                                ),
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.all(defaultPadding * 0.005),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.phone_in_talk_outlined,
-                                        color: Colors.blue,
-                                      ),
-                                      SizedBox(width: defaultPadding * 0.5),
-                                      Text(
-                                        '+213 65498325',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Poppins'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    ListView.separated(
+                        itemBuilder: (context, index) {},
+                        separatorBuilder: (context, index) {
+                          return ListTile(
+                            title: Center(child: Text(utilisateur[index])),
+                            // customize the appearance of your separator as desired
+                            // e.g. change the color, size, etc.
+                          );
+                        },
+                        itemCount: utilisateur.length),
                     Divider(color: Colors.black, thickness: 1),
                     Row(
                       children: [
@@ -410,36 +358,37 @@ class detailsConducteur extends StatelessWidget {
                     ),
                     SizedBox(height: screenHeight * 0.015),
                     Center(
-                        child: Text.rich(
-                          TextSpan(
-                            text:
-                                'Si vous avez un problème avec ce trajet, contactez notre service client pour plus d’aide ou signalez directement par ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.0,
-                              fontFamily: 'Poppins',
-                            ),
-                            children: [
-                              TextSpan(
-                                text: 'ici',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 16.0,
-                                  fontFamily: 'Poppins',
-                                  color: Colors.blue,
-                                  decoration: TextDecoration.underline,
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    launch('https://karimiarkane.github.io/NrohoSignaler.github.io/');
-                                  },
-                              )
-                            ],
+                      child: Text.rich(
+                        TextSpan(
+                          text:
+                              'Si vous avez un problème avec ce trajet, contactez notre service client pour plus d’aide ou signalez directement par ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16.0,
+                            fontFamily: 'Poppins',
                           ),
-                          softWrap: true,
-                          overflow: TextOverflow.visible,
-                          maxLines: null,
+                          children: [
+                            TextSpan(
+                              text: 'ici',
+                              style: TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16.0,
+                                fontFamily: 'Poppins',
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  launch(
+                                      'https://karimiarkane.github.io/NrohoSignaler.github.io/');
+                                },
+                            )
+                          ],
                         ),
+                        softWrap: true,
+                        overflow: TextOverflow.visible,
+                        maxLines: null,
+                      ),
                     ),
                   ],
                 ),

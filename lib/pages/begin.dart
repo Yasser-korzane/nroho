@@ -13,7 +13,6 @@ class _CommancerState extends State<Commancer> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
         body: Stack(
           children: [

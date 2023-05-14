@@ -1,16 +1,9 @@
-import 'package:appcouvoiturage/AppClasses/PlusInformations.dart';
-import 'package:appcouvoiturage/AppClasses/Trajet.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
-import 'package:appcouvoiturage/pages/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:places_service/places_service.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
 import '../AppClasses/Notifications.dart';
 import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
@@ -18,8 +11,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
@@ -130,43 +121,6 @@ class _MotdePasseState extends State<MotdePasse> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    Timestamp timestamp = Timestamp.now();
-    DateTime dateTime = timestamp.toDate();
-    PlacesAutoCompleteResult lieuDepart = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    PlacesAutoCompleteResult lieuArrive = PlacesAutoCompleteResult(
-      placeId: '',
-      description: '',
-      secondaryText: '',
-      mainText: '',
-    );
-    int year = dateTime.year;
-    int month = dateTime.month;
-    int day = dateTime.day;
-    int hour = dateTime.hour;
-    int minute = dateTime.minute;
-    DateTime timearrivee = DateTime(year, month, day, hour + 1, minute - 15);
-    Trajet trajetReserve = Trajet(
-        '',
-        dateTime,
-        timearrivee,
-        300,
-        'BeauLieu',
-        "Esi",
-        lieuDepart,
-        lieuArrive,
-        ['Itemm'],
-        PlusInformations(false, false, false, 1),
-        false,
-        "",
-        "",
-        false,
-        LatLng(0, 0),
-        LatLng(0, 0),'',[]);
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -204,7 +158,6 @@ class _MotdePasseState extends State<MotdePasse> {
                           fontFamily: 'Poppins'),
                     ),
                     onPressed: () async {
-                      String uid = FirebaseAuth.instance.currentUser!.uid;
 
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
                       //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);

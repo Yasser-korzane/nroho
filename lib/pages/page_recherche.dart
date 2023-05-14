@@ -1,9 +1,6 @@
 //import 'dart:js_util';
 
-import 'package:appcouvoiturage/Services/base de donnee.dart';
 import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/AppClasses/Trajet.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 
 class Page_recherche extends StatefulWidget {
@@ -13,7 +10,6 @@ class Page_recherche extends StatefulWidget {
 }
 
 class _Page_rechercheState extends State<Page_recherche> {
-  BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
 
 
   @override

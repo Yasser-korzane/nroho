@@ -9,7 +9,6 @@ class cardLancerList extends StatelessWidget {
   cardLancerList(this.trajetsLances);
   @override
   Widget build(BuildContext context) {
-    BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;

@@ -84,14 +84,11 @@ class _MyConnexinState extends State<Connexin> {
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
-    bool loading = false;
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
 
-    return loading
-        ? Loading()
-        : Scaffold(
+    return Scaffold(
             resizeToAvoidBottomInset: false,
             body: SafeArea(
               child: Stack(

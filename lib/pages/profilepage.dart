@@ -8,9 +8,7 @@ import 'package:appcouvoiturage/widgets/profilwidget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:places_service/places_service.dart';
@@ -21,8 +19,6 @@ import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Vehicule.dart';
 import '../Services/base de donnee.dart';
-import 'package:animations/animations.dart';
-
 class Profilepage extends StatefulWidget {
   const Profilepage({Key? key}) : super(key: key);
   @override

@@ -3,7 +3,6 @@ import 'package:appcouvoiturage/widgets/profilwidget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:animations/animations.dart';
 class Assistance extends StatelessWidget {
   const Assistance({Key? key}) : super(key: key);
 

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:appcouvoiturage/pages/home.dart';
 
-import 'package:flutter_verification_code/flutter_verification_code.dart';
 
 import '../Services/base de donnee.dart';
 import '../AppClasses/Utilisateur.dart';
@@ -24,7 +23,6 @@ class _VerificationState extends State<Verification> {
   bool _isVerified = false;
   bool _isLoading = false;
 
-  String _code = '';
 
   late Timer _timer;
   int _start = 60;
@@ -82,7 +80,6 @@ class _VerificationState extends State<Verification> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
