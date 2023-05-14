@@ -236,9 +236,10 @@ class _optionsState extends State<options> {
                 //Navigator.pop(context);
                 Navigator.pop(context);
               }else{
-                await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+                String idTrajetReserve = await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+                widget.trajetReserve.id = idTrajetReserve;
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => DriverListPage(monListe)));
+                    MaterialPageRoute(builder: (context) => DriverListPage(monListe,widget.trajetReserve)));
               }
             },
             style: ButtonStyle(

@@ -5,15 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:appcouvoiturage/AppClasses/Notifications.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
+import '../AppClasses/Trajet.dart';
 import 'AfficherTrajetSurLeMap.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
-import '../AppClasses/Evaluation.dart';
-import '../AppClasses/Vehicule.dart';
 
 class Details extends StatefulWidget {
   ConducteurTrajet _conducteurTrajet ;
-  Details(this._conducteurTrajet);
+  Trajet trajetReserve ;
+  Details(this._conducteurTrajet,this.trajetReserve);
 
   @override
   State<Details> createState() => _DetailsState();
@@ -31,41 +31,8 @@ class _DetailsState extends State<Details> {
           .then((snapshot) async {
         if (snapshot.exists) {
           setState(() {
-            _utilisateur.identifiant = snapshot.data()!['identifiant'];
             _utilisateur.nom = snapshot.data()!['nom'];
             _utilisateur.prenom = snapshot.data()!['prenom'];
-            _utilisateur.email = snapshot.data()!['email'];
-            _utilisateur.numeroTelephone = snapshot.data()!['numeroTelephone'];
-            _utilisateur.evaluation = Evaluation(
-              List<String>.from(snapshot.data()!['evaluation']['feedback']),
-              snapshot.data()!['evaluation']['etoiles'],
-              snapshot.data()!['evaluation']['nbSignalement'],
-            );
-            _utilisateur.vehicule = Vehicule(
-              snapshot.data()!['vehicule']['marque'],
-              snapshot.data()!['vehicule']['typevehicule'],
-              snapshot.data()!['vehicule']['matricule'],
-              snapshot.data()!['vehicule']['modele'],
-              snapshot.data()!['vehicule']['policeAssurance'],
-            );
-            _utilisateur.statut = snapshot.data()!['statut'];
-            List<dynamic> notificationsData = snapshot.data()!['notifications'];
-            for (var notificationData in notificationsData) {
-              Notifications notification = Notifications(
-                notificationData['id_conducteur'],
-                notificationData['id_pasagers'],
-                notificationData['id_trajet'],
-                notificationData['nom'],
-                notificationData['prenom'],
-                notificationData['villeDepart'],
-                notificationData['villeArrive'],
-                notificationData['accepte_refuse'],
-              );
-              _utilisateur.notifications.add(notification);
-            }
-            _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
-            _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
-            if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
             //tests by printing
           }); // end setState
         } else {
@@ -519,8 +486,8 @@ class _DetailsState extends State<Details> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}","${widget._conducteurTrajet.trajetLance.id}","${_utilisateur.nom}","${_utilisateur.nom}","${widget._conducteurTrajet.trajetLance.villeDepart}","${widget._conducteurTrajet.trajetLance.villeArrivee}",true));
-                  sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "nouvelle notification", "un passager vous a envoyé une demande ");
+                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}","${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
+                  sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "Nouvelle notification", "Un passager vous a envoyé une demande ");
                 },
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),

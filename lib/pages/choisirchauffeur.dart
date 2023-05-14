@@ -1,10 +1,12 @@
 import 'package:appcouvoiturage/pages/trajetdetailsconducteurs.dart';
 import 'package:flutter/material.dart';
+import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 
 class DriverListPage extends StatelessWidget {
   List<ConducteurTrajet> listeUtilisateurs ;
-  DriverListPage(this.listeUtilisateurs) ;
+  Trajet trajetReserve ;
+  DriverListPage(this.listeUtilisateurs,this.trajetReserve) ;
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -29,7 +31,7 @@ class DriverListPage extends StatelessWidget {
             padding:  EdgeInsets.all(screenWidth*0.015),
             child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,trajetReserve)));
               },
               child: Card(
                 color: Colors.white,
