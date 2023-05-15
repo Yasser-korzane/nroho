@@ -2,6 +2,8 @@ import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
 import '../Services/base de donnee.dart';
 import 'detailsconducteur.dart';
+import 'package:get/get.dart';
+
 class cardReserverListH extends StatelessWidget{
   List<Trajet> _trajetReserves;
   cardReserverListH(this._trajetReserves);
@@ -33,7 +35,9 @@ class cardReserverListH extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsConducteur(reserve,false),));
+                 // Navigator.push(context, MaterialPageRoute(builder: (context) => detailsConducteur(reserve,false),));
+                Get.to(MaterialPageRoute(builder: (context) => detailsConducteur(reserve,false),), transition: Transition.circularReveal, duration: const Duration(seconds: 4));
+
                 },
                 child: Card(
                   color: Colors.white,

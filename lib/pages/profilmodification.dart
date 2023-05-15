@@ -27,7 +27,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   TextEditingController _contrMatricule = TextEditingController();
   TextEditingController _contrModele = TextEditingController();
   TextEditingController _contrPolice = TextEditingController();
-  TextEditingController _contrNbPlaces = TextEditingController();
+  final TextEditingController _contrNbPlaces = TextEditingController();
   TextEditingController _contrNum = TextEditingController();
 
   @override
@@ -185,14 +185,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         width: size.width * 0.7,
                         child: TextFormField(
                           controller: _contrNom,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
                             fillColor: Colors.white,
                             filled: true,
                             hintText: 'nom',
-                            hintStyle: const TextStyle(fontFamily: 'poppins'),
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
                           ),
                           onChanged: (value) {
                             _changement = true;
@@ -204,6 +204,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             List<int> numbers = List.generate(10, (index) => index);
                             if (input == null ) {
                               return 'Entrez votre nom';
+                            } else if (input == ''){
+                              return 'Entrez votre prenom';
                             } else if (input.contains(' ')) {
                               return 'Espace';
                             } else if (numbers
@@ -228,14 +230,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         // height: size.height * 0.06,
                         child: TextFormField(
                           controller: _contrPrenom,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
                             fillColor: Colors.white,
                             filled: true,
                             hintText: 'prénom',
-                            hintStyle: const TextStyle(fontFamily: 'poppins'),
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
                           ),
                           onChanged: (value) {
                             _changement = true;
@@ -274,14 +276,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           // height: size.height * 0.06,
                           child: TextFormField(
                             controller: _contrNum,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
                               fillColor: Colors.white,
                               filled: true,
                               hintText: 'numeroTelephone',
-                              hintStyle: const TextStyle(fontFamily: 'poppins'),
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
                             ),
                             onChanged: (value) {
                               _changement = true;
@@ -291,7 +293,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                               });
                             },
                             validator: (input) {
-                              if (input == null ) {
+                              if (input == null || input == '') {
                                 return 'Entrez votre numero de téléphone ';
                               } else if (int.tryParse(input) == null) {
                                 return 'numero non valid ';
@@ -498,14 +500,14 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                       SizedBox(
                           width: size.width * 0.7,
                           child: TextFormField(
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
                               fillColor: Colors.white,
                               filled: true,
                               hintText: 'Police d\'assurance',
-                              hintStyle: const TextStyle(fontFamily: 'poppins'),
+                              hintStyle: TextStyle(fontFamily: 'poppins'),
                             ),
                             validator:(input){
                               if (input == null ) {
