@@ -470,7 +470,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                 ),
                 child: Text(
                   'Accepter la demande',
-                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
+                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins',fontSize:12),
                 ),
               ),
               ElevatedButton(
