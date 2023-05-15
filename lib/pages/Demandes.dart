@@ -59,8 +59,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-     Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajetLance','id_trajetReserve', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
-     listeNotifications.add(notifications);
+     // Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajetLance','id_trajetReserve', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
+     // listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(
             backgroundColor: Colors.grey.shade300,
@@ -88,7 +88,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                         List<String> nomPrenom = [];
                         nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
                         List<String> villesDepartArrive = [] ;
-                        //villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
+                        villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -115,17 +115,6 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                       '${demande.nom} ${demande.prenom}',
                                       style: TextStyle(fontFamily: 'Poppins',fontSize: 14),
                                     ),
-                                    /*leading: Container(
-                                      height: screenHeight * 0.06,
-                                      width: screenHeight * 0.06,
-                                      child: CircleAvatar(
-                                        //backGrounndImage: AssetImage('your image path'),
-                                        backgroundImage: AssetImage(
-                                          'asset/images/profile.png',
-                                        ),
-                                        radius: 50,
-                                      ),
-                                    ),*/
                                     subtitle: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -147,55 +136,6 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     dense: true,
                                   ),
                                 ),
-                                /*Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10),
-                                  child: OutlinedButton(
-                                    onPressed: () {
-                                      launchUrlString(
-                                          "tel:+213 65498325"); // Handle button press
-                                    },
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          side: BorderSide(color: Colors.blue),
-                                        ),
-                                      ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.white),
-                                      foregroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Colors.blue),
-                                    ),
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.all(defaultPadding * 0.01),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.phone_in_talk_outlined,
-                                            color: Colors.blue,
-                                          ),
-                                          SizedBox(width: defaultPadding * 0.5),
-                                          Text(
-                                            '+213 65498325',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'Poppins'),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),*/
                                 SizedBox(height: screenHeight * 0.005),
                                 GestureDetector(
                                   onTap: () async{
