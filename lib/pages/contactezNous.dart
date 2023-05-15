@@ -77,7 +77,7 @@ class ContactUs extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              top: screenHeight * 0.179,
+              top: screenHeight * 0.15,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
               child: Column(
@@ -102,7 +102,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.25,
+              top: screenHeight * 0.22,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
@@ -133,7 +133,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.25,
+              top: screenHeight * 0.22,
               left: screenWidth * 0.595,
 
 
@@ -163,7 +163,7 @@ class ContactUs extends StatelessWidget {
                 ],
               ),
             ),Positioned(
-              top: screenHeight * 0.34,
+              top: screenHeight * 0.31,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
               child: Column(
@@ -181,7 +181,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.38,
+              top: screenHeight * 0.35,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
@@ -212,7 +212,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.38,
+              top: screenHeight * 0.35,
               left: screenWidth * 0.595,
 
 
@@ -242,7 +242,7 @@ class ContactUs extends StatelessWidget {
                 ],
               ),
             ),Positioned(
-              top: screenHeight * 0.48,
+              top: screenHeight * 0.45,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
               child: Column(
@@ -260,7 +260,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.52,
+              top: screenHeight * 0.49,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
@@ -291,7 +291,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.52,
+              top: screenHeight * 0.49,
               left: screenWidth * 0.595,
 
 
@@ -321,7 +321,7 @@ class ContactUs extends StatelessWidget {
                 ],
               ),
             ),Positioned(
-              top: screenHeight * 0.62,
+              top: screenHeight * 0.59,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
               child: Column(
@@ -339,7 +339,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.66,
+              top: screenHeight * 0.63,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
@@ -370,7 +370,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.66,
+              top: screenHeight * 0.63,
               left: screenWidth * 0.595,
 
 
@@ -400,7 +400,7 @@ class ContactUs extends StatelessWidget {
                 ],
               ),
             ),Positioned(
-              top: screenHeight * 0.76,
+              top: screenHeight * 0.73,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
               child: Column(
@@ -418,7 +418,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.8,
+              top: screenHeight * 0.77,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
@@ -449,7 +449,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.8,
+              top: screenHeight * 0.77,
               left: screenWidth * 0.595,
 
 
@@ -479,7 +479,7 @@ class ContactUs extends StatelessWidget {
                 ],
               ),
             ),Positioned(
-              top: screenHeight * 0.9,
+              top: screenHeight * 0.87,
               left: screenWidth * 0.073,
               right: screenWidth * 0.0485,
               child: Column(
@@ -497,7 +497,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.94,
+              top: screenHeight * 0.91,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
@@ -528,7 +528,7 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.94,
+              top: screenHeight * 0.91,
               left: screenWidth * 0.595,
 
 
