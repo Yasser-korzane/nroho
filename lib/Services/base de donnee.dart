@@ -626,6 +626,7 @@ class BaseDeDonnee{
                 utilisateur.imageUrl = dataUtilisateur['imageUrl'];
                 utilisateur.fcmTocken = dataUtilisateur['fcmTocken'];
                 utilisateur.afficher();
+                trajetLance.id = data['id'];
                 trajetLance.dateDepart = data['dateDepart'].toDate(); //.add(Duration(hours: 1))
                 trajetLance.tempsDePause = data['tempsDePause'].toDate();
                 trajetLance.coutTrajet = data['coutTrajet'] as double;

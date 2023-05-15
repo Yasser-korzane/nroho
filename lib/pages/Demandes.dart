@@ -88,7 +88,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                         List<String> nomPrenom = [];
                         nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
                         List<String> villesDepartArrive = [] ;
-                        villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
+                        //villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -282,11 +282,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                 GestureDetector(
                                   onTap: () async{
                                     List<String> nomPrenom = [];
-                                    nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
+                                    //nomPrenom = await baseDeDonnee.getNomPrenom(FirebaseAuth.instance.currentUser!.uid);
                                     List<String> villesDepartArrive = [] ;
-                                    villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
+                                    //villesDepartArrive = await baseDeDonnee.getVilleDepartVilleArrive(FirebaseAuth.instance.currentUser!.uid, demande.id_trajetLance);
                                     String fcmTockenPassager = await baseDeDonnee.getFcmTocken(demande.id_pasagers);
-                                    await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajetLance}","${demande.id_trajetReserve}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],false));
+                                    print('fcmTockenPassager : $fcmTockenPassager');
+                                    //await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajetLance}","${demande.id_trajetReserve}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],false));
                                     await sendNotification(fcmTockenPassager, "Nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
                                   },
                                   child: Container(

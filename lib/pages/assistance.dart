@@ -73,7 +73,9 @@ class Assistance extends StatelessWidget {
               Profilewidget(
                 title: 'Avis',
                 icon: Icons.comment,
-                onPress: () {},
+                onPress: () {
+                  launch('https://docs.google.com/forms/d/e/1FAIpQLSfAfhYnl03eDWX-w6-rjy0rZx6YdaN3gbLzoHy1jQbsQEi0Iw/viewform');
+                },
               ),
               SizedBox(height: screenHeight * 0.22),
               Text.rich(
