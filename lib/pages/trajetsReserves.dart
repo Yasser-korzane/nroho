@@ -1,7 +1,5 @@
 import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:get/get.dart';
-
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +36,7 @@ class cardReserverList extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () async{
-                  //final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)));
-
-            final result = await    Get.to(  MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)), transition: Transition.circularReveal, duration: const Duration(seconds: 4));
-
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)));
                   if (!result){
                     ScaffoldMessenger.of(context)
                         .showSnackBar(

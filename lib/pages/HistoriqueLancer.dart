@@ -2,8 +2,6 @@ import '../AppClasses/Trajet.dart';
 import 'package:flutter/material.dart';
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'detailsconducteur.dart';
-import 'package:get/get.dart';
-
 class cardLancerListH extends StatelessWidget{
   List<Trajet> _trajetLances;
   cardLancerListH(this._trajetLances);
@@ -35,9 +33,7 @@ class cardLancerListH extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) => detailsConducteur(lancer,true),));
-                Get.to(MaterialPageRoute(builder: (context) => detailsConducteur(lancer,true),), transition: Transition.circularReveal, duration: const Duration(seconds: 4));
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => detailsConducteur(lancer,true),));
                 },
                 child: Card(
                   color: Colors.white,

@@ -3,12 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../AppClasses/Trajet.dart';
 
 class detailsConducteur extends StatelessWidget {
   Trajet _trajet;
-  bool cond_pas;
+  bool cond_pas; // si false alors passager else est conducteur
 
   List<String> utilisateur = [
     'yasser',
@@ -16,7 +15,7 @@ class detailsConducteur extends StatelessWidget {
     'hicham',
     'karim',
     'riyad'
-  ]; // si false alors passager else est conducteur
+  ];
   detailsConducteur(this._trajet, this.cond_pas);
 
   @override
@@ -32,26 +31,6 @@ class detailsConducteur extends StatelessWidget {
       qualite += '"Le trajet Le s\'est bien passé sans problèmes';
     return SafeArea(
       child: Scaffold(
-          floatingActionButton: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-            ),
-            child: Text(
-              'Voir le trajet sur la carte',
-              style: TextStyle(
-                  fontFamily: 'poppins',
-                  color: Colors.blue,
-                  fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AfficherTrajetSurLeMap(
-                        _trajet.latLngDepart, _trajet.latLngArrivee),
-                  ));
-            },
-          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.fromLTRB(
@@ -86,9 +65,6 @@ class detailsConducteur extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            // Add your logic here to navigate back to the previous page
-                          },
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.red,
@@ -252,6 +228,26 @@ class detailsConducteur extends StatelessWidget {
                               ),
                             )
                           ],
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
+                          child: Text(
+                            'Voir le trajet sur la carte',
+                            style: TextStyle(
+                                fontFamily: 'poppins',
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AfficherTrajetSurLeMap(
+                                      _trajet.latLngDepart, _trajet.latLngArrivee),
+                                ));
+                          },
                         ),
                         Divider(color: Colors.black, thickness: 1),
                         Row(

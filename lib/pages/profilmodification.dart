@@ -108,63 +108,67 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                 ),
               ),
               Card(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        const Expanded(
-                          flex: 1,
-                          child: Text(
-                            'Identifiant:',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontFamily: 'poppins',
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Identifiant:',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: 'poppins',
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            widget._utilisateur.identifiant,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontFamily: 'poppins',
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              widget._utilisateur.identifiant,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: 'poppins',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Expanded(
-                          flex: 1,
-                          child: Text(
-                            'Email: ',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontFamily: 'poppins',
+                        ],
+                      ),
+                      SizedBox(height: 6,),
+                      Row(
+                        children: [
+                          const Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Email: ',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: 'poppins',
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            widget._utilisateur.email,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                              fontFamily: 'poppins',
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              widget._utilisateur.email,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                                fontFamily: 'poppins',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: size.height * 0.033),

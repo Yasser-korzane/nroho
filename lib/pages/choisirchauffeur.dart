@@ -2,8 +2,6 @@ import 'package:appcouvoiturage/pages/trajetdetailsconducteurs.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
-import 'package:get/get.dart';
-
 
 class DriverListPage extends StatelessWidget {
   List<ConducteurTrajet> listeUtilisateurs ;
@@ -33,9 +31,7 @@ class DriverListPage extends StatelessWidget {
             padding:  EdgeInsets.all(screenWidth*0.015),
             child: InkWell(
               onTap: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,trajetReserve)));
-                Get.to(MaterialPageRoute(builder: (context) => Details(conducteurTrajet,trajetReserve),), transition: Transition.circularReveal, duration: const Duration(seconds: 4));
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,trajetReserve)));
               },
               child: Card(
                 color: Colors.white,

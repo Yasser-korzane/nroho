@@ -83,9 +83,6 @@ class detailsTrajetLancer extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(defaultPadding),
                           child: InkWell(
-                            onTap: () {
-                              
-                            },
                             child: Icon(
                               Icons.cancel,
                               color: Colors.white,

@@ -3,7 +3,6 @@ import 'package:appcouvoiturage/pages/detailsTrajetLancer.dart';
 import 'package:appcouvoiturage/pages/home.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../AppClasses/Trajet.dart';
 class cardLancerList extends StatelessWidget {
   List<Trajet> trajetsLances ;
@@ -36,8 +35,7 @@ class cardLancerList extends StatelessWidget {
                   vertical: screenHeight * 0.015),
               child: GestureDetector(
                 onTap: () async{
-                  // final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetLancer(lancer)));
-            final result = await    Get.to(detailsTrajetLancer(lancer), transition: Transition.circularReveal, duration: const Duration(seconds: 4));
+                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetLancer(lancer)));
                   if (result){
                     ScaffoldMessenger.of(context)
                         .showSnackBar(
