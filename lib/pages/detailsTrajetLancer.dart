@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Services/base de donnee.dart';
 class detailsTrajetLancer extends StatelessWidget {
-  Trajet _trajet ;
-  detailsTrajetLancer(this._trajet);
+  final Trajet _trajet ;
+  detailsTrajetLancer(this._trajet, {super.key});
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    final double defaultPadding = 10;
+    const double defaultPadding = 10;
     String prixText = '';
     if (_trajet.coutTrajet != 0.0) {
       prixText = 'Prix : ';
@@ -19,7 +19,6 @@ class detailsTrajetLancer extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: ElevatedButton(
-          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.white),),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.red,
           ),
@@ -35,6 +34,7 @@ class detailsTrajetLancer extends StatelessWidget {
               Navigator.pop(context,true);
             }
           },
+          child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.white),),
         ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: SingleChildScrollView(
@@ -50,7 +50,7 @@ class detailsTrajetLancer extends StatelessWidget {
               Container(
                 margin: EdgeInsets.all(defaultPadding),
                 decoration: BoxDecoration(
-                  color: Color(0xFFBAF1F9),
+                  color: const Color(0xFFBAF1F9),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Row(
@@ -72,6 +72,7 @@ class detailsTrajetLancer extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
+                        Navigator.pop(context);
                         // Add your logic here to navigate back to the previous page
                       },
                       child: Container(
@@ -83,7 +84,7 @@ class detailsTrajetLancer extends StatelessWidget {
                           padding: EdgeInsets.all(defaultPadding),
                           child: InkWell(
                             onTap: () {
-                              Navigator.pop(context);
+                              
                             },
                             child: Icon(
                               Icons.cancel,
@@ -98,10 +99,10 @@ class detailsTrajetLancer extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'Date et heure de départ',
@@ -116,35 +117,35 @@ class detailsTrajetLancer extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                             flex: 1,
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
+                          flex: 5,
                           child: Text(
                             '${BaseDeDonnee().reglerTemps(_trajet.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
-                          flex: 5,
                         ),
                       ],
                     ),
                     SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
-                        Expanded(flex: 1, child: Icon(Icons.access_time)),
+                        const Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
+                          flex: 5,
                           child: Text(
                             '${BaseDeDonnee().reglerTemps(_trajet.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(_trajet.dateDepart.minute)}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
-                          flex: 5,
                         ),
                       ],
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    Divider(color: Colors.black, thickness: 1),
+                    const Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.01),
-                    Row(
+                    const Row(
                       children: [
                         Text(
                           'Date et heure d\'arrivée',
@@ -159,33 +160,33 @@ class detailsTrajetLancer extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
-                        Expanded(
+                        const Expanded(
                             flex: 1,
                             child: Icon(Icons.calendar_month_outlined)),
                         Expanded(
+                          flex: 5,
                           child: Text(
                             '${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.day)} ${BaseDeDonnee().moisAuChaine(_trajet.tempsDePause.month)} ${_trajet.tempsDePause.year}',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
-                          flex: 5,
                         ),
                       ],
                     ),
                     SizedBox(height: screenHeight * 0.02),
                     Row(
                       children: [
-                        Expanded(flex: 1, child: Icon(Icons.access_time)),
+                        const Expanded(flex: 1, child: Icon(Icons.access_time)),
                         Expanded(
+                          flex: 5,
                           child: Text(
                             '${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.minute)} (estimation)',
                             style: TextStyle(fontFamily: 'Poppins'),
                           ),
-                          flex: 5,
                         ),
                       ],
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    Divider(color: Colors.black, thickness: 1),
+                    const Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.01),
                     Row(
                       children: [
@@ -193,7 +194,7 @@ class detailsTrajetLancer extends StatelessWidget {
                           flex: 1,
                           child: Column(
                             children: [
-                              Icon(Icons.circle, color: Colors.purple),
+                              const Icon(Icons.circle, color: Colors.purple),
                               // SizedBox(height: screenHeight * 0.03),
                               Container(
                                 height: screenHeight * 0.05,
@@ -201,7 +202,7 @@ class detailsTrajetLancer extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                               // SizedBox(height: screenHeight * 0.03),
-                              Icon(
+                              const Icon(
                                 Icons.circle_outlined,
                                 color: Colors.purple,
                               ),
@@ -216,7 +217,7 @@ class detailsTrajetLancer extends StatelessWidget {
                                 child: ListTile(
                                   title: Text(
                                     _trajet.villeDepart,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Poppins'),
@@ -231,7 +232,7 @@ class detailsTrajetLancer extends StatelessWidget {
                                 child: ListTile(
                                   title: Text(
                                     _trajet.villeArrivee,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Poppins'),
@@ -246,21 +247,21 @@ class detailsTrajetLancer extends StatelessWidget {
                         )
                       ],
                     ),
-                    Divider(color: Colors.black, thickness: 1),
+                    const Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           prixText,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
                             fontFamily: 'Poppins',
                           ),
                         ),Text(
-                         _trajet.coutTrajet.toString()+' DA',
-                          style: TextStyle(
+                         '${_trajet.coutTrajet} DA',
+                          style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16.0,
                             fontFamily: 'Poppins',

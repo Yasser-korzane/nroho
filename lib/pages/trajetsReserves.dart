@@ -1,5 +1,6 @@
 import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:get/get.dart';
 
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 class cardReserverList extends StatelessWidget{
   List<Trajet> trajetsReserve ;
-  cardReserverList(this.trajetsReserve);
+  cardReserverList(this.trajetsReserve, {super.key});
   @override
   Widget build (BuildContext context){
     final Size screenSize = MediaQuery
@@ -17,7 +18,7 @@ class cardReserverList extends StatelessWidget{
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     return trajetsReserve.isEmpty ?
-    Scaffold(
+    const Scaffold(
         backgroundColor: Colors.white,
         body: Center(
             child: Text(
@@ -37,7 +38,10 @@ class cardReserverList extends StatelessWidget{
               padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035,vertical: screenHeight*0.015),
               child: GestureDetector(
                 onTap: () async{
-                  final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)));
+                  //final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)));
+
+            final result = await    Get.to(  MaterialPageRoute(builder: (context) => detailsTrajetReserver(reserve)), transition: Transition.circularReveal, duration: const Duration(seconds: 4));
+
                   if (!result){
                     ScaffoldMessenger.of(context)
                         .showSnackBar(
@@ -66,7 +70,7 @@ class cardReserverList extends StatelessWidget{
                   elevation: 8,
                   margin: EdgeInsets.symmetric(horizontal: screenHeight*0.01,vertical: screenWidth*0.001),
                   borderOnForeground:true,
-                  shape:   RoundedRectangleBorder(
+                  shape:   const RoundedRectangleBorder(
                     side:  BorderSide(color: Colors.grey,width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(15)
                     ),
@@ -79,11 +83,11 @@ class cardReserverList extends StatelessWidget{
                           padding:  EdgeInsets.all(screenWidth*0.04),
                           child: Text(
                             '${BaseDeDonnee().reglerTemps(reserve.dateDepart.day)} ${BaseDeDonnee().moisAuChaine(reserve.dateDepart.month)} ${reserve.dateDepart.year}',
-                            style: TextStyle(fontFamily: 'poppins'),
+                            style: const TextStyle(fontFamily: 'poppins'),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left:10.0, right: 10),
+                        const Padding(
+                          padding: EdgeInsets.only(left:10.0, right: 10),
                           child: Divider(
                             height: 1,
                             thickness: 1,
@@ -97,7 +101,7 @@ class cardReserverList extends StatelessWidget{
                               flex: 1,
                               child: Column(
                                 children: [
-                                  Icon(Icons.circle, color: Colors.purple),
+                                  const Icon(Icons.circle, color: Colors.purple),
                                   // SizedBox(height: 20),
                                   Container(
                                     height: screenHeight* 0.05,
@@ -105,7 +109,7 @@ class cardReserverList extends StatelessWidget{
                                     color: Colors.grey,
                                   ),
                                   // SizedBox(height: 8),
-                                  Icon(
+                                  const Icon(
                                     Icons.circle_outlined,
                                     color: Colors.purple,
                                   ),
@@ -120,14 +124,14 @@ class cardReserverList extends StatelessWidget{
                                     child: ListTile(
                                       title: Text(
                                         '${BaseDeDonnee().reglerTemps(reserve.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(reserve.dateDepart.minute)}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(reserve.villeDepart,style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(reserve.villeDepart,style: const TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),
@@ -136,14 +140,14 @@ class cardReserverList extends StatelessWidget{
                                     child: ListTile(
                                       title: Text(
                                         '${BaseDeDonnee().reglerTemps(reserve.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(reserve.tempsDePause.minute)} (estimation)',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.blue,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
                                             fontFamily: 'Poppins'
                                         ),
                                       ),
-                                      subtitle: Text(reserve.villeArrivee,style: TextStyle(fontFamily: 'Poppins'),
+                                      subtitle: Text(reserve.villeArrivee,style: const TextStyle(fontFamily: 'Poppins'),
                                       ),
                                     ),
                                   ),
