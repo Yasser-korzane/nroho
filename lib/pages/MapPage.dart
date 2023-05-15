@@ -303,7 +303,7 @@ class _MywidState extends State<Mywid> {
                 child: InkWell(
                     onTap: () async {
                       await getStatut();
-                      if (!statut) {
+                      if (!statut) { // si mode passager
                         Navigator.push(
                           context,
                           PageRouteBuilder(

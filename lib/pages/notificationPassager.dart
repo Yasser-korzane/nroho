@@ -1,3 +1,7 @@
+import 'package:appcouvoiturage/AppClasses/Trajet.dart';
+import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:appcouvoiturage/pages/AfficherProfilConducteur.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -119,79 +123,89 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
               padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.035,
                   vertical: screenHeight * 0.015),
-              child: Card(
-                  color: Colors.white,
-                  elevation: 8,
-                  margin: EdgeInsets.symmetric(
-                      horizontal: screenHeight * 0.01,
-                      vertical: screenWidth * 0.001),
-                  borderOnForeground: true,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.grey, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.all(screenWidth * 0.02),
-                      child: Column(children: [
-                        Padding(
-                          padding: EdgeInsets.all(screenWidth * 0.01),
-                          child: ListTile(
-                            title: Text(
-                              '${demande.nom} ${demande.prenom}',
-                              style: TextStyle(fontFamily: 'Poppins'),
-                            ),
-                            /*leading: Container(
-                              height: screenHeight * 0.06,
-                              width: screenHeight * 0.06,
-                              child: CircleAvatar(
-                                //backGrounndImage: AssetImage('your image path'),
-                                backgroundImage: AssetImage(
-                                  'asset/images/profile.png',
-                                ),
-                                radius: 50,
+              child: GestureDetector(
+                onTap: ()async{
+                  Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
+                  // utilisateur = await BaseDeDonnee().getUser(demande.id_conducteur);
+                  Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
+                  // trajetLance =  await BaseDeDonnee().getTrajet(demande.id_conducteur,demande.id_trajetLance);
+                  ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AfficherProfilConducteur(conducteurTrajet)));
+                },
+                child: Card(
+                    color: Colors.white,
+                    elevation: 8,
+                    margin: EdgeInsets.symmetric(
+                        horizontal: screenHeight * 0.01,
+                        vertical: screenWidth * 0.001),
+                    borderOnForeground: true,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Padding(
+                        padding: EdgeInsets.all(screenWidth * 0.02),
+                        child: Column(children: [
+                          Padding(
+                            padding: EdgeInsets.all(screenWidth * 0.01),
+                            child: ListTile(
+                              title: Text(
+                                '${demande.nom} ${demande.prenom}',
+                                style: TextStyle(fontFamily: 'Poppins'),
                               ),
-                            ),*/
-                            subtitle: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                              /*leading: Container(
+                                height: screenHeight * 0.06,
+                                width: screenHeight * 0.06,
+                                child: CircleAvatar(
+                                  //backGrounndImage: AssetImage('your image path'),
+                                  backgroundImage: AssetImage(
+                                    'asset/images/profile.png',
+                                  ),
+                                  radius: 50,
+                                ),
+                              ),*/
+                              subtitle: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Départ : '+demande.villeDepart,
+                                    style:
+                                    TextStyle(fontFamily: 'Poppins'),
+                                  ),
+                                  Text(
+                                    'Arrivée : '+demande.villeArrive,
+                                    style:
+                                    TextStyle(fontFamily: 'Poppins'),
+                                  ),
+                                ],
+                              ),
+                              isThreeLine: true,
+                              dense: true,
+                            ),
+                          ),
+                          Padding(
+                             padding:
+                              EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                Text('Status :  ',style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                ),),
                                 Text(
-                                  'De : '+demande.villeDepart,
-                                  style:
-                                  TextStyle(fontFamily: 'Poppins'),
-                                ),
-                                Text(
-                                  'A : '+demande.villeArrive,
-                                  style:
-                                  TextStyle(fontFamily: 'Poppins'),
-                                ),
+                                  demande.accepte_refuse ? 'Acceptée' : 'Refusée', // Ternary operator to conditionally display text
+                                  style: TextStyle(
+                                    color: demande.accepte_refuse ? Colors.green : Colors.red, // Ternary operator to conditionally set text color
+                                    fontSize: 16.0, // Replace with your own font size
+                                  ),
+                                )
                               ],
                             ),
-                            isThreeLine: true,
-                            dense: true,
                           ),
-                        ),
-                        Padding(
-                           padding:
-                            EdgeInsets.symmetric(horizontal: screenWidth * 0.07),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text('Status :  ',style: TextStyle(
-                                fontFamily: 'Poppins',
-                              ),),
-                              Text(
-                                demande.accepte_refuse ? 'Acceptée' : 'Refusée', // Ternary operator to conditionally display text
-                                style: TextStyle(
-                                  color: demande.accepte_refuse ? Colors.green : Colors.red, // Ternary operator to conditionally set text color
-                                  fontSize: 16.0, // Replace with your own font size
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: screenHeight * 0.01),
-                      ]))));
+                          SizedBox(height: screenHeight * 0.01),
+                        ]))),
+              ));
         },
       ),
     );

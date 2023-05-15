@@ -1,67 +1,23 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:appcouvoiturage/AppClasses/Notifications.dart';
-import 'package:appcouvoiturage/pages/Demandes.dart';
-import '../AppClasses/Trajet.dart';
 import 'AfficherTrajetSurLeMap.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
-
-class Details extends StatefulWidget {
+class AfficherProfilConducteur extends StatefulWidget {
   ConducteurTrajet _conducteurTrajet ;
-  Trajet trajetReserve ;
-  Details(this._conducteurTrajet,this.trajetReserve);
-
+  AfficherProfilConducteur(this._conducteurTrajet);
   @override
-  State<Details> createState() => _DetailsState();
+  State<AfficherProfilConducteur> createState() => _AfficherProfilConducteurState();
 }
 
-class _DetailsState extends State<Details> {
-  late Utilisateur _utilisateur;
-  Future _getDataFromDataBase() async {
-    _utilisateur = BaseDeDonnee().creerUtilisateurVide();
-    try {
-      await FirebaseFirestore.instance
-          .collection('Utilisateur')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get()
-          .then((snapshot) async {
-        if (snapshot.exists) {
-          setState(() {
-            _utilisateur.nom = snapshot.data()!['nom'];
-            _utilisateur.prenom = snapshot.data()!['prenom'];
-            //tests by printing
-          }); // end setState
-        } else {
-          // end snapshot exist
-          throw Exception("Utilisateur does not exist.");
-        }
-      });
-    } catch (e) {
-      throw Exception("Failed to get utilisateur.");
-    }
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getDataFromDataBase();
-  }
+class _AfficherProfilConducteurState extends State<AfficherProfilConducteur> {
   @override
   Widget build(BuildContext context) {
-
     final Size screenSize = MediaQuery.of(context).size;
-
-    BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
-
-
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     List plusInformations =
-      ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.fumeur)}',
+    ['Le conducteur fume : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.fumeur)}',
       'Le conducteur accepte un bagage volumineux : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.bagage)}',
       'Le conducteur accepte des animaux : ${BaseDeDonnee().tranlsateToFrensh(widget._conducteurTrajet.trajetLance.plusInformations.animaux)}',
       'Le nombre de passager que le conducteur accepte : ${widget._conducteurTrajet.trajetLance.plusInformations.nbPlaces.toString()}'];
@@ -96,7 +52,7 @@ class _DetailsState extends State<Details> {
                       Row(
                         children: List.generate(
                           5,
-                          (index) => Icon(
+                              (index) => Icon(
                             Icons.star,
                             size: 20.0,
                             color: index < widget._conducteurTrajet.utilisateur.evaluation.etoiles.round()
@@ -130,14 +86,14 @@ class _DetailsState extends State<Details> {
               SizedBox(height: screenHeight * 0.01),
               Row(
                 children: [
-                   Text("Marque de voiture :",
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xff137c8b),
-                          ),
-                        )),
+                  Text("Marque de voiture :",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xff137c8b),
+                        ),
+                      )),
                   Text(' '+widget._conducteurTrajet.utilisateur.vehicule.marque),
                 ],
               ),
@@ -165,26 +121,26 @@ class _DetailsState extends State<Details> {
                           context: context,
                           builder: (context) => Builder(
                             builder: (context) {
-                                return ListView.separated(
-                                  separatorBuilder: (context, index) => Divider(
-                                    thickness: 1.0,
-                                    color: Colors.grey[300],
-                                  ),
-                                  itemCount: plusInformations.length,
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        plusInformations[index],
-                                        style: TextStyle(
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.normal,
-                                          fontSize: 14,
-                                        ),
+                              return ListView.separated(
+                                separatorBuilder: (context, index) => Divider(
+                                  thickness: 1.0,
+                                  color: Colors.grey[300],
+                                ),
+                                itemCount: plusInformations.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      plusInformations[index],
+                                      style: TextStyle(
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
                                       ),
-                                    );
-                                  },
-                                );
+                                    ),
+                                  );
+                                },
+                              );
                             },
                           ),
                         );
@@ -257,12 +213,12 @@ class _DetailsState extends State<Details> {
                             );
                           },
                           child: Text('Villes intermédiaires',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xff137c8b),
-                                ),
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff137c8b),
+                            ),
                           )
 
                       ),
@@ -296,8 +252,8 @@ class _DetailsState extends State<Details> {
                                     // If the list is empty, display a message
                                     return Center(
                                         child: Text(
-                                            'Aucun avis'
-                                        ,style: TextStyle(fontFamily: 'Poppins',),));
+                                          'Aucun avis'
+                                          ,style: TextStyle(fontFamily: 'Poppins',),));
                                   } else {
                                     // If the list is not empty, display the commentaires in a ListView
                                     return ListView.separated(
@@ -371,11 +327,11 @@ class _DetailsState extends State<Details> {
                           child: ListTile(
                             title: Text(widget._conducteurTrajet.trajetLance.villeDepart),
                             subtitle: Text(
-                    '${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.dateDepart.minute)}',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                    ),
+                              '${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.dateDepart.minute)}',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.01),
@@ -383,11 +339,11 @@ class _DetailsState extends State<Details> {
                           child: ListTile(
                             title: Text(widget._conducteurTrajet.trajetLance.villeArrivee),
                             subtitle: Text(
-                          '${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.tempsDePause.minute)}',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold),
-                          ),
+                              '${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(widget._conducteurTrajet.trajetLance.tempsDePause.minute)}',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
 
                           ),
                         ),
@@ -481,54 +437,6 @@ class _DetailsState extends State<Details> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: screenHeight * 0.08,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}",widget._conducteurTrajet.trajetLance.id,"${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
-                  sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "Nouvelle notification", "Un passager vous a envoyé une demande ");
-                },
-                style:  ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(4.0),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.001,
-                          horizontal: screenWidth * 0.23)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xff137c8b)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                ),
-                child: Text(
-                  'Choisir ce conducteur',
-                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.001,
-                          horizontal: screenWidth * 0.20)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.transparent),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                  ),
-                ),
-                child: const Text('Annuler',
-                    style: TextStyle(color: Colors.red, fontFamily: 'Poppins')),
-              )
             ],
           ),
         ),

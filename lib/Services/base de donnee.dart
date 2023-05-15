@@ -338,16 +338,14 @@ class BaseDeDonnee{
     return villeDepartArrive;
   }
 
-  Future<Utilisateur> getDataFromDataBase(String uid)async {
-    Utilisateur? utilisateur = creerUtilisateurVide();
+  Future<Utilisateur> getUser(String uid)async {
+    Utilisateur utilisateur = creerUtilisateurVide();
     try {
       await FirebaseFirestore.instance.collection('Utilisateur')
           .doc(uid)
           .get()
           .then((snapshot) async {
         if (snapshot.exists) {
-            print('Oui utilisateur ${snapshot.data()!['nom']} existe');
-            utilisateur.identifiant = snapshot.data()!['identifiant'];
             utilisateur.nom = snapshot.data()!['nom'];
             utilisateur.prenom = snapshot.data()!['prenom'];
             utilisateur.email = snapshot.data()!['email'];
@@ -364,27 +362,7 @@ class BaseDeDonnee{
               snapshot.data()!['vehicule']['modele'],
               snapshot.data()!['vehicule']['policeAssurance'],
             );
-            utilisateur.statut = snapshot.data()!['statut'];
-            utilisateur.notifications = [];
-            List<dynamic> notificationsData = snapshot.data()!['notifications'];
-            if (notificationsData.isNotEmpty){
-              for (var notificationData in notificationsData) {
-                Notifications notification = Notifications(
-                  notificationData['id_conducteur'],
-                  notificationData['id_pasagers'],
-                  notificationData['id_trajetLance'],
-                  notificationData['id_trajetReserve'],
-                  notificationData['nom'],
-                  notificationData['prenom'],
-                  notificationData['villeDepart'],
-                  notificationData['villeArrive'],
-                  notificationData['accepte_refuse'],
-                );
-                utilisateur.notifications.add(notification);
-              }
-            }
             utilisateur.imageUrl = snapshot.data()!['imageUrl'];
-            utilisateur.fcmTocken = snapshot.data()!['fcmTockenl'];
             utilisateur.afficher();
             return utilisateur;
             //tests by printing
@@ -427,6 +405,39 @@ class BaseDeDonnee{
       }
     });
     return [];
+  }
+
+  Future<Trajet> getTrajet(String id_conducteur, String id_trajetLance) async{
+    Trajet trajetLance = creerTrajetVide();
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(id_conducteur)
+        .collection('trajetsLances')
+        .doc(id_trajetLance)
+        .get()
+        .then((snapshot) {
+      if (snapshot.exists) {
+        trajetLance.dateDepart = snapshot.data()!['dateDepart'].toDate();
+        trajetLance.tempsDePause = snapshot.data()!['tempsDePause'].toDate();//.add(Duration(hours: 1))
+        trajetLance.coutTrajet = snapshot.data()!['coutTrajet'] as double;
+        trajetLance.villeDepart = snapshot.data()!['villeDepart'];
+        trajetLance.villeArrivee = snapshot.data()!['villeArrivee'];
+        trajetLance.villeIntermediaires = List<String>.from(snapshot.data()!['villeIntermediaires']);
+        trajetLance.plusInformations = PlusInformations(
+            snapshot.data()!['plusInformations']['fumeur'],
+            snapshot.data()!['plusInformations']['bagage'],
+            snapshot.data()!['plusInformations']['animaux'],
+            snapshot.data()!['plusInformations']['nbPlaces']);
+        /// ---------------------
+        GeoPoint geoPointDepart = snapshot.data()!['latLngDepart'];
+        GeoPoint geoPointArrivee = snapshot.data()!['latLngArrivee'];
+        LatLng latLngDepart = LatLng(geoPointDepart.latitude, geoPointDepart.longitude);
+        LatLng latLngArrivee = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
+        trajetLance.latLngDepart = latLngDepart;
+        trajetLance.latLngArrivee = latLngArrivee;
+      }
+    });
+    return trajetLance;
   }
 
   Future<bool?> getStatut(String uid) async {
@@ -503,57 +514,6 @@ class BaseDeDonnee{
 
   /// *********************************************************************************************************
 
-  Future<List<Utilisateur>> getUtilisateursByName(String name) async {
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Utilisateur')
-          .where('nom', isEqualTo: name)
-          .get();
-      List<Utilisateur> utilisateurs = [];
-      for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-        Utilisateur utilisateur = creerUtilisateurVide();
-        utilisateur.identifiant = data['identifiant'];
-        utilisateur.nom = data['nom'];
-        utilisateur.prenom = data['prenom'];
-        utilisateur.email = data['email'];
-        utilisateur.numeroTelephone = data['numeroTelephone'];
-        utilisateur.evaluation = Evaluation(
-          List<String>.from(data['evaluation']['feedback']),
-          data['evaluation']['etoiles'],
-          data['evaluation']['nbSignalement'],
-        );
-        utilisateur.vehicule = Vehicule(
-          data['vehicule']['marque'],
-          data['vehicule']['typevehicule'],
-          data['vehicule']['matricule'],
-          data['vehicule']['modele'],
-          data['vehicule']['policeAssurance'],
-        );
-        utilisateur.statut = data['statut'];
-        List<dynamic> notificationsData = data['notifications'];
-        for (var notificationData in notificationsData) {
-          Notifications notification = Notifications(
-            notificationData['id_conducteur'],
-            notificationData['id_pasagers'],
-            notificationData['id_trajetLance'],
-            notificationData['id_trajetReserve'],
-            notificationData['nom'],
-            notificationData['prenom'],
-            notificationData['villeDepart'],
-            notificationData['villeArrive'],
-            notificationData['accepte_refuse'],
-          );
-          utilisateur.notifications.add(notification);
-        }
-        utilisateur.imageUrl = data['imageUrl'];
-        utilisateurs.add(utilisateur);
-      }
-      return utilisateurs;
-    } catch (e) {
-      throw Exception("Failed to get utilisateurs by name: $e");
-    }
-  }
   Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
     trajetReserve.afficher();
     DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 30));
