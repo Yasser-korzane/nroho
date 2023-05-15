@@ -91,31 +91,24 @@ class ContactUs extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Poppins'),
                   ),
-                  SizedBox(height: screenHeight * 0.0112),
+
+
+
                   Text(
-                    'Etudiant 2CP à ESI Alger',
-                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
-                  ),
-                  Text(
-                      'Développeur mobile (Flutter , Java , Kotlin)',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
-                  ),
-                  Text(
-                    'Chef d’équipe de l\'application Nroho',
+                    'Chef d’équipe de l\'application nroho',
                     style: TextStyle(fontSize: screenWidth * 0.04,fontFamily: 'Poppins'),
                   ),
                 ],
               ),
             ),
             Positioned(
-              top: screenHeight * 0.448,
+              top: screenHeight * 0.25,
               left: screenWidth * 0.0485,
               child: Row(
                 children: [
                   Icon(
                     Icons.mail,
-                    size: screenWidth * 0.1214,
+                    size: screenWidth * 0.09,
                   ),
                   SizedBox(width: screenWidth * 0.0244),
                   TextButton(
@@ -132,7 +125,7 @@ class ContactUs extends StatelessWidget {
                       child: Text(
                         'lm_grine@esi.dz',
                         style: TextStyle(
-                            color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
+                            color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
                       ),
                     ),
                   ),
@@ -140,13 +133,13 @@ class ContactUs extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.561,
-              left: screenWidth * 0.0495,
+              top: screenHeight * 0.25,
+              left: screenWidth * 0.595,
 
 
               child: Row(
                 children: [
-                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),),
+                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),height: 35,),
                   SizedBox( width:screenWidth * 0.0244),
                   TextButton(
                     onPressed:(){
@@ -163,7 +156,402 @@ class ContactUs extends StatelessWidget {
                       ),
                       child: Text(
                       'LinkedIn',
-                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.0388,fontFamily: 'Poppins'),
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                  ),
+                    ),
+                  ),
+                ],
+              ),
+            ),Positioned(
+              top: screenHeight * 0.34,
+              left: screenWidth * 0.073,
+              right: screenWidth * 0.0485,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Challal Riad',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.0583,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'),
+                  ),
+]
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.38,
+              left: screenWidth * 0.0485,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.mail,
+                    size: screenWidth * 0.09,
+                  ),
+                  SizedBox(width: screenWidth * 0.0244),
+                  TextButton(
+                    onPressed: () {_launchEmail(_emailLaunchUri);},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'lr_challal@esi.dz',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.38,
+              left: screenWidth * 0.595,
+
+
+              child: Row(
+                children: [
+                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),height: 35,),
+                  SizedBox( width:screenWidth * 0.0244),
+                  TextButton(
+                    onPressed:(){
+                      launch('https://www.linkedin.com/in/riad-challal-06891222b');
+                    },
+                    child:Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                      'LinkedIn',
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                  ),
+                    ),
+                  ),
+                ],
+              ),
+            ),Positioned(
+              top: screenHeight * 0.48,
+              left: screenWidth * 0.073,
+              right: screenWidth * 0.0485,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Korzane Yasser',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.0583,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'),
+                  ),
+]
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.52,
+              left: screenWidth * 0.0485,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.mail,
+                    size: screenWidth * 0.09,
+                  ),
+                  SizedBox(width: screenWidth * 0.0244),
+                  TextButton(
+                    onPressed: () {_launchEmail(_emailLaunchUri);},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'ly_korzane@esi.dz',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.52,
+              left: screenWidth * 0.595,
+
+
+              child: Row(
+                children: [
+                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),height: 35,),
+                  SizedBox( width:screenWidth * 0.0244),
+                  TextButton(
+                    onPressed:(){
+                      launch('https://www.linkedin.com/in/yasser-korzane-154720243/');
+                    },
+                    child:Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                      'LinkedIn',
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                  ),
+                    ),
+                  ),
+                ],
+              ),
+            ),Positioned(
+              top: screenHeight * 0.62,
+              left: screenWidth * 0.073,
+              right: screenWidth * 0.0485,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Boulacheb Hichem',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.0583,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'),
+                  ),
+]
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.66,
+              left: screenWidth * 0.0485,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.mail,
+                    size: screenWidth * 0.09,
+                  ),
+                  SizedBox(width: screenWidth * 0.0244),
+                  TextButton(
+                    onPressed: () {_launchEmail(_emailLaunchUri);},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'lh_boulacheb@esi.dz',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.66,
+              left: screenWidth * 0.595,
+
+
+              child: Row(
+                children: [
+                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),height: 35,),
+                  SizedBox( width:screenWidth * 0.0244),
+                  TextButton(
+                    onPressed:(){
+                      launch('https://www.linkedin.com/in/grine-mohammed-205b01238/');
+                    },
+                    child:Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                      'LinkedIn',
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                  ),
+                    ),
+                  ),
+                ],
+              ),
+            ),Positioned(
+              top: screenHeight * 0.76,
+              left: screenWidth * 0.073,
+              right: screenWidth * 0.0485,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Iarkane Abdelkarim',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.0583,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'),
+                  ),
+]
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.8,
+              left: screenWidth * 0.0485,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.mail,
+                    size: screenWidth * 0.09,
+                  ),
+                  SizedBox(width: screenWidth * 0.0244),
+                  TextButton(
+                    onPressed: () {_launchEmail(_emailLaunchUri);},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'la_iarkane@esi.dz',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.8,
+              left: screenWidth * 0.595,
+
+
+              child: Row(
+                children: [
+                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),height: 35,),
+                  SizedBox( width:screenWidth * 0.0244),
+                  TextButton(
+                    onPressed:(){
+                      launch('https://www.linkedin.com/in/karim-iarkane-737b3622b/');
+                    },
+                    child:Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                      'LinkedIn',
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                  ),
+                    ),
+                  ),
+                ],
+              ),
+            ),Positioned(
+              top: screenHeight * 0.9,
+              left: screenWidth * 0.073,
+              right: screenWidth * 0.0485,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Dahmani Amira',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.0583,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Poppins'),
+                  ),
+]
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.94,
+              left: screenWidth * 0.0485,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.mail,
+                    size: screenWidth * 0.09,
+                  ),
+                  SizedBox(width: screenWidth * 0.0244),
+                  TextButton(
+                    onPressed: () {_launchEmail(_emailLaunchUri);},
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'la_dahmani@esi.dz',
+                        style: TextStyle(
+                            color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.94,
+              left: screenWidth * 0.595,
+
+
+              child: Row(
+                children: [
+                  new Tab(icon: new Image.asset("assets/images/linkedInLogo.png"),height: 35,),
+                  SizedBox( width:screenWidth * 0.0244),
+                  TextButton(
+                    onPressed:(){
+                      launch('https://www.linkedin.com/in/grine-mohammed-205b01238/');
+                    },
+                    child:Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                      'LinkedIn',
+                      style: TextStyle( color: Colors.black, fontSize: screenWidth * 0.035,fontFamily: 'Poppins'),
                   ),
                     ),
                   ),
