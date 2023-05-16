@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Notifications.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:http/http.dart' as http;
 
 
 class AnnulerTrajet extends StatefulWidget {
@@ -16,12 +17,6 @@ class AnnulerTrajet extends StatefulWidget {
 }
 
 class _AnnulerTrajetState extends State<AnnulerTrajet> {
-  final smtpServer = gmail("lh_boulacheb@esi.dz","hichem123");
-  final message = Message()
-    ..from = Address("lh_boulacheb@esi.dz")
-    ..recipients.add('hic.chem2016@gmail.com')
-    ..subject = 'Annulement du trjet'
-    ..text = 'j\'ai annulé le trajet pour les raison suivants :';
   final List<String> _raisons = [
     "J'ai changé ma destination.",
     " J'ai fait une erreur lors de lancement",
@@ -176,12 +171,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                             else if (n.id_trajetLance == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_pasagers);
                             await sendNotification(fcmToken, "Trajet annulé!", 'Votre partenaire avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé le trajet');
                             /// 2) send email :
-                            try {
-                              final sendReport = await send(message, smtpServer);
-                              print('E-mail envoyé : ${sendReport.toString()}');
-                            } catch (e) {
-                              print('Erreur lors de l\'envoi de l\'e-mail : $e');
-                            }
+                            sendEmail(FirebaseAuth.instance.currentUser!.email,_Stringchecked.toString());
                             ///
                             break;
                           }
@@ -201,4 +191,26 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
       ),
     );
   }
+}
+Future sendEmail(String? from_name,String message) async{
+  final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+  const serviceId= "service_5ztocbr";
+  const templateId= "template_enemzmj";
+  const userId= "5QCdePheDF7vaRWcr";
+  final response = await http.post(url,
+      headers: {'Content-Type': 'application/json',
+        'origin': 'https://localhost'},
+      body: json.encode({
+        "service_id": serviceId,
+        "template_id": templateId,
+        "user_id": userId,
+        "template_params":{
+          "from_name": from_name,
+          "message": message,
+        }
+      })
+  );
+  print(response.statusCode);
+  print(response.body);
+  return response.statusCode;
 }

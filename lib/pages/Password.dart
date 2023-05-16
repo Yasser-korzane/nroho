@@ -11,26 +11,13 @@ import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:appcouvoiturage/pages/annulertrajet.dart';
 
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
 
   @override
   State<MotdePasse> createState() => _MotdePasseState();
-}
-Future sendEmail() async{
-  final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
-  const serviceId= "service_5ztocbr";
-  const templateId= "template_enemzmj";
-  const userId= "G84j8h8WKIOp96kw8";
-  final response = await http.post(url,
-    headers: {'Content-Type': 'application/json'},
-    body: json.encode({
-      "service_id"
-    })
-  );
 }
 
 class _MotdePasseState extends State<MotdePasse> {
@@ -182,7 +169,7 @@ class _MotdePasseState extends State<MotdePasse> {
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(FirebaseAuth.instance.currentUser!.uid, trajetReserve);
                       //await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, 'JJo7Q4E6IJHmLJdA6XD8');
                        //sendNotification("c_xjr0ZhQRCsaCTcI6Yf-S:APA91bGznD7_-eSwaD3McjUUHaByuQ_Kz8C9Zr5EyZpdlrtTD5g5c_USyVcSQaEJ0kvrntKFF8FfWQbSF8nNO0HCHrkHne0vRCpzvYd1z01s2X_EQ6SslIU5bpUVHWe8FAvEyHkK7D2j","new notification", "hello mohammed");
-
+                      sendEmail("lh_grine@esi.dz", "krahttttt");
                     },
                   ),
                 ),
