@@ -170,7 +170,7 @@ class _MywidState extends State<Mywid> {
               Container(
                 child: Column(
                   children: [
-                    Expanded(flex: 60, child: Container()),
+                    Expanded(flex: 51, child: Container()),
                     Expanded(
                       flex: 40,
                       child: Container(
@@ -231,7 +231,7 @@ class _MywidState extends State<Mywid> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: screenHeight * 0.015),
+                            SizedBox(height: screenHeight * 0.013),
                             // use 3% of screen height as space between text fields
                             Container(
                               decoration: BoxDecoration(
@@ -282,7 +282,7 @@ class _MywidState extends State<Mywid> {
                                 ),
                               ),
                             ),
-                            SizedBox(height: screenHeight * 0.025),
+                            SizedBox(height: screenHeight * 0.015),
                             // use 4% of screen height as space between text fields and row
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

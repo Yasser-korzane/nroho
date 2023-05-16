@@ -99,7 +99,7 @@ class detailsTrajetLancer extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    const Row(
+                     Row(
                       children: [
                         Text(
                           'Date et heure de départ',
@@ -142,7 +142,7 @@ class detailsTrajetLancer extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.01),
                     const Divider(color: Colors.black, thickness: 1),
                     SizedBox(height: screenHeight * 0.01),
-                    const Row(
+                     Row(
                       children: [
                         Text(
                           'Date et heure d\'arrivée',

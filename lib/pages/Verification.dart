@@ -7,6 +7,7 @@ import 'package:appcouvoiturage/pages/home.dart';
 
 import '../Services/base de donnee.dart';
 import '../AppClasses/Utilisateur.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class Verification extends StatefulWidget {
   final String email;
@@ -157,6 +158,23 @@ class _VerificationState extends State<Verification> {
                                 builder: (context) =>
                                     home()),
                                 (Route<dynamic> route) => false,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(seconds: 2),
+                              content: AwesomeSnackbarContent(
+                                title: 'Bravo!!',
+                                message: 'Inscription avec succés',
+
+                                /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                contentType: ContentType.success,
+                                // to configure for material banner
+                                inMaterialBanner: true,
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              backgroundColor: Colors.transparent,
+                              elevation: 0,
+                            ),
                           );
 
                         };

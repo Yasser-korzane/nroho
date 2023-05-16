@@ -11,11 +11,26 @@ import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
 
   @override
   State<MotdePasse> createState() => _MotdePasseState();
+}
+Future sendEmail() async{
+  final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+  const serviceId= "service_5ztocbr";
+  const templateId= "template_enemzmj";
+  const userId= "G84j8h8WKIOp96kw8";
+  final response = await http.post(url,
+    headers: {'Content-Type': 'application/json'},
+    body: json.encode({
+      "service_id"
+    })
+  );
 }
 
 class _MotdePasseState extends State<MotdePasse> {
@@ -158,7 +173,7 @@ class _MotdePasseState extends State<MotdePasse> {
                     ),
                     onPressed: () async {
                       String uid = FirebaseAuth.instance.currentUser!.uid;
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Rating(BaseDeDonnee().creerTrajetVide())));
+                     // Navigator.push(context, MaterialPageRoute(builder: (context) => Rating(BaseDeDonnee().creerTrajetVide())));
                       //await _baseDeDonnee.decrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, '9piBiLWTdxO8FBVwATJC');
                       //await _baseDeDonnee.ajouterNotification(FirebaseAuth.instance.currentUser!.uid, not);
                       //await _baseDeDonnee.saveHistoriqueAsSubcollection(uid, trajetReserve);
