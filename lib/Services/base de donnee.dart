@@ -21,7 +21,38 @@ class BaseDeDonnee{
   final CollectionReference gestionConfilits = FirebaseFirestore.instance.collection('ConsultationDesConfilits');
   final CollectionReference mauvaisUtilisateurs = FirebaseFirestore.instance.collection('Mauvais_Utilisateurs');
 
+
   /** *********************************** Seters (ajout et modifications) *********************************** **////
+  Future<void> modifierNotification(String uid, int index, bool value) async {
+    List<Notifications> listeNotifications = [];
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        List<dynamic> notificationsData = snapshot.data()!['notifications'];
+        for (var notificationData in notificationsData) {
+          Notifications notification = Notifications(
+            notificationData['id_conducteur'],
+            notificationData['id_pasagers'],
+            notificationData['id_trajetLance'],
+            notificationData['id_trajetReserve'],
+            notificationData['nom'],
+            notificationData['prenom'],
+            notificationData['villeDepart'],
+            notificationData['villeArrive'],
+            notificationData['accepte_refuse'],
+          );
+          listeNotifications.add(notification);
+        }
+        listeNotifications[index].accepte_refuse = value ;
+      }
+    });
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    List<Map<String, dynamic>> notificationsMapList = listeNotifications.map((notification) => notification.toMap()).toList();
+    await utilisateurDocRef.update({'notifications': notificationsMapList});
+  }
   Future<void> creerUtilisateur(Utilisateur utilisateur) async {
     await utilisateurCollection.doc(utilisateur.identifiant).set({
       'identifiant': utilisateur.identifiant,

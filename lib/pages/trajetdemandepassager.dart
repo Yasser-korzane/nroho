@@ -17,21 +17,21 @@ class Detailspassaer extends StatefulWidget {
   String idTrajetReserve ;
   List<String> nomPrenom ;
   List<String> villeDepartArrive ;
-  Detailspassaer(this.idPassager,this.idTrajetLance,this.idTrajetReserve,this.nomPrenom,this.villeDepartArrive);
+  bool accepte;
+  Detailspassaer(this.idPassager,this.idTrajetLance,this.idTrajetReserve,this.nomPrenom,this.villeDepartArrive,this.accepte);
   @override
   State<Detailspassaer> createState() => _DetailspassaerState();
 }
 
 class _DetailspassaerState extends State<Detailspassaer> {
   late Utilisateur _utilisateur ;
-  bool accepte=false;
   BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
   bool est_presse=false;
   void _onButtonPressedaccepte() async{
     if (est_presse == false) {
       setState(() {
         est_presse = true;
-        accepte=true;
+        widget.accepte=true;
       });
     }
     await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],true));
@@ -44,7 +44,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
     if (est_presse == false) {
       setState(() {
         est_presse = true;
-        accepte=false;
       });
     }
     await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],false));
@@ -472,8 +471,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
               ),              SizedBox(
                 height: screenHeight * 0.08,
               ),
-              est_presse ?
-              accepte ?
+               widget.accepte ?
               Container(
                 margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -498,7 +496,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                   ],
                 ),
               )
-              :Container(
+              : est_presse ? Container(
                 margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 decoration: BoxDecoration(

@@ -19,6 +19,8 @@ class _DemandesPassagerState extends State<DemandesPassager> {
   BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
   bool est_presse=false;
   bool accepte=false;
+  bool test=false;
+  List<bool> est_pressee=[];
   Future _getNotifications() async {
     await FirebaseFirestore.instance
         .collection('Utilisateur')
@@ -80,6 +82,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
         itemCount: listeNotifications.length,
         itemBuilder: (context, index) {
           final demande = listeNotifications[index];
+          est_pressee.add(false);
           return Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.035,
@@ -93,7 +96,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Detailspassaer(demande.id_pasagers,demande.id_trajetLance,demande.id_trajetReserve,nomPrenom,villesDepartArrive)));
+                          builder: (context) => Detailspassaer(demande.id_pasagers,demande.id_trajetLance,demande.id_trajetReserve,nomPrenom,villesDepartArrive,demande.accepte_refuse)));
                 },
                 child: Card(
                     color: Colors.white,
@@ -138,14 +141,15 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                             ),
                           ),
                           SizedBox(height: screenHeight * 0.005),
-                          !est_presse ? Column(
+                          (!est_pressee[index] && !demande.accepte_refuse) ? Column(
                             children: [
                               GestureDetector(
                                 onTap: () async{
-                                    if (est_presse == false) {
-                                      setState(() {
-                                        est_presse = true;
-                                        accepte = true;
+                                    if (est_pressee[index] == false) {
+                                      setState(() async{
+                                        est_pressee[index] = true;
+                                        demande.accepte_refuse=true;
+                                        await baseDeDonnee.modifierNotification(demande.id_conducteur, index, true);
                                       });
                                     }
                                   List<String> nomPrenom = [];
@@ -227,13 +231,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                   ),
                                 ),
                               ),
-                          SizedBox(height: screenHeight * 0.015),
-                          GestureDetector(
+                           SizedBox(height: screenHeight * 0.015),
+                           GestureDetector(
                             onTap: () async{
-                              if (est_presse == false) {
+                              if (est_pressee[index] == false) {
                                 setState(() {
-                                  est_presse = true;
-                                  accepte=false;
+                                  est_pressee[index] = true;
                                 });
                               }
                               List<String> nomPrenom = [];
@@ -306,7 +309,7 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                             ),
                           ),
                           ],
-                          ): accepte ?
+                          ): demande.accepte_refuse ?
                           Container(
                             margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
                             padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
