@@ -301,7 +301,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                               )
                           );
                         },
-                        child: Text('Avis sur le conducteur',
+                        child: Text('Avis sur le passager',
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                 fontSize: 12,

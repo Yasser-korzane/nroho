@@ -13,6 +13,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:places_service/places_service.dart';
 import '../AppClasses/Evaluation.dart';
+import '../AppClasses/Notifications.dart';
 import '../AppClasses/PlusInformations.dart';
 import '../AppClasses/Trajet.dart';
 import '../AppClasses/Vehicule.dart';
@@ -56,7 +57,24 @@ class _ProfilepageState extends State<Profilepage> {
               snapshot.data()!['vehicule']['modele'],
               snapshot.data()!['vehicule']['policeAssurance'],
             );
+            _utilisateur.statut = snapshot.data()!['statut'];
+            List<dynamic> notificationsData = snapshot.data()!['notifications'];
+            for (var notificationData in notificationsData) {
+              Notifications notification = Notifications(
+                notificationData['id_conducteur'],
+                notificationData['id_pasagers'],
+                notificationData['id_trajetLance'],
+                notificationData['id_trajetReserve'],
+                notificationData['nom'],
+                notificationData['prenom'],
+                notificationData['villeDepart'],
+                notificationData['villeArrive'],
+                notificationData['accepte_refuse'],
+              );
+              _utilisateur.notifications.add(notification);
+            }
             _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
+            _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
             if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
             //tests by printing
           }); // end setState

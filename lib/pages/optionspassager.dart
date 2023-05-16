@@ -136,35 +136,38 @@ class _optionsState extends State<options> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.002),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
-                  //margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
-                  //child: CustomDropdown(options: [1, 2, 3, 4])),
                   child:
-                  DropdownButtonFormField<String>(
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(),
-                    ),
-                    value: selectedNb,
-                    items: nbPlaces
-                        .map(
-                          (item) => DropdownMenuItem(
-                        value: item,
-                        child: Text(
-                          item,
-                          style: TextStyle(fontFamily: 'Poppins'),
+                  Column(
+                    children: [
+                      Align(alignment: Alignment.centerLeft,child: Text('Avec combien de personnes partez-vous ? ',style: TextStyle(fontWeight: FontWeight.bold),)),
+                      SizedBox(height: 4,),
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(),
                         ),
+                        value: selectedNb,
+                        items: nbPlaces
+                            .map(
+                              (item) => DropdownMenuItem(
+                            value: item,
+                            child: Text(
+                              item,
+                              style: TextStyle(fontFamily: 'Poppins'),
+                            ),
+                          ),
+                        )
+                            .toList(),
+                        onChanged: (item) {
+                          setState(() {
+                            selectedNb = item;
+                            widget.trajetReserve.plusInformations.nbPlaces = int.parse(item!);
+                          });
+                        },
                       ),
-                    )
-                        .toList(),
-                    onChanged: (item) {
-                      setState(() {
-                        selectedNb = item;
-                        widget.trajetReserve.plusInformations.nbPlaces = int.parse(item!);
-                      });
-                    },
+                    ],
                   ),
                 ),
               ),

@@ -55,8 +55,6 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    Notifications notifications = Notifications('id_conducteur', 'id_pasagers', 'id_trajetLance','id_trajetReserve', 'Grine', 'Mohammed', 'Bab El Zouar', 'Beau Lieu', true);
-    listeNotifications.add(notifications);
     return listeNotifications.isEmpty
         ? Scaffold(
         backgroundColor: Colors.grey.shade300,
@@ -125,12 +123,17 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
                   vertical: screenHeight * 0.015),
               child: GestureDetector(
                 onTap: ()async{
-                  Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
-                  // utilisateur = await BaseDeDonnee().getUser(demande.id_conducteur);
-                  Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
-                  // trajetLance =  await BaseDeDonnee().getTrajet(demande.id_conducteur,demande.id_trajetLance);
-                  ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AfficherProfilConducteur(conducteurTrajet)));
+                   Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
+                   utilisateur = await BaseDeDonnee().getUser(demande.id_conducteur);
+                   utilisateur.afficher();
+                   Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
+                   trajetLance =  await BaseDeDonnee().getTrajet(demande.id_conducteur,demande.id_trajetLance);
+                   trajetLance.afficher();
+                   ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
+                   if (!(trajetLance.latLngDepart.longitude == 0 && trajetLance.latLngDepart.latitude == 0
+                       && trajetLance.latLngArrivee.latitude == 0
+                       && trajetLance.latLngArrivee.longitude == 0)) // si le trajet est dans l'historique
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => AfficherProfilConducteur(conducteurTrajet)));
                 },
                 child: Card(
                     color: Colors.white,

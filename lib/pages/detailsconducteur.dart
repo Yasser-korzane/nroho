@@ -1,4 +1,6 @@
+import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
 import 'package:appcouvoiturage/pages/AfficherTrajetSurLeMap.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,14 +10,7 @@ import '../AppClasses/Trajet.dart';
 class detailsConducteur extends StatelessWidget {
   Trajet _trajet;
   bool cond_pas; // si false alors passager else est conducteur
-
-  List<String> utilisateur = [
-    'yasser',
-    'mohammed',
-    'hicham',
-    'karim',
-    'riyad'
-  ];
+  List<String> nomPrenom = [];
   detailsConducteur(this._trajet, this.cond_pas);
 
   @override
@@ -232,6 +227,7 @@ class detailsConducteur extends StatelessWidget {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
+                            side: BorderSide(color: Colors.blue),
                           ),
                           child: Text(
                             'Voir le trajet sur la carte',
@@ -252,14 +248,34 @@ class detailsConducteur extends StatelessWidget {
                         Divider(color: Colors.black, thickness: 1),
                         Row(
                           children: [
-                            TextButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    isDismissible: true,
-                                    context: context,
-                                    builder: (context) => Builder(
-                                          builder: (context) {
-                                            return Container(
+                              Text(
+                                'Les emails des partenaires :',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.0,
+                                  fontFamily: 'Poppins',
+                                ),
+                              ),
+                            IconButton(
+                                onPressed: () async{
+                                  if (!cond_pas) {
+                                    String email = await BaseDeDonnee().getEmail(_trajet.idConductuer);
+                                    if (!nomPrenom.contains(email) && _trajet.idConductuer!= FirebaseAuth.instance.currentUser!.uid) nomPrenom.add(email);
+                                  }
+                                  else {
+                                    for(String uiP in _trajet.idPassagers) {
+                                      String email = await BaseDeDonnee().getEmail(uiP);
+                                      if (!nomPrenom.contains(email) && uiP!= FirebaseAuth.instance.currentUser!.uid) nomPrenom.add(email);
+                                    }
+                                  }
+                                  showModalBottomSheet(
+                                      isDismissible: true,
+                                      context: context,
+                                      builder: (context) => Builder(
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
                                               height: screenHeight*0.3,
                                               child: ListView.separated(
                                                 separatorBuilder:
@@ -267,49 +283,32 @@ class detailsConducteur extends StatelessWidget {
                                                   thickness: 1.0,
                                                   color: Colors.grey[300],
                                                 ),
-                                                itemCount: utilisateur.length,
+                                                itemCount: nomPrenom.length,
                                                 itemBuilder: (context, index) {
                                                   return Padding(
                                                     padding:
-                                                        const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(8.0),
                                                     child: Text(
-                                                      utilisateur[index],
+                                                      nomPrenom[index],
                                                       style: TextStyle(
                                                         fontFamily: 'poppins',
                                                         fontWeight:
-                                                            FontWeight.normal,
+                                                        FontWeight.normal,
                                                         fontSize: 14,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                               ),
-                                            );
-                                          },
-                                        ));
-                              },
-                              child: Text(
-                                'Le conducteur/Les passagers :',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.0,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                            ),
+                                            ),
+                                          );
+                                        },
+                                      ));
+                                },
+                                icon: Icon(Icons.arrow_drop_down_circle_outlined),color: Colors.blue[800],iconSize: 32),
                           ],
                         ),
                         SizedBox(height: 20.0),
-                        /*ListView.separated(
-                        itemBuilder: (context, index) {},
-                        separatorBuilder: (context, index) {
-                          return ListTile(
-                            title: Center(child: Text(utilisateur[index])),
-                            // customize the appearance of your separator as desired
-                            // e.g. change the color, size, etc.
-                          );
-                        },
-                        itemCount: utilisateur.length),*/
                         Divider(color: Colors.black, thickness: 1),
                         Row(
                           children: [

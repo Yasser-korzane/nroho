@@ -316,6 +316,24 @@ class BaseDeDonnee{
     }
     return listNomPrenom;
   }
+  Future<String> getEmail(String uid)async {
+    String email = '' ;
+    try {
+      await FirebaseFirestore.instance.collection('Utilisateur')
+          .doc(uid)
+          .get()
+          .then((snapshot) async {
+        if (snapshot.exists) {
+          email = snapshot.data()!['email'];
+        } else { // end snapshot exist
+          throw Exception("Utilisateur does not exist.");
+        }
+      });
+    } catch (e) {
+      throw Exception("Failed to get utilisateur.");
+    }
+    return email;
+  }
   /// *******************************************************************************************************
   Future <List<String>> getVilleDepartVilleArrive(String uid, String idTrajet)async {
     List<String> villeDepartArrive = [];

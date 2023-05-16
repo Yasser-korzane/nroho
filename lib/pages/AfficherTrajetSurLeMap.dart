@@ -82,7 +82,7 @@ class _AfficherTrajetSurLeMapState extends State<AfficherTrajetSurLeMap> {
         polylines: _polylineSet,markers: _markerSet,
         initialCameraPosition: CameraPosition(
           target: widget.origin,
-          zoom: 11.0,
+          zoom: 12,
         ),
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).size.height * 0.25,

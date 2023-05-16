@@ -26,7 +26,7 @@ class Historique extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: const Icon(Icons.chevron_left, color: Colors.black)),
+              icon: const Icon(Icons.arrow_back, color: Colors.black)),
           title: Text('Historique',
               style: TextStyle(fontFamily: 'Poppins')),
           backgroundColor: Colors.transparent,
