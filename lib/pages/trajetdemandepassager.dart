@@ -342,7 +342,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                       children: [
                         Container(
                           child: ListTile(
-                            title: Text('Oued Smar_Alger'),
+                            title: Text('${_trajet.lieuDepart}'),
                             subtitle: Text(
                               '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
                               style: TextStyle(
@@ -354,14 +354,13 @@ class _DetailspassaerState extends State<Detailspassaer> {
                         SizedBox(height: screenHeight * 0.01),
                         Container(
                           child: ListTile(
-                            title: Text('Maouklane_setif'),
+                            title: Text('${_trajet.lieuArrivee}'),
                             subtitle: Text(
                               '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute}',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
                             ),
-
                           ),
                         ),
                       ],
@@ -387,10 +386,10 @@ class _DetailspassaerState extends State<Detailspassaer> {
                     Text('${_trajet.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      _trajet.coutTrajet.toString()+' DA',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   _trajet.coutTrajet.toString()+' DA',
+                    //   style: TextStyle(fontWeight: FontWeight.bold),
+                    // ),
                   ],
                 ),
               ),
