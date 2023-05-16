@@ -14,13 +14,42 @@ import 'package:nroho/AppClasses/Utilisateur.dart';
 class Details extends StatefulWidget {
   ConducteurTrajet _conducteurTrajet ;
   Trajet trajetReserve ;
-  Details(this._conducteurTrajet,this.trajetReserve);
+  bool _isButtonPressed ;
+
+  Details(this._conducteurTrajet,this.trajetReserve,this._isButtonPressed);
 
   @override
   State<Details> createState() => _DetailsState();
 }
 
 class _DetailsState extends State<Details> {
+  bool est_presse=false;
+  BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+  void _onButtonPressed() {
+        if(est_presse==false) {
+         setState(() {
+           est_presse = true;
+         });
+          Navigator.pop(context, true);
+          sendNotification(widget._conducteurTrajet.utilisateur.fcmTocken,
+              "Nouvelle notification",
+              "Un passager vous a envoyé une demande ");
+          baseDeDonnee.ajouterNotification(
+              "${widget._conducteurTrajet.utilisateur.identifiant}",
+              Notifications(
+                  "${widget._conducteurTrajet.utilisateur.identifiant}",
+                  "${FirebaseAuth.instance.currentUser!.uid}",
+                  "${widget._conducteurTrajet.trajetLance.id}",
+                  "${widget.trajetReserve.id}",
+                  "${_utilisateur.nom}",
+                  "${_utilisateur.prenom}",
+                  "${widget.trajetReserve.villeDepart}",
+                  "${widget.trajetReserve.villeArrivee}",
+                  true));
+          // Autre logique à exécuter lorsque le bouton est enfoncé pour la première fois
+          print("Le bouton a été enfoncé !");
+        }
+  }
   late Utilisateur _utilisateur;
   Future _getDataFromDataBase() async {
     _utilisateur = BaseDeDonnee().creerUtilisateurVide();
@@ -50,13 +79,16 @@ class _DetailsState extends State<Details> {
     // TODO: implement initState
     super.initState();
     _getDataFromDataBase();
+    if(widget._isButtonPressed == true){
+      est_presse=true;
+    }
   }
   @override
   Widget build(BuildContext context) {
 
     final Size screenSize = MediaQuery.of(context).size;
 
-    BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+    bool isloading=false;
 
 
     final double screenWidth = screenSize.width;
@@ -436,7 +468,7 @@ class _DetailsState extends State<Details> {
                       },
                       icon: Icon(Icons.map_outlined, size: 32),
                       label: Text(
-                        'Voir le trajet sur la carte',
+                        'Voir le trajet ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 14,
@@ -444,7 +476,7 @@ class _DetailsState extends State<Details> {
                             color: Color(0xff137c8b)),
                       ),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffb8cbd0),
+                          backgroundColor: Colors.white,//Color(0xffb8cbd0),
                           side: BorderSide.none,
                           shape: StadiumBorder(side: BorderSide())),
                     ),
@@ -467,7 +499,7 @@ class _DetailsState extends State<Details> {
                       },
                       icon: Icon(Icons.phone_in_talk_outlined, size: 32),
                       label: Text(
-                        'Contacter le chauffeur',
+                        'Contacter',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 14,
@@ -475,7 +507,7 @@ class _DetailsState extends State<Details> {
                             color: Color(0xff137cb8)),
                       ),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffb8cbd0),
+                          backgroundColor: Colors.white,//Color(0xffb8cbd0),
                           side: BorderSide.none,
                           shape: StadiumBorder(side: BorderSide())),
                     ),
@@ -485,8 +517,36 @@ class _DetailsState extends State<Details> {
               SizedBox(
                 height: screenHeight * 0.08,
               ),
+              est_presse ?
+              Container(
+                margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.green[100],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                        Icons.check_circle,
+                      size: 40,
+                      color: Colors.green,
+
+                    ),
+                    Text("la demande a été envoyé",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.green,
+                    ),),
+                  ],
+                ),
+              )
+                  : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children:[
               ElevatedButton(
-                onPressed: () {
+                /*onPressed: () {
                   baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}",widget._conducteurTrajet.trajetLance.id,"${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
                   sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "Nouvelle notification", "Un passager vous a envoyé une demande ");
                   Navigator.pushAndRemoveUntil(
@@ -495,15 +555,21 @@ class _DetailsState extends State<Details> {
                         builder: (context) => home()),
                         (Route<dynamic> route) => false,
                   );
-                },
+                },*/
+                onPressed: _onButtonPressed,/*() {
+
+                 //Navigator.pop(context,true);
+                 sendNotification(widget._conducteurTrajet.utilisateur.fcmTocken, "Nouvelle notification", "Un passager vous a envoyé une demande ");
+                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}","${widget._conducteurTrajet.trajetLance.id}","${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
+
+                },*/
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),
                   padding: MaterialStateProperty.all<EdgeInsets>(
                       EdgeInsets.symmetric(
                           vertical: screenHeight * 0.001,
                           horizontal: screenWidth * 0.23)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Color(0xff137c8b)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xff137c8b)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -535,6 +601,8 @@ class _DetailsState extends State<Details> {
                 ),
                 child: const Text('Annuler',
                     style: TextStyle(color: Colors.red, fontFamily: 'Poppins')),
+              )
+            ]
               )
             ],
           ),

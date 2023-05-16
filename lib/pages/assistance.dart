@@ -48,6 +48,7 @@ class Assistance extends StatelessWidget {
                       	Navigator.push(
                                       context,
                                       PageRouteBuilder(
+                                        transitionDuration: Duration(milliseconds: 600),
                                         pageBuilder: (context, animation, secondaryAnimation) => ContactUs(),
                                         transitionsBuilder: (context, animation, secondaryAnimation, child) {
                                           var begin = Offset(1.0, 0.0);

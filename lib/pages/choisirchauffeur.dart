@@ -3,10 +3,19 @@ import 'package:flutter/material.dart';
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';
 
-class DriverListPage extends StatelessWidget {
+class DriverListPage extends StatefulWidget {
   List<ConducteurTrajet> listeUtilisateurs ;
   Trajet trajetReserve ;
+
   DriverListPage(this.listeUtilisateurs,this.trajetReserve) ;
+
+  @override
+  State<DriverListPage> createState() => _DriverListPageState();
+}
+
+class _DriverListPageState extends State<DriverListPage> {
+  bool _isButtonPressed = false;
+
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -24,14 +33,17 @@ class DriverListPage extends StatelessWidget {
         elevation: 5,
       ),
       body: ListView.builder( // Utilisation du widget ListView.builder pour afficher à l'utilisateur l'ensemble des chauffeurs disponible correspandant a sa demande
-        itemCount: listeUtilisateurs.length,
+        itemCount: widget.listeUtilisateurs.length,
         itemBuilder: (context, index) {
-          final ConducteurTrajet conducteurTrajet = listeUtilisateurs[index];
+          final ConducteurTrajet conducteurTrajet = widget.listeUtilisateurs[index];
           return Padding(
             padding:  EdgeInsets.all(screenWidth*0.015),
             child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,trajetReserve)));
+              onTap: () async{
+                setState(() async{
+                  bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,widget.trajetReserve,_isButtonPressed)));
+                  _isButtonPressed=result;
+                });
               },
               child: Card(
                 color: Colors.white,

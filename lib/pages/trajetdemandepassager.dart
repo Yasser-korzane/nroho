@@ -24,6 +24,32 @@ class Detailspassaer extends StatefulWidget {
 
 class _DetailspassaerState extends State<Detailspassaer> {
   late Utilisateur _utilisateur ;
+  bool accepte=false;
+  BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
+  bool est_presse=false;
+  void _onButtonPressedaccepte() async{
+    if (est_presse == false) {
+      setState(() {
+        est_presse = true;
+        accepte=true;
+      });
+    }
+    await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],true));
+    /* 1) et 4) et 5) */ await baseDeDonnee.modifierTrajetLance(widget.idTrajetLance, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
+    /* 2) et 6) et 7) */ await baseDeDonnee.modifierTrajetReserve(widget.idTrajetReserve, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
+    /* 3) */ await baseDeDonnee.incrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, widget.idTrajetLance);
+    await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a accepté votre demande");
+  }
+  void _onButtonPressedrefuse() async{
+    if (est_presse == false) {
+      setState(() {
+        est_presse = true;
+        accepte=false;
+      });
+    }
+    await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],false));
+    await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a refusé votre demande");
+  }
   Future _getDataFromDataBase() async {
     _utilisateur = BaseDeDonnee().creerUtilisateurVide();
     try {
@@ -97,7 +123,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
     List plusInformations =
@@ -164,7 +189,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                 children: [
                   Expanded(
                     flex: 2,
-                    child: Text("Email = ",
+                    child: Text("Email : ",
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                             fontSize: 15.0,
@@ -342,7 +367,8 @@ class _DetailspassaerState extends State<Detailspassaer> {
                       children: [
                         Container(
                           child: ListTile(
-                            title: Text('${_trajet.lieuDepart}'),
+                            //title: Text('${_trajet.lieuDepart}'),
+                            title: Text(_trajet.villeDepart),
                             subtitle: Text(
                               '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
                               style: TextStyle(
@@ -354,7 +380,8 @@ class _DetailspassaerState extends State<Detailspassaer> {
                         SizedBox(height: screenHeight * 0.01),
                         Container(
                           child: ListTile(
-                            title: Text('${_trajet.lieuArrivee}'),
+                            //title: Text('${_trajet.lieuArrivee}'),
+                            title: Text(_trajet.villeArrivee),
                             subtitle: Text(
                               '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute}',
                               style: TextStyle(
@@ -381,7 +408,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('${_trajet.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -445,54 +472,99 @@ class _DetailspassaerState extends State<Detailspassaer> {
               ),              SizedBox(
                 height: screenHeight * 0.08,
               ),
-              ElevatedButton(
-                onPressed: () async{
-                  await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],true));
-                  /* 1) et 4) et 5) */ await baseDeDonnee.modifierTrajetLance(widget.idTrajetLance, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
-                  /* 2) et 6) et 7) */ await baseDeDonnee.modifierTrajetReserve(widget.idTrajetReserve, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
-                  /* 3) */ await baseDeDonnee.incrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, widget.idTrajetLance);
-                  await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a accepté votre demande");
-                },
-                style:  ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(4.0),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.001,
-                          horizontal: screenWidth * 0.23)),
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(Color(0xff137c8b)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+              est_presse ?
+              accepte ?
+              Container(
+                margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.green[100],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.check_circle,
+                      size: 40,
+                      color: Colors.green,
+
                     ),
-                  ),
+                    Text("la demande a été accepté",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.green,
+                      ),),
+                  ],
                 ),
-                child: Text(
-                  'Accepter la demande',
-                  style: TextStyle(color: Colors.white, fontFamily: 'Poppins',fontSize:12),
+              )
+              :Container(
+                margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.red[100],
                 ),
-              ),
-              ElevatedButton(
-                onPressed: () async{
-                  baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],false));
-                  await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
-                },
-                style: ButtonStyle(
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      EdgeInsets.symmetric(
-                          vertical: screenHeight * 0.001,
-                          horizontal: screenWidth * 0.20)),
-                  backgroundColor:
-                  MaterialStateProperty.all<Color>(Colors.transparent),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.cancel,
+                      size: 40,
+                      color: Colors.red,
+
                     ),
-                  ),
+                    Text("la demande a été refusé",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),),
+                  ],
                 ),
-                child: const Text('Refuser la demande',
-                    style: TextStyle(color: Colors.red, fontFamily: 'Poppins')),
+              )
+                  : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children:[
+                    ElevatedButton(
+                      onPressed: _onButtonPressedaccepte,
+                      style:  ButtonStyle(
+                        elevation: MaterialStateProperty.all<double>(4.0),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.001,
+                                horizontal: screenWidth * 0.23)),
+                        backgroundColor: MaterialStateProperty.all<Color>(Color(0xff137c8b)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'Accepter la demande',
+                        style: TextStyle(color: Colors.white, fontFamily: 'Poppins',fontSize: 12),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: _onButtonPressedrefuse,
+                      style: ButtonStyle(
+                        elevation: MaterialStateProperty.all<double>(0.0),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.symmetric(
+                                vertical: screenHeight * 0.001,
+                                horizontal: screenWidth * 0.20)),
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.transparent),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                      ),
+                      child: const Text('Refuser la demande',
+                          style: TextStyle(color: Colors.red, fontFamily: 'Poppins',fontSize: 12)),
+                    )
+                  ]
               )
             ],
           ),

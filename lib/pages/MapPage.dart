@@ -191,6 +191,7 @@ class _MywidState extends State<Mywid> {
                                   Navigator.push(
                                     context,
                                     PageRouteBuilder(
+                                      transitionDuration: Duration(milliseconds: 600),
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           const OuAllezVous(),
@@ -246,6 +247,7 @@ class _MywidState extends State<Mywid> {
                                   Navigator.push(
                                     context,
                                     PageRouteBuilder(
+                                      transitionDuration: Duration(milliseconds: 600),
                                       pageBuilder: (context, animation,
                                               secondaryAnimation) =>
                                           const OuAllezVous(),
@@ -307,6 +309,7 @@ class _MywidState extends State<Mywid> {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 600),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
                                     DemandesPassagerResultat(),
@@ -330,6 +333,7 @@ class _MywidState extends State<Mywid> {
                         Navigator.push(
                           context,
                           PageRouteBuilder(
+                            transitionDuration: Duration(milliseconds: 600),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
                                     const ListDemandePassager(),
