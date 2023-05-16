@@ -1,5 +1,5 @@
-import 'package:appcouvoiturage/pages/contactezNous.dart';
-import 'package:appcouvoiturage/widgets/profilwidget.dart';
+import 'package:nroho/pages/contactezNous.dart';
+import 'package:nroho/widgets/profilwidget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

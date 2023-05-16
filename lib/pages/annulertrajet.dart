@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
-import 'package:appcouvoiturage/pages/Demandes.dart';
+import 'package:nroho/Services/base%20de%20donnee.dart';
+import 'package:nroho/pages/Demandes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Notifications.dart';
@@ -19,7 +19,7 @@ class AnnulerTrajet extends StatefulWidget {
 class _AnnulerTrajetState extends State<AnnulerTrajet> {
   final List<String> _raisons = [
     "J'ai changé ma destination.",
-    " J'ai fait une erreur lors de lancement",
+    "J'ai fait une erreur lors de lancement",
     "J'ai un probléme avec le covoitureur",
     "Ce trajet ne m'intéresse plus",
     "Aucune des raisons cités",

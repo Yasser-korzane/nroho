@@ -1,6 +1,6 @@
-import 'package:appcouvoiturage/Services/auth.dart';
-import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
-import 'package:appcouvoiturage/pages/Verification.dart';
+import 'package:nroho/Services/auth.dart';
+import 'package:nroho/Services/base%20de%20donnee.dart';
+import 'package:nroho/pages/Verification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +8,8 @@ import 'dart:async';
 import '../AppClasses/Evaluation.dart';
 import '../AppClasses/Utilisateur.dart';
 import '../AppClasses/Vehicule.dart';
-import 'package:appcouvoiturage/Shared/lodingEffect.dart';
-import 'package:appcouvoiturage/pages/connexion.dart';
+import 'package:nroho/Shared/lodingEffect.dart';
+import 'package:nroho/pages/connexion.dart';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 

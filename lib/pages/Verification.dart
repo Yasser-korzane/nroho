@@ -2,7 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:appcouvoiturage/pages/home.dart';
+import 'package:nroho/pages/home.dart';
 
 
 import '../Services/base de donnee.dart';

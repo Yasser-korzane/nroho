@@ -1,4 +1,4 @@
-import 'package:appcouvoiturage/pages/Info%20de%20trajet%20reserve.dart';
+import 'package:nroho/pages/Info%20de%20trajet%20reserve.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import '../AppClasses/Trajet.dart';
 import '../Services/base de donnee.dart';

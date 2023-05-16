@@ -1,9 +1,9 @@
-import 'package:appcouvoiturage/pages/assistance.dart';
-import 'package:appcouvoiturage/pages/lancer_reserver.dart';
-import 'package:appcouvoiturage/pages/profilepage.dart';
+import 'package:nroho/pages/assistance.dart';
+import 'package:nroho/pages/lancer_reserver.dart';
+import 'package:nroho/pages/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:appcouvoiturage/pages/MapPage.dart';
+import 'package:nroho/pages/MapPage.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:async';

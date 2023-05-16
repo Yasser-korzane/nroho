@@ -1,9 +1,9 @@
-import 'package:appcouvoiturage/AppClasses/Trajet.dart';
-import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
+import 'package:nroho/AppClasses/Trajet.dart';
+import 'package:nroho/AppClasses/Utilisateur.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:appcouvoiturage/pages/HistoriqueLancer.dart';
-import 'package:appcouvoiturage/pages/HistoriqueReserver.dart';
+import 'package:nroho/pages/HistoriqueLancer.dart';
+import 'package:nroho/pages/HistoriqueReserver.dart';
 
 class Historique extends StatelessWidget {
   Utilisateur _utilisateur;

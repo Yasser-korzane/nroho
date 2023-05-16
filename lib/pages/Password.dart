@@ -1,6 +1,6 @@
-import 'package:appcouvoiturage/AppClasses/Utilisateur.dart';
-import 'package:appcouvoiturage/pages/annulertrajet.dart';
-import 'package:appcouvoiturage/pages/rating.dart';
+import 'package:nroho/AppClasses/Utilisateur.dart';
+import 'package:nroho/pages/annulertrajet.dart';
+import 'package:nroho/pages/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -11,7 +11,7 @@ import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:appcouvoiturage/pages/annulertrajet.dart';
+import 'package:nroho/pages/annulertrajet.dart';
 
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);

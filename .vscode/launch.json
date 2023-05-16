@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "appcouvoiturage",
+            "name": "nroho",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "appcouvoiturage (profile mode)",
+            "name": "nroho (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "appcouvoiturage (release mode)",
+            "name": "nroho (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

@@ -1,7 +1,7 @@
-import 'package:appcouvoiturage/AppClasses/Trajet.dart';
-import 'package:appcouvoiturage/pages/rating.dart';
-import 'package:appcouvoiturage/pages/trajetsLances.dart';
-import 'package:appcouvoiturage/pages/trajetsReserves.dart';
+import 'package:nroho/AppClasses/Trajet.dart';
+import 'package:nroho/pages/rating.dart';
+import 'package:nroho/pages/trajetsLances.dart';
+import 'package:nroho/pages/trajetsReserves.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -20,7 +20,7 @@ class LocalNotification{
   static void showNotification(RemoteMessage message){
     final NotificationDetails notiDetails = NotificationDetails(
       android:  AndroidNotificationDetails(
-       'com.example.appcouvoiturage',
+       'com.example.nroho',
         'app covoiturage',
         importance: Importance.max,
         priority: Priority.high,
