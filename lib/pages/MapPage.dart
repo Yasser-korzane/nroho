@@ -170,7 +170,7 @@ class _MywidState extends State<Mywid> {
               Container(
                 child: Column(
                   children: [
-                    Expanded(flex: 51, child: Container()),
+                    Expanded(flex: 60, child: Container()),
                     Expanded(
                       flex: 40,
                       child: Container(

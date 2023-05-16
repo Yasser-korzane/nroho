@@ -1,4 +1,5 @@
 import 'package:appcouvoiturage/Services/base%20de%20donnee.dart';
+import 'package:appcouvoiturage/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -138,7 +139,7 @@ class _DetailsState extends State<Details> {
                             color: Color(0xff137c8b),
                           ),
                         )),
-                  Text(' '+widget._conducteurTrajet.utilisateur.vehicule.marque),
+                  Expanded(child: Text(' '+widget._conducteurTrajet.utilisateur.vehicule.marque)),
                 ],
               ),
               Row(
@@ -488,6 +489,12 @@ class _DetailsState extends State<Details> {
                 onPressed: () {
                   baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}",widget._conducteurTrajet.trajetLance.id,"${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
                   sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "Nouvelle notification", "Un passager vous a envoyé une demande ");
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => home()),
+                        (Route<dynamic> route) => false,
+                  );
                 },
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),

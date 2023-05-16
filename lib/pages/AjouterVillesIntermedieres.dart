@@ -118,7 +118,7 @@ class _AjouterVillesIntermedieresState
           child: Column(
             children: [
               SizedBox(
-                height: size.height * 0.12,
+                height: size.height * 0.1,
               ),
               Row(
                 children: [

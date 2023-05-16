@@ -1,3 +1,4 @@
+import 'package:appcouvoiturage/pages/home.dart';
 import 'package:appcouvoiturage/pages/trajetdemandepassager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -154,6 +155,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     /* 2) et 6) et 7) */ await baseDeDonnee.modifierTrajetReserve(demande.id_trajetReserve, demande.id_conducteur, demande.id_pasagers);
                                     /* 3) */ await baseDeDonnee.incrementerNbPlacesConducteur(demande.id_conducteur, demande.id_trajetLance);
                                     await sendNotification(fcmTockenPassager, "Nouvelle notification", "Un conducteur a accepté votre demande pour rejoindre son trajet");
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => home()),
+                                          (Route<dynamic> route) => false,
+                                    );
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -171,7 +178,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                         ),
                                         InkWell(
                                             onTap: () {
-                                              // Add your logic here to navigate back to the previous page
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => home()),
+                                                    (Route<dynamic> route) => false,
+                                              );
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -187,6 +199,13 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                         screenHeight * 0.007),
                                                 child: InkWell(
                                                   onTap: () {
+                                                    Navigator.pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => home()),
+                                                          (Route<dynamic> route) => false,
+                                                    );
+
                                                   },
                                                   child: Icon(
                                                     Icons.check_outlined,
@@ -227,6 +246,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                     print('fcmTockenPassager : $fcmTockenPassager');
                                     await baseDeDonnee.ajouterNotification("${demande.id_pasagers}",Notifications("${demande.id_conducteur}","${demande.id_pasagers}","${demande.id_trajetLance}","${demande.id_trajetReserve}",nomPrenom[0],nomPrenom[1],villesDepartArrive[0],villesDepartArrive[1],false));
                                     await sendNotification(fcmTockenPassager, "Nouvelle notification", "Un conducteur a refusé votre demande pour rejoindre son trajet");
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => home()),
+                                          (Route<dynamic> route) => false,
+                                    );
                                   },
                                   child: Container(
                                     margin: EdgeInsets.symmetric(
@@ -244,6 +269,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                         ),
                                         InkWell(
                                             onTap: () {
+                                              Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => home()),
+                                                    (Route<dynamic> route) => false,
+                                              );
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -259,6 +290,12 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                         screenHeight * 0.007),
                                                 child: InkWell(
                                                   onTap: () {
+                                                    Navigator.pushAndRemoveUntil(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) => home()),
+                                                          (Route<dynamic> route) => false,
+                                                    );
                                                   },
                                                   child: Icon(
                                                     Icons.close,
