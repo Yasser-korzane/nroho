@@ -140,10 +140,10 @@ class _SinupState extends State<Sinup> {
                               if (input == null|| input == '') {
                                 return 'Entrez votre nom';
                               } else if (input.contains(' ')) {
-                                return 'Espace';
+                                return 'Le nom ne doit pas contenir un espace';
                               } else if (numbers
                                   .any((number) => input.contains(number.toString()))) {
-                                return 'Numbers';
+                                return 'Le nom ne doit pas contenir des nombres';
                               }
 
                               return null;
@@ -193,10 +193,10 @@ class _SinupState extends State<Sinup> {
                               if (input == null || input == '') {
                                 return 'Entrez votre prenom';
                               } else if (input.contains(' ')) {
-                                return 'Espace';
+                                return 'Le prénom ne doit pas contenir un espace';
                               } else if (numbers
                                   .any((number) => input.contains(number.toString()))) {
-                                return 'Numbers';
+                                return 'Le prénom ne doit pas contenir des nombres';
                               }
 
                               return null;
@@ -238,31 +238,31 @@ class _SinupState extends State<Sinup> {
                                 },*/
                             validator: (input) {
                               if (input == null || input == '') {
-                                return 'Entrez votre numero de téléphone ';
+                                return 'Entrez votre numéro de téléphone ';
                               } else if (int.tryParse(input) == null) {
-                                return 'numéro non valid ';
+                                return 'Numéro de téléphone non valide';
                               } else if (input.length != 10 &&
                                   input.length != 14 &&
                                   input.length != 13) {
-                                return 'nombre de chiffre inférieur a 10 !';
+                                return 'Nombre de chiffre doit étre inférieur a 10 !';
                               } else {
                                 if (input.length == 10 &&
                                     !input.startsWith('05') &&
                                     !input.startsWith('06') &&
                                     !input.startsWith('07')) {
-                                  return 'le numéro ne commance que avec 05 ou 06 ou 07';
+                                  return 'Numéro de téléphone non valide';
                                 }
                                 if (input.length == 13 &&
-                                    !input.startsWith('*2135') &&
-                                    !input.startsWith('*2136') &&
-                                    !input.startsWith('*2137')) {
-                                  return 'error';
+                                    !input.startsWith('+2135') &&
+                                    !input.startsWith('+2136') &&
+                                    !input.startsWith('+2137')) {
+                                  return 'Numéro de téléphone non valide';
                                 }
                                 if (input.length == 14 &&
                                     !input.startsWith('002135') &&
                                     !input.startsWith('002136') &&
                                     !input.startsWith('002137')) {
-                                  return 'erreur';
+                                  return 'Numéro de téléphone non valide';
                                 }
                               }
 
@@ -314,9 +314,9 @@ class _SinupState extends State<Sinup> {
                               } else if (!RegExp(
                                   r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
                                   .hasMatch(input)) {
-                                return 'Not valid email';
+                                return 'email non valid';
                               } else if (!input.endsWith('@esi.dz')) {
-                                return 'only Email esi allowd';
+                                return 'Veuillez entrer une adresse email avec @esi.dz';
                               }
                               return null;
                             },
@@ -333,7 +333,7 @@ class _SinupState extends State<Sinup> {
 
                               labelText: 'Email',
                               labelStyle: const TextStyle(fontFamily: 'Poppins'),
-                              hintText: 'Entrez votre adresse mail de l\'esi',
+                              hintText: 'Entrez votre adresse email de l\'esi',
                               hintStyle: TextStyle(
                                   color: Colors.grey[700],
                                   fontSize: 14,
@@ -364,7 +364,7 @@ class _SinupState extends State<Sinup> {
                                 if (input == null || input == '') {
                                   return 'Entrez votre mot de passe ';
                                 } else if (input.toString().length < 8) {
-                                  return 'nombre de chifre doit etre superieur a 8 ';
+                                  return 'Nombre de caractére doit être supérieur à 8 ';
                                 }
                                 return null;
                               },
@@ -467,23 +467,6 @@ class _SinupState extends State<Sinup> {
                                                 email: _controllerEmail.text,utilisateur: utilisateur1)),
                                         // (Route<dynamic> route) => false,
                                       );
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          duration: const Duration(seconds: 2),
-                                          content: AwesomeSnackbarContent(
-                                            title: 'Bravo!!',
-                                            message: 'Inscription avec succés',
-
-                                            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                                            contentType: ContentType.success,
-                                            // to configure for material banner
-                                            inMaterialBanner: true,
-                                          ),
-                                          behavior: SnackBarBehavior.floating,
-                                          backgroundColor: Colors.transparent,
-                                          elevation: 0,
-                                        ),
-                                      );
                                     }
                                   }
                                 } else {
@@ -491,7 +474,7 @@ class _SinupState extends State<Sinup> {
                                     duration: const Duration(seconds: 2),
                                     content: AwesomeSnackbarContent(
                                       title: 'Oh Erreur!!',
-                                      message: 'Vous devez verifier vos donnees',
+                                      message: 'Vous devez vérifier vos données',
 
                                       /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                       contentType: ContentType.failure,

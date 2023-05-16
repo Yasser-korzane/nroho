@@ -3,6 +3,10 @@ import 'package:appcouvoiturage/pages/Demandes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../AppClasses/Notifications.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+
+
 class AnnulerTrajet extends StatefulWidget {
   String uidTrajet ;
   bool lance_reserve ; // if true alors lance else reserve
@@ -12,12 +16,18 @@ class AnnulerTrajet extends StatefulWidget {
 }
 
 class _AnnulerTrajetState extends State<AnnulerTrajet> {
+  final smtpServer = gmail("lh_boulacheb@esi.dz","hichem123");
+  final message = Message()
+    ..from = Address("lh_boulacheb@esi.dz")
+    ..recipients.add('hic.chem2016@gmail.com')
+    ..subject = 'Annulement du trjet'
+    ..text = 'j\'ai annulé le trajet pour les raison suivants :';
   final List<String> _raisons = [
-    "J'ai changer ma destination.",
-    " J'ai fait une erreur lors de la reservation",
-    "J'ai un probleme avec le covoitureur",
+    "J'ai changé ma destination.",
+    " J'ai fait une erreur lors de lancement",
+    "J'ai un probléme avec le covoitureur",
     "Ce trajet ne m'intéresse plus",
-    "Aucune des raisons cités ci-dessus.",
+    "Aucune des raisons cités",
   ];
   List<bool> _checked = [
     false,
@@ -26,6 +36,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
     false,
     false,
   ];
+  List<String> _Stringchecked =[];
   TextEditingController _textFieldController = TextEditingController();
   bool clicked = false;
   List<Notifications> _listNot = [];
@@ -33,6 +44,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: Scaffold(
           body: Center(
@@ -61,7 +73,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                                 TextStyle(fontFamily: 'Poppins', fontSize: 16),
                           )),
                           SizedBox(
-                            height: 10,
+                            height: 4,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -97,7 +109,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                     )
                   :AlertDialog(
                 title: Text(
-                    'Quelle est la raison qui vous pousse à annuler ce trajet ?'),
+                    'Pourquoi vous voulez annuler votre trajet ?'),
                 content: SizedBox(
                   width: double.maxFinite,
                   child: ListView(
@@ -112,6 +124,11 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                             onChanged: (bool? value) {
                               setState(() {
                                 _checked[index] = value!;
+                                if(value==true){
+                                  _Stringchecked.add(_raisons[index]);
+                                }else{
+                                  _Stringchecked.remove(_raisons[index]);
+                                }
                               });
                             },
                             title: Text(
@@ -136,11 +153,12 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                   TextButton(
                     child: Text('OK'),
                     onPressed: () async{
+                      print(_Stringchecked);
                       /// if (search in notification if this trajet id exist in notifications with accepter = false)
                       /// delete normally
                       if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
                       else await _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
-                      String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annuller un trajet pour les raisons suivantes :\n';
+                      String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé un trajet pour les raisons suivantes :\n';
                       _listNot = await _baseDeDonnee.getNotifications(FirebaseAuth.instance.currentUser!.uid);
                       for (Notifications n in _listNot){
                         if (n.id_trajetLance == widget.uidTrajet || n.id_trajetReserve == widget.uidTrajet){
@@ -158,6 +176,12 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                             else if (n.id_trajetLance == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_pasagers);
                             await sendNotification(fcmToken, "Trajet annulé!", 'Votre partenaire avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé le trajet');
                             /// 2) send email :
+                            try {
+                              final sendReport = await send(message, smtpServer);
+                              print('E-mail envoyé : ${sendReport.toString()}');
+                            } catch (e) {
+                              print('Erreur lors de l\'envoi de l\'e-mail : $e');
+                            }
                             ///
                             break;
                           }
