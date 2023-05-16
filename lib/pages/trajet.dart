@@ -266,7 +266,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
         child: Column(
           children: [
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
               child: Card(
                 child: Column(
                   children: [
@@ -277,7 +277,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             children: [
                               const Icon(Icons.gps_fixed),
                               Container(
-                                height: size.height*0.05,
+                                height: size.height * 0.05,
                                 width: 1,
                                 color: Colors.grey,
                               ),
@@ -309,8 +309,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(12)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
                                         ),
                                         fillColor: Colors.white,
                                         filled: true,
@@ -338,8 +338,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                       },
                                       decoration: InputDecoration(
                                         border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.all(Radius.circular(12)),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
                                         ),
                                         fillColor: Colors.white,
                                         filled: true,
@@ -420,8 +420,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 ),
               ),
             ),
-            Column(
-                children: [
+            Column(children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
                 child: Card(
@@ -616,27 +615,32 @@ class _OuAllezVousState extends State<OuAllezVous> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async {
-              if (
-              (monDateEtTime2.year< DateTime.now().year ||
-                  (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month < DateTime.now().month)
-                  || (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month == DateTime.now().month && monDateEtTime2.day< DateTime.now().day)
-                  || (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month == DateTime.now().month && monDateEtTime2.day==DateTime.now().day && monDateEtTime2.hour< DateTime.now().hour)
-                  || (monDateEtTime2.year == DateTime.now().year && monDateEtTime2.month == DateTime.now().month && monDateEtTime2.day==DateTime.now().day && monDateEtTime2.hour==DateTime.now().hour && monDateEtTime2.minute<DateTime.now().minute))
-                  ||
+              if ((monDateEtTime2.year < DateTime.now().year ||
+                      (monDateEtTime2.year == DateTime.now().year &&
+                          monDateEtTime2.month < DateTime.now().month) ||
+                      (monDateEtTime2.year == DateTime.now().year &&
+                          monDateEtTime2.month == DateTime.now().month &&
+                          monDateEtTime2.day < DateTime.now().day) ||
+                      (monDateEtTime2.year == DateTime.now().year &&
+                          monDateEtTime2.month == DateTime.now().month &&
+                          monDateEtTime2.day == DateTime.now().day &&
+                          monDateEtTime2.hour < DateTime.now().hour) ||
+                      (monDateEtTime2.year == DateTime.now().year &&
+                          monDateEtTime2.month == DateTime.now().month &&
+                          monDateEtTime2.day == DateTime.now().day &&
+                          monDateEtTime2.hour == DateTime.now().hour &&
+                          monDateEtTime2.minute < DateTime.now().minute)) ||
                   placeD.placeId == null ||
                   placeA.placeId! == null ||
                   placeD.placeId!.isEmpty ||
-                  placeA.placeId!.isEmpty
-              ) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(
+                  placeA.placeId!.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    duration:
-                    const Duration(seconds: 3),
+                    duration: const Duration(seconds: 3),
                     content: AwesomeSnackbarContent(
                       title: 'Attention!',
                       message:
-                      'Vous devez remplir tout les informations et entrer des informations correctes',
+                          'Vous devez remplir tout les informations et entrer des informations correctes',
 
                       /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                       contentType: ContentType.warning,
@@ -675,6 +679,8 @@ class _OuAllezVousState extends State<OuAllezVous> {
                     1000;
                 _trajet.tempsDePause =
                     calculateArrivalTime(distance, _trajet.dateDepart);
+                if (distance<30) _trajet.tempsDePause.add(Duration(minutes: 10));
+                _trajet.tempsDePause.add(Duration(minutes: 5));
                 _trajet.afficher();
                 isLoading = false;
                 if (statut == false) {
