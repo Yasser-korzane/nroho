@@ -36,18 +36,15 @@ class Assistance extends StatelessWidget {
               Profilewidget(
                 title: 'Guide',
                 icon: Icons.my_library_books,
-                onPress: () {},
+                onPress: () {
+                  launch('https://drive.google.com/file/d/1dhdyu5Lnkbs6n6t5CKNLV-kqhAmYOZzX/view?ts=64633db4&pli=1');
+                },
               ),
               SizedBox(height: screenHeight * 0.02),
               Profilewidget(
                 title: 'Contactez nous',
                 icon: Icons.call,
                 onPress: () {
-                  /*Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ContactUs(),
-                      ));*/
                       	Navigator.push(
                                       context,
                                       PageRouteBuilder(
