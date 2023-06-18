@@ -9,8 +9,6 @@ class ContactUs extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     final String subject = "Contactez_nous";
-    final String linkedInProfileUrl =
-        'linkedin.com/in/grine-mohammed-205b01238';
     final Uri _emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'lm_grine@esi.dz',

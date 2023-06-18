@@ -372,7 +372,7 @@ class _MyConnexinState extends State<Connexin> {
                                     MaterialPageRoute(
                                       builder: (context) => Sinup(),
                                     ));*/
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   PageRouteBuilder(
                                     transitionDuration: Duration(milliseconds: 600),

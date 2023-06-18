@@ -514,7 +514,7 @@ class _SinupState extends State<Sinup> {
                           MaterialPageRoute(
                             builder: (context) => Connexin(),
                           ));*/
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
                           transitionDuration: Duration(milliseconds: 600),

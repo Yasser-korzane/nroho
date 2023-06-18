@@ -107,6 +107,7 @@ flutter:
     - assets/images/email.png
     - assets/images/user-profile.png
     - assets/images/photo_recherche.png
+    - assets/images/tpa.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

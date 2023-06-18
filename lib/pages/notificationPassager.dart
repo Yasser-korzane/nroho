@@ -124,11 +124,11 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
               child: GestureDetector(
                 onTap: ()async{
                    Utilisateur utilisateur = BaseDeDonnee().creerUtilisateurVide();
+                   print("id = ${demande.id_conducteur}");
                    utilisateur = await BaseDeDonnee().getUser(demande.id_conducteur);
                    utilisateur.afficher();
                    Trajet trajetLance = BaseDeDonnee().creerTrajetVide();
                    trajetLance =  await BaseDeDonnee().getTrajet(demande.id_conducteur,demande.id_trajetLance);
-                   trajetLance.afficher();
                    ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
                    if (!(trajetLance.latLngDepart.longitude == 0 && trajetLance.latLngDepart.latitude == 0
                        && trajetLance.latLngArrivee.latitude == 0

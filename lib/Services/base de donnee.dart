@@ -389,7 +389,6 @@ class BaseDeDonnee{
 
   Future<Utilisateur> getUser(String uid)async {
     Utilisateur utilisateur = creerUtilisateurVide();
-    try {
       await FirebaseFirestore.instance.collection('Utilisateur')
           .doc(uid)
           .get()
@@ -412,27 +411,23 @@ class BaseDeDonnee{
               snapshot.data()!['vehicule']['policeAssurance'],
             );
             utilisateur.imageUrl = snapshot.data()!['imageUrl'];
-            utilisateur.afficher();
             return utilisateur;
             //tests by printing
         } else { // end snapshot exist
           throw Exception("Utilisateur does not exist.");
         }
       });
-    } catch (e) {
-      throw Exception("Failed to get utilisateur.");
-    }
-    return BaseDeDonnee().creerUtilisateurVide();
+    return utilisateur;
   } /// end getdata
 
   Future<List<Notifications>> getNotifications(String uid) async {
+    List<Notifications> listeNotifications = [];
     await FirebaseFirestore.instance
         .collection('Utilisateur')
         .doc(uid)
         .get()
         .then((snapshot) async {
       if (snapshot.exists) {
-        List<Notifications> listeNotifications = [];
           List<dynamic> notificationsData = snapshot.data()!['notifications'];
           for (var notificationData in notificationsData) {
             Notifications notification = Notifications(
@@ -450,10 +445,9 @@ class BaseDeDonnee{
               listeNotifications.add(notification);
             }
           }
-          return listeNotifications;
       }
     });
-    return [];
+    return listeNotifications;
   }
 
   Future<Trajet> getTrajet(String id_conducteur, String id_trajetLance) async{

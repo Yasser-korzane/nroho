@@ -24,8 +24,8 @@ class _Page_rechercheState extends State<Page_recherche> {
       Column(
         children:<Widget> [
           Container(
-            padding: EdgeInsets.fromLTRB(0, screenHeight*0.07, 0, 0),
-            child: Image.asset("assets/images/photo_recherche.png"),
+            padding: EdgeInsets.fromLTRB(0, screenHeight*0.2, 0, screenHeight*0.05),
+            child: Image.asset("assets/images/tpa.png"),
           ),
           Container(
             padding: EdgeInsets.fromLTRB(0, 0, 0,0),
@@ -76,7 +76,7 @@ class _Page_rechercheState extends State<Page_recherche> {
               ),
             ),
           ),
-          Container(
+          Container(alignment: Alignment.bottomCenter,
             child: Text(
                 "Merci de patienter",
               style: TextStyle(

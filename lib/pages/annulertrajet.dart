@@ -155,9 +155,12 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                       else await _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
                       String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé un trajet pour les raisons suivantes :\n';
                       _listNot = await _baseDeDonnee.getNotifications(FirebaseAuth.instance.currentUser!.uid);
+                      print(_listNot.isEmpty);
                       for (Notifications n in _listNot){
                         if (n.id_trajetLance == widget.uidTrajet || n.id_trajetReserve == widget.uidTrajet){
+                          print("not rhi exist");
                           if (n.accepte_refuse) {
+                            print("trajet est valide");
                             int i = 0 ;
                             for (bool b in _checked){
                               if (b) text += _raisons[i]+'\n';
