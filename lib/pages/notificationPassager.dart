@@ -9,8 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../AppClasses/Notifications.dart';
 
 class DemandesPassagerResultat extends StatefulWidget {
-  bool ilYaUneNotification ;
-  DemandesPassagerResultat(this.ilYaUneNotification);
   @override
   State<DemandesPassagerResultat> createState() =>
       _DemandesPassagerResultatState();
@@ -48,9 +46,6 @@ class _DemandesPassagerResultatState extends State<DemandesPassagerResultat> {
         });
       }
     });
-    if (widget.ilYaUneNotification){
-      await BaseDeDonnee().updateUtilisateurilYaUneNotification(FirebaseAuth.instance.currentUser!.uid, false);
-    }
   }
 
   @override

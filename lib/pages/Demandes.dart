@@ -9,10 +9,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DemandesPassager extends StatefulWidget {
-  bool ilYaUneNotification;
-
-  DemandesPassager(this.ilYaUneNotification);
-
   @override
   State<DemandesPassager> createState() => _DemandesPassagerState();
 }
@@ -54,9 +50,6 @@ class _DemandesPassagerState extends State<DemandesPassager> {
         });
       }
     });
-    if (widget.ilYaUneNotification){
-      await BaseDeDonnee().updateUtilisateurilYaUneNotification(FirebaseAuth.instance.currentUser!.uid, false);
-    }
   }
 
   @override

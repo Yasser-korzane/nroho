@@ -1,12 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:nroho/Services/base%20de%20donnee.dart';
 import 'package:nroho/pages/Demandes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ListDemandePassager extends StatefulWidget {
-  bool ilYaUneNotification ;
-  ListDemandePassager(this.ilYaUneNotification);
   @override
   State<ListDemandePassager> createState() => _ListDemandePassagerState();
 }
@@ -15,9 +11,6 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
   @override
   void initState() {
     super.initState();
-    if (widget.ilYaUneNotification){
-      BaseDeDonnee().updateUtilisateurilYaUneNotification(FirebaseAuth.instance.currentUser!.uid, false);
-    }
   }
   @override
   Widget build(BuildContext context) {
@@ -28,10 +21,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
           appBar: AppBar(
             leading: IconButton(
               icon: Icon(Icons.cancel_outlined) ,
-              onPressed:()async{
-                if (widget.ilYaUneNotification){
-                  await BaseDeDonnee().updateUtilisateurilYaUneNotification(FirebaseAuth.instance.currentUser!.uid, false);
-                }
+              onPressed:(){
                 Navigator.pop(context,false);
               } ,
             ),
@@ -50,7 +40,7 @@ class _ListDemandePassagerState extends State<ListDemandePassager> {
             centerTitle: true,
             backgroundColor: Colors.grey.shade300,
           ),
-          body: DemandesPassager(widget.ilYaUneNotification),
+          body: DemandesPassager(),
         )
     );
   }

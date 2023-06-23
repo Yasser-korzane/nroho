@@ -320,13 +320,13 @@ class _MywidState extends State<Mywid> {
                     onTap: () async {
                       await getStatut();
                       if (!statut) { // si mode passager
-                        final result = await Navigator.push(
+                        Navigator.push(
                           context,
                           PageRouteBuilder(
                             transitionDuration: Duration(milliseconds: 600),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    DemandesPassagerResultat(ilYaUneNotification),
+                                    DemandesPassagerResultat(),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               var begin = const Offset(0.0, -1.0);
@@ -341,19 +341,14 @@ class _MywidState extends State<Mywid> {
                             },
                           ),
                         );
-                        if (!result){
-                          setState(() {
-                            ilYaUneNotification = false ;
-                          });
-                        }
                       } else { // si mode conducteur
-                        final result1 = await Navigator.push(
+                          Navigator.push(
                           context,
                           PageRouteBuilder(
                             transitionDuration: Duration(milliseconds: 600),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                     ListDemandePassager(ilYaUneNotification),
+                                     ListDemandePassager(),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               var begin = const Offset(0.0, 1.0);
@@ -369,11 +364,13 @@ class _MywidState extends State<Mywid> {
                             },
                           ),
                         );
-                        if (!result1){
-                          setState(() {
-                            ilYaUneNotification = false ;
-                          });
-                        }
+                      }
+                      setState(() {
+                        ilYaUneNotification = false ;
+                      });
+                      if (ilYaUneNotification) {
+                        await baseDeDonnee.updateUtilisateurilYaUneNotification(
+                            FirebaseAuth.instance.currentUser!.uid, false);
                       }
                     },
                     child: ilYaUneNotification
