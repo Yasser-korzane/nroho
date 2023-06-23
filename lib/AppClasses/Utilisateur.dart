@@ -14,48 +14,10 @@ class Utilisateur extends Personne{
   List<Notifications> notifications;
   String imageUrl ;
   String fcmTocken;
+  bool ilYaUneNotification ;
   Utilisateur(super.identifiant, super.nom, super.prenom, super.email,super.motDePasse,
       super.numeroTelephone,this.evaluation, this.vehicule, this.statut,
-      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications,this.imageUrl,this.fcmTocken);
-
-  void lancerTrajet() {
-    // Code pour lancer un trajet
-  }
-  void reserverTrajet() {
-    // Code pour réserver un trajet
-  }
-  void annulerReservation() {
-    // Code pour annuler une réservation
-  }
-
-  void annulerLancement() {
-    // Code pour annuler un lancement
-  }
-
-  void accepterTrajet() {
-    // Code pour accepter un trajet
-  }
-
-  void afficherTrajetReservee() {
-    // Code pour afficher les trajets réservés
-  }
-
-  void afficherTrajetLancee() {
-    // Code pour afficher les trajets lancés
-  }
-
-  void afficherHistorique() {
-    // Code pour afficher l'historique des trajets effectués
-  }
-  void ajouterHistorique(Trajet trajet) {
-    Historique.add(trajet);
-  }
-  void ajouterTrajetReserve(Trajet trajet) {
-    trajetsReserves.add(trajet);
-  }
-  void ajouterTrajetLance(Trajet trajet) {
-    trajetsLances.add(trajet);
-  }
+      this.trajetsReserves,this.trajetsLances,this.Historique,this.notifications,this.imageUrl,this.fcmTocken,this.ilYaUneNotification);
   void afficher(){
     print("Id : $identifiant , Nom : $nom , Prenom : $prenom , email : $email");
   }

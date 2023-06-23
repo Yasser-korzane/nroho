@@ -94,7 +94,7 @@ class _AfficherProfilConducteurState extends State<AfficherProfilConducteur> {
                           color: Color(0xff137c8b),
                         ),
                       )),
-                  Text(' '+widget._conducteurTrajet.utilisateur.vehicule.marque),
+                  Text(' '+widget._conducteurTrajet.utilisateur.vehicule.modele+' '+widget._conducteurTrajet.utilisateur.vehicule.marque),
                 ],
               ),
               Row(

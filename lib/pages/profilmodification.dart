@@ -27,7 +27,6 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   TextEditingController _contrMatricule = TextEditingController();
   TextEditingController _contrModele = TextEditingController();
   TextEditingController _contrPolice = TextEditingController();
-  final TextEditingController _contrNbPlaces = TextEditingController();
   TextEditingController _contrNum = TextEditingController();
 
   @override
@@ -349,39 +348,29 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         ),
                       ),
                       SizedBox(
-                          width: size.width * 0.7,
-                          // height: size.height * 0.06,
-                          child: TextFormField(
-                            //controller: _contrMarque,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: widget._utilisateur.vehicule.marque,
-                              hintStyle: const TextStyle(fontFamily: 'poppins'),
+                        width: size.width * 0.7,
+                        child: TextFormField(
+                          controller: _contrMarque,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
-                            validator:(input){
-                              List<int> numbers = List.generate(10, (index) => index);
-                              if (input == null ) {
-                                return 'Entrez la marque';
-                              } else if (input.contains(' ')) {
-                                return 'Espace';
-                              } else if (numbers.any((number) => input.contains(number.toString()))) {
-                                return 'Numbers';
-                              }
-                              return null;
-
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                _changement = true;
-                                //_contrMarque.text = value;
-                                widget._utilisateur.vehicule.marque = value;
-                              });
-                            },
-                          )),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: 'Marque',
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              widget._utilisateur.vehicule.marque = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers = List.generate(10, (index) => index);
+                          },
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       const Text(
                         'Type du vehicule',
@@ -389,45 +378,29 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             fontFamily: 'poppins', fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                          width: size.width * 0.7,
-                          // height: size.height * 0.06,
-                          child: TextFormField(
-                            //controller: _contrType,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: widget._utilisateur.vehicule.typevehicule,
-                              hintStyle: const TextStyle(fontFamily: 'poppins'),
+                        width: size.width * 0.7,
+                        child: TextFormField(
+                          controller: _contrType,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
-                            validator: (input){
-                              /*  if (input == null || input == '') {
-                            return 'Entrez le type de vehicule';
-                          } else if (input.contains(' ')) {
-                            return 'Espace';
-                          }
-                          return null;*/
-                              List<int> numbers = List.generate(10, (index) => index);
-                              if (input == null ) {
-                                return 'Entrez le type de vehicule';
-                              } else if (input.contains(' ')) {
-                                return 'Espace';
-                              } else if (numbers
-                                  .any((number) => input.contains(number.toString()))) {
-                                return 'Numbers';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              _changement = true;
-                              setState(() {
-                                //_contrType.text = value;
-                                widget._utilisateur.vehicule.typevehicule = value;
-                              });
-                            },
-                          )),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: 'Type de vehicule',
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              widget._utilisateur.vehicule.typevehicule = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers = List.generate(10, (index) => index);
+                          },
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       const Text(
                         'Matricule',
@@ -435,33 +408,29 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             fontFamily: 'poppins', fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                          width: size.width * 0.7,
-                          // height: size.height * 0.06,
-                          child: TextFormField(
-                            //controller: _contrMatricule,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: widget._utilisateur.vehicule.matricule,
-                              hintStyle: const TextStyle(fontFamily: 'poppins'),
+                        width: size.width * 0.7,
+                        child: TextFormField(
+                          controller: _contrMatricule,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
-                            validator: (input){
-                              if (input == null ) {
-                                return 'Entrez le matricule ';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              _changement = true;
-                              setState(() {
-                                //_contrMatricule.text = value;
-                                widget._utilisateur.vehicule.matricule = value;
-                              });
-                            },
-                          )),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: 'Matricule',
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              widget._utilisateur.vehicule.matricule = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers = List.generate(10, (index) => index);
+                          },
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       const Text(
                         'Modéle',
@@ -469,32 +438,29 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             fontFamily: 'poppins', fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                          width: size.width * 0.7,
-                          // height: size.height * 0.06,
-                          child: TextFormField(
-                            //controller: _contrModele,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: widget._utilisateur.vehicule.modele,
-                              hintStyle: const TextStyle(fontFamily: 'poppins'),
+                        width: size.width * 0.7,
+                        child: TextFormField(
+                          controller: _contrModele,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
-                            validator:(input){
-
-                              return null;
-
-                            },
-                            onChanged: (value) {
-                              _changement = true;
-                              setState(() {
-                                //_contrModele.text = value;
-                                widget._utilisateur.vehicule.modele = value;
-                              });
-                            },
-                          )),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: 'Modele',
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              widget._utilisateur.vehicule.modele = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers = List.generate(10, (index) => index);
+                          },
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       const Text(
                         'Police d\'assurance',
@@ -502,31 +468,29 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             fontFamily: 'poppins', fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                          width: size.width * 0.7,
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(12)),
-                              ),
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: 'Police d\'assurance',
-                              hintStyle: TextStyle(fontFamily: 'poppins'),
+                        width: size.width * 0.7,
+                        child: TextFormField(
+                          controller: _contrPolice,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
                             ),
-                            validator:(input){
-                              if (input == null ) {
-                                return 'Entrez la police d\'assurance ';
-                              }
-                              return null;
-
-                            },
-                            onChanged: (value) {
-                              _changement = true;
-                              setState(() {
-                                widget._utilisateur.vehicule.policeAssurance = value;
-                              });
-                            },
-                          )),
+                            fillColor: Colors.white,
+                            filled: true,
+                            hintText: 'Police d\'assurance',
+                            hintStyle: TextStyle(fontFamily: 'poppins'),
+                          ),
+                          onChanged: (value) {
+                            _changement = true;
+                            setState(() {
+                              widget._utilisateur.vehicule.policeAssurance = value;
+                            });
+                          },
+                          validator: (input) {
+                            List<int> numbers = List.generate(10, (index) => index);
+                          },
+                        ),
+                      ),
                     ],
 
                   ),

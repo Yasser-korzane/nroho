@@ -47,13 +47,6 @@ class _WelcomePageState extends State<WelcomePage>
         child: Scaffold(
           body: Stack(
             children: [
-             /* ClipPath(
-                clipper: CustomClipper1(),
-                child: Container(
-                  height: 200,
-                  color: Color.fromARGB(255, 1, 31, 56),
-                ),
-              ),*/
               Center(
                 child: FadeTransition(
                   opacity: _animation,

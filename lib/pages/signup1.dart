@@ -68,7 +68,7 @@ class _SinupState extends State<Sinup> {
         [],
         [],
         '',
-        fcmtoken);
+        fcmtoken,false);
   }
 
   /** ************************************************************************************************** **/
@@ -126,14 +126,6 @@ class _SinupState extends State<Sinup> {
                             style: const TextStyle(fontFamily: 'Poppins'),
                             controller: _controllerNom,
                             keyboardType: TextInputType.name,
-                            /*validator: (input) {
-                                  if (input == null) {
-                                    return 'Entrez votre nom ';
-                                  } else {
-                                    return null;
-                                  }
-                                },*/
-
                             validator: (input) {
                               print(input);
                               List<int> numbers = List.generate(10, (index) => index);
@@ -181,13 +173,6 @@ class _SinupState extends State<Sinup> {
                             style: const TextStyle(fontFamily: 'Poppins'),
                             controller: _controllerPrenom,
                             keyboardType: TextInputType.name,
-                            /* validator: (input) {
-                                  if (input == null) {
-                                    return 'Entrez votre prenom';
-                                  } else {
-                                    return null;
-                                  }
-                                },*/
                             validator: (input) {
                               List<int> numbers = List.generate(10, (index) => index);
                               if (input == null || input == '') {
@@ -229,13 +214,6 @@ class _SinupState extends State<Sinup> {
                           TextFormField(
                             controller: _controllerPhone,
                             keyboardType: TextInputType.phone,
-                            /*validator: (input) {
-                                  if (input == null) {
-                                    return 'Entrez votre numero de téléphone ';
-                                  } else {
-                                    return null;
-                                  }
-                                },*/
                             validator: (input) {
                               if (input == null || input == '') {
                                 return 'Entrez votre numéro de téléphone ';
@@ -286,10 +264,6 @@ class _SinupState extends State<Sinup> {
                                   color: Colors.grey[700],
                                   fontSize: 14,
                                   fontFamily: 'Poppins'),
-                              /*  color: Colors.grey[800],
-                                      fontSize: 14,
-                                      fontFamily: 'Poppins'
-                                  ),*/
                               fillColor: Colors.grey.shade100,
                               filled: true,
                             ),
@@ -301,13 +275,6 @@ class _SinupState extends State<Sinup> {
                             style: const TextStyle(fontFamily: 'Poppins'),
                             controller: _controllerEmail,
                             keyboardType: TextInputType.emailAddress,
-                            /* validator: (input) {
-                                  if (input == null) {
-                                    return 'Entrez votre adresse mail ';
-                                  } else {
-                                    return null;
-                                  }
-                                },*/
                             validator: (input) {
                               if (input == null|| input == '') {
                                 return 'Entrez votre adresse email ';
@@ -338,9 +305,6 @@ class _SinupState extends State<Sinup> {
                                   color: Colors.grey[700],
                                   fontSize: 14,
                                   fontFamily: 'Poppins'),
-                              /* color: Colors.grey[800],
-                                      fontSize: 14,
-                                      fontFamily: 'Poppins'),*/
                               fillColor: Colors.grey.shade100,
                               filled: true,
                             ),
@@ -354,12 +318,6 @@ class _SinupState extends State<Sinup> {
                               //keyboardType: TextInputType.visiblePassword,
                               controller: _controllerMotDePasse,
                               keyboardType: TextInputType.visiblePassword,
-                              /* validator: (input) {
-                                    if (input == null) {
-                                      return 'Entrez votre mot de passe ';
-                                    }
-                                    return null;
-                                  },*/
                               validator: (input) {
                                 if (input == null || input == '') {
                                   return 'Entrez votre mot de passe ';
@@ -385,9 +343,6 @@ class _SinupState extends State<Sinup> {
                                       color: Colors.grey[700],
                                       fontSize: 14,
                                       fontFamily: 'Poppins'),
-                                  /* color: Colors.grey[800],
-                                          fontSize: 14,
-                                          fontFamily: 'Poppins'),*/
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                   suffixIcon: IconButton(
@@ -465,7 +420,6 @@ class _SinupState extends State<Sinup> {
                                         MaterialPageRoute(
                                             builder: (context) => Verification(
                                                 email: _controllerEmail.text,utilisateur: utilisateur1)),
-                                        // (Route<dynamic> route) => false,
                                       );
                                     }
                                   }
@@ -509,11 +463,6 @@ class _SinupState extends State<Sinup> {
                   ),
                   TextButton(
                     onPressed: () {
-                     /* Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Connexin(),
-                          ));*/
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
@@ -552,11 +501,7 @@ class _SinupState extends State<Sinup> {
                               fontFamily: 'Poppins',
                               color: Colors.blue,
                               decoration: TextDecoration.underline,
-                            ),
-                            // ),
-                            // TextSpan(
-                            //   text: ' .',
-                            // ),
+                            )
                           )
                         ],
                       ),

@@ -86,6 +86,7 @@ class BaseDeDonnee{
       }).toList(),
       'imageUrl': utilisateur.imageUrl,
       'fcmTocken': utilisateur.fcmTocken,
+      'ilYaUneNotification' : utilisateur.ilYaUneNotification,
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
@@ -122,12 +123,14 @@ class BaseDeDonnee{
       }).toList(),
       'imageUrl': utilisateur.imageUrl,
       'fcmTocken': utilisateur.fcmTocken,
+      'ilYaUneNotification' : utilisateur.ilYaUneNotification,
     });
   } // Fin creerUtilisateur
   //------------------------------------------------------------------------------------------
   Utilisateur creerUtilisateurVide() {
     return Utilisateur("", "", "", "", "", "", Evaluation([], 5, 0),
         Vehicule("", "", "", "", ""), false, [],[],[],[],'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png',''
+        ,false
     );
   }
   Trajet creerTrajetVide(){
@@ -145,6 +148,10 @@ class BaseDeDonnee{
   Future<void> updateUtilisateurStatut(String uid, bool newStatut) async {
     DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
     await utilisateurDocRef.update({'statut': newStatut});
+  }
+  Future<void> updateUtilisateurilYaUneNotification(String uid, bool newIlYaUneNotification) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    await utilisateurDocRef.update({'ilYaUneNotification': newIlYaUneNotification});
   }
   Future<void> saveInfoUserAfterTrajet(String uid,int nbEtoiles,String avis,bool signale)async {
     /// si signal est true alors on va incrementer nbSignalement a l'utilisateur
@@ -186,7 +193,24 @@ class BaseDeDonnee{
       'notifications': FieldValue.arrayUnion([notMap]),
     });
   }
-    //------------------------------------------------------------------------------------------
+  Future<void> supprimerNotification(String uid, int index) async {
+    DocumentReference utilisateurDocRef = utilisateurCollection.doc(uid);
+    await utilisateurDocRef.get().then((snapshot) {
+      if (snapshot.exists) {
+        List<Map<String, dynamic>> notifications = List<Map<String, dynamic>>.from((snapshot.data() as Map<String, dynamic>)['notifications']);
+        if (index >= 0 && index < notifications.length) {
+          notifications.removeAt(index);
+          utilisateurDocRef.update({'notifications': notifications});
+        } else {
+          throw Exception("Invalid index for notification deletion.");
+        }
+      } else {
+        throw Exception("Utilisateur does not exist.");
+      }
+    });
+  }
+
+  //------------------------------------------------------------------------------------------
   Future<void> saveTrajetLanceAsSubcollection(String uid, Trajet trajetLance) async {
     Map<String, dynamic> trajetLanceData = trajetLance.toMap();
     DocumentReference docRef = await FirebaseFirestore.instance
@@ -251,8 +275,6 @@ class BaseDeDonnee{
         .set(historiqueData);
   }
   //------------------------------------------------------------------------------------------
-  Future<void> sauvegarderVillesIntermediaires(String uid, List<String> villes)async{
-  }
   Future<void> ajouterConflit(String idConducteur , String idPassager, String idTrajetConductuer ,String idTrajetPassager) async {
     String uid = alternerChaines(idConducteur, idPassager);
     await utilisateurCollection.doc(uid).set({
@@ -802,41 +824,6 @@ class BaseDeDonnee{
         DONC ON VA PARCOURIR TOUT LES UTILISATEURS AVEC utilisateurDoc
         ET POUR CHAQUE UTILISATEUR ON VA PARCOURIR CA LIST DE trajetsLances
         AVEC trajetLanceDoc
-
-        //.where('plusInformations.nbPlaces', isGreaterThanOrEqualTo: trajetReserve.plusInformations.nbPlaces)
-        //.where('plusInformations.fumeur', isGreaterThanOrEqualTo: trajetReserve.plusInformations.fumeur)
-        //.where('plusInformations.animaux', isGreaterThanOrEqualTo: trajetReserve.plusInformations.animaux)
-        //.where('plusInformations.bagage', isGreaterThanOrEqualTo: trajetReserve.plusInformations.bagage)
-
      **/
-
-
-/** Les criteres de recherche :
-    on a donne pour le trajet :
-    - 'ville departP' #
-    - 'ville arriveP' #
-    - 'date departP' #
-    - 'heure departP' #
-    les donnee qu'on va comparer :
-    - 'ville departC' #
-    - 'ville arriveC' #
-    - 'date departC' #
-    - 'heure departC' #
-    resultat :
- * 'date departC' soit egale srictement :  'date departC' == 'date departP' ## OUI ##
- * 'heure departC' du conductuer soit compris entre: 'heure departP'-10<='heure departC'< 'heure departP'+20'  ## OUI ##
- * 'ville departP' soit egale a 'ville departC' ou appartient au villeIntermedieres entre 'ville departC' et 'ville arriveC'
- * 'ville arriveP' soit egale a 'ville arriveC' ou appartient au villeIntermedieres entre 'ville departC' et 'ville arriveC'
-
-    exemple : ville departP = 'BeauLieu'
-    ville arriveP = 'Esi'
-    ville departC = 'Bouraoui'
-    ville arriveC = 'Esi'
-    villesIntermedieres('Bouraoui','Esi') = ['garnaison','BeauLieu','Itemm']
-
-    DateTime dateTime = timestamp.toDate();
-    Timestamp timestamp = Timestamp.fromDate(dateTime);
- **/
-
 
 } // end Bdd class

@@ -75,6 +75,7 @@ class _ProfilepageState extends State<Profilepage> {
             }
             _utilisateur.imageUrl = snapshot.data()!['imageUrl'];
             _utilisateur.fcmTocken = snapshot.data()!['fcmTocken'];
+            _utilisateur.ilYaUneNotification = snapshot.data()!['ilYaUneNotification'];
             if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
             //tests by printing
           }); // end setState

@@ -34,12 +34,13 @@ class _MywidState extends State<Mywid> {
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
   bool statut = false;
-
+  bool ilYaUneNotification = false ;
   bool notification_recus = false;
 
   @override
   void initState() {
     super.initState();
+    getilYaUneNotification();
     polylinePoints = PolylinePoints();
     markers = HashSet();
     setCustomMarker();
@@ -62,6 +63,19 @@ class _MywidState extends State<Mywid> {
         statut = snapshot.data()!['statut'];
       } else {
         throw Exception('Failed to get statut');
+      }
+    });
+  }
+  Future getilYaUneNotification() async {
+    await FirebaseFirestore.instance
+        .collection('Utilisateur')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((snapshot) async {
+      if (snapshot.exists) {
+        ilYaUneNotification = snapshot.data()!['ilYaUneNotification'];
+      } else {
+        throw Exception('Failed to get ilYaUneNotification');
       }
     });
   }
@@ -306,22 +320,20 @@ class _MywidState extends State<Mywid> {
                     onTap: () async {
                       await getStatut();
                       if (!statut) { // si mode passager
-                        Navigator.push(
+                        final result = await Navigator.push(
                           context,
                           PageRouteBuilder(
                             transitionDuration: Duration(milliseconds: 600),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    DemandesPassagerResultat(),
+                                    DemandesPassagerResultat(ilYaUneNotification),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               var begin = const Offset(0.0, -1.0);
                               var end = Offset.zero;
                               var curve = Curves.ease;
-
                               var tween = Tween(begin: begin, end: end)
                                   .chain(CurveTween(curve: curve));
-
                               return SlideTransition(
                                 position: animation.drive(tween),
                                 child: child,
@@ -329,14 +341,19 @@ class _MywidState extends State<Mywid> {
                             },
                           ),
                         );
-                      } else {
-                        Navigator.push(
+                        if (!result){
+                          setState(() {
+                            ilYaUneNotification = false ;
+                          });
+                        }
+                      } else { // si mode conducteur
+                        final result1 = await Navigator.push(
                           context,
                           PageRouteBuilder(
                             transitionDuration: Duration(milliseconds: 600),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    const ListDemandePassager(),
+                                     ListDemandePassager(ilYaUneNotification),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               var begin = const Offset(0.0, 1.0);
@@ -345,7 +362,6 @@ class _MywidState extends State<Mywid> {
 
                               var tween = Tween(begin: begin, end: end)
                                   .chain(CurveTween(curve: curve));
-
                               return SlideTransition(
                                 position: animation.drive(tween),
                                 child: child,
@@ -353,12 +369,17 @@ class _MywidState extends State<Mywid> {
                             },
                           ),
                         );
+                        if (!result1){
+                          setState(() {
+                            ilYaUneNotification = false ;
+                          });
+                        }
                       }
                     },
-                    child: notification_recus
+                    child: ilYaUneNotification
                         ? const Icon(
                             Icons.notifications_active,
-                            color: Colors.blue,
+                            color: Colors.red,
                             size: 50,
                           )
                         : const Icon(

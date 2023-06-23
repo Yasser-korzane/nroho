@@ -17,6 +17,7 @@ class _optionsState extends State<options> {
   List<String> nbPlaces = ['1','2','3','4'];
   String ?selectedNb = '1';
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  TextEditingController _commentcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -175,6 +176,8 @@ class _optionsState extends State<options> {
                 margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                 padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
                 child: TextField(
+                  controller: _commentcontroller,
+                  keyboardType: TextInputType.text,
                      style: TextStyle(
                        fontWeight: FontWeight.normal,
                        fontSize: screenHeight*0.02,
@@ -188,9 +191,6 @@ class _optionsState extends State<options> {
                       suffixIcon: Icon(Icons.insert_comment_rounded,
                           color: Colors.black)
                       ),
-                  onChanged: (value) {
-                    widget.trajetReserve.avis = value ;
-                  },
                 ),
               ),
               SizedBox(height: screenHeight * 0.094),
@@ -207,7 +207,7 @@ class _optionsState extends State<options> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
-              widget.trajetReserve.afficher();
+              widget.trajetReserve.avis = _commentcontroller.text;
               Navigator.push(context,
                   MaterialPageRoute(builder:(context)=> Page_recherche()));
               List<ConducteurTrajet> monListe = [];

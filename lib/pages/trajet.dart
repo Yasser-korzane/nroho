@@ -135,7 +135,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
             ImageConfiguration.empty, "assets/images/marker.png")
         .then((icon) => customMarker = icon);
   }
-
   /// -------------------------------------------------------------------------------------------------
   Future<PlacesAutoCompleteResult> getPlaceFromLatLng(
       double lat, double lng) async {
@@ -615,7 +614,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async {
-              if ((monDateEtTime2.year < DateTime.now().year ||
+              if (/*(monDateEtTime2.year < DateTime.now().year ||
                       (monDateEtTime2.year == DateTime.now().year &&
                           monDateEtTime2.month < DateTime.now().month) ||
                       (monDateEtTime2.year == DateTime.now().year &&
@@ -629,7 +628,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                           monDateEtTime2.month == DateTime.now().month &&
                           monDateEtTime2.day == DateTime.now().day &&
                           monDateEtTime2.hour == DateTime.now().hour &&
-                          monDateEtTime2.minute < DateTime.now().minute)) ||
+                          monDateEtTime2.minute < DateTime.now().minute))||*/
                   placeD.placeId == null ||
                   placeA.placeId! == null ||
                   placeD.placeId!.isEmpty ||

@@ -1,5 +1,4 @@
 import 'package:nroho/Services/base%20de%20donnee.dart';
-import 'package:nroho/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +24,7 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   bool est_presse=false;
   BaseDeDonnee baseDeDonnee=new BaseDeDonnee();
-  void _onButtonPressed() {
+  void _onButtonPressed() async {
         if(est_presse==false) {
          setState(() {
            est_presse = true;
@@ -46,8 +45,7 @@ class _DetailsState extends State<Details> {
                   "${widget.trajetReserve.villeDepart}",
                   "${widget.trajetReserve.villeArrivee}",
                   false));
-          // Autre logique à exécuter lorsque le bouton est enfoncé pour la première fois
-          print("Le bouton a été enfoncé !");
+          await baseDeDonnee.updateUtilisateurilYaUneNotification(widget._conducteurTrajet.utilisateur.identifiant, true);
         }
   }
   late Utilisateur _utilisateur;
@@ -171,7 +169,7 @@ class _DetailsState extends State<Details> {
                             color: Color(0xff137c8b),
                           ),
                         )),
-                  Expanded(child: Text(' '+widget._conducteurTrajet.utilisateur.vehicule.marque)),
+                  Expanded(child: Text(' '+widget._conducteurTrajet.utilisateur.vehicule.modele+' '+widget._conducteurTrajet.utilisateur.vehicule.marque)),
                 ],
               ),
               Row(
@@ -546,23 +544,7 @@ class _DetailsState extends State<Details> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children:[
               ElevatedButton(
-                /*onPressed: () {
-                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}",widget._conducteurTrajet.trajetLance.id,"${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
-                  sendNotification("${widget._conducteurTrajet.utilisateur.fcmTocken}", "Nouvelle notification", "Un passager vous a envoyé une demande ");
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => home()),
-                        (Route<dynamic> route) => false,
-                  );
-                },*/
-                onPressed: _onButtonPressed,/*() {
-
-                 //Navigator.pop(context,true);
-                 sendNotification(widget._conducteurTrajet.utilisateur.fcmTocken, "Nouvelle notification", "Un passager vous a envoyé une demande ");
-                  baseDeDonnee.ajouterNotification("${widget._conducteurTrajet.utilisateur.identifiant}",Notifications("${widget._conducteurTrajet.utilisateur.identifiant}","${FirebaseAuth.instance.currentUser!.uid}","${widget._conducteurTrajet.trajetLance.id}","${widget.trajetReserve.id}","${_utilisateur.nom}","${_utilisateur.prenom}","${widget.trajetReserve.villeDepart}","${widget.trajetReserve.villeArrivee}",true));
-
-                },*/
+                onPressed: _onButtonPressed,
                 style:  ButtonStyle(
                   elevation: MaterialStateProperty.all<double>(4.0),
                   padding: MaterialStateProperty.all<EdgeInsets>(

@@ -20,7 +20,8 @@ class _RatingState extends State<Rating> {
       TextEditingController();
   BaseDeDonnee baseDeDonnee = new BaseDeDonnee();
   bool est_signale = false;
-
+  bool trajetEstConfortable = true;
+  String dropdownValue = 'Non';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,7 +59,8 @@ class _RatingState extends State<Rating> {
                     },
                     child: Icon(
                       Icons.star,
-                      color: index < currentRating ? Colors.yellow : Colors.grey,
+                      color:
+                          index < currentRating ? Colors.yellow : Colors.grey,
                       size: 40,
                     ),
                   );
@@ -85,6 +87,35 @@ class _RatingState extends State<Rating> {
                 ),
               ),
               SizedBox(height: 30.0),
+              Row(
+                children: [
+                  Text(
+                    'Vous avez eu des problèmes ?',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 8,),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    onChanged: (newValue) {
+                      setState(() {
+                        dropdownValue = newValue.toString();
+                      });
+                    },
+                    items: <String>['Non','Oui'].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value,style: TextStyle(fontSize: 13),),
+                      );
+                    }).toList(),
+
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.0),
               Text(
                 'Donnez votre avis sur le trajet parcouru',
                 style: TextStyle(
@@ -117,8 +148,8 @@ class _RatingState extends State<Rating> {
                   },
                   child: Text(
                     'Signaler',
-                    style:
-                        TextStyle(fontFamily: 'Poppins', color: Colors.red[400]),
+                    style: TextStyle(
+                        fontFamily: 'Poppins', color: Colors.red[400]),
                   ),
                 ),
               ),
@@ -128,6 +159,11 @@ class _RatingState extends State<Rating> {
             TextButton(
               child: Text('Terminer'),
               onPressed: () {
+                 if (dropdownValue == 'Oui') {
+                   widget._trajet.probleme = true ;
+                 }else if (dropdownValue == 'Non') {
+                   widget._trajet.probleme = false ;
+                 }
                 if (currentRating == 0) currentRating++;
                 widget._trajet.avis = _routeFeedbackController.text;
                 if (widget._trajet.idConductuer == FirebaseAuth.instance.currentUser!.uid) {

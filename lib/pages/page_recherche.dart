@@ -1,8 +1,4 @@
-//import 'dart:js_util';
-
 import 'package:flutter/material.dart';
-
-
 class Page_recherche extends StatefulWidget {
 
   @override

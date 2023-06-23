@@ -39,6 +39,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
     /* 2) et 6) et 7) */ await baseDeDonnee.modifierTrajetReserve(widget.idTrajetReserve, FirebaseAuth.instance.currentUser!.uid, _utilisateur.identifiant);
     /* 3) */ await baseDeDonnee.incrementerNbPlacesConducteur(FirebaseAuth.instance.currentUser!.uid, widget.idTrajetLance);
     await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a accepté votre demande");
+    await baseDeDonnee.updateUtilisateurilYaUneNotification(_utilisateur.identifiant, true);
   }
   void _onButtonPressedrefuse() async{
     if (est_presse == false) {
@@ -48,6 +49,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
     }
     await baseDeDonnee.ajouterNotification(_utilisateur.identifiant,Notifications(FirebaseAuth.instance.currentUser!.uid,_utilisateur.identifiant,widget.idTrajetLance,widget.idTrajetReserve,widget.nomPrenom[0],widget.nomPrenom[1],widget.villeDepartArrive[0],widget.villeDepartArrive[1],false));
     await sendNotification(_utilisateur.fcmTocken, "Nouvelle notification", "Un conducteur a refusé votre demande");
+    await baseDeDonnee.updateUtilisateurilYaUneNotification(_utilisateur.identifiant, true);
   }
   Future _getDataFromDataBase() async {
     _utilisateur = BaseDeDonnee().creerUtilisateurVide();
@@ -108,6 +110,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
               snapshot.data()!['plusInformations']['animaux'],
               snapshot.data()!['plusInformations']['nbPlaces']);
         });
+        _trajet.avis = snapshot.data()!['avis'];
       }else print('ce trajet n\'exist pas');
     });
   }
@@ -379,7 +382,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
                         SizedBox(height: screenHeight * 0.01),
                         Container(
                           child: ListTile(
-                            //title: Text('${_trajet.lieuArrivee}'),
                             title: Text(_trajet.villeArrivee),
                             subtitle: Text(
                               '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute}',
@@ -412,10 +414,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
                     Text('${_trajet.dateDepart.day} ${BaseDeDonnee().moisAuChaine(_trajet.dateDepart.month)} ${_trajet.dateDepart.year}',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    // Text(
-                    //   _trajet.coutTrajet.toString()+' DA',
-                    //   style: TextStyle(fontWeight: FontWeight.bold),
-                    // ),
                   ],
                 ),
               ),
@@ -468,9 +466,10 @@ class _DetailspassaerState extends State<Detailspassaer> {
                     ],
                   ),
                 ),
-              ),              SizedBox(
-                height: screenHeight * 0.08,
               ),
+               SizedBox(height: screenHeight * 0.02,),
+               Text('Commentaire :  '+'<< '+_trajet.avis+' >>'),
+               SizedBox(height: screenHeight * 0.02,),
                widget.accepte ?
               Container(
                 margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
