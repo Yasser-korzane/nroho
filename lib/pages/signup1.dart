@@ -82,7 +82,7 @@ class _SinupState extends State<Sinup> {
   /// ************************************************************************************************** *
 
   final _formKey = GlobalKey<FormState>();
-
+  RegExp regExpNomPrenom = RegExp(r'^[a-zA-Z\u0600-\u06FF ]+$');
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -127,17 +127,17 @@ class _SinupState extends State<Sinup> {
                             controller: _controllerNom,
                             keyboardType: TextInputType.name,
                             validator: (input) {
-                              print(input);
                               List<int> numbers = List.generate(10, (index) => index);
                               if (input == null|| input == '') {
-                                return 'Entrez votre nom';
-                              } else if (input.contains(' ')) {
-                                return 'Le nom ne doit pas contenir un espace';
-                              } else if (numbers
-                                  .any((number) => input.contains(number.toString()))) {
+                                return 'Veuillez entrez votre nom';
+                              } else if (numbers.any((number) => input.contains(number.toString()))) {
                                 return 'Le nom ne doit pas contenir des nombres';
+                              }else if (!regExpNomPrenom.hasMatch(input)){
+                                return 'Le nom non valide' ;
                               }
-
+                              else if (input.length >= 20){
+                                return 'Nom trop long' ;
+                              }
                               return null;
                             },
                             decoration: InputDecoration(
@@ -146,7 +146,6 @@ class _SinupState extends State<Sinup> {
                                 color: Colors.black,
                                 size: 20,
                               ),
-                              //border: OutlineInputBorder(),
                               border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
@@ -158,10 +157,6 @@ class _SinupState extends State<Sinup> {
                                   color: Colors.grey[700],
                                   fontSize: 14,
                                   fontFamily: 'Poppins'),
-                              /* color: Colors.grey[800],
-                                        fontSize: 14,
-                                      fontFamily: 'Poppins'*
-                                    ),*/
                               fillColor: Colors.grey.shade100,
                               filled: true,
                             ),
@@ -175,15 +170,16 @@ class _SinupState extends State<Sinup> {
                             keyboardType: TextInputType.name,
                             validator: (input) {
                               List<int> numbers = List.generate(10, (index) => index);
-                              if (input == null || input == '') {
-                                return 'Entrez votre prenom';
-                              } else if (input.contains(' ')) {
-                                return 'Le prénom ne doit pas contenir un espace';
-                              } else if (numbers
-                                  .any((number) => input.contains(number.toString()))) {
+                              if (input == null|| input == '') {
+                                return 'Veuillez entrez votre prénom';
+                              } else if (numbers.any((number) => input.contains(number.toString()))) {
                                 return 'Le prénom ne doit pas contenir des nombres';
+                              }else if (!regExpNomPrenom.hasMatch(input)){
+                                return 'Le prénom est non valide' ;
                               }
-
+                              else if (input.length >= 20){
+                                return 'Prénom trop long' ;
+                              }
                               return null;
                             },
                             decoration: InputDecoration(
@@ -192,11 +188,9 @@ class _SinupState extends State<Sinup> {
                                 color: Colors.black,
                                 size: 20,
                               ),
-                              //border: OutlineInputBorder(),
                               border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
-
                               labelText: 'Prénom',
                               labelStyle: const TextStyle(fontFamily: 'Poppins'),
                               hintText: 'Entrez votre prénom',
@@ -216,34 +210,18 @@ class _SinupState extends State<Sinup> {
                             keyboardType: TextInputType.phone,
                             validator: (input) {
                               if (input == null || input == '') {
-                                return 'Entrez votre numéro de téléphone ';
+                                return 'Veuillez entrez votre numéro de téléphone';
                               } else if (int.tryParse(input) == null) {
-                                return 'Numéro de téléphone non valide';
-                              } else if (input.length != 10 &&
-                                  input.length != 14 &&
-                                  input.length != 13) {
-                                return 'Nombre de chiffre doit étre inférieur a 10 !';
-                              } else {
-                                if (input.length == 10 &&
-                                    !input.startsWith('05') &&
-                                    !input.startsWith('06') &&
-                                    !input.startsWith('07')) {
-                                  return 'Numéro de téléphone non valide';
+                                return 'Numéro de téléphone est non valide';
+                              } else if (input.length != 10) {
+                                return 'Nombre de chiffre doit étre égale à 10 !';
+                              } else if (
+                                         !(
+                                           input.startsWith('05') ||
+                                           input.startsWith('06') ||
+                                           input.startsWith('07') ) ) {
+                                  return 'Le numéro doit commencer par \'05\' ou \'06\' ou \'07\'';
                                 }
-                                if (input.length == 13 &&
-                                    !input.startsWith('+2135') &&
-                                    !input.startsWith('+2136') &&
-                                    !input.startsWith('+2137')) {
-                                  return 'Numéro de téléphone non valide';
-                                }
-                                if (input.length == 14 &&
-                                    !input.startsWith('002135') &&
-                                    !input.startsWith('002136') &&
-                                    !input.startsWith('002137')) {
-                                  return 'Numéro de téléphone non valide';
-                                }
-                              }
-
                               return null;
                             },
                             decoration: InputDecoration(
@@ -252,7 +230,6 @@ class _SinupState extends State<Sinup> {
                                 color: Colors.black,
                                 size: 20,
                               ),
-                              //border: OutlineInputBorder(),
                               border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
@@ -276,14 +253,12 @@ class _SinupState extends State<Sinup> {
                             controller: _controllerEmail,
                             keyboardType: TextInputType.emailAddress,
                             validator: (input) {
-                              if (input == null|| input == '') {
-                                return 'Entrez votre adresse email ';
-                              } else if (!RegExp(
-                                  r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
-                                  .hasMatch(input)) {
-                                return 'email non valid';
+                              if (input == null || input == '') {
+                                return 'Veuillez entrez votre adresse email';
+                              } else if (!RegExp(r'^[a-zA-Z_.@]+$').hasMatch(input)) {
+                                return 'L\'email n\'est pas validé';
                               } else if (!input.endsWith('@esi.dz')) {
-                                return 'Veuillez entrer une adresse email avec @esi.dz';
+                                return 'Seul l\'email de l\'ESI est autorisé';
                               }
                               return null;
                             },
@@ -293,11 +268,9 @@ class _SinupState extends State<Sinup> {
                                 color: Colors.black,
                                 size: 20,
                               ),
-                              //border: OutlineInputBorder(),
                               border: const OutlineInputBorder(
                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                               ),
-
                               labelText: 'Email',
                               labelStyle: const TextStyle(fontFamily: 'Poppins'),
                               hintText: 'Entrez votre adresse email de l\'esi',
@@ -315,14 +288,13 @@ class _SinupState extends State<Sinup> {
                           TextFormField(
                               style: const TextStyle(fontFamily: 'Poppins'),
                               obscureText: _isObscured,
-                              //keyboardType: TextInputType.visiblePassword,
                               controller: _controllerMotDePasse,
                               keyboardType: TextInputType.visiblePassword,
                               validator: (input) {
                                 if (input == null || input == '') {
-                                  return 'Entrez votre mot de passe ';
-                                } else if (input.toString().length < 8) {
-                                  return 'Nombre de caractére doit être supérieur à 8 ';
+                                  return 'Veuillez entrez votre mot de passe';
+                                } else if (!(input.toString().length >= 8 && input.toString().length < 20)) {
+                                  return 'Le mot de passe doit étre supérieur à 8 et inférieur à 20';
                                 }
                                 return null;
                               },
@@ -332,7 +304,6 @@ class _SinupState extends State<Sinup> {
                                     color: Colors.black,
                                     size: 20,
                                   ),
-                                  //border: OutlineInputBorder(),
                                   border: const OutlineInputBorder(
                                     borderRadius: BorderRadius.all(Radius.circular(12)),
                                   ),
@@ -364,8 +335,6 @@ class _SinupState extends State<Sinup> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  // If the form is valid, display a snackbar. In the real world,
-                                  // you'd often call a server or save the information in a database.
                                   if (_baseDeDonnee
                                       .validerNomEtPrenom(_controllerNom.text) &&
                                       _baseDeDonnee
@@ -402,10 +371,7 @@ class _SinupState extends State<Sinup> {
                                           content: AwesomeSnackbarContent(
                                             title: 'Oh Erreur!!',
                                             message: 'Cette adresse email est déja utilisé',
-
-                                            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                             contentType: ContentType.failure,
-                                            // to configure for material banner
                                             inMaterialBanner: true,
                                           ),
                                           behavior: SnackBarBehavior.floating,
@@ -429,10 +395,7 @@ class _SinupState extends State<Sinup> {
                                     content: AwesomeSnackbarContent(
                                       title: 'Oh Erreur!!',
                                       message: 'Vous devez vérifier vos données',
-
-                                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                       contentType: ContentType.failure,
-                                      // to configure for material banner
                                       inMaterialBanner: true,
                                     ),
                                     behavior: SnackBarBehavior.floating,
@@ -472,9 +435,7 @@ class _SinupState extends State<Sinup> {
                             var begin = Offset(1.0, 0.0);
                             var end = Offset.zero;
                             var curve = Curves.ease;
-
                             var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
                             return SlideTransition(
                               position: animation.drive(tween),
                               child: child,

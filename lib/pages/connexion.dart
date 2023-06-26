@@ -109,7 +109,6 @@ class _MyConnexinState extends State<Connexin> {
                           height: screenHeight * 0.4,
                         ),
                         Form(
-                          // key:_formkey1,
                           key: _formKey,
                           child: Container(
                             margin: EdgeInsets.only(
@@ -123,37 +122,24 @@ class _MyConnexinState extends State<Connexin> {
                                   style: TextStyle(fontFamily: 'Poppins'),
                                   controller: _controllerEmail,
                                   keyboardType: TextInputType.emailAddress,
-                                  /* validator: (input) {
-                                    if (input == null) {
-                                      return 'Entrez votre Email ';
-                                    } else {
-                                      return null;
-                                    }
-                                  },*/
                                   validator: (input) {
                                     if (input == null || input == '') {
-                                      return 'Entrez votre adresse email ';
-                                    } else if (!RegExp(
-                                            r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b')
-                                        .hasMatch(input)) {
-                                      return 'Not valid email';
+                                      return 'Veuillez entrez votre adresse email';
+                                    } else if (!RegExp(r'^[a-zA-Z_.@]+$').hasMatch(input)) {
+                                      return 'L\'email est non valide';
                                     } else if (!input.endsWith('@esi.dz')) {
-                                      return 'only Email esi allowd';
+                                      return 'Seul l\'email de l\'ESI est autorisé';
+                                    }else if (input.contains(' ')){
+                                      return 'L\'email ne doit pas contenir des espaces' ;
                                     }
                                     return null;
                                   },
                                   decoration: InputDecoration(
-                                    /* prefixIcon: Icon(
-                                      Icons.person_outline_outlined,
-                                      color: Colors.black,
-                                      size: 20,
-                                    ),*/
                                     prefixIcon: const Icon(
                                       Icons.email_outlined,
                                       color: Colors.black,
                                       size: 20,
                                     ),
-                                    //border: OutlineInputBorder(),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(12)),
@@ -164,8 +150,6 @@ class _MyConnexinState extends State<Connexin> {
                                         'Entrez votre adresse mail de l\'esi',
                                     hintStyle: TextStyle(
                                         color: Colors.grey[700], fontSize: 14),
-                                    /* color: Colors.grey[800],
-                                        fontSize: 14,fontFamily: 'Poppins'),*/
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
                                   ),
@@ -176,20 +160,13 @@ class _MyConnexinState extends State<Connexin> {
                                 TextFormField(
                                     obscureText: !_isObscured,
                                     style: TextStyle(fontFamily: 'Poppins'),
-                                    //keyboardType: TextInputType.visiblePassword,
                                     controller: _controllerMotDePasse,
                                     keyboardType: TextInputType.visiblePassword,
-                                    /*validator: (input) {
-                                      if (input == null) {
-                                        return 'Entrez votre mot de passe ';
-                                      }
-                                      return null;
-                                    },*/
                                     validator: (input) {
                                       if (input == null || input == '') {
-                                        return 'Entrez votre mot de passe ';
-                                      } else if (input.toString().length < 8) {
-                                        return 'nombre de chifre doit etre superieur a 8 ';
+                                        return 'Veuillez entrez votre mot de passe ';
+                                      } else if (!(input.toString().length >= 8 && input.toString().length < 20)) {
+                                        return 'Le mot de passe doit étre supérieur à 8 et inférieur à 20';
                                       }
                                       return null;
                                     },
@@ -211,8 +188,6 @@ class _MyConnexinState extends State<Connexin> {
                                             color: Colors.grey[700],
                                             fontSize: 14,
                                             fontFamily: 'Poppins'),
-                                        /*color: Colors.grey[800],
-                                            fontSize: 14,fontFamily: 'Poppins'),*/
                                         fillColor: Colors.grey.shade100,
                                         filled: true,
                                         suffixIcon: IconButton(
@@ -258,10 +233,7 @@ class _MyConnexinState extends State<Connexin> {
                                                   title: 'Oh Erreur!!',
                                                   message:
                                                   'Veuillez vérifier vos données',
-
-                                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                                   contentType: ContentType.failure,
-                                                  // to configure for material banner
                                                   inMaterialBanner: true,
                                                 ),
                                                 behavior: SnackBarBehavior.floating,
@@ -285,10 +257,7 @@ class _MyConnexinState extends State<Connexin> {
                                                 content: AwesomeSnackbarContent(
                                                   title: 'Succés!!',
                                                   message: 'Connexion avec succés',
-
-                                                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                                   contentType: ContentType.success,
-                                                  // to configure for material banner
                                                   inMaterialBanner: true,
                                                 ),
                                                 behavior: SnackBarBehavior.floating,
@@ -309,10 +278,7 @@ class _MyConnexinState extends State<Connexin> {
                                               title: 'Oh Erreur!!',
                                               message:
                                                   'Veuillez vérifier vos données',
-
-                                              /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                                               contentType: ContentType.failure,
-                                              // to configure for material banner
                                               inMaterialBanner: true,
                                             ),
                                             behavior: SnackBarBehavior.floating,
@@ -367,11 +333,6 @@ class _MyConnexinState extends State<Connexin> {
                           children: [
                             TextButton(
                               onPressed: () {
-                               /* Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Sinup(),
-                                    ));*/
                                 Navigator.pushReplacement(
                                   context,
                                   PageRouteBuilder(
@@ -381,9 +342,7 @@ class _MyConnexinState extends State<Connexin> {
                                       var begin = Offset(1.0, 0.0);
                                       var end = Offset.zero;
                                       var curve = Curves.ease;
-
                                       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
                                       return SlideTransition(
                                         position: animation.drive(tween),
                                         child: child,

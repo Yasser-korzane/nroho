@@ -170,7 +170,7 @@ class BaseDeDonnee{
           snapshot.data()!['evaluation']['etoiles'],
           snapshot.data()!['evaluation']['nbSignalement']);
         evaluation.etoiles = ((evaluation.etoiles+nbEtoiles) / 2).ceil() ;
-        evaluation.feedback.add(avis);
+        if (avis.isNotEmpty) evaluation.feedback.add(avis);
         if (signale) evaluation.nbSignalement++;
         if (evaluation.nbSignalement >=3) await ajouterMauvaisUtilisateur(uid,email);
         await utilisateurDocRef.update({'evaluation': evaluation.toMap()});

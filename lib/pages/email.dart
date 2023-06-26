@@ -10,7 +10,7 @@ class Emailgetter extends StatefulWidget {
 
 class _EmailgetterState extends State<Emailgetter> {
   TextEditingController _controllerEmail = TextEditingController();
-
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final AuthService _auth = AuthService();
@@ -69,6 +69,7 @@ class _EmailgetterState extends State<Emailgetter> {
                 height: screenHeight * 0.03,
               ),
               Form(
+                key: _formKey,
                   child: Column(children: [
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
@@ -78,11 +79,16 @@ class _EmailgetterState extends State<Emailgetter> {
                         keyboardType: TextInputType.emailAddress,
                         controller: _controllerEmail,
                         validator: (input) {
-                          if (input == null) {
-                            return 'Entrez votre adresse mail';
-                          } else {
-                            return null;
+                          if (input == null || input == '') {
+                            return 'Veuillez entrez votre adresse email';
+                          } else if (!RegExp(r'^[a-zA-Z_.@]+$').hasMatch(input)) {
+                            return 'L\'email est non valide';
+                          } else if (!input.endsWith('@esi.dz')) {
+                            return 'Seul l\'email de l\'ESI est autorisé';
+                          }else if (input.contains(' ')){
+                            return 'L\'email ne doit pas contenir des espaces' ;
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           prefixIcon: Icon(
@@ -90,7 +96,6 @@ class _EmailgetterState extends State<Emailgetter> {
                             color: Colors.black,
                             size: 20,
                           ),
-                          //border: OutlineInputBorder(),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
@@ -101,7 +106,8 @@ class _EmailgetterState extends State<Emailgetter> {
                           ),
                           hintText: 'Entrez votre adresse mail de l\'esi',
                           hintStyle:
-                          TextStyle(color: Colors.grey[800], fontSize: 14,                          fontFamily:'Poppins'
+                          TextStyle(color: Colors.grey[800], fontSize: 14,
+                              fontFamily:'Poppins'
                           ),
                           fillColor: Colors.grey.shade100,
                           filled: true,
@@ -119,42 +125,41 @@ class _EmailgetterState extends State<Emailgetter> {
                           borderRadius: BorderRadius.all(Radius.circular(12)),
                           child: ElevatedButton(
                             onPressed: () async {
-                              print(_controllerEmail.text);
-                              var email_correct = await _auth.resetPassword(_controllerEmail.text);
-                              print(email_correct);
-                              if(email_correct == true){
-                                showDialog(context: context,
-                                    builder: (context){
-                                      return AlertDialog(
-                                        content: Text("Mot de passe réinitialisé, vérifier votre adresse mail et essayer de vous connecter"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                              onPressed:(){
+                              if (_formKey.currentState!.validate()){
+                                var email_correct = await _auth.resetPassword(_controllerEmail.text);
+                                if(email_correct == true){
+                                  showDialog(context: context,
+                                      builder: (context){
+                                        return AlertDialog(
+                                          content: Text("Mot de passe réinitialisé, vérifier votre adresse mail et essayer de vous connecter"),
+                                          actions: <Widget>[
+                                            TextButton(
+                                                onPressed:(){
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("ok"))
+                                          ],
+                                        );
+                                      }
+                                  );
+                                }else{
+                                  showDialog(context: context,
+                                      builder: (context){
+                                        return AlertDialog(
+                                          content: Text("Adresse mail invalide, essayer d'entrer une adresse email correcte"),
+                                          actions: <Widget>[
+                                            Center(
+                                              child: TextButton(onPressed:(){
                                                 Navigator.pop(context);
                                               },
-                                              child: Text("ok"))
-                                        ],
-                                      );
-                                    }
-                                );
-                              }else{
-                                showDialog(context: context,
-                                    builder: (context){
-                                      return AlertDialog(
-                                        content: Text("Adresse mail invalide, essayer d'entrer une adresse email correcte"),
-                                        actions: <Widget>[
-                                          Center(
-                                            child: TextButton(onPressed:(){
-                                              Navigator.pop(context);
-                                            },
-                                                child: Text("réssayer")),
-                                          )
-                                        ],
-                                      );
-                                    }
-                                );
-                              }
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => Verification()));
+                                                  child: Text("réssayer")),
+                                            )
+                                          ],
+                                        );
+                                      }
+                                  );
+                                }
+                              } // end validate
                             },
                             child: Text(
                               ' suivant',

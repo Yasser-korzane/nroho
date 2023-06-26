@@ -36,6 +36,7 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
   bool clicked = false;
   List<Notifications> _listNot = [];
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -135,10 +136,20 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                           );
                         },
                       ),
-                      TextField(
-                        controller: _textFieldController,
-                        decoration: InputDecoration(
-                          hintText: 'Raison supplémentaire...',
+                      Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: _textFieldController,
+                          validator: (input) {
+                            RegExp regExp = RegExp(r'^[a-zA-Z0-9_]+$');
+                            if (input == null || !regExp.hasMatch(input)){
+                              return 'La raison est non valide' ;
+                            }
+                            return null ;
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Raison supplémentaire...',
+                          ),
                         ),
                       ),
                     ],
@@ -148,43 +159,37 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                   TextButton(
                     child: Text('OK'),
                     onPressed: () async{
-                      print(_Stringchecked);
-                      /// if (search in notification if this trajet id exist in notifications with accepter = false)
-                      /// delete normally
-                      if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
-                      else await _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
-                      String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé un trajet pour les raisons suivantes :\n';
-                      _listNot = await _baseDeDonnee.getNotifications(FirebaseAuth.instance.currentUser!.uid);
-                      print(_listNot.isEmpty);
-                      for (Notifications n in _listNot){
-                        if (n.id_trajetLance == widget.uidTrajet || n.id_trajetReserve == widget.uidTrajet){
-                          print("not rhi exist");
-                          if (n.accepte_refuse) {
-                            print("trajet est valide");
-                            int i = 0 ;
-                            for (bool b in _checked){
-                              if (b) text += _raisons[i]+'\n';
-                              i++ ;
+                      if (_formKey.currentState!.validate()){
+                        /// if (search in notification if this trajet id exist in notifications with accepter = false)
+                        /// delete normally
+                        if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
+                        else await _baseDeDonnee.annulerTrajetReserve(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
+                        String text = 'L\'utilisateur ${FirebaseAuth.instance.currentUser!.uid} avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé un trajet pour les raisons suivantes :\n';
+                        _listNot = await _baseDeDonnee.getNotifications(FirebaseAuth.instance.currentUser!.uid);
+                        for (Notifications n in _listNot){
+                          if (n.id_trajetLance == widget.uidTrajet || n.id_trajetReserve == widget.uidTrajet){
+                            if (n.accepte_refuse) {
+                              int i = 0 ;
+                              for (bool b in _checked){
+                                if (b) text += _raisons[i]+'\n';
+                                i++ ;
+                              }
+                              text += 'Raison supplémentaire : ${_textFieldController.text}';
+                              /// send email to admin and send notification to the next user
+                              /// 1) send notification :
+                              String fcmToken = '' ;
+                              if (n.id_trajetReserve == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_conducteur);
+                              else if (n.id_trajetLance == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_pasagers);
+                              await sendNotification(fcmToken, "Trajet annulé!", 'Votre partenaire avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé le trajet');
+                              /// 2) send email :
+                              sendEmail(FirebaseAuth.instance.currentUser!.email,text);
+                              ///
+                              break;
                             }
-                            text += 'Raison supplémentaire : ${_textFieldController.text}';
-                            /// send email to admin and send notification to the next user
-                            /// 1) send notification :
-                            String fcmToken = '' ;
-                            if (n.id_trajetReserve == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_conducteur);
-                            else if (n.id_trajetLance == widget.uidTrajet) fcmToken = await _baseDeDonnee.getFcmTocken(n.id_pasagers);
-                            await sendNotification(fcmToken, "Trajet annulé!", 'Votre partenaire avec l\'email ${FirebaseAuth.instance.currentUser!.email} a annulé le trajet');
-                            /// 2) send email :
-                            sendEmail(FirebaseAuth.instance.currentUser!.email,_Stringchecked.toString());
-                            ///
-                            break;
                           }
                         }
+                        Navigator.pop(context,true);
                       }
-                      print('*******************************************************************');
-                      print("message = $text");
-                      print('*******************************************************************');
-                      /// on envoi une notification de l'autre coté beli rah ne7a trajet
-                      Navigator.pop(context,true);
                     },
                   ),
                 ],
@@ -213,7 +218,5 @@ Future sendEmail(String? from_name,String message) async{
         }
       })
   );
-  print(response.statusCode);
-  print(response.body);
   return response.statusCode;
 }

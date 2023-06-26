@@ -20,7 +20,8 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   bool _changement = false;
   String imageUrl = '';
-
+  RegExp regExpNomPrenom = RegExp(r'^[a-zA-Z\u0600-\u06FF ]+$');
+  RegExp regExp = RegExp(r'^[a-zA-Z0-9_]+$');
   late TextEditingController _contrNom , _contrPrenom;
   TextEditingController _contrMarque = TextEditingController();
   TextEditingController _contrType = TextEditingController();
@@ -194,7 +195,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                             fillColor: Colors.white,
                             filled: true,
-                            hintText: 'nom',
+                            hintText: 'Nom',
                             hintStyle: TextStyle(fontFamily: 'poppins'),
                           ),
                           onChanged: (value) {
@@ -205,17 +206,16 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           },
                           validator: (input) {
                             List<int> numbers = List.generate(10, (index) => index);
-                            if (input == null ) {
-                              return 'Entrez votre nom';
-                            } else if (input == ''){
-                              return 'Entrez votre prenom';
-                            } else if (input.contains(' ')) {
-                              return 'Espace';
-                            } else if (numbers
-                                .any((number) => input.contains(number.toString()))) {
-                              return 'Numbers';
+                            if (input == null|| input == '') {
+                              return 'Veuillez entrez votre nom';
+                            } else if (numbers.any((number) => input.contains(number.toString()))) {
+                              return 'Le nom ne doit pas contenir des nombres';
+                            }else if (!regExpNomPrenom.hasMatch(input)){
+                              return 'Le nom non valide' ;
                             }
-
+                            else if (input.length >= 20){
+                              return 'Nom trop long' ;
+                            }
                             return null;
                           },
                         ),
@@ -251,17 +251,16 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           },
                           validator: (input) {
                             List<int> numbers = List.generate(10, (index) => index);
-                            if (input == null ) {
-                              return 'Entrez votre prenom';
-                            } else if (input == ''){
-                              return 'Entrez votre prenom';
-                            } else if (input.contains(' ')) {
-                              return 'Espace';
-                            } else if (numbers
-                                .any((number) => input.contains(number.toString()))) {
-                              return 'Numbers';
+                            if (input == null|| input == '') {
+                              return 'Veuillez entrez votre prénom';
+                            } else if (numbers.any((number) => input.contains(number.toString()))) {
+                              return 'Le prénom ne doit pas contenir des nombres';
+                            }else if (!regExpNomPrenom.hasMatch(input)){
+                              return 'Le prénom est non valide' ;
                             }
-
+                            else if (input.length >= 20){
+                              return 'Prénom trop long' ;
+                            }
                             return null;
                           },
                         ),
@@ -285,50 +284,32 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                               ),
                               fillColor: Colors.white,
                               filled: true,
-                              hintText: 'numeroTelephone',
+                              hintText: 'NumeroTelephone',
                               hintStyle: TextStyle(fontFamily: 'poppins'),
                             ),
                             onChanged: (value) {
                               _changement = true;
                               setState(() {
-                                //_contrPrenom.text = value;
                                 widget._utilisateur.numeroTelephone = value;
                               });
                             },
                             validator: (input) {
                               if (input == null || input == '') {
-                                return 'Entrez votre numero de téléphone ';
+                                return 'Veuillez entrez votre numéro de téléphone';
                               } else if (int.tryParse(input) == null) {
-                                return 'numero non valid ';
-                              } else if (input.length != 10 &&
-                                  input.length != 14 &&
-                                  input.length != 13) {
-                                return 'nombre de chiffre inferieur a 10 !';
-                              } else {
-                                if (input.length == 10 &&
-                                    !input.startsWith('05') &&
-                                    !input.startsWith('06') &&
-                                    !input.startsWith('07')) {
-                                  return 'le numero ne commance pas avec 05 ou 06 ou 07';
-                                }
-                                if (input.length == 13 &&
-                                    !input.startsWith('*2135') &&
-                                    !input.startsWith('*2136') &&
-                                    !input.startsWith('*2137')) {
-                                  return 'error';
-                                }
-                                if (input.length == 14 &&
-                                    !input.startsWith('002135') &&
-                                    !input.startsWith('002136') &&
-                                    !input.startsWith('002137')) {
-                                  return 'error';
-                                }
+                                return 'Numéro de téléphone est non valide';
+                              } else if (input.length != 10) {
+                                return 'Nombre de chiffre doit étre égale à 10 !';
+                              } else if (
+                              !(
+                                  input.startsWith('05') ||
+                                      input.startsWith('06') ||
+                                      input.startsWith('07') ) ) {
+                                return 'Le numéro doit commencer par \'05\' ou \'06\' ou \'07\'';
                               }
-
                               return null;
                             },
                           )),
-                      const SizedBox(height: 25),
                       const SizedBox(height: 40),
                       const Text(
                         'Informations du vehicule',
@@ -367,7 +348,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             });
                           },
                           validator: (input) {
-                            List<int> numbers = List.generate(10, (index) => index);
+                            if (input == null || input.isEmpty){
+                              return 'Veuillez entrer la marque' ;
+                            }
+                            else if (!regExp.hasMatch(input)){
+                              return 'La marque est non valide' ;
+                            }
                           },
                         ),
                       ),
@@ -397,7 +383,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             });
                           },
                           validator: (input) {
-                            List<int> numbers = List.generate(10, (index) => index);
+                            if (input == null || input.isEmpty){
+                              return 'Veuillez entrer le type de vehicule' ;
+                            }
+                            else if (!regExp.hasMatch(input)){
+                              return 'Le type de vehicule est non valide' ;
+                            }
                           },
                         ),
                       ),
@@ -427,7 +418,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             });
                           },
                           validator: (input) {
-                            List<int> numbers = List.generate(10, (index) => index);
+                            if (input == null || input.isEmpty){
+                              return 'Veuillez entrer le matricule' ;
+                            }
+                            else if (!regExp.hasMatch(input)){
+                              return 'Le matricule est non valide' ;
+                            }
                           },
                         ),
                       ),
@@ -447,7 +443,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             ),
                             fillColor: Colors.white,
                             filled: true,
-                            hintText: 'Modele',
+                            hintText: 'Modèle',
                             hintStyle: TextStyle(fontFamily: 'poppins'),
                           ),
                           onChanged: (value) {
@@ -457,7 +453,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             });
                           },
                           validator: (input) {
-                            List<int> numbers = List.generate(10, (index) => index);
+                            if (input == null || input.isEmpty){
+                              return 'Veuillez entrer le modèle' ;
+                            }
+                            else if (!regExp.hasMatch(input)){
+                              return 'Le modèle est non valide' ;
+                            }
                           },
                         ),
                       ),
@@ -487,7 +488,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             });
                           },
                           validator: (input) {
-                            List<int> numbers = List.generate(10, (index) => index);
+                            if (input == null || input.isEmpty){
+                              return 'Veuillez entrer la police d\'assurance' ;
+                            }
+                            else if (!regExp.hasMatch(input)){
+                              return 'La police d\'assurance est non valide' ;
+                            }
                           },
                         ),
                       ),
@@ -511,9 +517,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           content: AwesomeSnackbarContent(
                             title: 'Succés!!',
                             message: 'Modification effectué avec avec succès',
-                            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                             contentType: ContentType.success,
-                            // to configure for material banner
                             inMaterialBanner: true,
                           ),
                           behavior: SnackBarBehavior.floating,
@@ -532,9 +536,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         content: AwesomeSnackbarContent(
                           title: 'oh Erreurs!!',
                           message: 'Vérifier votre données',
-                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                           contentType: ContentType.failure,
-                          // to configure for material banner
                           inMaterialBanner: true,
                         ),
                         behavior: SnackBarBehavior.floating,
@@ -542,10 +544,7 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                         elevation: 0,
                       ),
                     );
-
-
                   }
-
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,

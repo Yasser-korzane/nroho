@@ -15,6 +15,7 @@ class _optionsState extends State<options> {
   String ?selectedNb = '1';
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   TextEditingController _commentcontroller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -172,22 +173,31 @@ class _optionsState extends State<options> {
               Container(
                 margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                 padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
-                child: TextField(
-                  controller: _commentcontroller,
-                  keyboardType: TextInputType.text,
-                     style: TextStyle(
-                       fontWeight: FontWeight.normal,
-                       fontSize: screenHeight*0.02,
-                       fontFamily: 'Poppins',
-                     ),
-                      decoration: InputDecoration(
-                      fillColor: Colors.grey.shade300,
-                      labelText: 'Laisser un commentaire',
-                      floatingLabelBehavior: FloatingLabelBehavior.auto,
-                      // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
-                      suffixIcon: Icon(Icons.insert_comment_rounded,
-                          color: Colors.black)
-                      ),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: _commentcontroller,
+                    keyboardType: TextInputType.text,
+                    validator: (input) {
+                      RegExp regExp = RegExp(r'^[a-zA-Z0-9_]+$');
+                      if (input == null || !regExp.hasMatch(input)){
+                        return 'La Commentaire est non valide' ;
+                      }
+                      return null;
+                    },
+                       style: TextStyle(
+                         fontWeight: FontWeight.normal,
+                         fontSize: screenHeight*0.02,
+                         fontFamily: 'Poppins',
+                       ),
+                        decoration: InputDecoration(
+                        fillColor: Colors.grey.shade300,
+                        labelText: 'Laisser un commentaire',
+                        floatingLabelBehavior: FloatingLabelBehavior.auto,
+                        suffixIcon: Icon(Icons.insert_comment_rounded,
+                            color: Colors.black)
+                        ),
+                  ),
                 ),
               ),
               SizedBox(height: screenHeight * 0.094),
@@ -204,38 +214,40 @@ class _optionsState extends State<options> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
-              widget.trajetReserve.avis = _commentcontroller.text;
-              Navigator.push(context,
-                  MaterialPageRoute(builder:(context)=> Page_recherche()));
-              List<ConducteurTrajet> monListe = [];
-              final stopwatch = Stopwatch()..start();
-              Duration duration = Duration(seconds: 10);
-              while (stopwatch.elapsed < duration ) {
-                monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
-              }
-              stopwatch.stop();
-              if(monListe.isEmpty){
-                showDialog(context: context,
-                    builder: (context){
-                      return AlertDialog(
-                        content: Text("Il n'y a pas de chauffeurs disponibles pour le moment, essayez ultérieurment"),
-                        actions: <Widget>[
-                          TextButton(
-                              onPressed:(){
-                                Navigator.pop(context);
-                              },
-                              child: Text("ok"))
-                        ],
-                      );
-                    }
-                );
-                //Navigator.pop(context);
-                Navigator.pop(context);
-              }else{
-                String idTrajetReserve = await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
-                widget.trajetReserve.id = idTrajetReserve;
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => DriverListPage(monListe,widget.trajetReserve)));
+              if (_formKey.currentState!.validate()){
+                widget.trajetReserve.avis = _commentcontroller.text;
+                Navigator.push(context,
+                    MaterialPageRoute(builder:(context)=> Page_recherche()));
+                List<ConducteurTrajet> monListe = [];
+                final stopwatch = Stopwatch()..start();
+                Duration duration = Duration(seconds: 10);
+                while (stopwatch.elapsed < duration ) {
+                  monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+                }
+                stopwatch.stop();
+                if(monListe.isEmpty){
+                  showDialog(context: context,
+                      builder: (context){
+                        return AlertDialog(
+                          content: Text("Il n'y a pas de chauffeurs disponibles pour le moment, essayez ultérieurment"),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed:(){
+                                  Navigator.pop(context);
+                                },
+                                child: Text("ok"))
+                          ],
+                        );
+                      }
+                  );
+                  //Navigator.pop(context);
+                  Navigator.pop(context);
+                }else{
+                  String idTrajetReserve = await _baseDeDonnee.saveTrajetReserveAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
+                  widget.trajetReserve.id = idTrajetReserve;
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => DriverListPage(monListe,widget.trajetReserve)));
+                }
               }
             },
             style: ButtonStyle(

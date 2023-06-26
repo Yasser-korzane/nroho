@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:nroho/Services/base%20de%20donnee.dart';
 import 'package:nroho/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +18,12 @@ class _optionconducState extends State<optionconduc> {
   String ?selectedNb = '1';
     TextEditingController _coutController = TextEditingController();
     BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
+  bool isNumeric(String str) {
+    if (str.isEmpty) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -27,9 +34,9 @@ class _optionconducState extends State<optionconduc> {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              // Navigator.pop(context)
+               Navigator.pop(context) ;
             },
-            icon: const Icon(Icons.chevron_left, color: Colors.black)),
+            icon: const Icon(Icons.arrow_back, color: Colors.black)),
         title: Text('Plus d\’informations',
           style: TextStyle(fontWeight: FontWeight.normal,
             fontFamily: 'Poppins',),),
@@ -184,7 +191,6 @@ class _optionconducState extends State<optionconduc> {
                         fillColor: Colors.grey.shade300,
                         hintText: 'Entrer votre prix',
                         floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        // i can you only a icon (not prefixeIcon) to show the icons out of the Textfield
                         suffixIcon: Icon(Icons.monetization_on,
                             color: Colors.black)),
                   ),
@@ -202,36 +208,63 @@ class _optionconducState extends State<optionconduc> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async {
-              if (_coutController.text.isNotEmpty) {
-                widget.trajetLance.coutTrajet = double.parse(_coutController.text);
-              } else {
-                widget.trajetLance.coutTrajet = 0.0;
+              String error = '' ;
+              if (_coutController.text == null || _coutController.text.isEmpty){
+                error = 'Veuillez entrer le prix' ;
               }
-              await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetLance);
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => home()),
-                    (Route<dynamic> route) => false,
-              );
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text("Trajet lancé"),
-                    content: Text("Votre trajet a bien été lancé "),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text("OK"),
-                        onPressed: () async {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
+              else if (!isNumeric(_coutController.text)){
+                error = 'Le prix est non valide' ;
+              }else if (_coutController.text.contains(' ')){
+                error = 'Le prix ne doit pas contenir des espaces' ;
+              }else if (_coutController.text.contains('-')){
+                error = 'Le prix ne doit pas contenir \'-\'' ;
+              }
+              if (error != ''){
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: const Duration(seconds: 1),
+                  content: AwesomeSnackbarContent(
+                    title: 'Prix est incorrecte!!',
+                    message: error,
+                    contentType: ContentType.failure,
+                    inMaterialBanner: true,
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                ));
+              }
+              else {
+                if (_coutController.text.isNotEmpty) {
+                  widget.trajetLance.coutTrajet = double.parse(_coutController.text);
+                } else {
+                  widget.trajetLance.coutTrajet = 0.0;
+                }
+                await _baseDeDonnee.saveTrajetLanceAsSubcollection(FirebaseAuth.instance.currentUser!.uid, widget.trajetLance);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => home()),
+                      (Route<dynamic> route) => false,
+                );
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Trajet lancé"),
+                      content: Text("Votre trajet a bien été lancé "),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text("OK"),
+                          onPressed: () async {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              } // end else if prix est correcte
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
