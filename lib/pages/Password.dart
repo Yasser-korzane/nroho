@@ -1,17 +1,12 @@
-import 'package:nroho/AppClasses/Utilisateur.dart';
-import 'package:nroho/pages/annulertrajet.dart';
-import 'package:nroho/pages/rating.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../AppClasses/Notifications.dart';
 import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:nroho/pages/annulertrajet.dart';
 
 class MotdePasse extends StatefulWidget {
   const MotdePasse({Key? key}) : super(key: key);
@@ -22,13 +17,9 @@ class MotdePasse extends StatefulWidget {
 
 class _MotdePasseState extends State<MotdePasse> {
   final BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
-  final CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('Utilisateur');
+  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('Utilisateur');
   String oldPassword = '';
   String newPassword = '';
-  List<Utilisateur> utilisateurs = [];
-  Notifications not = Notifications(FirebaseAuth.instance.currentUser!.uid, 'id_pasagerss', 'idTrajetLance','idTrajetReserve','Grine','Mohammed','Alger','Bouira',false);
-
   @override
   void dispose() {
     super.dispose();
@@ -150,14 +141,17 @@ class _MotdePasseState extends State<MotdePasse> {
                   height: screenHeight * 0.04,
                 ),
                 Center(
-                    child: Text(
-                      'Changer le mot de passe ',
+                    child: TextButton(
+                      onPressed: ()async{
+                        //await calculateArrivalTime(36.4735715,2.8323153,36.5651532,3.1539961);
+                      },
+                      child: Text('Changer le mot de passe ',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
                           fontFamily: 'Poppins'),
-                    ),
+                    ),),
                 ),
                 SizedBox(height: screenHeight * 0.1),
                 Text(

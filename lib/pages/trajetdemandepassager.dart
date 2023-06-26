@@ -369,10 +369,9 @@ class _DetailspassaerState extends State<Detailspassaer> {
                       children: [
                         Container(
                           child: ListTile(
-                            //title: Text('${_trajet.lieuDepart}'),
                             title: Text(_trajet.villeDepart),
                             subtitle: Text(
-                              '${_trajet.dateDepart.hour}:${_trajet.dateDepart.minute}',
+                              '${BaseDeDonnee().reglerTemps(_trajet.dateDepart.hour)}:${BaseDeDonnee().reglerTemps(_trajet.dateDepart.minute)}',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),
@@ -384,7 +383,7 @@ class _DetailspassaerState extends State<Detailspassaer> {
                           child: ListTile(
                             title: Text(_trajet.villeArrivee),
                             subtitle: Text(
-                              '${_trajet.tempsDePause.hour}:${_trajet.tempsDePause.minute}',
+                              '${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.hour)}:${BaseDeDonnee().reglerTemps(_trajet.tempsDePause.minute)}',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.bold),

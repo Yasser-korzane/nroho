@@ -14,8 +14,6 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:ui' as ui;
 import '../Services/base de donnee.dart';
-import '../AppClasses/Notifications.dart';
-
 class Mywid extends StatefulWidget {
   const Mywid({Key? key}) : super(key: key);
 
@@ -24,7 +22,6 @@ class Mywid extends StatefulWidget {
 }
 
 class _MywidState extends State<Mywid> {
-  List<Notifications> listeNotifications = [];
   BaseDeDonnee baseDeDonnee = BaseDeDonnee();
   late HashSet<Marker> markers;
   Position? current_location;
@@ -35,7 +32,6 @@ class _MywidState extends State<Mywid> {
   late PolylinePoints polylinePoints;
   bool statut = false;
   bool ilYaUneNotification = false ;
-  bool notification_recus = false;
 
   @override
   void initState() {
@@ -152,11 +148,6 @@ class _MywidState extends State<Mywid> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
-    if (listeNotifications.isEmpty) {
-      notification_recus = false;
-    } else {
-      notification_recus = true;
-    }
     return current_location == null
         ? const Center(
             child: CircularProgressIndicator(
@@ -341,6 +332,10 @@ class _MywidState extends State<Mywid> {
                             },
                           ),
                         );
+                        await baseDeDonnee.updateUtilisateurilYaUneNotification(FirebaseAuth.instance.currentUser!.uid, false);
+                        setState(() {
+                          ilYaUneNotification = false ;
+                        });
                       } else { // si mode conducteur
                           Navigator.push(
                           context,
@@ -365,13 +360,10 @@ class _MywidState extends State<Mywid> {
                           ),
                         );
                       }
+                      await baseDeDonnee.updateUtilisateurilYaUneNotification(FirebaseAuth.instance.currentUser!.uid, false);
                       setState(() {
                         ilYaUneNotification = false ;
                       });
-                      if (ilYaUneNotification) {
-                        await baseDeDonnee.updateUtilisateurilYaUneNotification(
-                            FirebaseAuth.instance.currentUser!.uid, false);
-                      }
                     },
                     child: ilYaUneNotification
                         ? const Icon(

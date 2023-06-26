@@ -7,13 +7,10 @@ import 'package:flutter/material.dart';
 class options extends StatefulWidget {
   Trajet trajetReserve ;
   options(this.trajetReserve);
-
   @override
   State<options> createState() => _optionsState();
 }
-
 class _optionsState extends State<options> {
-
   List<String> nbPlaces = ['1','2','3','4'];
   String ?selectedNb = '1';
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();

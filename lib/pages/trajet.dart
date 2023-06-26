@@ -64,6 +64,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
   bool isLoading = false;
+  bool _isLoadingC = false;
 
   /// -------------------------------------------------------------------------------------------------
   Future<void> _selectDate() async {
@@ -175,14 +176,65 @@ class _OuAllezVousState extends State<OuAllezVous> {
   }
 
   /// -------------------------------------------------------------------------------------------------
-  DateTime calculateArrivalTime(double distance, DateTime dateDepart) {
-    double speed = 40; // average speed in km/h
-    double timeInHours = distance / speed;
-    int timeInMinutes =
-        (timeInHours * 60).ceil(); // convert hours to minutes and round up
-    DateTime now = dateDepart;
-    DateTime arrivalTime = now.add(Duration(minutes: timeInMinutes));
-    return arrivalTime;
+  Future<DateTime> calculateArrivalTime(DateTime dateDebut,double latD, double lngD, double latA, double lngA) async {
+    const apiKey = 'AIzaSyC9sGlH43GL0Jer73n9ETKsxNpZqvrWn-k';
+    final url = Uri.parse('https://maps.googleapis.com/maps/api/directions/json?origin=$latD,$lngD&destination=$latA,$lngA&key=$apiKey');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final decodedResponse = json.decode(response.body);
+      final durationText = decodedResponse['routes'][0]['legs'][0]['duration']['text'];
+      print('*******************************************');
+      print('durationText = $durationText');
+      print('*******************************************');
+      final estimatedDuration = parseDuration(durationText);
+      final currentTime = dateDebut;
+      final arrivalTime = currentTime.add(estimatedDuration);
+      return arrivalTime;
+    } else {
+      throw Exception('Error: ${response.statusCode}');
+    }
+  }
+  Duration parseDuration(String durationText) {
+    int totalDuration = 0;
+    durationText = durationText.replaceAll(' ', '');
+    print(durationText);
+    String d1 = durationText ;
+    if (durationText.contains('day') || durationText.contains('days')) {
+      int indexOfDays = 0 ;
+      if (durationText.contains('day') && !durationText.contains('days')){
+        indexOfDays = durationText.indexOf('day');
+        d1 = durationText.replaceAll(RegExp(r'.*day'), '');
+      }
+      else if (durationText.contains('days')){
+        indexOfDays = durationText.indexOf('days');
+        d1 = durationText.replaceAll(RegExp(r'.*days'), '');
+      }
+      String value = durationText.substring(0, indexOfDays).trim();
+      totalDuration += int.parse(value) * 24 * 60 * 60;
+      int indexOfHours = d1.indexOf('hour');
+      value = d1.substring(0, indexOfHours).trim();
+      totalDuration += int.parse(value) * 60 * 60 ;
+    } else if (durationText.contains('hour') || durationText.contains('hours')) {
+      int indexOfHours = 0 ;
+      if (durationText.contains('hour') && !durationText.contains('hours')){
+        indexOfHours = durationText.indexOf('hour');
+        d1 = durationText.replaceAll(RegExp(r'.*hour'), '');
+      }
+      else if (durationText.contains('hours')){
+        indexOfHours = durationText.indexOf('hours');
+        d1 = durationText.replaceAll(RegExp(r'.*hours'), '');
+      }
+      String value = durationText.substring(0, indexOfHours).trim();
+      totalDuration += int.parse(value) * 60 * 60;
+      int indexOfMinutes = d1.indexOf('min');
+      value = d1.substring(0, indexOfMinutes).trim();
+      totalDuration += int.parse(value) * 60 ;
+    } else if (durationText.contains('mins') || durationText.contains('min')) {
+      int indexOfMins = durationText.indexOf('min');
+      String value = durationText.substring(0, indexOfMins).trim();
+      totalDuration += int.parse(value) * 60 ;
+    }
+    return Duration(seconds: totalDuration);
   }
 
   Future<bool> isPlaceOnRoute(PlacesAutoCompleteResult place,
@@ -474,6 +526,9 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       padding: const EdgeInsets.symmetric(vertical: 0),
                       child: ListTile(
                         onTap: () async {
+                          setState(() {
+                            _isLoadingC = true ;
+                          });
                           Position currentPosition =
                               await Geolocator.getCurrentPosition();
                           latLngD = LatLng(currentPosition.latitude,
@@ -485,6 +540,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                             _departController.value = TextEditingValue(
                               text: depart!,
                             );
+                            _isLoadingC = false ;
                           });
                         },
                         leading: const Icon(
@@ -500,6 +556,15 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       ),
                     ),
                   ]),
+                ),
+              ),
+              Visibility(
+                visible: _isLoadingC,
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                    Text('Veuillez patienter un instant...'),
+                  ],
                 ),
               ),
               Visibility(
@@ -614,21 +679,14 @@ class _OuAllezVousState extends State<OuAllezVous> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async {
-              if (/*(monDateEtTime2.year < DateTime.now().year ||
-                      (monDateEtTime2.year == DateTime.now().year &&
-                          monDateEtTime2.month < DateTime.now().month) ||
-                      (monDateEtTime2.year == DateTime.now().year &&
-                          monDateEtTime2.month == DateTime.now().month &&
-                          monDateEtTime2.day < DateTime.now().day) ||
-                      (monDateEtTime2.year == DateTime.now().year &&
-                          monDateEtTime2.month == DateTime.now().month &&
-                          monDateEtTime2.day == DateTime.now().day &&
-                          monDateEtTime2.hour < DateTime.now().hour) ||
-                      (monDateEtTime2.year == DateTime.now().year &&
-                          monDateEtTime2.month == DateTime.now().month &&
-                          monDateEtTime2.day == DateTime.now().day &&
-                          monDateEtTime2.hour == DateTime.now().hour &&
-                          monDateEtTime2.minute < DateTime.now().minute))||*/
+              DateTime dateDebut = DateTime(
+                  monDateEtTime.year,
+                  monDateEtTime.month,
+                  monDateEtTime.day,
+                  monDateEtTime2.hour,
+                  monDateEtTime2.minute);
+              if (
+                  dateDebut.isBefore(DateTime.now()) ||
                   placeD.placeId == null ||
                   placeA.placeId! == null ||
                   placeD.placeId!.isEmpty ||
@@ -640,10 +698,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                       title: 'Attention!',
                       message:
                           'Vous devez remplir tout les informations et entrer des informations correctes',
-
-                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                       contentType: ContentType.warning,
-                      // to configure for material banner
                       inMaterialBanner: true,
                     ),
                     behavior: SnackBarBehavior.floating,
@@ -656,32 +711,21 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 setState(() {
                   isLoading = true;
                 });
-                _trajet.dateDepart = DateTime(
-                    monDateEtTime.year,
-                    monDateEtTime.month,
-                    monDateEtTime.day,
-                    monDateEtTime2.hour,
-                    monDateEtTime2.minute);
+                DateTime dt = DateTime.now();
+                dt = await calculateArrivalTime(dateDebut,latLngD.latitude,latLngD.longitude,latLngA.latitude,latLngA.longitude);
+                 dt.add(Duration(minutes: 5));
+                _trajet.tempsDePause = dt ;
+                _trajet.dateDepart = dateDebut;
                 _trajet.lieuDepart = placeD;
                 _trajet.lieuArrivee = placeA;
                 _trajet.latLngDepart = latLngD;
                 _trajet.latLngArrivee = latLngA;
                 _trajet.villeDepart = placeD.description!;
                 _trajet.villeArrivee = placeA.description!;
-                double distance = 0;
-                distance = (Geolocator.distanceBetween(
-                            latLngD.latitude,
-                            latLngD.longitude,
-                            latLngA.latitude,
-                            latLngA.longitude) +
-                        15) /
-                    1000;
-                _trajet.tempsDePause =
-                    calculateArrivalTime(distance, _trajet.dateDepart);
-                if (distance<30) _trajet.tempsDePause.add(Duration(minutes: 10));
-                _trajet.tempsDePause.add(Duration(minutes: 5));
-                _trajet.afficher();
-                isLoading = false;
+                //_trajet.afficher();
+                setState(() {
+                  isLoading = false;
+                });
                 if (statut == false) {
                   Navigator.push(
                       context,

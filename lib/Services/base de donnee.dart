@@ -591,7 +591,6 @@ class BaseDeDonnee{
           .get();
       for (QueryDocumentSnapshot utilisateurDoc in querySnapshot.docs) {
         Map<String, dynamic> dataUtilisateur = utilisateurDoc.data() as Map<String, dynamic>;
-        print(utilisateurDoc.get('nom'));
         QuerySnapshot trajetsSnapshot = await FirebaseFirestore.instance
             .collection('Utilisateur')
             .doc(utilisateurDoc.id)
@@ -607,17 +606,8 @@ class BaseDeDonnee{
             LatLng latLngArriveLance = LatLng(geoPointArrivee.latitude, geoPointArrivee.longitude);
             double distanceD = Geolocator.distanceBetween(latLngDepartLance.latitude, latLngDepartLance.longitude, trajetReserve.latLngDepart.latitude, trajetReserve.latLngDepart.longitude)/1000 ;
             double distanceA = Geolocator.distanceBetween(latLngArriveLance.latitude, latLngArriveLance.longitude, trajetReserve.latLngArrivee.latitude, trajetReserve.latLngArrivee.longitude)/1000 ;
-            //t1 = t1.add(Duration(hours: 1));
             bool pD = await isPlaceOnRoute(trajetReserve.lieuDepart!, trajetReserve.latLngDepart, latLngDepartLance, latLngArriveLance);
             bool pA = await isPlaceOnRoute(trajetReserve.lieuArrivee!, trajetReserve.latLngDepart, latLngDepartLance, latLngArriveLance);
-            print('**************************************************************************************');
-            print('**************************************************************************************');
-            print('t1 = $t1');
-            print('TempsPmoins15 = $TempsPmoins15');
-            print('TempsPplus4h = $TempsPplus4h');
-            print( ( t1.isAfter(TempsPmoins15) || t1.isAtSameMomentAs(TempsPmoins15) ) && ( t1.isBefore(TempsPplus4h) || t1.isAtSameMomentAs(TempsPplus4h)));
-            print('**************************************************************************************');
-            print('**************************************************************************************');
             if (
             /* 1) nbPlaces */
             data['plusInformations']['nbPlaces'] >= trajetReserve.plusInformations.nbPlaces
@@ -652,7 +642,6 @@ class BaseDeDonnee{
                         3)  si place depart et place arrivee appartient du passager au rue du conductuer **/
                 )
             ) {
-                print('Les conditions sont verifier pour ${dataUtilisateur['nom']}');
                 Utilisateur utilisateur = creerUtilisateurVide();
                 Trajet trajetLance = creerTrajetVide();
                 utilisateur.identifiant = dataUtilisateur['identifiant'];
@@ -690,7 +679,6 @@ class BaseDeDonnee{
                 }
                 utilisateur.imageUrl = dataUtilisateur['imageUrl'];
                 utilisateur.fcmTocken = dataUtilisateur['fcmTocken'];
-                utilisateur.afficher();
                 trajetLance.id = data['id'];
                 trajetLance.dateDepart = data['dateDepart'].toDate(); //.add(Duration(hours: 1))
                 trajetLance.tempsDePause = data['tempsDePause'].toDate();
@@ -727,7 +715,6 @@ class BaseDeDonnee{
                 trajetLance.latLngArrivee = latLngArrivee;
                 trajetLance.idConductuer = data['idConductuer'];
                 trajetLance.idPassagers = List<String>.from(data['idPassagers']);
-                trajetLance.afficher();
                 ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
                 listConducteurTrajet.add(conducteurTrajet);
               }else { print('Les conditions ne sont pas verifier pour ${dataUtilisateur['nom']}');
@@ -735,8 +722,6 @@ class BaseDeDonnee{
           } // end for trajetLanceDoc
         }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur
       } // end for utilisateurDoc
-      print('Resultat de recherche : ');
-      for(ConducteurTrajet c in listConducteurTrajet) c.utilisateur.afficher();
       return listConducteurTrajet;
     } catch (e) {
       throw Exception("Failed to get utilisateurs : $e");
