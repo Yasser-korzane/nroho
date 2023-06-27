@@ -348,12 +348,13 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                             });
                           },
                           validator: (input) {
-                            if (input == null || input.isEmpty){
-                              return 'Veuillez entrer la marque' ;
-                            }
-                            else if (!regExp.hasMatch(input)){
+                              if (input == null || input.isEmpty){
+                                return null ;
+                              }
+                              else if (!regExp.hasMatch(input)){
                               return 'La marque est non valide' ;
                             }
+                              return null ;
                           },
                         ),
                       ),
@@ -384,11 +385,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           },
                           validator: (input) {
                             if (input == null || input.isEmpty){
-                              return 'Veuillez entrer le type de vehicule' ;
+                              return null ;
                             }
                             else if (!regExp.hasMatch(input)){
                               return 'Le type de vehicule est non valide' ;
                             }
+                            return null ;
                           },
                         ),
                       ),
@@ -419,11 +421,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           },
                           validator: (input) {
                             if (input == null || input.isEmpty){
-                              return 'Veuillez entrer le matricule' ;
+                              return null ;
                             }
                             else if (!regExp.hasMatch(input)){
                               return 'Le matricule est non valide' ;
                             }
+                            return null ;
                           },
                         ),
                       ),
@@ -454,11 +457,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           },
                           validator: (input) {
                             if (input == null || input.isEmpty){
-                              return 'Veuillez entrer le modèle' ;
+                              return null ;
                             }
                             else if (!regExp.hasMatch(input)){
                               return 'Le modèle est non valide' ;
                             }
+                            return null ;
                           },
                         ),
                       ),
@@ -489,11 +493,12 @@ class _ModifierProfilePageState extends State<ModifierProfilePage> {
                           },
                           validator: (input) {
                             if (input == null || input.isEmpty){
-                              return 'Veuillez entrer la police d\'assurance' ;
+                              return null ;
                             }
                             else if (!regExp.hasMatch(input)){
                               return 'La police d\'assurance est non valide' ;
                             }
+                            return null ;
                           },
                         ),
                       ),

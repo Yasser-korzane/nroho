@@ -15,7 +15,6 @@ class Rating extends StatefulWidget {
 
 class _RatingState extends State<Rating> {
   int currentRating = 0;
-  RegExp regExp = RegExp(r'^[a-zA-Z0-9_]+$');
   final TextEditingController _userFeedbackController = TextEditingController();
   final TextEditingController _routeFeedbackController =
       TextEditingController();
@@ -86,7 +85,7 @@ class _RatingState extends State<Rating> {
                 TextFormField(
                   controller: _userFeedbackController,
                   validator: (input) {
-                    if (input == null || regExp.hasMatch(input)){
+                    if (input == null){
                       return 'L\'avis est non valide' ;
                     }
                     return null ;
@@ -137,7 +136,7 @@ class _RatingState extends State<Rating> {
                 TextFormField(
                   controller: _routeFeedbackController,
                   validator: (input) {
-                    if (input == null || regExp.hasMatch(input)){
+                    if (input == null){
                       return 'L\'avis est non valide' ;
                     }
                     return null ;

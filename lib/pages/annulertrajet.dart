@@ -36,7 +36,6 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
   bool clicked = false;
   List<Notifications> _listNot = [];
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -136,20 +135,10 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                           );
                         },
                       ),
-                      Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          controller: _textFieldController,
-                          validator: (input) {
-                            RegExp regExp = RegExp(r'^[a-zA-Z0-9_]+$');
-                            if (input == null || !regExp.hasMatch(input)){
-                              return 'La raison est non valide' ;
-                            }
-                            return null ;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Raison supplémentaire...',
-                          ),
+                      TextFormField(
+                        controller: _textFieldController,
+                        decoration: InputDecoration(
+                          hintText: 'Raison supplémentaire...',
                         ),
                       ),
                     ],
@@ -159,7 +148,6 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                   TextButton(
                     child: Text('OK'),
                     onPressed: () async{
-                      if (_formKey.currentState!.validate()){
                         /// if (search in notification if this trajet id exist in notifications with accepter = false)
                         /// delete normally
                         if (widget.lance_reserve) await _baseDeDonnee.annulerTrajetLance(FirebaseAuth.instance.currentUser!.uid,widget.uidTrajet);
@@ -189,7 +177,6 @@ class _AnnulerTrajetState extends State<AnnulerTrajet> {
                           }
                         }
                         Navigator.pop(context,true);
-                      }
                     },
                   ),
                 ],

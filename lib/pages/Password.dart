@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:nroho/pages/rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Services/base de donnee.dart';
 import '../Shared/lodingEffect.dart';
@@ -135,158 +134,155 @@ class _MotdePasseState extends State<MotdePasse> {
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(screenWidth * 0.08),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: screenHeight * 0.04,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: screenHeight * 0.04,
+                ),
+                Center(
+                    child: Text('Changer le mot de passe ',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        fontFamily: 'Poppins'),
+                    ),
+                ),
+                SizedBox(height: screenHeight * 0.1),
+                Text(
+                  'Ancien mot de passe',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+                ),
+                TextFormField(
+                  style: TextStyle(fontFamily: 'Poppins'),
+                  validator: (input) {
+                    if (input == null || input == '') {
+                      return 'Veuillez entrez votre ancien mot de passe';
+                    } else if (!(input.toString().length >= 8 && input.toString().length < 20)) {
+                      return 'Le mot de passe doit étre supérieur à 8 et inférieur à 20';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      oldPassword = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(12)),
+                    ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Entrez votre ancien mot de passe',
+                    hintStyle: TextStyle(fontFamily: 'poppins'),
                   ),
-                  Center(
-                      child: Text('Changer le mot de passe ',
+                  obscureText: true,
+                ),
+                SizedBox(height: screenHeight * 0.07),
+                Text(
+                  'Nouveau mot de passe ',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
+                ),
+                TextFormField(
+                  style: TextStyle(fontFamily: 'Poppins'),
+                  validator: (input) {
+                    if (input == null || input == '') {
+                      return 'Veuillez entrez votre nouveau mot de passe';
+                    } else if (!(input.toString().length >= 8 && input.toString().length < 20)) {
+                      return 'Le mot de passe doit étre supérieur à 8 et inférieur à 20';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    setState(() {
+                      newPassword = value;
+                    });
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(12)),
+                    ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    hintText: 'Entrez votre nouveau mot de passe',
+                    hintStyle: TextStyle(fontFamily: 'poppins'),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.1),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  ),
+                  onPressed: () async {
+                    //if (_formKey.currentState!.validate()){
+                      if (_baseDeDonnee.validerMotDePasse(newPassword)) {
+                        changePassword(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          duration: const Duration(seconds: 2),
+                          content: AwesomeSnackbarContent(
+                            title: 'Mot de passe incorrecte!!',
+                            message: 'Vous devez vérifier vos données',
+                            contentType: ContentType.failure,
+                            inMaterialBanner: true,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                        ));
+                      }
+                    //} // end validate
+                  },
+                  child: Center(
+                      child: Text(
+                    'Valider les modifications',
+                    style:
+                        TextStyle(color: Colors.white, fontFamily: 'Poppins'),
+                  )),
+                ),
+                SizedBox(height: screenHeight * 0.17),
+                Center(
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'besoin d’aide? ',
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          fontFamily: 'Poppins'),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16.0,
+                        fontFamily: 'Poppins',
                       ),
-                  ),
-                  SizedBox(height: screenHeight * 0.1),
-                  Text(
-                    'Ancien mot de passe',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
-                  ),
-                  TextFormField(
-                    style: TextStyle(fontFamily: 'Poppins'),
-                    validator: (input) {
-                      if (input == null || input == '') {
-                        return 'Veuillez entrez votre ancien mot de passe';
-                      } else if (!(input.toString().length >= 8 && input.toString().length < 20)) {
-                        return 'Le mot de passe doit étre supérieur à 8 et inférieur à 20';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      setState(() {
-                        oldPassword = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(12)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez votre ancien mot de passe',
-                      hintStyle: TextStyle(fontFamily: 'poppins'),
+                      children: [
+                        TextSpan(
+                          text: ' Cliquez ici',
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16.0,
+                            fontFamily: 'Poppins',
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              launch('https://karimiarkane.github.io/QuestionNroho.github.io/');
+                            },
+                        )
+                      ],
                     ),
-                    obscureText: true,
+                    softWrap: true,
+                    overflow: TextOverflow.visible,
+                    maxLines: null,
                   ),
-                  SizedBox(height: screenHeight * 0.07),
-                  Text(
-                    'Nouveau mot de passe ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
-                  ),
-                  TextFormField(
-                    style: TextStyle(fontFamily: 'Poppins'),
-                    validator: (input) {
-                      if (input == null || input == '') {
-                        return 'Veuillez entrez votre nouveau mot de passe';
-                      } else if (!(input.toString().length >= 8 && input.toString().length < 20)) {
-                        return 'Le mot de passe doit étre supérieur à 8 et inférieur à 20';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {
-                      setState(() {
-                        newPassword = value;
-                      });
-                    },
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(12)),
-                      ),
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Entrez votre nouveau mot de passe',
-                      hintStyle: TextStyle(fontFamily: 'poppins'),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.1),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()){
-                        if (_baseDeDonnee.validerMotDePasse(newPassword)) {
-                          changePassword(context);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: const Duration(seconds: 2),
-                            content: AwesomeSnackbarContent(
-                              title: 'Mot de passe incorrecte!!',
-                              message: 'Vous devez vérifier vos données',
-                              contentType: ContentType.failure,
-                              inMaterialBanner: true,
-                            ),
-                            behavior: SnackBarBehavior.floating,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                          ));
-                        }
-                      } // end validate
-                    },
-                    child: Center(
-                        child: Text(
-                      'Valider les modifications',
-                      style:
-                          TextStyle(color: Colors.white, fontFamily: 'Poppins'),
-                    )),
-                  ),
-                  SizedBox(height: screenHeight * 0.17),
-                  Center(
-                    child: Text.rich(
-                      TextSpan(
-                        text: 'besoin d’aide? ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16.0,
-                          fontFamily: 'Poppins',
-                        ),
-                        children: [
-                          TextSpan(
-                            text: ' Cliquez ici',
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16.0,
-                              fontFamily: 'Poppins',
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                launch('https://karimiarkane.github.io/QuestionNroho.github.io/');
-                              },
-                          )
-                        ],
-                      ),
-                      softWrap: true,
-                      overflow: TextOverflow.visible,
-                      maxLines: null,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ));

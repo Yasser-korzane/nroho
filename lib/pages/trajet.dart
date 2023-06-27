@@ -183,9 +183,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
     if (response.statusCode == 200) {
       final decodedResponse = json.decode(response.body);
       final durationText = decodedResponse['routes'][0]['legs'][0]['duration']['text'];
-      print('*******************************************');
-      print('durationText = $durationText');
-      print('*******************************************');
       final estimatedDuration = parseDuration(durationText);
       final currentTime = dateDebut;
       final arrivalTime = currentTime.add(estimatedDuration);
@@ -197,7 +194,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
   Duration parseDuration(String durationText) {
     int totalDuration = 0;
     durationText = durationText.replaceAll(' ', '');
-    print(durationText);
     String d1 = durationText ;
     if (durationText.contains('day') || durationText.contains('days')) {
       int indexOfDays = 0 ;
@@ -587,8 +583,7 @@ class _OuAllezVousState extends State<OuAllezVous> {
                               var data = snapshot.data[index];
                               var prediction = data.description;
                               return ListTile(
-                                onTap: () {
-                                  setState(() async {
+                                onTap: () async{
                                     showSuggestion = false;
                                     switch (caseSelected) {
                                       case Selected.depart:
@@ -605,14 +600,16 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                             secondaryText: secondaryTextD);
                                         latLngD = await getPlaceLatLng(idD!);
                                         depart = prediction;
-                                        _departController.value =
-                                            TextEditingValue(
-                                          text: depart!,
-                                          selection: TextSelection.fromPosition(
-                                            TextPosition(
-                                                offset: depart!.length),
-                                          ),
-                                        );
+                                        setState(() {
+                                          _departController.value =
+                                              TextEditingValue(
+                                            text: depart!,
+                                            selection: TextSelection.fromPosition(
+                                              TextPosition(
+                                                  offset: depart!.length),
+                                            ),
+                                          );
+                                        });
                                         break;
                                       case Selected.arrivee:
                                         ArriveData = data;
@@ -628,18 +625,19 @@ class _OuAllezVousState extends State<OuAllezVous> {
                                             secondaryText: secondaryTextA);
                                         latLngA = await getPlaceLatLng(idA!);
                                         arrive = prediction;
-                                        _arriveController.value =
-                                            TextEditingValue(
-                                          text: arrive!,
-                                          selection: TextSelection.fromPosition(
-                                            TextPosition(
-                                                offset: arrive!.length),
-                                          ),
-                                        );
+                                        setState(() {
+                                          _arriveController.value =
+                                              TextEditingValue(
+                                            text: arrive!,
+                                            selection: TextSelection.fromPosition(
+                                              TextPosition(
+                                                  offset: arrive!.length),
+                                            ),
+                                          );
+                                        });
                                         break;
                                       default:
                                     }
-                                  });
                                 },
                                 title: Text(prediction),
                               );
@@ -722,7 +720,6 @@ class _OuAllezVousState extends State<OuAllezVous> {
                 _trajet.latLngArrivee = latLngA;
                 _trajet.villeDepart = placeD.description!;
                 _trajet.villeArrivee = placeA.description!;
-                //_trajet.afficher();
                 setState(() {
                   isLoading = false;
                 });

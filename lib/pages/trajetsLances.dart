@@ -36,28 +36,30 @@ class cardLancerList extends StatelessWidget {
               child: GestureDetector(
                 onTap: () async{
                   final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => detailsTrajetLancer(lancer)));
-                  if (result){
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(
-                      SnackBar(
-                        duration:
-                        const Duration(seconds: 3),
-                        content: AwesomeSnackbarContent(
-                          title: 'Succés!',
-                          message:
-                          'Le trajet a été annulée avec succès',
+                  if (result != null){
+                    if (result){
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(
+                        SnackBar(
+                          duration:
+                          const Duration(seconds: 3),
+                          content: AwesomeSnackbarContent(
+                            title: 'Succés!',
+                            message:
+                            'Le trajet a été annulée avec succès',
 
-                          /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                          contentType: ContentType.success,
-                          // to configure for material banner
-                          inMaterialBanner: true,
+                            /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                            contentType: ContentType.success,
+                            // to configure for material banner
+                            inMaterialBanner: true,
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
                         ),
-                        behavior: SnackBarBehavior.floating,
-                        backgroundColor: Colors.transparent,
-                        elevation: 0,
-                      ),
-                    );
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                      );
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => home(),));
+                    }
                   }
                 },
                 child: Card(

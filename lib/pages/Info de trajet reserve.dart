@@ -20,15 +20,17 @@ class detailsTrajetReserver extends StatelessWidget {
               backgroundColor: Colors.red,
             ),
             onPressed: () async {
-              final bool result = await showDialog(
+              final result = await showDialog(
                 context: context,
                 barrierDismissible: false,
                 builder: (context) {
                   return AnnulerTrajet(_trajet.id,false);
                 },
               );
-              if (result) {
-                Navigator.pop(context,true);
+              if (result != null){
+                if (result) {
+                  Navigator.pop(context,true);
+                }
               }
             },
           ),

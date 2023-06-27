@@ -23,15 +23,17 @@ class detailsTrajetLancer extends StatelessWidget {
             backgroundColor: Colors.red,
           ),
           onPressed: ()async{
-            final bool result = await showDialog(
+            final result = await showDialog(
               context: context,
               barrierDismissible: false,
               builder: (context) {
                 return AnnulerTrajet(_trajet.id,true);
               },
             );
-            if (result) {
-              Navigator.pop(context,true);
+            if (result != null){
+              if (result) {
+                Navigator.pop(context,true);
+              }
             }
           },
           child: Text('Annuler le trajet',style: TextStyle(fontFamily: 'poppins',color: Colors.white),),
@@ -72,8 +74,7 @@ class detailsTrajetLancer extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.pop(context);
-                        // Add your logic here to navigate back to the previous page
+                        Navigator.pop(context,false);
                       },
                       child: Container(
                         decoration: BoxDecoration(

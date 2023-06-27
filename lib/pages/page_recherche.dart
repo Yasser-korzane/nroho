@@ -89,7 +89,6 @@ class _Page_rechercheState extends State<Page_recherche> {
 }
 
 class LinearProgressIndicatorDemo extends StatefulWidget {
- // const LinearProgressIndicatorDemo({Key? key}) : super(key: key);
 
   @override
   State<LinearProgressIndicatorDemo> createState() => _LinearProgressIndicatorDemoState();

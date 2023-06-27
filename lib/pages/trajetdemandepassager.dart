@@ -60,7 +60,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
           .get()
           .then((snapshot) async {
         if (snapshot.exists) {
-          setState(() {
             setState(() {
               _utilisateur.identifiant = snapshot.data()!['identifiant'];
               _utilisateur.nom = snapshot.data()!['nom'];
@@ -77,7 +76,6 @@ class _DetailspassaerState extends State<Detailspassaer> {
               if (_utilisateur.imageUrl.isEmpty) _utilisateur.imageUrl = 'https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png';
             });
             //tests by printing
-          }); // end setState
         } else {
           // end snapshot exist
           throw Exception("Utilisateur does not exist.");

@@ -15,7 +15,6 @@ class _optionsState extends State<options> {
   String ?selectedNb = '1';
   BaseDeDonnee _baseDeDonnee = BaseDeDonnee();
   TextEditingController _commentcontroller = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery
@@ -173,31 +172,21 @@ class _optionsState extends State<options> {
               Container(
                 margin: EdgeInsets.fromLTRB(screenHeight * 0.01, 0, screenHeight * 0.01, 0),
                 padding: EdgeInsets.fromLTRB(screenHeight * 0.015, 0, screenHeight * 0.01, 0),
-                child: Form(
-                  key: _formKey,
-                  child: TextFormField(
-                    controller: _commentcontroller,
-                    keyboardType: TextInputType.text,
-                    validator: (input) {
-                      RegExp regExp = RegExp(r'^[a-zA-Z0-9_]+$');
-                      if (input == null || !regExp.hasMatch(input)){
-                        return 'La Commentaire est non valide' ;
-                      }
-                      return null;
-                    },
-                       style: TextStyle(
-                         fontWeight: FontWeight.normal,
-                         fontSize: screenHeight*0.02,
-                         fontFamily: 'Poppins',
-                       ),
-                        decoration: InputDecoration(
-                        fillColor: Colors.grey.shade300,
-                        labelText: 'Laisser un commentaire',
-                        floatingLabelBehavior: FloatingLabelBehavior.auto,
-                        suffixIcon: Icon(Icons.insert_comment_rounded,
-                            color: Colors.black)
-                        ),
-                  ),
+                child: TextFormField(
+                  controller: _commentcontroller,
+                  keyboardType: TextInputType.text,
+                     style: TextStyle(
+                       fontWeight: FontWeight.normal,
+                       fontSize: screenHeight*0.02,
+                       fontFamily: 'Poppins',
+                     ),
+                      decoration: InputDecoration(
+                      fillColor: Colors.grey.shade300,
+                      labelText: 'Laisser un commentaire',
+                      floatingLabelBehavior: FloatingLabelBehavior.auto,
+                      suffixIcon: Icon(Icons.insert_comment_rounded,
+                          color: Colors.black)
+                      ),
                 ),
               ),
               SizedBox(height: screenHeight * 0.094),
@@ -214,14 +203,13 @@ class _optionsState extends State<options> {
           height: size.height * 0.048,
           child: ElevatedButton(
             onPressed: () async{
-              if (_formKey.currentState!.validate()){
                 widget.trajetReserve.avis = _commentcontroller.text;
                 Navigator.push(context,
                     MaterialPageRoute(builder:(context)=> Page_recherche()));
                 List<ConducteurTrajet> monListe = [];
                 final stopwatch = Stopwatch()..start();
-                Duration duration = Duration(seconds: 10);
-                while (stopwatch.elapsed < duration ) {
+                Duration duration = const Duration(seconds: 10);
+                while (stopwatch.elapsed < duration && monListe.length < 3 ) {
                   monListe = await _baseDeDonnee.chercherConductuersPossibles(FirebaseAuth.instance.currentUser!.uid, widget.trajetReserve);
                 }
                 stopwatch.stop();
@@ -248,7 +236,6 @@ class _optionsState extends State<options> {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => DriverListPage(monListe,widget.trajetReserve)));
                 }
-              }
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),

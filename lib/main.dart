@@ -16,7 +16,6 @@ Future<void> main() async {
       await FirebaseMessaging.instance.requestPermission();
   print(settings.authorizationStatus);
   final fcm = await FirebaseMessaging.instance.getToken();
-  print(fcm);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {

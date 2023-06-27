@@ -580,7 +580,6 @@ class BaseDeDonnee{
   /// *********************************************************************************************************
 
   Future<List<ConducteurTrajet>> chercherConductuersPossibles(String uid , Trajet trajetReserve) async {
-    trajetReserve.afficher();
     DateTime TempsPmoins15 = trajetReserve.dateDepart.subtract(Duration(minutes: 30));
     DateTime TempsPplus4h = trajetReserve.dateDepart.add(Duration(hours: 4));
     try {
@@ -717,10 +716,9 @@ class BaseDeDonnee{
                 trajetLance.idPassagers = List<String>.from(data['idPassagers']);
                 ConducteurTrajet conducteurTrajet = ConducteurTrajet(utilisateur, trajetLance);
                 listConducteurTrajet.add(conducteurTrajet);
-              }else { print('Les conditions ne sont pas verifier pour ${dataUtilisateur['nom']}');
-            }// end if conditions de recherche
+              }
           } // end for trajetLanceDoc
-        }else { print("Le trajet n\'existe pas!");} // end if trajetsLances exist dans le conducteur
+        } // end if trajetsLances exist dans le conducteur
       } // end for utilisateurDoc
       return listConducteurTrajet;
     } catch (e) {

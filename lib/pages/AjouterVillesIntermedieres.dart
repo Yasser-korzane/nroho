@@ -68,6 +68,7 @@ class _AjouterVillesIntermedieresState
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
+              heroTag: 'info',
               child: Icon(Icons.question_mark),
               onPressed: () {
                 showDialog(
@@ -100,7 +101,6 @@ class _AjouterVillesIntermedieresState
                   if (ville4.isNotEmpty) listVillesIntermediers.add(ville4);
                   if (ville5.isNotEmpty) listVillesIntermediers.add(ville5);
                   widget._trajetLance.villeIntermediaires = listVillesIntermediers;
-                  widget._trajetLance.afficher();
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -151,7 +151,7 @@ class _AjouterVillesIntermedieresState
                         )
                     ),
                   ),
-                  Hero(tag: '0',
+                  Hero(tag: 'checkbox_0',
                     child: Checkbox(
                       value: _checkboxSelected[0],
                       onChanged: (value) {
@@ -193,7 +193,7 @@ class _AjouterVillesIntermedieresState
                           filled: true,
                         )),
                   ),
-                  Hero(tag: '1',
+                  Hero(tag: 'checkbox_1',
                     child: Checkbox(
                       value: _checkboxSelected[1],
                       onChanged: (value) {
@@ -235,7 +235,7 @@ class _AjouterVillesIntermedieresState
                           filled: true,
                         )),
                   ),
-                  Hero(tag: '2',
+                  Hero(tag: 'checkbox_2',
                     child: Checkbox(
                       value: _checkboxSelected[2],
                       onChanged: (value) {
@@ -277,7 +277,7 @@ class _AjouterVillesIntermedieresState
                           filled: true,
                         )),
                   ),
-                  Hero(tag: '3',
+                  Hero(tag: 'checkbox_3',
                     child: Checkbox(
                       value: _checkboxSelected[3],
                       onChanged: (value) {
@@ -321,7 +321,7 @@ class _AjouterVillesIntermedieresState
                           filled: true,
                         )),
                   ),
-                  Hero(tag: '4',
+                  Hero(tag: 'checkbox_4',
                     child: Checkbox(
                       value: _checkboxSelected[4],
                       onChanged: (value) {

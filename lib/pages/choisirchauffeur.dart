@@ -40,10 +40,12 @@ class _DriverListPageState extends State<DriverListPage> {
             padding:  EdgeInsets.all(screenWidth*0.015),
             child: InkWell(
               onTap: () async{
-                setState(() async{
-                  bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,widget.trajetReserve,_isButtonPressed)));
-                  _isButtonPressed=result;
-                });
+                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => Details(conducteurTrajet,widget.trajetReserve,_isButtonPressed)));
+                if (result != null) {
+                  setState(() {
+                    _isButtonPressed = result;
+                  });
+                }
               },
               child: Card(
                 color: Colors.white,

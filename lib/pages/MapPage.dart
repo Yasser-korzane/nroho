@@ -93,18 +93,19 @@ class _MywidState extends State<Mywid> {
   }
 
   Future<void> addMarker() async {
-    await getBytesFromAsset("assets/images/current_location.png", 120)
-        .then((value) {
-      setState(() {
-        markers.add(Marker(
-          markerId: const MarkerId("cuurent_pos"),
-          position:
-              LatLng(current_location!.latitude, current_location!.longitude),
-          icon: BitmapDescriptor.fromBytes(value),
-        ));
-      });
+    await getBytesFromAsset("assets/images/current_location.png", 120).then((value) {
+      if (mounted) {
+        setState(() {
+          markers.add(Marker(
+            markerId: const MarkerId("cuurent_pos"),
+            position: LatLng(current_location!.latitude, current_location!.longitude),
+            icon: BitmapDescriptor.fromBytes(value),
+          ));
+        });
+      }
     });
   }
+
 
   void setPolylines(LatLng depart, LatLng arrive) async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(

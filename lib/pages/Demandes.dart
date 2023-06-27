@@ -158,15 +158,15 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                           GestureDetector(
                                             onTap: () async {
                                               if (est_pressee[index] == false) {
-                                                setState(() async {
+                                                setState(() {
                                                   est_pressee[index] = true;
                                                   demande.accepte_refuse = true;
-                                                  await baseDeDonnee
-                                                      .modifierNotification(
-                                                          demande.id_conducteur,
-                                                          index,
-                                                          true);
                                                 });
+                                                await baseDeDonnee
+                                                    .modifierNotification(
+                                                        demande.id_conducteur,
+                                                        index,
+                                                        true);
                                               }
                                               List<String> nomPrenom = [];
                                               nomPrenom = await baseDeDonnee
@@ -226,7 +226,10 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                   fcmTockenPassager,
                                                   "Nouvelle notification",
                                                   "Un conducteur a accepté votre demande pour rejoindre son trajet");
-                                                await baseDeDonnee.updateUtilisateurilYaUneNotification(demande.id_pasagers, true);
+                                              await baseDeDonnee
+                                                  .updateUtilisateurilYaUneNotification(
+                                                      demande.id_pasagers,
+                                                      true);
                                             },
                                             child: Container(
                                               margin: EdgeInsets.symmetric(
@@ -345,7 +348,10 @@ class _DemandesPassagerState extends State<DemandesPassager> {
                                                   fcmTockenPassager,
                                                   "Nouvelle notification",
                                                   "Un conducteur a refusé votre demande pour rejoindre son trajet");
-                                              await baseDeDonnee.updateUtilisateurilYaUneNotification(demande.id_pasagers, true);
+                                              await baseDeDonnee
+                                                  .updateUtilisateurilYaUneNotification(
+                                                      demande.id_pasagers,
+                                                      true);
                                             },
                                             child: Container(
                                               margin: EdgeInsets.symmetric(
